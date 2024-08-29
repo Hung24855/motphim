@@ -2,32 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.dropdown {
+  @apply absolute left-1/2 top-full hidden -translate-x-1/2 animate-fade-in-down rounded bg-black/90 p-2 text-white backdrop-blur-lg before:absolute before:bottom-full before:left-1/2 before:-translate-x-1/2 before:border-8 before:border-black/70 before:border-l-transparent before:border-r-transparent before:border-t-transparent group-hover:block;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.before-arrow {
+  @apply before:absolute before:bottom-full before:left-1/2 before:z-50 before:-translate-x-1/2 before:border-8 before:border-black/90 before:border-l-transparent before:border-r-transparent before:border-t-transparent;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+body::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 4px;
+  background-color: transparent;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+body::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 4px;
+  border-radius: 2px;
+  background-color: transparent;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+.scale-up {
+  @apply animate-zoom-in;
 }
