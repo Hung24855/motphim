@@ -104,8 +104,8 @@ export default function Slide() {
 
     return (
         <div
-            className="relative h-screen cursor-grab"
-            style={{ background: `center/cover no-repeat url(${oldSlides.img})` }}
+            className="relative h-screen cursor-grab bg-cover bg-no-repeat bg-clip-padding  bg-center "
+            style={{ backgroundImage: `url(${oldSlides.img})` }}
             onMouseUp={handleMouseUp}
             onMouseDown={handleMouseDown}
         >
@@ -115,10 +115,14 @@ export default function Slide() {
                 className="absolute inset-0 z-[1] h-full w-full object-cover"
                 ref={slideRef}
             />
-            <div className="absolute z-10 h-full w-full bg-gradient-to-r from-[#030A1B]">
+            <div className="absolute z-10 inset-0 h-full w-full bg-gradient-to-r from-[#030A1B] px-2">
                 <MaxWidth className="relative">
                     <div className="absolute bottom-48 h-32 max-w-[32rem] text-white">
-                        <h1 className="text-5xl font-extrabold">{slides[2].title}</h1>
+                        <div className="w-max">
+                            <h1 className="line-clamp-1 animate-typing-text overflow-hidden whitespace-nowrap border-r-2 md:text-5xl text-4xl font-extrabold">
+                                {slides[2].title}
+                            </h1>
+                        </div>
                         <div className="mt-10 line-clamp-3">{slides[0].description}</div>
                         <div className="mt-2 flex gap-x-2 text-primary">
                             <FaStar />
@@ -134,7 +138,7 @@ export default function Slide() {
                             </button>
                         </div>
                     </div>
-                    <div className="absolute bottom-32 right-0 flex h-32 text-white">
+                    <div className="absolute bottom-20 right-0 hidden h-32 text-white md:flex">
                         {slides.map((item, index) => (
                             <div
                                 key={index}

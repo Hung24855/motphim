@@ -30,11 +30,20 @@ const config: Config = {
                     "100%": {
                         transform: "scale(1)"
                     }
+                },
+                typing: {
+                    "0%": {
+                        width: "0"
+                    },
+                    "100%": {
+                        width: "100%"
+                    }
                 }
             },
             animation: {
                 "fade-in-down": "fade-in-down 0.2s ease-out",
-                "zoom-in": "zoom-in 0.3s ease-out"
+                "zoom-in": "zoom-in 0.3s ease-out",
+                "typing-text": "typing 2.5s infinite"
             }
         }
     }

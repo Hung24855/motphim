@@ -7,7 +7,9 @@ const minute = 1000 * 60;
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
+            refetchOnMount: true,
             refetchOnWindowFocus: false,
+            refetchOnReconnect: true,
             staleTime: minute * 5
         }
     }

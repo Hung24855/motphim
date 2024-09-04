@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 .dropdown {
-  @apply absolute left-1/2 top-full hidden -translate-x-1/2 animate-fade-in-down rounded bg-black/90 p-2 text-white backdrop-blur-lg before:absolute before:bottom-full before:left-1/2 before:-translate-x-1/2 before:border-8 before:border-black/70 before:border-l-transparent before:border-r-transparent before:border-t-transparent group-hover:block;
+  @apply absolute left-1/2 top-full hidden -translate-x-1/2 animate-fade-in-down rounded bg-black/90 p-2 text-white backdrop-blur-lg before:absolute before:bottom-full before:left-1/2 before:-translate-x-1/2 before:border-8 before:border-black/90 before:border-l-transparent before:border-r-transparent before:border-t-transparent group-hover:block;
 }
 
 .before-arrow {
@@ -14,6 +18,7 @@ body::-webkit-scrollbar {
   width: 6px;
   border-radius: 4px;
   background-color: transparent;
+  
 }
 
 body::-webkit-scrollbar-thumb {

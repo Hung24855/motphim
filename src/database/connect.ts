@@ -19,7 +19,7 @@ export default async function DB_Connect() {
       if (err) {
         console.error("Lỗi khi truy vấn định danh: ", err.stack);
       }
-      console.log("Connected to Postgres success: ", result.rows[0].now);
+      console.log("Kết nối cơ sở dữ liệu thành công!: ", result.rows[0].now);
     });
   });
 }

@@ -7,6 +7,8 @@ import Footer from "@/components/layout/footer";
 import ProgessbarProviders from "@/base/libs/progesbar";
 import ReactQueryProvder from "@/base/libs/react-query";
 import { ToastContainer } from "react-toastify";
+import "swiper/css";
+import { Fragment } from "react";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 
@@ -16,11 +18,15 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
-    children
+    children,
+    admin
 }: Readonly<{
     children: React.ReactNode;
+    admin: React.ReactNode;
 }>) {
     DB_Connect();
+
+    const isAdmin = false;
 
     return (
         <html lang="en">
@@ -30,9 +36,15 @@ export default async function RootLayout({
             <body className={inter.className}>
                 <ReactQueryProvder>
                     <ProgessbarProviders>
-                        <Header />
-                        <main>{children}</main>
-                        <Footer />
+                        {isAdmin ? (
+                            <main className="text-black">{admin}</main>
+                        ) : (
+                            <Fragment>
+                                <Header />
+                                <main className="min-h-screen bg-[#030A1B] md:px-0">{children}</main>
+                                <Footer />
+                            </Fragment>
+                        )}
                     </ProgessbarProviders>
                 </ReactQueryProvder>
                 <ToastContainer />
