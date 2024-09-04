@@ -15,8 +15,15 @@ class EndpointUrl {
     create_country = () => `${this.baseAdmin}/quoc-gia`;
     update_country = (id: string) => `${this.baseAdmin}/quoc-gia/${id}`;
     delete_country = (id: string) => `${this.baseAdmin}/quoc-gia/${id}`;
-    //chi-tiet-phim
+    //Phim
+    get_movies = () => `/danh-sach`;
+    get_movies_by_type = (slug: "phim-bo" | "phim-le") => `/danh-sach/${slug}`;
     get_movie = (slug: string) => `/phim/${slug}`;
+
+    //Phim theo theo loai
+    get_movies_by_genre = (id: string) => `/the-loai/${id}`;
+    //Phim theo theo quoc gia
+    get_movies_by_country = (id: string) => `/quoc-gia/${id}`;
 }
 
 export const ENDPOINT_URL = new EndpointUrl();

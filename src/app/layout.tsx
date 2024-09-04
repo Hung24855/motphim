@@ -27,6 +27,7 @@ export default async function RootLayout({
     DB_Connect();
 
     const isAdmin = false;
+  
 
     return (
         <html lang="en">

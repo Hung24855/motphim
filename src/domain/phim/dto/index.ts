@@ -17,4 +17,22 @@ export interface MoviesDTO {
     link: string;
 }
 
-export type GetAllMoviesDTO = ISuccessResponse<MoviesDTO[]>;
+export interface DataGetMoviesDTO {
+    status: string;
+    message: string;
+    data: {
+        movie_name: string;
+        slug: string;
+        year: number;
+        image: string;
+        time_per_episode: string;
+        episode_current: string;
+        lang: string;
+    }[];
+    pagination: {
+        totalRows: number;
+        currentPage: number;
+        pageSize: number;
+        totalPages: number;
+    };
+}

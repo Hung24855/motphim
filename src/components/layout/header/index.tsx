@@ -77,22 +77,30 @@ export default function Header() {
                             <Image src="/logo/Logo-light.png" alt="logo" width={65} height={65} /> MOTPHIM
                         </Link>
                         <div className="cursor-pointer text-blue-500">Trang chủ</div>
-                        <div className="cursor-pointer">Phim lẻ</div>
-                        <div className="cursor-pointer">Phim bộ</div>
+
+                        <Link href={"/danh-sach/phim-le"}>
+                            <div className="cursor-pointer">Phim lẻ</div>
+                        </Link>
+                        <Link href={"/danh-sach/phim-bo"}>
+                            <div className="cursor-pointer">Phim bộ</div>
+                        </Link>
+
                         <div className="group relative flex cursor-pointer items-center py-3 group-hover:text-primary">
                             Thể loại{" "}
                             <span>
                                 <RiArrowDropDownLine size={25} />
                             </span>
                             {/* Dropdown menu */}
-                            <div className="dropdown">
-                                {/* Content of the dropdown */}
-                                <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
-                                    {genres?.data.map((item) => (
-                                        <div className="whitespace-nowrap hover:text-primary">{item.name}</div>
-                                    ))}
+                            {countries?.data && (
+                                <div className="dropdown">
+                                    {/* Content of the dropdown */}
+                                    <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
+                                        {countries?.data.map((item) => (
+                                            <div className="whitespace-nowrap hover:text-primary">{item.name}</div>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                         <div className="group relative flex cursor-pointer items-center py-3 group-hover:text-primary">
                             Quốc gia{" "}
@@ -100,15 +108,20 @@ export default function Header() {
                                 <RiArrowDropDownLine size={25} />
                             </span>
                             {/* Dropdown menu */}
-                            <div className="dropdown">
-                                {/* Content of the dropdown */}
-                                <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
-                                    {countries?.data.map((item) => (
-                                        <div className="whitespace-nowrap hover:text-primary">{item.name}</div>
-                                    ))}
+                            {genres?.data && (
+                                <div className="dropdown">
+                                    {/* Content of the dropdown */}
+                                    <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
+                                        {genres?.data.map((item) => (
+                                            <div className="whitespace-nowrap hover:text-primary">{item.name}</div>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
+                        <Link href={"/yeu-thich"}>
+                            <div className="cursor-pointer">Yêu thích</div>
+                        </Link>
                     </div>
                     {/* side bar */}
                     <SideBarMenu genres={genres?.data} countries={countries?.data} />
