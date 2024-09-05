@@ -1,5 +1,6 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
+import { DataGetMoviesDTO } from "../dto";
 
 export class MoviesApi {
     static async get_movies() {
@@ -10,25 +11,27 @@ export class MoviesApi {
             console.log("Error: get_movies ", error);
         }
     }
-    static async get_movies_by_type(id: "phim-le" | "phim-bo") {
+    static async get_movies_by_type(slug: "phim-le" | "phim-bo") {
         try {
-            const { data } = await http.get(ENDPOINT_URL.get_movies_by_type(id));
+            const { data } = await http.get(ENDPOINT_URL.get_movies_by_type(slug));
             return data;
         } catch (error) {
             console.log("Error: get_movies_by_type ", error);
         }
     }
-    static async get_movies_by_genre(id:string) {
+    static async get_movies_by_genre(slug:string) {
         try {
-            const { data } = await http.get(ENDPOINT_URL.get_movies_by_genre(id));
+            const { data } = await http.get(ENDPOINT_URL.get_movies_by_genre(slug));
+            console.log(ENDPOINT_URL.get_movies_by_genre(slug));
+            
             return data;
         } catch (error) {
             console.log("Error: get_movies_by_genre ", error);
         }
     }
-    static async get_movies_by_country(id:string) {
+    static async get_movies_by_country(slug:string) {
         try {
-            const { data } = await http.get(ENDPOINT_URL.get_movies_by_country(id));
+            const { data } = await http.get(ENDPOINT_URL.get_movies_by_country(slug));
             return data;
         } catch (error) {
             console.log("Error: get_movies_by_country ", error);

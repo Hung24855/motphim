@@ -1,4 +1,4 @@
-import { ISuccessResponse } from "@/infrastructure/config/types/apiResponse";
+
 
 export interface MoviesDTO {
     id: string;

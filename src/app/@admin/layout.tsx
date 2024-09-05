@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Trang quản trị"
+    title: "Phim mới chất lượng cao"
 };
 
 export default async function AdminLayout({

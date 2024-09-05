@@ -131,7 +131,7 @@ export default function MoviePage() {
                     </Script>
 
                     <div className="px-2 py-2">
-                        <MovieCategory title="Phim mới cập nhật" />
+                        <MovieCategory title="Phim mới cập nhật" slug="phim-moi" />
                     </div>
                 </MaxWidth>
             </div>

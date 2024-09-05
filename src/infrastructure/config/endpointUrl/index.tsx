@@ -21,9 +21,9 @@ class EndpointUrl {
     get_movie = (slug: string) => `/phim/${slug}`;
 
     //Phim theo theo loai
-    get_movies_by_genre = (id: string) => `/the-loai/${id}`;
+    get_movies_by_genre = (slug: string) => `/the-loai/${slug}`;
     //Phim theo theo quoc gia
-    get_movies_by_country = (id: string) => `/quoc-gia/${id}`;
+    get_movies_by_country = (slug: string) => `/quoc-gia/${slug}`;
 }
 
 export const ENDPOINT_URL = new EndpointUrl();

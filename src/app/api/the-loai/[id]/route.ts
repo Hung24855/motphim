@@ -1,5 +1,6 @@
 import { pool } from "@/database/connect";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { Filter } from "../../utils/filter";
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
     try {
@@ -32,6 +33,53 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 
         return NextResponse.json({ status: "success", message: "Xóa thể loại thành công", data: res.rows });
     } catch (error) {
+        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+    }
+}
+
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+    
+    let select =
+        "movies.movie_name, movies.slug, movies.year , movies.image, movies.time_per_episode, movies.episode_current,movies.lang";
+
+    let join =
+        "INNER JOIN movie_genre ON movies.id = movie_genre.movie_id INNER JOIN genres ON movie_genre.genres_id = genres.id";
+    try {
+        const { limitSql, offset, orderBy, where, page, limit } = Filter(request);
+        const [movies, totalRows] = await Promise.all([
+            pool.query(`SELECT ${select} FROM movies ${join} WHERE genres.slug = $1`, [params.id]),
+            pool.query(
+                `SELECT COUNT(*) FROM movies ${join} WHERE ${where} genres.slug = $1 ${orderBy} ${limitSql} ${offset}`,
+                [params.id]
+            )
+        ]);
+        if (movies.rows.length === 0) {
+            return NextResponse.json({
+                status: "success",
+                message: "Phim không tồn tại!",
+                data: [],
+                pagination: {
+                    totalRows: Number(totalRows.rows[0].count),
+                    currentPage: page,
+                    pageSize: limit,
+                    totalPages: Math.ceil(totalRows.rows[0].count / limit)
+                }
+            });
+        }
+
+        return NextResponse.json({
+            status: "success",
+            message: "Lấy phim theo thể loại thành công!",
+            data: movies.rows,
+            pagination: {
+                totalRows: Number(totalRows.rows[0].count),
+                currentPage: Number(page),
+                pageSize: Number(limit),
+                totalPages: Math.ceil(totalRows.rows[0].count / Number(limit))
+            }
+        });
+    } catch (error) {
+        console.log("Error: ", error);
         return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
     }
 }

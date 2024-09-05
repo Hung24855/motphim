@@ -1,17 +1,9 @@
 import { pool } from "@/database/connect";
 import { NextResponse, NextRequest } from "next/server";
+import { Filter } from "../../utils/filter";
 
 export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
-    const searchParams = request.nextUrl.searchParams;
-    const { country, year, limit = "20", sort_field, page = "1" } = Object.fromEntries(searchParams);
-    const query: string[] = [];
-    if (country) query.push(`country = '${country}'`);
-    if (year) query.push(`year = '${year}'`);
-
-    const where = query.length ? `${query.join(" AND ")}` : "";
-    const orderBy = sort_field ? `ORDER BY ${sort_field}` : "";
-    const limitSql = `LIMIT ${Number(limit)}`;
-    const offset = page ? `OFFSET ${Number(limit) * (Number(page) - 1)}` : "";
+    const { limitSql, offset, orderBy, where, page, limit } = Filter(request);
 
     let sql = `SELECT 
     movies.movie_name, movies.slug, movies.year , 
@@ -36,9 +28,9 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
                 data: [],
                 pagination: {
                     totalRows: Number(totalRows.rows[0].count),
-                    currentPage: Number(page),
-                    pageSize: Number(limit),
-                    totalPages: Math.ceil(totalRows.rows[0].count / Number(limit))
+                    currentPage: page,
+                    pageSize: limit,
+                    totalPages: Math.ceil(totalRows.rows[0].count / limit)
                 }
             });
         }

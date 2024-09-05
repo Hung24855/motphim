@@ -1,3 +1,4 @@
+import { DataGetMoviesDTO } from "@/domain/phim/dto";
 import Link from "next/link";
 
 const img = "https://img.ophim.live/uploads/movies/du-phuong-hanh-thumb.jpg";

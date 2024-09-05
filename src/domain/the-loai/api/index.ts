@@ -1,6 +1,7 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
-import { IDataCreateGenres } from "../modal";
+import { IDataCreateGenres } from "../model";
+import { GetAllGenresDTO } from "../dto";
 
 export class GenresApi {
     static async get_all_genres() {

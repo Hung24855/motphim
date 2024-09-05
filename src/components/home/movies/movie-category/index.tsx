@@ -4,10 +4,24 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import MovieCard from "@/components/shared/movie-card";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
+import { MoviesService } from "@/domain/phim/services";
 
-export default function MovieCategory(props: any) {
-    const { title, movies, pathAll, slidesPerView = 5 } = props;
+type props = {
+    title: string;
+    movies?: any[];
+    pathAll?: string;
+    slidesPerView?: number;
+    slug: string;
+};
+
+export default function MovieCategory(props: props) {
+    const { title, movies, pathAll, slidesPerView = 5, slug } = props;
     const swiperRef = useRef<SwiperCore>();
+
+    const {data} = MoviesService.get_movies_by_genre(slug);
+
+    if(!data) return <></>
+    
     return (
         <div className="mb-10">
             {/* Title */}
