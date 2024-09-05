@@ -37,9 +37,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     }
 }
 
-
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-    
     let select =
         "movies.movie_name, movies.slug, movies.year , movies.image, movies.time_per_episode, movies.episode_current,movies.lang";
 
@@ -48,7 +46,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     try {
         const { limitSql, offset, orderBy, where, page, limit } = Filter(request);
         const [movies, totalRows] = await Promise.all([
-            pool.query(`SELECT ${select} FROM movies ${join} WHERE countries.slug = $1`, [params.id]),
+            pool.query(
+                `SELECT ${select} FROM movies ${join} WHERE ${where} countries.slug = $1 ${orderBy} ${limitSql} ${offset}`,
+                [params.id]
+            ),
             pool.query(
                 `SELECT COUNT(*) FROM movies ${join} WHERE ${where} countries.slug = $1 ${orderBy} ${limitSql} ${offset}`,
                 [params.id]

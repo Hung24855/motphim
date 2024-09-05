@@ -7,9 +7,9 @@ export default function Home() {
         <main className="pb-2">
             <Slide />
             <MaxWidth className="min-h-screen px-2 pt-2 text-white">
-                {/* <MovieCategory title="Phim mới cập nhật" slug="phim-moi" /> */}
+                <MovieCategory title="Phim cổ trang" slug="co-trang" />
                 <MovieCategory title="Phim hành động" slug="hanh-dong" />
-                <MovieCategory title="Phim cổ trang" slug="tinh-cam" />
+                <MovieCategory title="Phim tình cảm" slug="tinh-cam" />
             </MaxWidth>
         </main>
     );

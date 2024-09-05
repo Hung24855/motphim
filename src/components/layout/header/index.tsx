@@ -98,7 +98,7 @@ export default function Header() {
                                     {/* Content of the dropdown */}
                                     <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
                                         {genres?.data.map((item) => (
-                                            <div className="whitespace-nowrap hover:text-primary">{item.name}</div>
+                                            <div className="whitespace-nowrap hover:text-primary" key={item.id}>{item.name}</div>
                                         ))}
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@ export default function Header() {
                                     {/* Content of the dropdown */}
                                     <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
                                         {countries?.data.map((item) => (
-                                            <div className="whitespace-nowrap hover:text-primary">{item.name}</div>
+                                            <div className="whitespace-nowrap hover:text-primary" key={item.id}>{item.name}</div>
                                         ))}
                                     </div>
                                 </div>

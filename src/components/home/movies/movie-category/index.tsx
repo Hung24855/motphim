@@ -8,22 +8,21 @@ import { MoviesService } from "@/domain/phim/services";
 
 type props = {
     title: string;
-    movies?: any[];
     pathAll?: string;
     slidesPerView?: number;
     slug: string;
 };
 
 export default function MovieCategory(props: props) {
-    const { title, movies, pathAll, slidesPerView = 5, slug } = props;
+    const { title, pathAll, slidesPerView = 5, slug } = props;
     const swiperRef = useRef<SwiperCore>();
 
-    const {data} = MoviesService.get_movies_by_genre(slug);
+    const { data } = MoviesService.get_movies_by_genre(slug);
 
-    if(!data) return <></>
-    
+    if (!data) return <></>;
+
     return (
-        <div className="mb-10">
+        <div className="mb-5">
             {/* Title */}
             <div className="flex justify-between">
                 <h1 className="mb-2 text-2xl">{title}</h1>
@@ -64,9 +63,15 @@ export default function MovieCategory(props: props) {
                     }
                 }}
             >
-                {[1, 2, 3, 4, 5, 6].map((_, index) => (
+                {/* {[1, 2, 3, 4, 5, 6].map((_, index) => (
                     <SwiperSlide key={index}>
                         <MovieCard />
+                    </SwiperSlide>
+                ))} */}
+
+                {data.data.map((movie, index) => (
+                    <SwiperSlide key={index}>
+                        <MovieCard movie={movie} />
                     </SwiperSlide>
                 ))}
             </Swiper>

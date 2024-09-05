@@ -9,14 +9,13 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
     movies.movie_name, movies.slug, movies.year , 
     movies.image, movies.time_per_episode, movies.episode_current, movies.lang FROM movies `;
     //Join bảng
-    let join =
-        "INNER JOIN movie_genre ON movies.id = movie_genre.movie_id INNER JOIN genres ON movie_genre.genres_id = genres.id ";
+    let join = "INNER JOIN movie_type ON movie_type.id = movies.movie_type_id";
 
     try {
         const [movies, totalRows] = await Promise.all([
-            pool.query(`${sql} ${join} WHERE genres.slug = $1`, [params.slug]),
+            pool.query(`${sql} ${join} WHERE movie_type.slug = $1`, [params.slug]),
             pool.query(
-                `SELECT COUNT(*) FROM movies ${join} WHERE ${where} genres.slug = $1 ${orderBy} ${limitSql} ${offset}`,
+                `SELECT COUNT(*) FROM movies ${join} WHERE ${where} movie_type.slug = $1 ${orderBy} ${limitSql} ${offset}`,
                 [params.slug]
             )
         ]);

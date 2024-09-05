@@ -1,9 +1,16 @@
+"use client";
 import Pagination from "@/base/libs/pagination";
 import MaxWidth from "@/components/layout/max-width";
 import MovieCard from "@/components/shared/movie-card";
+import { MoviesService } from "@/domain/phim/services";
 import { notFound } from "next/navigation";
 
-const TITLE = [
+type TitleType = {
+    title: string;
+    slug: "phim-bo" | "phim-le";
+};
+
+const TITLE: TitleType[] = [
     {
         title: "Danh sách phim bộ",
         slug: "phim-bo"
@@ -15,43 +22,30 @@ const TITLE = [
 ];
 
 export default function ListMovie({ params }: { params: { slug: string } }) {
-    const totalPages = 10;
-
     const isTitle = TITLE.filter((item) => item.slug === params.slug)[0];
     if (!isTitle) return notFound();
+    const { data: response } = MoviesService.get_movies_by_type(isTitle.slug);
+
+    if (!response) return null;
+
+    console.log(response.pagination.totalPages);
+    
 
     return (
         <MaxWidth className="min-h-screen text-white">
             <div className="pb-10 pt-24">
-                <div className="text-2xl px-2">{isTitle.title}</div>
+                <div className="px-2 text-2xl">{isTitle.title}</div>
                 <div className="mt-2 grid grid-cols-2 gap-2 px-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
+                    {response.data.map((movie) => (
+                        <MovieCard key={movie.slug} movie={movie} />
+                    ))}
                 </div>
 
                 {/* Phân trang */}
 
-                {totalPages > 1 && (
+                {response.pagination.totalPages > 1 && (
                     <div className="flex items-center justify-center pb-10 pt-16">
-                        <Pagination totalPage={totalPages} initPage={Number(1)} />
+                        <Pagination totalPage={response.pagination.totalPages} initPage={Number(1)} />
                     </div>
                 )}
             </div>

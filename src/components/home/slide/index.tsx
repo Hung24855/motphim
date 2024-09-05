@@ -14,34 +14,34 @@ type slide = {
 
 const arr = [
     {
-        title: "The Witcher One",
-        img: "https://wallpapersmug.com/download/1600x900/cce793/movie-poster-of-john-wick-3.jpg",
+        title: "Liễu Chu Ký",
+        img: "https://img.ophim.live/uploads/movies/lieu-chu-ky-thumb.jpg",
         description:
-            "Để cứu Paris khỏi cuộc tắm máu quốc tế, nhà khoa học đau buồn nọ buộc phải đối mặt với quá khứ bi thảm của mình khi một con cá mập khổng lồ xuất hiện ở sông Seine."
+            "Liễu Miên Đường bị thương nặng và được Hoài Dương vương Thôi Hành Chu cứu. Khi tỉnh lại, cô mất đi trí nhớ và tưởng Thôi Hành Chu là phu quân của mình."
     },
     {
-        title: "The Witcher Two",
-        img: "https://wallpapersmug.com/download/1600x900/b41742/thanos-and-the-black-order.jpg",
+        title: "Tứ Phương Quán",
+        img: "https://img.ophim.live/uploads/movies/tu-phuong-quan-thumb.jpg",
         description:
-            "Reiyan Asura, nếu đó là tên thật của anh ấy, thức tỉnh trong khoảng không, bị ràng buộc bởi xiềng xích. Anh ta không nhớ mình là ai hay làm thế nào anh ta đến được thế giới màu trắng này. Anh ấy không hề biết rằng anh ấy đã cùng hàng triệu người khác tham gia vào một trò chơi phức tạp, nơi chỉ có kẻ mạnh nhất mới thắng thế."
+            '"Tứ Phương Quán" là bộ phim hài cổ trang do Triệu Khải Thần (đạo diễn "Ở Rể") đạo diễn, có sự tham gia của Đàm Kiện Thứ (diễn viên "Lạp Tội Đồ Giám"), Châu Y Nhiên (diễn viên "Đuổi bắt thanh xuân") và Đỗ Thuần (diễn viên "Bát Bách"), Hám Thanh Tử (diễn viên "Chuyến Bay Sinh Tử"). Bộ phim kể về câu chuyện của Nguyên Mạc, A Thuật, Vương Khôn Ngô, và Úy Trì Hoa, bốn chí sĩ với lý tưởng lớn lao, dũng cảm tiến lên vì gia đình, quốc gia và công lý, dù họ chỉ sống trong một thế giới nhỏ bé. Trong thời kỳ An Bình của Đại Ung, chàng trai trẻ Nguyên Mạc người thành Trường Nhạc (Đàm Kiện Thứ đóng) mang theo con dấu Tứ Phương Quán để cấp giấy phép vào thành cho dị tộc, không ngờ sao lại gặp phải A Thuật từ nước Yên Nhạc đến tị nạn.'
     },
     {
-        title: "The Witcher Three",
-        img: "https://images.hdqwalls.com/download/poster-avengers-endgame-ni-1600x900.jpg",
+        title: "Trường Lạc Khúc",
+        img: "https://img.ophim.live/uploads/movies/truong-lac-khuc-thumb.jpg",
         description:
-            "Thiếu Lâm Tự Truyền Kỳ 3: Thiếu Lâm Tự Đại Mạc Anh Hào - The Legend of Shaolin Kung Fu 3 tiếp tục là câu chuyện kể về các cao tăng thiếu lâm, những môn võ bị thất truyền"
+            "Bộ phim kể về câu chuyện của một cặp đôi kẻ thù không đội trời chung vô tình trở thành một cặp nhưng lại yêu nhau trong một loạt các vụ án kỳ lạ và cuối cùng đã chọn chiến đấu cùng nhau."
     },
     {
-        title: "The Witcher Four",
-        img: "https://wallpapersmug.com/download/1600x900/e5a909/star-wars-the-last-jedi-2017-movie-poster-red.jpg",
+        title: "Uyển Uyển Như Mộng Tiêu",
+        img: "https://img.ophim.live/uploads/movies/uyen-uyen-nhu-mong-tieu-thumb.jpg",
         description:
-            "Những sự kiện kỳ lạ quấy nhiễu một cựu cảnh sát sau khi anh nhận nuôi một cô bé khăng khăng rằng mình là con gái anh. Giờ anh bắt đầu tìm hiểu xem cô bé là ai và đang muốn gì."
+            "Lăng Tiêu ẩn núp nhiều năm, thoắt cái đã trở thành tân thành chủ quyền thế ngất trời. Để trả thù, hắn cưỡng ép chiếm đoạt con gái của lão thành chủ là Tô Uyển Nhi. Dù hai người có ân oán thù hận ngăn cách, nhưng qua nhiều lần nguy hiểm và bảo vệ, hai người vẫn rơi vào vướng mắc yêu hận, cuối cùng tương lai của cả hai sẽ đi về đâu?"
     },
     {
-        title: "The Witcher Five",
-        img: "https://wallpapersmug.com/download/1600x900/4bf01b/new-2023-movie-john-wick-4-poster.jpg",
+        title: "Niệm Niệm Nhân Gian Ngọc",
+        img: "https://img.ophim.live/uploads/movies/niem-niem-nhan-gian-ngoc-thumb.jpg",
         description:
-            "Sau khi nhà vua qua đời ở Goguryeo, một cuộc chiến khốc liệt nổ ra giữa các bộ tộc. Nữ hoàng Woo, người ngay lập tức trở thành mục tiêu của các hoàng tử và năm bộ tộc tranh giành ngai vàng, đấu tranh để trao vương miện cho một vị vua mới trong vòng 24 giờ. "
+            "Liên hôn giữa hai gia tộc diệt ma lớn đã khiến Mạc Viêm và Hiên Viên Ngọc trở thành phu thê. Ban đầu, họ chỉ nghĩ rằng mối quan hệ hôn nhân chỉ là tạm thời trong hai năm, nhưng Mạc Viêm lại phát hiện ra rằng, nàng từ lâu đã chiếm lĩnh trái tim anh... Với những mâu thuẫn liên tục nảy sinh và sự thật ẩn sau vẻ bề ngoài, liệu họ có thể thực sự đến với nhau không?"
     }
 ];
 export default function Slide() {
@@ -104,7 +104,7 @@ export default function Slide() {
 
     return (
         <div
-            className="relative h-screen cursor-grab bg-cover bg-no-repeat bg-clip-padding  bg-center "
+            className="relative h-screen cursor-grab bg-cover bg-clip-padding bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${oldSlides.img})` }}
             onMouseUp={handleMouseUp}
             onMouseDown={handleMouseDown}
@@ -115,15 +115,15 @@ export default function Slide() {
                 className="absolute inset-0 z-[1] h-full w-full object-cover"
                 ref={slideRef}
             />
-            <div className="absolute z-10 inset-0 h-full w-full bg-gradient-to-r from-[#030A1B] px-2">
+            <div className="absolute inset-0 z-10 h-full w-full bg-gradient-to-r from-[#030A1B] px-2">
                 <MaxWidth className="relative">
                     <div className="absolute bottom-48 h-32 max-w-[32rem] text-white">
                         <div className="w-max">
-                            <h1 className="line-clamp-1 animate-typing-text overflow-hidden whitespace-nowrap border-r-2 md:text-5xl text-4xl font-extrabold">
+                            <h1 className="line-clamp-1 animate-typing-text overflow-hidden whitespace-nowrap border-r-2 text-4xl font-extrabold md:text-5xl">
                                 {slides[2].title}
                             </h1>
                         </div>
-                        <div className="mt-10 line-clamp-3">{slides[0].description}</div>
+                        <div className="mt-10 line-clamp-3">{slides[2].description}</div>
                         <div className="mt-2 flex gap-x-2 text-primary">
                             <FaStar />
                             <FaStar />

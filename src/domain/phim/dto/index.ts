@@ -1,5 +1,3 @@
-
-
 export interface MoviesDTO {
     id: string;
     movie_name: string;
@@ -14,7 +12,14 @@ export interface MoviesDTO {
     episode_current: string;
     episode_total: string;
     movie_type_id: string;
-    link: string;
+    genre: string;
+    genre_slug: string;
+}
+
+export interface DataGetMovieDetailDTO {
+    status: string;
+    message: string;
+    data: MoviesDTO[];
 }
 
 export interface DataGetMoviesDTO {
