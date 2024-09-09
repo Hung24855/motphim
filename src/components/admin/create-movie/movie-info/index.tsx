@@ -63,12 +63,15 @@ export default function MovieInfo({ control, errors }: Props) {
                     name="episode_duration"
                     control={control}
                     defaultValue=""
+                    rules={{ required: "Không bỏ trống" }}
                     render={({ field }) => (
                         <Input
                             field={field}
                             label="Thời lượng tập phim"
                             placeholder="45 Phút/tập"
+                            required
                             error={errors.episode_duration}
+                            tranform="buttom"
                         />
                     )}
                 />
@@ -76,32 +79,64 @@ export default function MovieInfo({ control, errors }: Props) {
                     name="current_episode"
                     control={control}
                     defaultValue=""
+                    rules={{ required: "Không bỏ trống" }}
                     render={({ field }) => (
-                        <Input field={field} label="Tập phim hiện tại" placeholder="5" error={errors.current_episode} />
+                        <Input
+                            field={field}
+                            label="Tập phim hiện tại"
+                            placeholder="5"
+                            error={errors.current_episode}
+                            required
+                            tranform="buttom"
+                        />
                     )}
                 />
                 <Controller
                     name="total_episodes"
                     control={control}
                     defaultValue=""
+                    rules={{ required: "Không bỏ trống" }}
                     render={({ field }) => (
-                        <Input field={field} label="Tổng số tập phim" placeholder="40" error={errors.total_episodes} />
+                        <Input
+                            field={field}
+                            label="Tổng số tập phim"
+                            placeholder="40"
+                            error={errors.total_episodes}
+                            required
+                            tranform="buttom"
+                        />
                     )}
                 />
                 <Controller
                     name="year_publication"
                     control={control}
                     defaultValue=""
+                    rules={{ required: "Không bỏ trống" }}
                     render={({ field }) => (
-                        <Input field={field} label="Năm xuất bản" placeholder="2024" error={errors.year_publication} />
+                        <Input
+                            field={field}
+                            label="Năm xuất bản"
+                            placeholder="2024"
+                            error={errors.year_publication}
+                            required
+                            tranform="buttom"
+                        />
                     )}
                 />
                 <Controller
                     name="quality"
                     control={control}
                     defaultValue=""
+                    rules={{ required: "Không bỏ trống" }}
                     render={({ field }) => (
-                        <Input field={field} label="Chất lượng" placeholder="HD" error={errors.quality} />
+                        <Input
+                            field={field}
+                            label="Chất lượng"
+                            placeholder="HD"
+                            error={errors.quality}
+                            required
+                            tranform="buttom"
+                        />
                     )}
                 />
             </div>

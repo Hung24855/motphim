@@ -1,5 +1,6 @@
+import { CountriesService } from "@/domain/quoc-gia/service";
+import { GenresService } from "@/domain/the-loai/service";
 import { FieldValues } from "@/views/admin/movie/create/page";
-import { title } from "process";
 import { Control, Controller, FieldErrors, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 
 interface Props {
@@ -9,68 +10,9 @@ interface Props {
     getValues: UseFormGetValues<FieldValues>;
 }
 
-type TheLoai = {
-    title: string;
-    slug: string;
-};
-
-type QuocGia = TheLoai;
-
-const the_loai: TheLoai[] = [
-    {
-        title: "Cổ trang",
-        slug: "co-trang"
-    },
-    {
-        title: "Tình cảm",
-        slug: "tinh-cam"
-    },
-    {
-        title: "Viễn tưởng",
-        slug: "vien-tuong"
-    },
-    {
-        title: "Khoa học",
-        slug: "khoa-hoc"
-    },
-    {
-        title: "Võ thuật",
-        slug: "vo-thuat"
-    },
-    {
-        title: "Hành động",
-        slug: "hanh-dong"
-    }
-];
-
-const quoc_gia: QuocGia[] = [
-    {
-        title: "Trung quốc",
-        slug: "trung-quoc"
-    },
-    {
-        title: "Hồng Kông",
-        slug: "hong-kong"
-    },
-    {
-        title: "Ấn Độ",
-        slug: "an-do"
-    },
-    {
-        title: "Đức",
-        slug: "duc"
-    },
-    {
-        title: "Thổ Nhĩ Kỳ",
-        slug: "tho-nhi-ky"
-    },
-    {
-        title: "Đài Loan",
-        slug: "dai-loan"
-    }
-];
-
 export default function MovieClassification({ control, errors, setValue, getValues }: Props) {
+    const { data: genres } = GenresService.useGenres();
+    const { data: countries } = CountriesService.useCountries();
     return (
         <div className="w-max">
             <div className="dinh-dang">
@@ -105,17 +47,19 @@ export default function MovieClassification({ control, errors, setValue, getValu
             </div>
             <div className="dinh-dang mt-4 w-full">
                 <span className="font-semibold">Thể loại</span> <span className="ml-0.5 text-red-600">*</span>
-                <div className="grid w-full grid-cols-3 gap-x-6">
-                    {the_loai.map((item, index) => (
+                <div className="grid w-full grid-cols-4 gap-x-6">
+                    {genres?.data.map((item, index) => (
                         <Controller
                             name="genres"
                             control={control}
+                            key={index}
                             render={({ field }) => (
                                 <span className="flex items-center gap-x-1">
                                     <input
                                         type="checkbox"
                                         id={item.slug}
                                         {...field}
+                                        defaultChecked={item.slug === "hanh-dong"}
                                         onChange={(e) => {
                                             let theloais = getValues("genres");
                                             // console.log(theloais);
@@ -127,8 +71,8 @@ export default function MovieClassification({ control, errors, setValue, getValu
                                             );
                                         }}
                                     ></input>
-                                    <label htmlFor="co-trang" className="cursor-pointer">
-                                        {item.title}
+                                    <label htmlFor={item.slug} className="cursor-pointer">
+                                        {item.name}
                                     </label>
                                 </span>
                             )}
@@ -138,17 +82,19 @@ export default function MovieClassification({ control, errors, setValue, getValu
             </div>
             <div className="khu-vuc mt-4 w-full">
                 <span className="font-semibold">Khu vực</span> <span className="ml-0.5 text-red-600">*</span>
-                <div className="grid w-full grid-cols-3 gap-x-6">
-                    {quoc_gia.map((item, index) => (
+                <div className="grid w-full grid-cols-4 gap-x-6">
+                    {countries?.data.map((item, index) => (
                         <Controller
                             name="countries"
                             control={control}
+                            key={index}
                             render={({ field }) => (
                                 <span className="flex items-center gap-x-1">
                                     <input
                                         type="checkbox"
                                         id={item.slug}
                                         {...field}
+                                        defaultChecked={item.slug === "trung-quoc"}
                                         onChange={(e) => {
                                             let quocgia = getValues("countries");
                                             setValue(
@@ -159,8 +105,8 @@ export default function MovieClassification({ control, errors, setValue, getValu
                                             );
                                         }}
                                     ></input>
-                                    <label htmlFor="trung-quoc" className="cursor-pointer">
-                                        {item.title}
+                                    <label htmlFor={item.slug} className="cursor-pointer">
+                                        {item.name}
                                     </label>
                                 </span>
                             )}

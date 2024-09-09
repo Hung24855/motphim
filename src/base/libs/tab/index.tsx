@@ -20,6 +20,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs, className, contentClassName }) => {
             <div className="tabs flex w-full">
                 {tabs.map((tab, index) => (
                     <button
+                        type="button"
                         key={index}
                         className={clsx(
                             "px-4 py-2",

@@ -7,7 +7,7 @@ import { RiEarthFill } from "react-icons/ri";
 
 export default function AdminSideBar() {
     return (
-        <aside className="fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full transition-transform sm:translate-x-0">
+        <aside className="fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full border-r-[1px] transition-transform sm:translate-x-0">
             <div className="h-full overflow-y-auto bg-gray-50 px-3 py-4">
                 <ul className="space-y-2 font-medium">
                     <li>
@@ -30,7 +30,7 @@ export default function AdminSideBar() {
                             <MdCategory size={20} />
                             <span className="ms-3 flex-1 whitespace-nowrap">Thể loại</span>
                         </a>
-                    </li>   
+                    </li>
                     <li>
                         <a href="#" className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100">
                             <RiEarthFill size={20} />

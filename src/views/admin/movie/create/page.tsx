@@ -30,17 +30,17 @@ export default function CreateMoviePage() {
     const {
         control,
         handleSubmit,
-        watch,
         formState: { errors },
         setValue,
         getValues,
         reset
     } = useForm<FieldValues>({
+        mode: "onSubmit",
         reValidateMode: "onSubmit",
         defaultValues: {
             movie_name: "",
-            genres: [],
-            countries: [],
+            genres: ["hanh-dong"],
+            countries: ["trung-quoc"],
             movie_type_id: "type1",
             episodes: []
         }
@@ -52,8 +52,10 @@ export default function CreateMoviePage() {
             label: "Phân loại",
             content: <MovieClassification control={control} errors={errors} setValue={setValue} getValues={getValues} />
         },
-        { label: "Danh sách tập phim", content: <MovieEpisodeList control={control} errors={errors} /> },
-        { label: "Khác", content: <div>Thông tin khác về phim</div> }
+        {
+            label: "Danh sách tập phim",
+            content: <MovieEpisodeList control={control} errors={errors} setValue={setValue} getValues={getValues} />
+        }
     ];
 
     const Submit = (data: any) => {
@@ -100,7 +102,7 @@ export default function CreateMoviePage() {
                 </button>
             </div>
             <div className="min-h-screen w-full border bg-white px-4 py-2">{renderContent()}</div> */}
-            <form onSubmit={handleSubmit(Submit)}>
+            <form onSubmit={handleSubmit(Submit)} method="POST">
                 <Tabs tabs={movieTabs} />
                 <div className="mt-2 flex gap-x-2">
                     <button className="rounded bg-green-600 px-3 py-2 text-white" type="submit">
