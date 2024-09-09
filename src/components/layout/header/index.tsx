@@ -13,6 +13,7 @@ import SideBarMenu from "../side-bar";
 import { GenresService } from "@/domain/the-loai/service";
 import { CountriesService } from "@/domain/quoc-gia/service";
 
+
 function Search() {
     const [search, setSearch] = useState<string>("");
     const [showSearch, setShowSearch] = useState<boolean>(false);
@@ -72,7 +73,7 @@ export default function Header() {
     return (
         <nav className="h-18 fixed top-0 z-50 w-full text-white md:mt-2">
             <MaxWidth>
-                <div className="flex items-center justify-between bg-white/15 p-2 backdrop-blur-sm md:rounded-2xl md:p-0 md:pr-4">
+                <div className="flex items-center justify-between bg-transparent backdrop-blur-md p-2 md:rounded-2xl md:p-0 md:pr-4">
                     {/* dieu huong */}
                     <div className="hidden h-full items-center gap-x-6 md:flex">
                         <Link href="/" className="flex cursor-pointer items-center">

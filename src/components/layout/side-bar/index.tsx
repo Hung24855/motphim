@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosArrowForward, IoMdClose } from "react-icons/io";
+import { motion } from "framer-motion";
 
 type SideBarProps = {
     genres?: GenresDTO[];
@@ -17,9 +18,9 @@ export default function SideBarMenu({ countries, genres }: SideBarProps) {
     const [openSubMenuCountry, setopenSubMenuCountry] = useState<boolean>(false);
     return (
         <div className="md:hidden">
-            <div onClick={() => setOpen(!open)}>
+            <motion.div onClick={() => setOpen(!open)} whileTap={{ scale: 0.8 }}>
                 <GiHamburgerMenu size={35} className={`mr-4 cursor-pointer md:hidden ${open && "hidden"}`} />
-            </div>
+            </motion.div>
 
             {/* Sidebar */}
             <div
@@ -27,7 +28,7 @@ export default function SideBarMenu({ countries, genres }: SideBarProps) {
                     !open ? "-translate-x-full" : "translate-x-0"
                 }`}
             >
-                <div className="text-center font-bold">THE MOVIES</div>
+                <div className="text-center font-bold">MOT PHIM</div>
                 <div className="mt-2 h-full text-left">
                     <ul>
                         <Link href="/">
@@ -40,7 +41,7 @@ export default function SideBarMenu({ countries, genres }: SideBarProps) {
                                 Trang chủ
                             </li>
                         </Link>
-                        <Link href="/phim-bo">
+                        <Link href="/danh-sach/phim-bo">
                             <li
                                 className="flex cursor-pointer items-center rounded py-3 pl-1 hover:bg-slate-100/60"
                                 onClick={() => {
@@ -50,7 +51,7 @@ export default function SideBarMenu({ countries, genres }: SideBarProps) {
                                 Phim bộ
                             </li>
                         </Link>
-                        <Link href="/phim-le">
+                        <Link href="/danh-sach/phim-le">
                             <li
                                 className="flex cursor-pointer items-center rounded py-3 pl-1 hover:bg-slate-100/60"
                                 onClick={() => {
@@ -78,7 +79,7 @@ export default function SideBarMenu({ countries, genres }: SideBarProps) {
                                 }`}
                             >
                                 {genres?.map((item) => (
-                                    <Link href={`/genres/${item.slug}`} key={item.id}>
+                                    <Link href={`/the-loai/${item.slug}`} key={item.id}>
                                         <li
                                             className="cursor-pointer rounded py-2 pl-4 hover:bg-slate-100/60"
                                             onClick={() => {
@@ -110,7 +111,7 @@ export default function SideBarMenu({ countries, genres }: SideBarProps) {
                                 }`}
                             >
                                 {countries?.map((item) => (
-                                    <Link href={`/genres/${item.slug}`} key={item.id}>
+                                    <Link href={`/quoc-gia/${item.slug}`} key={item.id}>
                                         <li
                                             className="cursor-pointer rounded py-2 pl-4 hover:bg-slate-100/60"
                                             onClick={() => {
@@ -124,7 +125,7 @@ export default function SideBarMenu({ countries, genres }: SideBarProps) {
                                 ))}
                             </ul>
                         </li>
-                        <Link href={"/favourite"}>
+                        <Link href={"/yeu-thich"}>
                             <li
                                 className="flex cursor-pointer items-center rounded py-3 pl-1 hover:bg-slate-100/60"
                                 onClick={() => {
@@ -136,7 +137,13 @@ export default function SideBarMenu({ countries, genres }: SideBarProps) {
                         </Link>
                     </ul>
                 </div>
-                <IoMdClose size={35} className="absolute right-1 top-1 cursor-pointer" onClick={() => setOpen(false)} />
+                <motion.span
+                    whileTap={{ scale: 0 }}
+                    className="absolute right-1 top-1 cursor-pointer"
+                    onClick={() => setOpen(false)}
+                >
+                    <IoMdClose size={35} />
+                </motion.span>
             </div>
 
             {/* Overlay */}

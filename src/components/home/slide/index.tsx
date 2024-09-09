@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { IoPlay } from "react-icons/io5";
+import { motion } from "framer-motion";
 
 type slide = {
     img: string;
@@ -117,7 +118,12 @@ export default function Slide() {
             />
             <div className="absolute inset-0 z-10 h-full w-full bg-gradient-to-r from-[#030A1B] px-2">
                 <MaxWidth className="relative">
-                    <div className="absolute bottom-48 h-32 max-w-[32rem] text-white">
+                    <motion.div
+                        className="absolute bottom-48 h-32 max-w-[32rem] text-white"
+                        initial={{ opacity: 0, y: 75 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
+                    >
                         <div className="w-max">
                             <h1 className="line-clamp-1 animate-typing-text overflow-hidden whitespace-nowrap border-r-2 text-4xl font-extrabold md:text-5xl">
                                 {slides[2].title}
@@ -137,8 +143,13 @@ export default function Slide() {
                                 Watch Movie
                             </button>
                         </div>
-                    </div>
-                    <div className="absolute bottom-20 right-0 hidden h-32 text-white md:flex">
+                    </motion.div>
+                    <motion.div
+                        className="absolute bottom-20 right-0 hidden h-32 text-white md:flex"
+                        initial={{ opacity: 0, y: 75 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
+                    >
                         {slides.map((item, index) => (
                             <div
                                 key={index}
@@ -166,7 +177,7 @@ export default function Slide() {
                                 }}
                             ></div>
                         ))}
-                    </div>
+                    </motion.div>
                 </MaxWidth>
             </div>
         </div>

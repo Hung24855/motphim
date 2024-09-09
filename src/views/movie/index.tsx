@@ -11,15 +11,53 @@ type Props = {
     slug: string;
 };
 
+const MovieDetailSkeleton = () => {
+    return (
+        <div className="flex min-h-screen w-full items-center justify-center bg-gray-900 pt-28 md:pt-0">
+            <MaxWidth className="w-full max-w-7xl">
+                <div className="rounded-lg p-6 text-white shadow-lg">
+                    {/* Movie Poster Skeleton */}
+                    <div className="flex flex-col lg:flex-row">
+                        <div className="w-full lg:w-1/3 flex justify-center">
+                            <div className="mb-6 h-80 w-2/3 md:w-full animate-pulse rounded-lg bg-gray-700 lg:mb-0"></div>
+                        </div>
+
+                        {/* Movie Information Skeleton */}
+                        <div className="flex flex-col justify-between lg:w-2/3 lg:pl-6">
+                            <div>
+                                <div className="mb-4 h-8 w-1/2 animate-pulse rounded bg-gray-700"></div>
+
+                                {/* Smaller skeleton text lines */}
+                                <div className="mb-2 h-4 w-3/4 animate-pulse rounded bg-gray-700"></div>
+                                <div className="mb-2 h-4 w-1/4 animate-pulse rounded bg-gray-700"></div>
+                                <div className="mb-2 h-4 w-1/3 animate-pulse rounded bg-gray-700"></div>
+                                <div className="mb-2 h-4 w-1/3 animate-pulse rounded bg-gray-700"></div>
+                                <div className="mb-4 h-4 w-1/4 animate-pulse rounded bg-gray-700"></div>
+                                <div className="mb-6 h-24 w-full animate-pulse rounded bg-gray-700"></div>
+                            </div>
+
+                            {/* Button Skeleton */}
+                            <div className="mt-4 flex justify-start">
+                                <div className="mr-4 h-10 w-20 animate-pulse rounded bg-gray-700"></div>
+                                <div className="h-10 w-32 animate-pulse rounded bg-gray-700"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </MaxWidth>
+        </div>
+    );
+};
+
 export default function MoviePage(props: Props) {
     const { data: response } = MoviesService.get_movie(props.slug);
     const movie = response?.data[0];
-
+ 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
-    if (!movie) return null;
+    if (!movie) return <MovieDetailSkeleton />;
 
     return (
         <Fragment>
@@ -96,6 +134,7 @@ export default function MoviePage(props: Props) {
                     </div>
                 </MaxWidth>
             </div>
+
             <div className="min-h-screen bg-[#0D0D0D] pt-10">
                 <MaxWidth className="text-white">
                     {/* Tập phim */}
@@ -124,6 +163,7 @@ export default function MoviePage(props: Props) {
                             className="aspect-video w-full overflow-hidden rounded-md bg-stone-900"
                             allowFullScreen
                             referrerPolicy="no-referrer"
+                            loading="lazy"
                         />
                     </div>
 

@@ -5,6 +5,7 @@ import SwiperCore from "swiper";
 import MovieCard from "@/components/shared/movie-card";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import { MoviesService } from "@/domain/phim/services";
+import { motion } from "framer-motion";
 
 type props = {
     title: string;
@@ -27,12 +28,22 @@ export default function MovieCategory(props: props) {
             <div className="flex justify-between">
                 <h1 className="mb-2 text-2xl">{title}</h1>
                 <div className="flex items-center space-x-4">
-                    <button className="px-2 py-1 hover:text-primary" onClick={() => swiperRef.current?.slidePrev()}>
+                    <motion.button
+                        className="px-2 py-1 hover:text-primary"
+                        onClick={() => swiperRef.current?.slidePrev()}
+                        whileHover={{ scale: 1.5 }}
+                        whileTap={{ scale: 1.2 }}
+                    >
                         <GrLinkPrevious />
-                    </button>
-                    <button className="px-2 py-1 hover:text-primary" onClick={() => swiperRef.current?.slideNext()}>
+                    </motion.button>
+                    <motion.button
+                        className="px-2 py-1 hover:text-primary"
+                        onClick={() => swiperRef.current?.slideNext()}
+                        whileHover={{ scale: 1.5 }}
+                        whileTap={{ scale: 1.2 }}
+                    >
                         <GrLinkNext />
-                    </button>
+                    </motion.button>
                 </div>
             </div>
             <Swiper
