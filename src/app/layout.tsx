@@ -6,9 +6,9 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import ProgessbarProviders from "@/base/libs/progesbar";
 import ReactQueryProvder from "@/base/libs/react-query";
-import { ToastContainer } from "react-toastify";
 import "swiper/css";
 import { Fragment } from "react";
+import Toast from "@/base/libs/toast";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 
@@ -26,8 +26,7 @@ export default async function RootLayout({
 }>) {
     DB_Connect();
 
-    const isAdmin = true;
-  
+    const isAdmin = false;
 
     return (
         <html lang="en">
@@ -48,7 +47,7 @@ export default async function RootLayout({
                         )}
                     </ProgessbarProviders>
                 </ReactQueryProvder>
-                <ToastContainer />
+                <Toast />
             </body>
         </html>
     );

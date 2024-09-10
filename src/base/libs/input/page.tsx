@@ -19,12 +19,21 @@ const Input = ({ label, placeholder, required, field, error, type = "text", tran
                 {error && tranform === "right" && <span className="text-red-600">{error?.message}</span>}
             </div>
 
-            <input
-                className="h-9 w-full rounded-md bg-[#F0F3F6] px-2 py-1 text-[#6888A1] placeholder-[#BAC9D4] outline-none"
-                placeholder={placeholder}
-                {...field}
-                type={type}
-            />
+            {type === "textarea" ? (
+                <textarea
+                    className="w-full rounded-md border border-blue-200 p-2"
+                    {...field}
+                    placeholder={placeholder}
+                    rows={4}
+                />
+            ) : (
+                <input
+                    className="h-9 w-full rounded-md bg-[#F0F3F6] px-2 py-1 text-[#6888A1] placeholder-[#BAC9D4] outline-none"
+                    placeholder={placeholder}
+                    {...field}
+                    type={type}
+                />
+            )}
             <div className="w-max">
                 {error && tranform === "buttom" && <span className="text-red-600">{error?.message}</span>}
             </div>

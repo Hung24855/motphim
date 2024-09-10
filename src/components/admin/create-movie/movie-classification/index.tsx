@@ -36,9 +36,9 @@ export default function MovieClassification({ control, errors, setValue, getValu
                         control={control}
                         render={({ field }) => (
                             <span className="flex items-center gap-x-1">
-                                <input type="radio" id="phim-bo" {...field} value={"type2"}></input>
-                                <label htmlFor="phim-bo" className="cursor-pointer">
-                                    Phim bộ
+                                <input type="radio" id="phim-le" {...field} value={"type2"}></input>
+                                <label htmlFor="phim-le" className="cursor-pointer">
+                                    Phim lẻ
                                 </label>
                             </span>
                         )}
@@ -50,7 +50,7 @@ export default function MovieClassification({ control, errors, setValue, getValu
                 <div className="grid w-full grid-cols-4 gap-x-6">
                     {genres?.data.map((item, index) => (
                         <Controller
-                            name="genres"
+                            name="genresId"
                             control={control}
                             key={index}
                             render={({ field }) => (
@@ -59,18 +59,18 @@ export default function MovieClassification({ control, errors, setValue, getValu
                                         type="checkbox"
                                         id={item.slug}
                                         {...field}
-                                        defaultChecked={item.slug === "hanh-dong"}
+                                        defaultChecked={item.id === 2}
+                                        value={item.id.toString()} // Convert the value to a string
                                         onChange={(e) => {
-                                            let theloais = getValues("genres");
-                                            // console.log(theloais);
+                                            let genres = getValues("genresId");
                                             setValue(
-                                                "genres",
+                                                "genresId",
                                                 e.target.checked
-                                                    ? [...theloais, "co-trang"]
-                                                    : [...theloais.filter((theloai) => item.slug !== theloai)]
+                                                    ? [...genres, item.id]
+                                                    : [...genres.filter((theloai) => item.id !== theloai)]
                                             );
                                         }}
-                                    ></input>
+                                    />
                                     <label htmlFor={item.slug} className="cursor-pointer">
                                         {item.name}
                                     </label>
@@ -85,7 +85,7 @@ export default function MovieClassification({ control, errors, setValue, getValu
                 <div className="grid w-full grid-cols-4 gap-x-6">
                     {countries?.data.map((item, index) => (
                         <Controller
-                            name="countries"
+                            name="countriesId"
                             control={control}
                             key={index}
                             render={({ field }) => (
@@ -94,17 +94,18 @@ export default function MovieClassification({ control, errors, setValue, getValu
                                         type="checkbox"
                                         id={item.slug}
                                         {...field}
-                                        defaultChecked={item.slug === "trung-quoc"}
+                                        defaultChecked={item.id === 1}
+                                        value={item.id.toString()} // Convert the value to a string
                                         onChange={(e) => {
-                                            let quocgia = getValues("countries");
+                                            let quocgia = getValues("countriesId");
                                             setValue(
-                                                "countries",
+                                                "countriesId",
                                                 e.target.checked
-                                                    ? [...quocgia, item.slug]
-                                                    : [...quocgia.filter((quocgia) => item.slug !== quocgia)]
+                                                    ? [...quocgia, item.id]
+                                                    : [...quocgia.filter((quocgia) => item.id !== quocgia)]
                                             );
                                         }}
-                                    ></input>
+                                    />
                                     <label htmlFor={item.slug} className="cursor-pointer">
                                         {item.name}
                                     </label>

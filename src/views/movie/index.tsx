@@ -5,7 +5,7 @@ import { MoviesService } from "@/domain/phim/services";
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import Script from "next/script";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 type Props = {
     slug: string;
@@ -18,8 +18,8 @@ const MovieDetailSkeleton = () => {
                 <div className="rounded-lg p-6 text-white shadow-lg">
                     {/* Movie Poster Skeleton */}
                     <div className="flex flex-col lg:flex-row">
-                        <div className="w-full lg:w-1/3 flex justify-center">
-                            <div className="mb-6 h-80 w-2/3 md:w-full animate-pulse rounded-lg bg-gray-700 lg:mb-0"></div>
+                        <div className="flex w-full justify-center lg:w-1/3">
+                            <div className="mb-6 h-80 w-2/3 animate-pulse rounded-lg bg-gray-700 md:w-full lg:mb-0"></div>
                         </div>
 
                         {/* Movie Information Skeleton */}
@@ -50,9 +50,12 @@ const MovieDetailSkeleton = () => {
 };
 
 export default function MoviePage(props: Props) {
+    const [episode, setEpisode] = useState<string>("1");
     const { data: response } = MoviesService.get_movie(props.slug);
     const movie = response?.data[0];
- 
+
+    // console.log(response);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -141,7 +144,23 @@ export default function MoviePage(props: Props) {
                     <div className="px-2 md:px-0">
                         <p>Vietsub #1</p>
                         <div className="mt-2 grid grid-cols-4 gap-2 md:grid-cols-8 lg:grid-cols-12">
-                            {[1, 2, 3, 4, 5].map((item) => {
+                            {movie.episodes?.map((item) => {
+                                return (
+                                    <button
+                                        className={clsx(
+                                            "rounded bg-[#191919] px-2 py-2 text-center hover:bg-primary hover:text-black md:px-10",
+                                            {
+                                                "bg-primary text-black": item.name === episode
+                                            }
+                                        )}
+                                        key={item.episode_id}
+                                        onClick={() => setEpisode(item.name)}
+                                    >
+                                        {item.name}
+                                    </button>
+                                );
+                            })}
+                            {/* {[1, 2, 3, 4, 5].map((item) => {
                                 return (
                                     <button
                                         className={clsx(
@@ -152,14 +171,14 @@ export default function MoviePage(props: Props) {
                                         {item}
                                     </button>
                                 );
-                            })}
+                            })} */}
                         </div>
                     </div>
 
                     {/* Xem video */}
                     <div className="mt-20 px-2 md:px-0">
                         <iframe
-                            src="https://vip.opstream17.com/share/a9c154c4658d7fc48fd2be3ef34d9109"
+                            src={movie.episodes.find((item) => item.name === episode)?.link}
                             className="aspect-video w-full overflow-hidden rounded-md bg-stone-900"
                             allowFullScreen
                             referrerPolicy="no-referrer"

@@ -12,10 +12,11 @@ export async function GET(request: Request, { params }: { params: { slug: string
              INNER JOIN genres ON movie_genre.genres_id = genres.id`;
 
         const res = await pool.query(
-            "SELECT movies.*, genres.name AS genre,genres.slug AS genre_slug  FROM movies " + join + " WHERE movies.slug = $1",
+            "SELECT movies.*, genres.name AS genre,genres.slug AS genre_slug  FROM movies " +
+                join +
+                " WHERE movies.slug = $1",
             [params.slug]
         );
-
         if (res.rows.length === 0) {
             return NextResponse.json({
                 status: "success",
@@ -23,13 +24,23 @@ export async function GET(request: Request, { params }: { params: { slug: string
                 data: []
             });
         }
+
+        // console.log("res: ", res.rows[0]);
+
+        const episodes = (await pool.query("SELECT * FROM episodes WHERE movie_id = $1", [res.rows[0]?.id])).rows;
+
         return NextResponse.json({
             status: "success",
             message: "Lấy thông tin chi tiết phim thành công!",
-            data: res.rows
+            data: [
+                {
+                    ...res.rows[0],
+                    episodes
+                }
+            ]
         });
     } catch (error) {
-        console.log("Error: get_movie ", error);
+        console.log("Error: get_movie", error);
 
         return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
     }

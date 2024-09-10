@@ -3,7 +3,11 @@ import Tabs from "@/base/libs/tab";
 import MovieClassification from "@/components/admin/create-movie/movie-classification";
 import MovieEpisodeList from "@/components/admin/create-movie/movie-episode-list";
 import MovieInfo from "@/components/admin/create-movie/movie-info";
+import { MoviesService } from "@/domain/phim/services";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export interface Episode {
     name: string;
@@ -13,16 +17,18 @@ export interface Episode {
 
 export interface FieldValues {
     movie_name: string;
-    thumbnail_img: string;
+    slug: string;
+    content: string;
+    image: string;
     trailer_youtube_url: string;
-    episode_duration: string;
-    current_episode: string;
-    total_episodes: string;
-    year_publication: string;
+    time_per_episode: string;
+    episode_current: string;
+    episode_total: string;
+    year: string;
     quality: string;
     movie_type_id: string;
-    genres: string[];
-    countries: string[];
+    genresId: number[];
+    countriesId: number[];
     episodes: Episode[];
 }
 
@@ -39,8 +45,8 @@ export default function CreateMoviePage() {
         reValidateMode: "onSubmit",
         defaultValues: {
             movie_name: "",
-            genres: ["hanh-dong"],
-            countries: ["trung-quoc"],
+            genresId: [2],
+            countriesId: [1],
             movie_type_id: "type1",
             episodes: []
         }
@@ -58,8 +64,19 @@ export default function CreateMoviePage() {
         }
     ];
 
-    const Submit = (data: any) => {
-        console.log("data", data);
+    const { createMovieMutation, isPeddingCreateMovie } = MoviesService.use_movies();
+
+    const Submit = (data: FieldValues) => {
+        createMovieMutation({
+            data,
+            onError: () => {
+                toast.error("Cố lỗi xảy ra!");
+            },
+            onSuccess: () => {
+                toast.success("Tạo phim thành công!");
+                window.location.reload();
+            }
+        });
     };
     // const [activeTab, setActiveTab] = useState("info");
     // const renderContent = () => {
@@ -105,9 +122,15 @@ export default function CreateMoviePage() {
             <form onSubmit={handleSubmit(Submit)} method="POST">
                 <Tabs tabs={movieTabs} />
                 <div className="mt-2 flex gap-x-2">
-                    <button className="rounded bg-green-600 px-3 py-2 text-white" type="submit">
-                        Lưu Và Quay lại
-                    </button>
+                    <Spin indicator={<LoadingOutlined spin />} size="large" spinning={isPeddingCreateMovie}>
+                        <button
+                            className="rounded bg-green-600 px-3 py-2 text-white"
+                            type="submit"
+                            disabled={isPeddingCreateMovie}
+                        >
+                            Lưu thay đổi
+                        </button>
+                    </Spin>
                     <button className="rounded bg-gray-600 px-3 py-2 text-white">Hủy bỏ</button>
                 </div>
             </form>

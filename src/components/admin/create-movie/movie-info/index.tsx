@@ -21,27 +21,50 @@ export default function MovieInfo({ control, errors }: Props) {
                     <Input
                         field={field}
                         label="Tên phim"
-                        placeholder="VD: Spiderman"
+                        placeholder="VD: Tứ Phương Quán"
                         required
                         error={errors.movie_name}
                     />
                 )}
             />
             <Controller
-                name="thumbnail_img"
+                name="slug"
+                control={control}
+                defaultValue=""
+                rules={{
+                    required: "Slug phim không thể để trống."
+                }}
+                render={({ field }) => (
+                    <Input field={field} label="Slug" placeholder="VD: tu-phuong-quan" required error={errors.slug} />
+                )}
+            />
+            <Controller
+                name="content"
+                control={control}
+                defaultValue=""
+                rules={{
+                    required: "Nội dung phim không thể để trống."
+                }}
+                render={({ field }) => (
+                    <Input
+                        field={field}
+                        type="textarea"
+                        label="Nội dung"
+                        placeholder="Nội dung ....."
+                        required
+                        error={errors.content}
+                    />
+                )}
+            />
+            <Controller
+                name="image"
                 control={control}
                 defaultValue=""
                 rules={{
                     required: "Ảnh phim không thể để trống."
                 }}
                 render={({ field }) => (
-                    <Input
-                        field={field}
-                        label="Ảnh Thumb"
-                        placeholder="Ảnh thumbnail"
-                        required
-                        error={errors.thumbnail_img}
-                    />
+                    <Input field={field} label="Ảnh Thumb" placeholder="Ảnh thumbnail" required error={errors.image} />
                 )}
             />
             <Controller
@@ -60,7 +83,7 @@ export default function MovieInfo({ control, errors }: Props) {
 
             <div className="grid grid-cols-3 gap-x-4">
                 <Controller
-                    name="episode_duration"
+                    name="time_per_episode"
                     control={control}
                     defaultValue=""
                     rules={{ required: "Không bỏ trống" }}
@@ -70,13 +93,13 @@ export default function MovieInfo({ control, errors }: Props) {
                             label="Thời lượng tập phim"
                             placeholder="45 Phút/tập"
                             required
-                            error={errors.episode_duration}
+                            error={errors.time_per_episode}
                             tranform="buttom"
                         />
                     )}
                 />
                 <Controller
-                    name="current_episode"
+                    name="episode_current"
                     control={control}
                     defaultValue=""
                     rules={{ required: "Không bỏ trống" }}
@@ -85,14 +108,14 @@ export default function MovieInfo({ control, errors }: Props) {
                             field={field}
                             label="Tập phim hiện tại"
                             placeholder="5"
-                            error={errors.current_episode}
+                            error={errors.episode_current}
                             required
                             tranform="buttom"
                         />
                     )}
                 />
                 <Controller
-                    name="total_episodes"
+                    name="episode_total"
                     control={control}
                     defaultValue=""
                     rules={{ required: "Không bỏ trống" }}
@@ -101,23 +124,23 @@ export default function MovieInfo({ control, errors }: Props) {
                             field={field}
                             label="Tổng số tập phim"
                             placeholder="40"
-                            error={errors.total_episodes}
+                            error={errors.episode_total}
                             required
                             tranform="buttom"
                         />
                     )}
                 />
                 <Controller
-                    name="year_publication"
+                    name="year"
                     control={control}
-                    defaultValue=""
+                    defaultValue="2024"
                     rules={{ required: "Không bỏ trống" }}
                     render={({ field }) => (
                         <Input
                             field={field}
                             label="Năm xuất bản"
                             placeholder="2024"
-                            error={errors.year_publication}
+                            error={errors.year}
                             required
                             tranform="buttom"
                         />
@@ -126,7 +149,7 @@ export default function MovieInfo({ control, errors }: Props) {
                 <Controller
                     name="quality"
                     control={control}
-                    defaultValue=""
+                    defaultValue="HD"
                     rules={{ required: "Không bỏ trống" }}
                     render={({ field }) => (
                         <Input

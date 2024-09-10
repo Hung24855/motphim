@@ -16,12 +16,16 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
     return (
         <div className="min-w-max">
             <button
-            type="button"
+                type="button"
                 className="rounded bg-orange-400 px-3 py-2 text-white"
                 onClick={() => {
                     setEpisodes((prevState) => [
                         ...prevState,
-                        { name: `${prevState.length + 1}`, link: "", slug: `tap-${prevState.length + 1}` }
+                        {
+                            name: `${prevState.length + 1}`,
+                            link: `link-${prevState.length + 1}`,
+                            slug: `tap-${prevState.length + 1}`
+                        }
                     ]);
 
                     setValue(`episodes`, Episodes);
@@ -107,7 +111,6 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                                             className="rounded bg-red-600 px-2 text-white"
                                             onClick={() => {
                                                 let NewEpisodes = getValues("episodes").filter((_, i) => i !== index);
-
                                                 setEpisodes(NewEpisodes);
                                                 setValue(`episodes`, NewEpisodes);
                                             }}

@@ -1,6 +1,7 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
 import { DataGetMoviesDTO } from "../dto";
+import { IDataCreateMovieType } from "../model";
 
 export class MoviesApi {
     static async get_movie(slug: string) {
@@ -41,6 +42,14 @@ export class MoviesApi {
         try {
             const { data } = await http.get(ENDPOINT_URL.get_movies_by_country(slug));
             return data;
+        } catch (error) {
+            console.log("Error: get_movies_by_country ", error);
+        }
+    }
+    static async create_movie(data: IDataCreateMovieType) {
+        try {
+            const { data: res } = await http.post(ENDPOINT_URL.create_movie(), data);
+            return res;
         } catch (error) {
             console.log("Error: get_movies_by_country ", error);
         }

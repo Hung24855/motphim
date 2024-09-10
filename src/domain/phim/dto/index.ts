@@ -1,3 +1,11 @@
+export interface Episode {
+    episode_id: string;
+    movie_id: string;
+    name: string;
+    link: string;
+    slug: string;
+}
+
 export interface MoviesDTO {
     id: string;
     movie_name: string;
@@ -14,6 +22,7 @@ export interface MoviesDTO {
     movie_type_id: string;
     genre: string;
     genre_slug: string;
+    episodes: Episode[];
 }
 
 export interface DataGetMovieDetailDTO {

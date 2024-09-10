@@ -1,0 +1,20 @@
+export interface IDataCreateMovieType {
+    countriesId: number[];
+    genresId: number[];
+    episode_current: string;
+    time_per_episode: string;
+    episodes: {
+        name: string;
+        link: string;
+        slug: string;
+    }[];
+    movie_name: string;
+    movie_type_id: string;
+    quality: string;
+    image: string;
+    episode_total: string;
+    trailer_youtube_url: string;
+    year: string;
+    slug: string;
+    content: string;
+}
