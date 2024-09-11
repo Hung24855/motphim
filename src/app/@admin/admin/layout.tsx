@@ -11,7 +11,7 @@ export default async function AdminLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen">
             <button
                 type="button"
                 className="ms-3 mt-2 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 sm:hidden dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"

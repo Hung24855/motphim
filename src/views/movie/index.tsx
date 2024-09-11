@@ -119,9 +119,11 @@ export default function MoviePage(props: Props) {
                                     </button>
                                     <span className="h-12 w-0.5 bg-white/10 md:block" />
                                     <div className="flex items-center gap-3 text-sm font-bold">
-                                        <button className="rounded-full bg-primary px-8 py-3 text-black disabled:bg-zinc-600 disabled:text-white disabled:hover:bg-zinc-600">
-                                            Xem
-                                        </button>
+                                        <a href="#viđeo">
+                                            <button className="rounded-full bg-primary px-8 py-3 text-black disabled:bg-zinc-600 disabled:text-white disabled:hover:bg-zinc-600">
+                                                Xem
+                                            </button>
+                                        </a>
                                         <button className="flex items-center gap-2 rounded-full border-2 border-primary bg-black/70 px-5 py-2.5 duration-300 hover:bg-primary hover:text-black">
                                             <Icon
                                                 // icon={isFavourite ? "ph:heart-break-fill" : "solar:heart-linear"}
@@ -176,7 +178,7 @@ export default function MoviePage(props: Props) {
                     </div>
 
                     {/* Xem video */}
-                    <div className="mt-20 px-2 md:px-0">
+                    <div className="mt-20 px-2 md:px-0" id="viđeo">
                         <iframe
                             src={movie.episodes.find((item) => item.name === episode)?.link}
                             className="aspect-video w-full overflow-hidden rounded-md bg-stone-900"

@@ -13,7 +13,6 @@ import SideBarMenu from "../side-bar";
 import { GenresService } from "@/domain/the-loai/service";
 import { CountriesService } from "@/domain/quoc-gia/service";
 
-
 function Search() {
     const [search, setSearch] = useState<string>("");
     const [showSearch, setShowSearch] = useState<boolean>(false);
@@ -54,8 +53,16 @@ function Search() {
                 <FaBell size={20} />
                 <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
             </button>
-            <button>
+            <button className="group relative">
                 <FaUser size={20} />
+                <div className="absolute right-1/2 top-full hidden w-max translate-x-1/2 gap-y-2 rounded bg-white p-2 text-black group-hover:block">
+                    <Link href="/dang-ky">
+                        <div className="py-1 hover:underline">Đăng ký</div>
+                    </Link>
+                    <Link href="/dang-nhap">
+                        <div className="py-1 hover:underline">Đăng nhập</div>
+                    </Link>
+                </div>
             </button>
             <button>
                 <MdSunny size={22} />
@@ -65,15 +72,13 @@ function Search() {
 }
 
 export default function Header() {
-
-    
     const { data: genres } = GenresService.useGenres();
     const { data: countries } = CountriesService.useCountries();
 
     return (
         <nav className="h-18 fixed top-0 z-50 w-full text-white md:mt-2">
             <MaxWidth>
-                <div className="flex items-center justify-between bg-transparent backdrop-blur-md p-2 md:rounded-2xl md:p-0 md:pr-4">
+                <div className="flex items-center justify-between bg-transparent p-2 backdrop-blur-md md:rounded-2xl md:p-0 md:pr-4">
                     {/* dieu huong */}
                     <div className="hidden h-full items-center gap-x-6 md:flex">
                         <Link href="/" className="flex cursor-pointer items-center">
@@ -99,7 +104,9 @@ export default function Header() {
                                     {/* Content of the dropdown */}
                                     <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
                                         {genres?.data.map((item) => (
-                                            <div className="whitespace-nowrap hover:text-primary" key={item.id}>{item.name}</div>
+                                            <div className="whitespace-nowrap hover:text-primary" key={item.id}>
+                                                {item.name}
+                                            </div>
                                         ))}
                                     </div>
                                 </div>
@@ -116,7 +123,9 @@ export default function Header() {
                                     {/* Content of the dropdown */}
                                     <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
                                         {countries?.data.map((item) => (
-                                            <div className="whitespace-nowrap hover:text-primary" key={item.id}>{item.name}</div>
+                                            <div className="whitespace-nowrap hover:text-primary" key={item.id}>
+                                                {item.name}
+                                            </div>
                                         ))}
                                     </div>
                                 </div>

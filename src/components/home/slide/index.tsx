@@ -140,7 +140,7 @@ export default function Slide() {
                         <div className="mt-4">
                             <button className="flex items-center gap-x-1 rounded-lg bg-blue-500 px-3 py-1 text-white">
                                 <IoPlay />
-                                Watch Movie
+                                Xem phim
                             </button>
                         </div>
                     </motion.div>

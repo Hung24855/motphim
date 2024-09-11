@@ -47,7 +47,7 @@ export default function MovieClassification({ control, errors, setValue, getValu
             </div>
             <div className="dinh-dang mt-4 w-full">
                 <span className="font-semibold">Thể loại</span> <span className="ml-0.5 text-red-600">*</span>
-                <div className="grid w-full grid-cols-4 gap-x-6">
+                <div className="grid w-full grid-cols-5 gap-x-6">
                     {genres?.data.map((item, index) => (
                         <Controller
                             name="genresId"
@@ -82,7 +82,7 @@ export default function MovieClassification({ control, errors, setValue, getValu
             </div>
             <div className="khu-vuc mt-4 w-full">
                 <span className="font-semibold">Khu vực</span> <span className="ml-0.5 text-red-600">*</span>
-                <div className="grid w-full grid-cols-4 gap-x-6">
+                <div className="grid w-full grid-cols-5 gap-x-6">
                     {countries?.data.map((item, index) => (
                         <Controller
                             name="countriesId"
