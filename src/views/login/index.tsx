@@ -12,7 +12,7 @@ export default function LoginPage() {
     const {
         control,
         handleSubmit,
-        formState: { errors }
+        formState: { errors, isSubmitting }
     } = useForm<SignInType>({
         mode: "onSubmit",
         reValidateMode: "onSubmit",
@@ -90,6 +90,7 @@ export default function LoginPage() {
                                     block
                                     htmlType="submit"
                                     className="bg-[#295779] py-5 text-white hover:text-red-500"
+                                    loading={isSubmitting}
                                 >
                                     Đăng nhập
                                 </Button>

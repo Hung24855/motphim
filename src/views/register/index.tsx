@@ -2,18 +2,23 @@
 import Input from "@/base/libs/input/page";
 import { Button } from "antd";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import "./style/index.css";
 import { signUpSchema, SignUpType } from "@/utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { register_action } from "@/actions/auth";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export default function RegisternPage() {
+    const [globalMessage, setGlobalMessage] = useState<string>("");
+    const router = useRouter();
     const {
         control,
         handleSubmit,
-        formState: { errors },
-
+        formState: { errors, isSubmitting },
+        reset,
         watch
     } = useForm<SignUpType>({
         mode: "onSubmit",
@@ -21,7 +26,15 @@ export default function RegisternPage() {
         resolver: zodResolver(signUpSchema)
     });
 
-    const Submit = (data: SignUpType) => {};
+    const Submit = async (data: SignUpType) => {
+        const res = await register_action(data);
+        if (res.status === "success") {
+            toast.success(res.message);
+            router.push("/dang-nhap");
+        } else {
+            setGlobalMessage(res.message);
+        }
+    };
     return (
         <Fragment>
             <section className="bg-[#030A1B]">
@@ -44,6 +57,22 @@ export default function RegisternPage() {
                                                 placeholder="name@gmail.com"
                                                 required
                                                 error={errors.email}
+                                            />
+                                        )}
+                                    />
+                                </div>
+                                <div>
+                                    <Controller
+                                        name="username"
+                                        control={control}
+                                        defaultValue=""
+                                        render={({ field }) => (
+                                            <Input
+                                                field={field}
+                                                label="Tên người dùng"
+                                                placeholder="Nghiêm Hồng"
+                                                required
+                                                error={errors.username}
                                             />
                                         )}
                                     />
@@ -83,10 +112,12 @@ export default function RegisternPage() {
                                     />
                                 </div>
 
+                                <div className="text-right">{globalMessage}</div>
                                 <Button
-                                    block
                                     htmlType="submit"
+                                    block
                                     className="bg-[#295779] py-5 text-white hover:text-red-500"
+                                    loading={isSubmitting}
                                 >
                                     Đăng ký
                                 </Button>

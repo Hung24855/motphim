@@ -9,6 +9,8 @@ import ReactQueryProvder from "@/base/libs/react-query";
 import "swiper/css";
 import { Fragment } from "react";
 import Toast from "@/base/libs/toast";
+import NextAuthProvider from "@/base/provider/next-auth";
+
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 
@@ -29,26 +31,28 @@ export default async function RootLayout({
     const isAdmin = false;
 
     return (
-        <html lang="en">
-            <head>
-                <link rel="icon" href="/logo/Logo-light.png" sizes="any" />
-            </head>
-            <body className={inter.className}>
-                <ReactQueryProvder>
-                    <ProgessbarProviders>
-                        {isAdmin ? (
-                            <main className="text-black">{admin}</main>
-                        ) : (
-                            <Fragment>
-                                <Header />
-                                <main className="min-h-screen bg-[#030A1B] md:px-0">{children}</main>
-                                <Footer />
-                            </Fragment>
-                        )}
-                    </ProgessbarProviders>
-                </ReactQueryProvder>
-                <Toast />
-            </body>
-        </html>
+        <NextAuthProvider>
+            <html lang="en">
+                <head>
+                    <link rel="icon" href="/logo/Logo-light.png" sizes="any" />
+                </head>
+                <body className={inter.className}>
+                    <ReactQueryProvder>
+                        <ProgessbarProviders>
+                            {isAdmin ? (
+                                <main className="text-black">{admin}</main>
+                            ) : (
+                                <Fragment>
+                                    <Header />
+                                    <main className="min-h-screen bg-[#030A1B] md:px-0">{children}</main>
+                                    <Footer />
+                                </Fragment>
+                            )}
+                        </ProgessbarProviders>
+                    </ReactQueryProvder>
+                    <Toast />
+                </body>
+            </html>
+        </NextAuthProvider>
     );
 }

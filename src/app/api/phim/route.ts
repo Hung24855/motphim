@@ -26,7 +26,7 @@ import { v4 as uuidv4 } from "uuid";
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        console.log(body);
+        // console.log(body);
 
         const requiredFields = [
             "countriesId",

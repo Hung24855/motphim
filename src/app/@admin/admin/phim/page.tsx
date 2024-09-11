@@ -39,7 +39,7 @@ const columns = [
 
 export default function MovieManagement() {
     const { data } = MoviesService.use_movies();
-    console.log("data: ", data);
+    // console.log("data: ", data);
 
     return (
         <div>

@@ -5,18 +5,24 @@ import { CiSearch } from "react-icons/ci";
 import { FaBell } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
 import { MdSunny } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from "next/link";
 import SideBarMenu from "../side-bar";
 import { GenresService } from "@/domain/the-loai/service";
 import { CountriesService } from "@/domain/quoc-gia/service";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function Search() {
     const [search, setSearch] = useState<string>("");
     const [showSearch, setShowSearch] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
+
+    //Auth
+
+    const { data: session } = useSession();
+    // console.log(session);
 
     useEffect(() => {
         if (inputRef.current && showSearch) {
@@ -56,12 +62,18 @@ function Search() {
             <button className="group relative">
                 <FaUser size={20} />
                 <div className="absolute right-1/2 top-full hidden w-max translate-x-1/2 gap-y-2 rounded bg-white p-2 text-black group-hover:block">
-                    <Link href="/dang-ky">
-                        <div className="py-1 hover:underline">Đăng ký</div>
-                    </Link>
-                    <Link href="/dang-nhap">
-                        <div className="py-1 hover:underline">Đăng nhập</div>
-                    </Link>
+                    {!session ? (
+                        <Fragment>
+                            <Link href="/dang-ky">
+                                <div className="py-1 hover:underline">Đăng ký</div>
+                            </Link>
+                            <Link href="/dang-nhap">
+                                <div className="py-1 hover:underline">Đăng nhập</div>
+                            </Link>
+                        </Fragment>
+                    ) : (
+                        <div className="py-1 hover:underline">Đăng xuất</div>
+                    )}
                 </div>
             </button>
             <button>
