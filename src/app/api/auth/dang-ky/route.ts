@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { pool } from "@/database/connect";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
+// import { signUpSchema } from "@/utils/zod";
 
 type BodyRegisterField = {
     email: string;
@@ -13,6 +14,9 @@ type BodyRegisterField = {
 export async function POST(request: Request): Promise<NextResponse> {
     try {
         const body: BodyRegisterField = await request.json();
+        // const requireField = signUpSchema.safeParse(body);
+        // console.log("requireField: ", requireField.data);
+        // const schemaWithoutPassword = signUpSchema.omit({ password: true });
 
         if (!body.email || !body.password || !body.username) {
             return NextResponse.json({

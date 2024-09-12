@@ -1,6 +1,10 @@
 "use server";
 
+import { signOut, signIn, auth } from "@/auth";
+import { AuthError } from "next-auth";
 import { IResponseData } from "@/infrastructure/config/types/apiResponse";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export const register_action = async ({
     email,
@@ -32,3 +36,30 @@ export const register_action = async ({
         };
     }
 };
+
+export const login_action = async ({ email, password }: { email: string; password: string }) => {
+    try {
+        await signIn("credentials", { email, password, redirectTo: "/" });
+        revalidatePath("/");
+    } catch (error) {
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case "CredentialsSignin":
+                    return {
+                        message: "Tài khoản hoặc mật khẩu không chính xác!"
+                    };
+                default:
+                    return {
+                        message: "Có lỗi xảy ra!."
+                    };
+            }
+        }
+        throw error;
+    }
+};
+
+export async function logout_action() {
+    await signOut({ redirect: false });
+    revalidatePath("/");
+    redirect("/");
+}

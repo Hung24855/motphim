@@ -10,7 +10,7 @@ import "swiper/css";
 import { Fragment } from "react";
 import Toast from "@/base/libs/toast";
 import NextAuthProvider from "@/base/provider/next-auth";
-
+import { auth } from "@/auth";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 
@@ -28,10 +28,12 @@ export default async function RootLayout({
 }>) {
     DB_Connect();
 
-    const isAdmin = false;
+    // const isAdmin = false;
+    const session = await auth();
+    // console.log("session: ", session);
 
     return (
-        <NextAuthProvider>
+        <NextAuthProvider session={session}>
             <html lang="en">
                 <head>
                     <link rel="icon" href="/logo/Logo-light.png" sizes="any" />
@@ -39,15 +41,13 @@ export default async function RootLayout({
                 <body className={inter.className}>
                     <ReactQueryProvder>
                         <ProgessbarProviders>
-                            {isAdmin ? (
-                                <main className="text-black">{admin}</main>
-                            ) : (
+                            <Fragment>
                                 <Fragment>
-                                    <Header />
-                                    <main className="min-h-screen bg-[#030A1B] md:px-0">{children}</main>
+                                    <Header session={session} />
+                                    <main className="bg-bg_primary min-h-screen md:px-0">{children}</main>
                                     <Footer />
                                 </Fragment>
-                            )}
+                            </Fragment>
                         </ProgessbarProviders>
                     </ReactQueryProvder>
                     <Toast />

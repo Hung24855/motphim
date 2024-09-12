@@ -2,13 +2,15 @@
 import Input from "@/base/libs/input/page";
 import { Button } from "antd";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import "./style/index.css";
 import { signInSchema, SignInType } from "@/utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { login_action } from "@/actions/auth";
 
 export default function LoginPage() {
+    const [globalMessage, setGlobalMessage] = useState<string>("");
     const {
         control,
         handleSubmit,
@@ -19,13 +21,22 @@ export default function LoginPage() {
         resolver: zodResolver(signInSchema)
     });
 
-    const Submit = (data: SignInType) => {};
+    const Submit = async (data: SignInType) => {
+        try {
+            const result = await login_action(data);
+            if (result?.message) {
+                setGlobalMessage(result.message);
+            }
+        } catch (error) {
+            console.log("Error: Submit login", error);
+        }
+    };
     return (
         <Fragment>
             <section className="bg-[#030A1B]">
                 <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 pt-28 md:h-screen lg:py-0">
                     <div className="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
-                        <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
+                        <div className="space-y-4 p-4 sm:p-6 md:space-y-6">
                             <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-[#295779] md:text-2xl">
                                 ĐĂNG NHẬP
                             </h1>
@@ -86,6 +97,7 @@ export default function LoginPage() {
                                         Quên mật khẩu?
                                     </a>
                                 </div>
+                                <div className="text-right">{globalMessage}</div>
                                 <Button
                                     block
                                     htmlType="submit"

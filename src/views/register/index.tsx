@@ -38,13 +38,13 @@ export default function RegisternPage() {
     return (
         <Fragment>
             <section className="bg-[#030A1B]">
-                <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 pt-28 md:h-screen lg:py-0">
+                <div className="mx-auto flex flex-col items-center justify-center px-6 pt-28 md:min-h-screen lg:py-0">
                     <div className="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
-                        <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
+                        <div className="space-y-3 p-2 sm:p-6 md:space-y-4">
                             <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-[#295779] md:text-2xl">
                                 ĐĂNG KÝ
                             </h1>
-                            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(Submit)} method="POST">
+                            <form className="space-y-2 md:space-y-4" onSubmit={handleSubmit(Submit)} method="POST">
                                 <div>
                                     <Controller
                                         name="email"

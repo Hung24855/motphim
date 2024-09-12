@@ -12,17 +12,16 @@ import Link from "next/link";
 import SideBarMenu from "../side-bar";
 import { GenresService } from "@/domain/the-loai/service";
 import { CountriesService } from "@/domain/quoc-gia/service";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { logout_action } from "@/actions/auth";
+import { Session } from "next-auth";
 
-function Search() {
+function Search({ session }: { session: Session | null }) {
     const [search, setSearch] = useState<string>("");
     const [showSearch, setShowSearch] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
+    // console.log("session", session);
 
     //Auth
-
-    const { data: session } = useSession();
-    // console.log(session);
 
     useEffect(() => {
         if (inputRef.current && showSearch) {
@@ -62,7 +61,7 @@ function Search() {
             <button className="group relative">
                 <FaUser size={20} />
                 <div className="absolute right-1/2 top-full hidden w-max translate-x-1/2 gap-y-2 rounded bg-white p-2 text-black group-hover:block">
-                    {!session ? (
+                    {!session?.user ? (
                         <Fragment>
                             <Link href="/dang-ky">
                                 <div className="py-1 hover:underline">Đăng ký</div>
@@ -72,7 +71,12 @@ function Search() {
                             </Link>
                         </Fragment>
                     ) : (
-                        <div className="py-1 hover:underline">Đăng xuất</div>
+                        <div>
+                            <Link href={"/admin"}>{session?.user?.role === "admin" && "Admin"}</Link>
+                            <div className="py-1 hover:underline" onClick={() => logout_action()}>
+                                Đăng xuất
+                            </div>
+                        </div>
                     )}
                 </div>
             </button>
@@ -83,7 +87,7 @@ function Search() {
     );
 }
 
-export default function Header() {
+export default function Header({ session }: { session: Session | null }) {
     const { data: genres } = GenresService.useGenres();
     const { data: countries } = CountriesService.useCountries();
 
@@ -150,7 +154,7 @@ export default function Header() {
                     {/* side bar */}
                     <SideBarMenu genres={genres?.data} countries={countries?.data} />
                     {/* tim kiem */}
-                    <Search />
+                    <Search session={session} />
                 </div>
             </MaxWidth>
         </nav>
