@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import Link from "next/link";
 
 export interface Episode {
     name: string;
@@ -131,7 +132,9 @@ export default function CreateMoviePage() {
                             Lưu thay đổi
                         </button>
                     </Spin>
-                    <button className="rounded bg-gray-600 px-3 py-2 text-white">Hủy bỏ</button>
+                    <Link href={"/admin/phim"}>
+                        <button className="rounded bg-gray-600 px-3 py-2 text-white">Hủy bỏ</button>
+                    </Link>
                 </div>
             </form>
         </div>

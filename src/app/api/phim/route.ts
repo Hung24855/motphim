@@ -1,4 +1,5 @@
 import { pool } from "@/database/connect";
+import { Episode } from "@/domain/phim/dto";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 
@@ -87,7 +88,7 @@ export async function POST(request: Request) {
                         query: "INSERT INTO movie_genre (movie_id,genres_id) VALUES ($1,$2)",
                         values: [movie_id, genre_id]
                     })),
-                    ...body.episodes.map((episode: any) => {
+                    ...body.episodes.map((episode: Episode) => {
                         let episode_id = uuidv4();
                         return {
                             query: "INSERT INTO episodes (episode_id,movie_id, name, link, slug) VALUES ($1, $2, $3, $4, $5)",

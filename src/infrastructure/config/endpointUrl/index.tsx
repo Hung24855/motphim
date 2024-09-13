@@ -20,6 +20,8 @@ class EndpointUrl {
     get_movies_by_type = (slug: "phim-bo" | "phim-le") => `/danh-sach/${slug}`;
     get_movie = (slug: string) => `/phim/${slug}`;
     create_movie = () => `/phim`;
+    update_movie = (id: string) => `/phim/${id}`;
+    delete_movie = (id: string) => `/phim/${id}`;
 
     //Phim theo theo loai
     get_movies_by_genre = (slug: string) => `/the-loai/${slug}`;

@@ -4,48 +4,68 @@ import Link from "next/link";
 
 import { ConfigProvider, Table } from "antd";
 import { MoviesService } from "@/domain/phim/services";
-const dataSource = [
-    {
-        key: "1",
-        name: "Mike",
-        age: 32,
-        address: "10 Downing Street"
-    },
-    {
-        key: "2",
-        name: "John",
-        age: 42,
-        address: "10 Downing Street"
-    }
-];
 
 const columns = [
     {
-        title: "Tên",
-        dataIndex: "name",
-        key: "name"
+        title: "Tên phim",
+        dataIndex: "movie_name",
+        key: "movie_name"
     },
     {
-        title: "Tuổi",
-        dataIndex: "age",
-        key: "age"
+        title: "Ảnh",
+        dataIndex: "image",
+        key: "image",
+        render: (text: string) => <img src={text} alt="" className="h-24 w-20" />
     },
     {
-        title: "Địa chỉ",
-        dataIndex: "address",
-        key: "address"
+        title: "Năm xuất bản",
+        dataIndex: "year",
+        key: "year"
+    },
+    {
+        title: "Thời gian mỗi tập",
+        dataIndex: "time_per_episode",
+        key: "time_per_episode"
+    },
+    {
+        title: "Ngôn ngữ",
+        dataIndex: "lang",
+        key: "lang"
+    },
+    {
+        title: "Tập hiện tại",
+        dataIndex: "episode_current",
+        key: "episode_current"
+    },
+    {
+        title: "Tổng số tập",
+        dataIndex: "episode_total",
+        key: "episode_total"
+    },
+
+    {
+        title: "Action",
+        key: "action",
+        render: (_: any, record: any) => (
+            <div className="flex gap-x-1">
+                <button className="rounded bg-blue-500 px-3 py-2 text-white">Ẩn</button>
+                <Link href={`/admin/phim/sua/${record.slug}`}>
+                    <button className="rounded bg-green-500 px-3 py-2 text-white">Sửa</button>
+                </Link>
+                <button className="rounded bg-red-500 px-3 py-2 text-white">Xóa</button>
+            </div>
+        )
     }
 ];
 
 export default function MovieManagement() {
-    const { data } = MoviesService.use_movies();
-    // console.log("data: ", data);
+    const { data: movies } = MoviesService.use_movies();
 
     return (
         <div>
-            <h1 className="text-xl font-semibold">Quản lý phim</h1>
+            <h1 className="text-3xl font-semibold">Quản lý phim</h1>
             <Link href={"/admin/phim/them-phim"}>
-                <button className="rounded bg-[#7c69ef] px-3 py-2 text-white">Thêm phim</button>
+                <button className="mt-3 rounded bg-[#7c69ef] px-3 py-2 text-white">Thêm phim</button>
             </Link>
             <div className="mt-3">
                 <ConfigProvider
@@ -57,7 +77,7 @@ export default function MovieManagement() {
                         }
                     }}
                 >
-                    <Table dataSource={dataSource} columns={columns} />
+                    <Table dataSource={movies?.data} columns={columns} loading={!movies} />
                 </ConfigProvider>
             </div>
         </div>

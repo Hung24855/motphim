@@ -20,9 +20,20 @@ export interface MoviesDTO {
     episode_current: string;
     episode_total: string;
     movie_type_id: string;
-    genre: string;
-    genre_slug: string;
     episodes: Episode[];
+    genres: {
+        id: number;
+        movie_id: string;
+        genres_id: number;
+        name: string;
+        slug: string;
+    }[];
+    countries: {
+        movie_id: string;
+        country_id: number;
+        name: string;
+        slug: string;
+    }[];
 }
 
 export interface DataGetMovieDetailDTO {

@@ -21,10 +21,10 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
     children,
-    admin
+
 }: Readonly<{
     children: React.ReactNode;
-    admin: React.ReactNode;
+
 }>) {
     DB_Connect();
 

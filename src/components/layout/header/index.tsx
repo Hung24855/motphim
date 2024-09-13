@@ -14,6 +14,7 @@ import { GenresService } from "@/domain/the-loai/service";
 import { CountriesService } from "@/domain/quoc-gia/service";
 import { logout_action } from "@/actions/auth";
 import { Session } from "next-auth";
+import { Button, Popover } from "antd";
 
 function Search({ session }: { session: Session | null }) {
     const [search, setSearch] = useState<string>("");
@@ -28,6 +29,32 @@ function Search({ session }: { session: Session | null }) {
             inputRef.current.focus();
         }
     }, [showSearch]);
+
+    const content = (
+        <Fragment>
+            <div className="cursor-pointer gap-y-2">
+                {session?.user ? (
+                    <div>
+                        <Link href={"/admin"} className="w-full">
+                            {session?.user?.role === "admin" && <div>Trang quản trị</div>}
+                        </Link>
+                        <div className="hover:text-red-500 hover:underline" onClick={() => logout_action()}>
+                            Đăng xuất
+                        </div>
+                    </div>
+                ) : (
+                    <Fragment>
+                        <Link href="/dang-ky">
+                            <div className="hover:underline">Đăng ký</div>
+                        </Link>
+                        <Link href="/dang-nhap">
+                            <div className="hover:underline">Đăng nhập</div>
+                        </Link>
+                    </Fragment>
+                )}
+            </div>
+        </Fragment>
+    );
     return (
         <div className="flex items-center gap-x-6">
             <button
@@ -58,9 +85,10 @@ function Search({ session }: { session: Session | null }) {
                 <FaBell size={20} />
                 <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
             </button>
-            <button className="group relative">
-                <FaUser size={20} />
-                <div className="absolute right-1/2 top-full hidden w-max translate-x-1/2 gap-y-2 rounded bg-white p-2 text-black group-hover:block">
+            <Popover content={content} trigger="click" className="px-0">
+                <button>
+                    <FaUser size={20} />
+                    {/* <div className="absolute right-1/2 top-full hidden w-max translate-x-1/2 gap-y-2 rounded bg-white p-2 text-black group-hover:block">
                     {!session?.user ? (
                         <Fragment>
                             <Link href="/dang-ky">
@@ -78,8 +106,9 @@ function Search({ session }: { session: Session | null }) {
                             </div>
                         </div>
                     )}
-                </div>
-            </button>
+                </div> */}
+                </button>
+            </Popover>
             <button>
                 <MdSunny size={22} />
             </button>

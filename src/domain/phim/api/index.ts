@@ -1,7 +1,7 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
 import { DataGetMoviesDTO } from "../dto";
-import { IDataCreateMovieType } from "../model";
+import { IDataCreateMovieType, IDataUpdateMovieType } from "../model";
 
 export class MoviesApi {
     static async get_movie(slug: string) {
@@ -51,7 +51,23 @@ export class MoviesApi {
             const { data: res } = await http.post(ENDPOINT_URL.create_movie(), data);
             return res;
         } catch (error) {
-            console.log("Error: get_movies_by_country ", error);
+            console.log("Error: create_movie ", error);
+        }
+    }
+    static async update_movie({ data, id }: { data: IDataUpdateMovieType; id: string }) {
+        try {
+            const { data: res } = await http.put(ENDPOINT_URL.update_movie(id), data);
+            return res;
+        } catch (error) {
+            console.log("Error: update_movie ", error);
+        }
+    }
+    static async delete_movie(id: string) {
+        try {
+            const { data: res } = await http.delete(ENDPOINT_URL.delete_movie(id));
+            return res;
+        } catch (error) {
+            console.log("Error: delete_movie ", error);
         }
     }
 }

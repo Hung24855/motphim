@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
 
     const sql = `SELECT 
     movies.movie_name, movies.slug, movies.year , 
-    movies.image, movies.time_per_episode, movies.episode_current,
+    movies.image, movies.time_per_episode, movies.episode_current,movies.episode_total,
     movies.lang FROM movies ${where} ${orderBy} ${limitSql} ${offset}`;
 
     try {

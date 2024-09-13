@@ -1,18 +1,25 @@
+import { MoviesDTO } from "@/domain/phim/dto";
 import { CountriesService } from "@/domain/quoc-gia/service";
 import { GenresService } from "@/domain/the-loai/service";
-import { FieldValues } from "@/views/admin/movie/create/page";
 import { Control, Controller, FieldErrors, UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
+import { FieldValues } from "@/views/admin/movie/edit/page";
 
 interface Props {
     control: Control<FieldValues, any>;
     errors: FieldErrors<FieldValues>;
     setValue: UseFormSetValue<FieldValues>;
     getValues: UseFormGetValues<FieldValues>;
+    movie: MoviesDTO;
 }
 
-export default function MovieClassification({ control, errors, setValue, getValues }: Props) {
+export default function MovieClassificationUpdate({ control, errors, setValue, getValues, movie }: Props) {
     const { data: genres } = GenresService.useGenres();
     const { data: countries } = CountriesService.useCountries();
+
+    const genresID = movie.genres.map((genre) => genre.genres_id);
+    const countriesID = movie.countries.map((country) => country.country_id);
+
     return (
         <div className="w-max">
             <div className="dinh-dang">
@@ -21,9 +28,16 @@ export default function MovieClassification({ control, errors, setValue, getValu
                     <Controller
                         name="movie_type_id"
                         control={control}
+                        defaultValue={movie.movie_type_id}
                         render={({ field }) => (
                             <span className="flex items-center gap-x-1">
-                                <input type="radio" id="phim-bo" {...field} value={"type1"} defaultChecked></input>
+                                <input
+                                    type="radio"
+                                    id="phim-bo"
+                                    {...field}
+                                    value={"type1"}
+                                    defaultChecked={movie.movie_type_id === "type1"}
+                                ></input>
                                 <label htmlFor="phim-bo" className="cursor-pointer">
                                     Phim bộ
                                 </label>
@@ -36,7 +50,14 @@ export default function MovieClassification({ control, errors, setValue, getValu
                         control={control}
                         render={({ field }) => (
                             <span className="flex items-center gap-x-1">
-                                <input type="radio" id="phim-le" {...field} value={"type2"}></input>
+                                <input
+                                    type="radio"
+                                    id="phim-le"
+                                    {...field}
+                                    value={"type2"}
+                                    defaultValue={movie.movie_type_id}
+                                    defaultChecked={movie.movie_type_id === "type2"}
+                                ></input>
                                 <label htmlFor="phim-le" className="cursor-pointer">
                                     Phim lẻ
                                 </label>
@@ -50,24 +71,27 @@ export default function MovieClassification({ control, errors, setValue, getValu
                 <div className="grid w-full grid-cols-5 gap-x-6">
                     {genres?.data.map((item, index) => (
                         <Controller
-                            name="genresId"
+                            name="genres_movies"
                             control={control}
                             key={index}
+                            defaultValue={movie.genres.map((genre) => {
+                                return { id: genre.genres_id, genre_id: genre.genres_id };
+                            })}
                             render={({ field }) => (
                                 <span className="flex items-center gap-x-1">
                                     <input
                                         type="checkbox"
                                         id={item.slug}
                                         {...field}
-                                        defaultChecked={item.id === 2}
+                                        defaultChecked={genresID.includes(item.id)}
                                         value={item.id.toString()} // Convert the value to a string
                                         onChange={(e) => {
-                                            let genres = getValues("genresId");
+                                            let genres = getValues("genres_movies");
                                             setValue(
-                                                "genresId",
+                                                "genres_movies",
                                                 e.target.checked
-                                                    ? [...genres, item.id]
-                                                    : [...genres.filter((theloai) => item.id !== theloai)]
+                                                    ? [...genres, { genre_id: item.id, id: item.id }]
+                                                    : [...genres.filter((theloai) => item.id !== theloai.genre_id)]
                                             );
                                         }}
                                     />
@@ -85,24 +109,27 @@ export default function MovieClassification({ control, errors, setValue, getValu
                 <div className="grid w-full grid-cols-5 gap-x-6">
                     {countries?.data.map((item, index) => (
                         <Controller
-                            name="countriesId"
+                            name="countries_movies"
                             control={control}
                             key={index}
+                            defaultValue={movie.countries.map((country) => {
+                                return { id: country.country_id, country_id: country.country_id };
+                            })}
                             render={({ field }) => (
                                 <span className="flex items-center gap-x-1">
                                     <input
                                         type="checkbox"
                                         id={item.slug}
                                         {...field}
-                                        defaultChecked={item.id === 1}
+                                        defaultChecked={countriesID.includes(item.id)}
                                         value={item.id.toString()} // Convert the value to a string
                                         onChange={(e) => {
-                                            let quocgia = getValues("countriesId");
+                                            let quocgia = getValues("countries_movies");
                                             setValue(
-                                                "countriesId",
+                                                "countries_movies",
                                                 e.target.checked
-                                                    ? [...quocgia, item.id]
-                                                    : [...quocgia.filter((quocgia) => item.id !== quocgia)]
+                                                    ? [...quocgia, { country_id: item.country_id, id: item.id }]
+                                                    : [...quocgia.filter((quocgia) => item.id !== quocgia.country_id)]
                                             );
                                         }}
                                     />
@@ -115,6 +142,7 @@ export default function MovieClassification({ control, errors, setValue, getValu
                     ))}
                 </div>
             </div>
+            <DevTool control={control} />
         </div>
     );
 }

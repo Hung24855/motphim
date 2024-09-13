@@ -1,6 +1,8 @@
 import { ISuccessResponse } from "@/infrastructure/config/types/apiResponse";
 
 export interface GenresDTO {
+    movie_id: string;
+    genres_id: number;
     id: number;
     name: string;
     slug: string;

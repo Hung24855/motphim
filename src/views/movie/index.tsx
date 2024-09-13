@@ -82,7 +82,9 @@ export default function MoviePage(props: Props) {
                                         <span className="border-2 border-white px-2.5 py-0.5">HD</span>
                                     </div>
                                     <ul className="flex flex-wrap items-center gap-x-2">
-                                        <li className="hover:text-primary">{movie.genre} </li>
+                                        <li className="hover:text-primary">
+                                            {movie.genres.map((genre) => genre.name).join(", ")}{" "}
+                                        </li>
                                     </ul>
                                 </div>
                                 <div className="flex items-center gap-5">
@@ -107,7 +109,9 @@ export default function MoviePage(props: Props) {
                                     <div className="my-2 flex items-center gap-2">
                                         <Icon icon="grommet-icons:language" className="text-primary" height={16} />
                                         <ul className="flex items-center gap-2">
-                                            <li className="hover:text-primary">Trung Quốc</li>
+                                            <li className="hover:text-primary">
+                                                {movie.countries.map((country) => country.name).join(", ")}
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -200,7 +204,7 @@ export default function MoviePage(props: Props) {
                     </Script>
 
                     <div className="px-2 py-2">
-                        <MovieCategory title={"Phim " + movie.genre} slug={movie.genre_slug} />
+                        <MovieCategory title={"Phim " + movie.genres[0].name} slug={movie.genres[0].slug} />
                     </div>
                 </MaxWidth>
             </div>

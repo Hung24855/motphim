@@ -25,7 +25,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs, className, contentClassName }) => {
                         className={clsx(
                             "px-4 py-2",
                             {
-                                "active rounded-tl-md rounded-tr-md border border-blue-200 border-b-transparent bg-white":
+                                "active rounded-tl-md rounded-tr-md border border-blue-200 border-b-transparent bg-white font-bold":
                                     activeTab === index,
                                 "border-b-[1px] border-b-blue-200": activeTab !== index
                             },

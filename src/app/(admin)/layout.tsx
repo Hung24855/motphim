@@ -6,6 +6,7 @@ import "./globals.css";
 import "swiper/css";
 import ReactQueryProvder from "@/base/provider/react-query";
 import ProgessbarProviders from "@/base/libs/progesbar";
+import Toast from "@/base/libs/toast";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 
@@ -53,6 +54,7 @@ export default async function RootLayout({
                             </main>
                         </ProgessbarProviders>
                     </ReactQueryProvder>
+                    <Toast />
                 </body>
             </html>
         </Fragment>
