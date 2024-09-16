@@ -37,9 +37,13 @@ export async function GET(request: Request, { params }: { params: { slug: string
             )
         ).rows;
 
-        // console.log("res: ", res.rows[0]);
-
-        const episodes = (await pool.query("SELECT * FROM episodes WHERE movie_id = $1", [res.rows[0]?.id])).rows;
+        //Chuyển tập phim sang number vì ban đầu name của nó là chuỗi nên không order_by được
+        const episodes = (
+            await pool.query(
+                "SELECT * FROM episodes WHERE movie_id = $1 ORDER BY CAST(REGEXP_REPLACE(name, '\\D', '', 'g') AS INTEGER)",
+                [res.rows[0]?.id]
+            )
+        ).rows;
 
         return NextResponse.json({
             status: "success",
@@ -61,17 +65,11 @@ export async function GET(request: Request, { params }: { params: { slug: string
 }
 
 type UpdateMovieFields = {
-    countries_movies: {
-        id: number;
-        country_id: number;
-    }[];
-    genres_movies: {
-        id: number;
-        genre_id: number;
-    }[];
+    countriesId: number[];
+    genresId: number[];
     episode_current: string;
     time_per_episode: string;
-    episodes: Episode[];
+    // episodes: Episode[];
     movie_name: string;
     quality: string;
     image: string;
@@ -84,14 +82,15 @@ type UpdateMovieFields = {
 };
 
 export async function PUT(request: Request, { params }: { params: { slug: string } }) {
+    //slug là id phim
     try {
         const body = (await request.json()) as UpdateMovieFields;
         const requiredFields: Array<keyof UpdateMovieFields> = [
-            "countries_movies",
-            "genres_movies",
+            "countriesId",
+            "genresId",
             "episode_current",
             "time_per_episode",
-            "episodes",
+            // "episodes",
             "movie_name",
             "quality",
             "image",
@@ -137,51 +136,40 @@ export async function PUT(request: Request, { params }: { params: { slug: string
                     return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
                 }
 
-                //Lấy thông tin các danh mục| quốc gia hiện tại
+                //C1: Xóa danh mục cũ và thêm danh mục mới
+                //C2: Xóa những danh mục cũ không có trong lựa chọn mới và thêm những lựa chọn mới
 
-                const genres_current = await pool.query("SELECT id FROM movie_genre WHERE movie_id = $1", [
-                    params.slug
+                await Promise.all([
+                    pool.query("DELETE FROM movie_country WHERE movie_id = $1", [params.slug]),
+                    pool.query("DELETE FROM movie_genre WHERE movie_id = $1", [params.slug])
                 ]);
-                const countries_current = await pool.query("SELECT id FROM movie_country WHERE movie_id = $1", [
-                    params.slug
-                ]);
 
-                //Xóa nhưng danh mục không có trong lựa chọn mới
-
-                await pool.query("DELETE FROM movie_genre WHERE movie_id = $1", [params.slug]);
-
-                //Thêm mới những lựa chọn không có trong DB
-
-                // const queries = [
-                //     ...body.countries_movies.map((countries_movie) => ({
-                //         query: "UPDATE movie_country SET country_id = $1 WHERE id = $2",
-                //         values: [countries_movie.country_id, countries_movie.id]
-                //     })),
-                //     ...body.genres_movies.map((genres_movie) => ({
-                //         query: "UPDATE movie_genre SET genres_id = $1 WHERE id = $2",
-                //         values: [genres_movie.genre_id, genres_movie.id]
-                //     })),
-                //     ...body.episodes.map((episode) => {
-                //         let episode_id = uuidv4();
-                //         return {
-                //             query: "INSERT INTO episodes (episode_id,movie_id, name, link, slug) VALUES ($1, $2, $3, $4, $5)",
-                //             values: [episode_id, params.slug, episode.name, episode.link, episode.slug]
-                //         };
-                //     })
-                // ];
-
-                // // console.log("queries", queries);
-
-                // // Run all queries
-                // const promises = queries.map(({ query,values }) => pool.query(query, [...values]));
-                // Promise.all(promises)
-                //     .then(() => {
-                //         return NextResponse.json({ status: "success", message: "Cập nhật phim thành công", data: [] });
-                //     })
-                //     .catch((error) => {
-                //         console.log("Error: ", error);
-                //         return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
-                //     });
+                const queries = [
+                    ...body.countriesId.map((country_id: any) => ({
+                        query: "INSERT INTO movie_country (movie_id,country_id) VALUES ($1,$2)",
+                        values: [params.slug, country_id]
+                    })),
+                    ...body.genresId.map((genre_id: any) => ({
+                        query: "INSERT INTO movie_genre (movie_id,genres_id) VALUES ($1,$2)",
+                        values: [params.slug, genre_id]
+                    }))
+                    // ...body.episodes.map((episode: Episode) => {
+                    //     let episode_id = uuidv4();
+                    //     return {
+                    //         query: "INSERT INTO episodes (episode_id,movie_id, name, link, slug) VALUES ($1, $2, $3, $4, $5)",
+                    //         values: [episode_id, params.slug, episode.name, episode.link, episode.slug]
+                    //     };
+                    // })
+                ];
+                const promises = queries.map(({ query, values }) => pool.query(query, [...values]));
+                Promise.all(promises)
+                    .then(() => {
+                        return NextResponse.json({ status: "success", message: "Cập nhật phim thành công", data: [] });
+                    })
+                    .catch((error) => {
+                        console.log("Error: ", error);
+                        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+                    });
             }
         );
 

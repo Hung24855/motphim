@@ -64,8 +64,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         authorized({ request: { nextUrl }, auth }) {
             const isLoggedIn = !!auth?.user;
             const { pathname } = nextUrl;
-            // console.log("dhkjfhdkhfkjdhsfjkdhskfjd: ", auth);
-            // console.log("pathname: ", pathname);
 
             const role = auth?.user?.role || "user";
             if (pathname.startsWith("/dang-nhap") && isLoggedIn) {

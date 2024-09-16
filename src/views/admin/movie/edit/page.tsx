@@ -12,6 +12,7 @@ import Link from "next/link";
 import CreateEpisodeUpdate from "@/components/admin/update-movie/create-apisode-update";
 
 import { IDataUpdateMovieType } from "@/domain/phim/model";
+import { useQueryClient } from "@tanstack/react-query";
 
 export interface Episode {
     name: string;
@@ -22,6 +23,7 @@ export interface Episode {
 export type FieldValues = IDataUpdateMovieType;
 
 export default function EditMoviePage({ slug }: { slug: string }) {
+    const queryClient = useQueryClient();
     const {
         control,
         handleSubmit,
@@ -32,7 +34,7 @@ export default function EditMoviePage({ slug }: { slug: string }) {
         mode: "onSubmit",
         reValidateMode: "onSubmit"
     });
-    const { data: response } = MoviesService.get_movie(slug);
+    const { data: response, refetch: refetchMovieDetail } = MoviesService.get_movie(slug);
     const { updateMovieMutation, isPeddingUpdateMovie } = MoviesService.use_movies();
     const movie = response?.data[0];
     // const movie = false;
@@ -61,27 +63,27 @@ export default function EditMoviePage({ slug }: { slug: string }) {
         },
         {
             label: "Thêm tập phim",
-            content: <CreateEpisodeUpdate control={control} errors={errors} setValue={setValue} getValues={getValues} />
+            content: <CreateEpisodeUpdate movie_id={movie.id} refetchMovieDetail={refetchMovieDetail} />
         },
         {
             label: "Danh sách tập phim",
-            content: <MovieEpisodeListUpdate movie={movie} />
+            content: <MovieEpisodeListUpdate movie={movie} refetchMovieDetail={refetchMovieDetail} />
         }
     ];
 
     const Submit = (data: FieldValues) => {
         console.log("ghfkjhgkjfhdgkjfhd kgfhdgjfd h gkfdhkg", data);
 
-        // createMovieMutation({
-        //     data,
-        //     onError: () => {
-        //         toast.error("Cố lỗi xảy ra!");
-        //     },
-        //     onSuccess: () => {
-        //         toast.success("Cập nhật phim thành công!");
-        //         window.location.reload();
-        //     }
-        // });
+        updateMovieMutation({
+            data: { data: data, id: movie.id },
+            onError: () => {
+                toast.error("Cố lỗi xảy ra!");
+            },
+            onSuccess: () => {
+                toast.success("Cập nhật phim thành công!");
+                refetchMovieDetail();
+            }
+        });
     };
 
     return (

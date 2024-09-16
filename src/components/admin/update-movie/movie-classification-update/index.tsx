@@ -71,11 +71,11 @@ export default function MovieClassificationUpdate({ control, errors, setValue, g
                 <div className="grid w-full grid-cols-5 gap-x-6">
                     {genres?.data.map((item, index) => (
                         <Controller
-                            name="genres_movies"
+                            name="genresId"
                             control={control}
                             key={index}
                             defaultValue={movie.genres.map((genre) => {
-                                return { id: genre.genres_id, genre_id: genre.genres_id };
+                                return genre.genres_id;
                             })}
                             render={({ field }) => (
                                 <span className="flex items-center gap-x-1">
@@ -86,12 +86,12 @@ export default function MovieClassificationUpdate({ control, errors, setValue, g
                                         defaultChecked={genresID.includes(item.id)}
                                         value={item.id.toString()} // Convert the value to a string
                                         onChange={(e) => {
-                                            let genres = getValues("genres_movies");
+                                            let genres = getValues("genresId");
                                             setValue(
-                                                "genres_movies",
+                                                "genresId",
                                                 e.target.checked
-                                                    ? [...genres, { genre_id: item.id, id: item.id }]
-                                                    : [...genres.filter((theloai) => item.id !== theloai.genre_id)]
+                                                    ? [...genres, item.id]
+                                                    : [...genres.filter((theloai_id) => item.id !== theloai_id)]
                                             );
                                         }}
                                     />
@@ -109,11 +109,11 @@ export default function MovieClassificationUpdate({ control, errors, setValue, g
                 <div className="grid w-full grid-cols-5 gap-x-6">
                     {countries?.data.map((item, index) => (
                         <Controller
-                            name="countries_movies"
+                            name="countriesId"
                             control={control}
                             key={index}
                             defaultValue={movie.countries.map((country) => {
-                                return { id: country.country_id, country_id: country.country_id };
+                                return country.country_id;
                             })}
                             render={({ field }) => (
                                 <span className="flex items-center gap-x-1">
@@ -124,12 +124,16 @@ export default function MovieClassificationUpdate({ control, errors, setValue, g
                                         defaultChecked={countriesID.includes(item.id)}
                                         value={item.id.toString()} // Convert the value to a string
                                         onChange={(e) => {
-                                            let quocgia = getValues("countries_movies");
+                                            let quocgia = getValues("countriesId");
                                             setValue(
-                                                "countries_movies",
+                                                "countriesId",
                                                 e.target.checked
-                                                    ? [...quocgia, { country_id: item.country_id, id: item.id }]
-                                                    : [...quocgia.filter((quocgia) => item.id !== quocgia.country_id)]
+                                                    ? [...quocgia, item.id]
+                                                    : [
+                                                          ...quocgia.filter(
+                                                              (quocgia_id) => item.id !== quocgia_id
+                                                          )
+                                                      ]
                                             );
                                         }}
                                     />
@@ -142,7 +146,7 @@ export default function MovieClassificationUpdate({ control, errors, setValue, g
                     ))}
                 </div>
             </div>
-            <DevTool control={control} />
+            {/* <DevTool control={control} /> */}
         </div>
     );
 }

@@ -1,34 +1,29 @@
-import { Episode, FieldValues } from "@/views/admin/movie/create/page";
-import { Controller, useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
-import { MoviesDTO } from "@/domain/phim/dto";
+import { Episode, MoviesDTO } from "@/domain/phim/dto";
+import { MoviesService } from "@/domain/phim/services";
+import { toast } from "react-toastify";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 interface Props {
     movie: MoviesDTO;
+    refetchMovieDetail: () => void;
 }
 
-export default function MovieEpisodeListUpdate({ movie }: Props) {
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
-        setValue,
-        getValues,
-        reset
-    } = useForm<FieldValues>({
-        mode: "onSubmit",
-        reValidateMode: "onSubmit"
-    });
+export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Props) {
     const [Episodes, setEpisodes] = useState<Episode[]>(() => {
         return [...movie.episodes];
     });
 
-    const [UpdateEpisode, setUpdateEpisode] = useState<Episode>({} as Episode);
+    useEffect(() => {
+        setEpisodes([...movie.episodes]);
+    }, [movie]);
 
-    const handleUpdateEpisode = (episode: Episode) => {
-        //do somthing
-    };
+    const [UpdateEpisode, setUpdateEpisode] = useState<Episode>({} as Episode);
+    const [DeleteEpisode, setDeleteEpisode] = useState<Episode>({} as Episode);
+    const { deleteEpisodeMutation, updateEpisodeMutation, isPeddingDeleteEpisode, isPeddingUpdateEpisode } =
+        MoviesService.use_episodes();
 
     return (
         <div className="min-w-max">
@@ -46,69 +41,45 @@ export default function MovieEpisodeListUpdate({ movie }: Props) {
                         {Episodes.map((episode, index) => (
                             <tr className="hover:bg-gray-50" key={index}>
                                 <td className="border border-gray-300">
-                                    <Controller
-                                        control={control}
-                                        name={`episodes.${index}.name`}
+                                    <input
+                                        type="text"
+                                        placeholder="1"
                                         defaultValue={episode.name}
-                                        rules={{ required: true }}
-                                        render={({ field }) => (
-                                            <input
-                                                {...field}
-                                                type="text"
-                                                placeholder="1"
-                                                disabled={episode.name !== UpdateEpisode?.name}
-                                                className={clsx(
-                                                    "w-full px-4 py-2 outline-none disabled:bg-gray-200",
-                                                    errors.episodes?.[index]?.name && "border border-b-red-500"
-                                                )}
-                                            />
-                                        )}
+                                        onChange={(e) => {
+                                            setUpdateEpisode({ ...UpdateEpisode, name: e.target.value });
+                                        }}
+                                        disabled={episode.episode_id !== UpdateEpisode?.episode_id}
+                                        className={clsx("w-full px-4 py-2 outline-none disabled:bg-gray-200")}
                                     />
                                 </td>
                                 <td className="border border-gray-300">
-                                    <Controller
-                                        control={control}
-                                        name={`episodes.${index}.slug`}
+                                    <input
+                                        type="text"
+                                        placeholder="tap-1"
                                         defaultValue={episode.slug}
-                                        rules={{ required: true }}
-                                        render={({ field }) => (
-                                            <input
-                                                {...field}
-                                                type="text"
-                                                placeholder="tap-1"
-                                                disabled={episode.slug !== UpdateEpisode?.slug}
-                                                className={clsx(
-                                                    "w-full px-4 py-2 outline-none disabled:bg-gray-200",
-                                                    errors.episodes?.[index]?.slug && "border border-b-red-500"
-                                                )}
-                                            />
-                                        )}
+                                        onChange={(e) => {
+                                            setUpdateEpisode({ ...UpdateEpisode, slug: e.target.value });
+                                        }}
+                                        disabled={episode.episode_id !== UpdateEpisode?.episode_id}
+                                        className={clsx("w-full px-4 py-2 outline-none disabled:bg-gray-200")}
                                     />
                                 </td>
                                 <td className="border border-gray-300">
-                                    <Controller
-                                        control={control}
-                                        name={`episodes.${index}.link`}
+                                    <input
+                                        type="text"
+                                        placeholder="Link phim"
                                         defaultValue={episode.link}
-                                        rules={{ required: true }}
-                                        render={({ field }) => (
-                                            <input
-                                                {...field}
-                                                type="text"
-                                                disabled={episode.link !== UpdateEpisode?.link}
-                                                placeholder="Link phim"
-                                                className={clsx(
-                                                    "w-full px-4 py-2 outline-none disabled:bg-gray-200",
-                                                    errors.episodes?.[index]?.link && "border border-b-red-500"
-                                                )}
-                                            />
-                                        )}
+                                        onChange={(e) => {
+                                            setUpdateEpisode({ ...UpdateEpisode, link: e.target.value });
+                                        }}
+                                        disabled={episode.episode_id !== UpdateEpisode?.episode_id}
+                                        className={clsx("w-full px-4 py-2 outline-none disabled:bg-gray-200")}
                                     />
                                 </td>
                                 <td className="w-52 border border-gray-300 px-2">
-                                    {index !== 0 && (
+                                    {
                                         <div className="flex gap-x-1">
-                                            {UpdateEpisode?.name === episode.name && (
+                                            {UpdateEpisode?.episode_id === episode.episode_id && (
                                                 <button
                                                     type="button"
                                                     className="rounded bg-gray-500 px-2 py-1 text-white"
@@ -119,37 +90,84 @@ export default function MovieEpisodeListUpdate({ movie }: Props) {
                                                     Hủy
                                                 </button>
                                             )}
-                                            <button
-                                                type="button"
-                                                className={clsx("rounded bg-green-600 px-2 py-1 text-white", {
-                                                    "bg-gray-500": UpdateEpisode?.name !== episode.name
-                                                })}
-                                                onClick={() => {
-                                                    setUpdateEpisode(episode);
-
-                                                    //Thêm popup xác nhận
-
-                                                    //Cập nhật thông tin tập phim
-                                                }}
+                                            <Spin
+                                                indicator={<LoadingOutlined spin />}
+                                                size="large"
+                                                spinning={isPeddingUpdateEpisode}
                                             >
-                                                {UpdateEpisode?.name === episode.name ? "Cập nhật" : "Sửa"}
-                                            </button>
+                                                <button
+                                                    type="button"
+                                                    className={clsx("rounded bg-green-600 px-2 py-1 text-white", {
+                                                        "bg-gray-500": UpdateEpisode?.episode_id !== episode.episode_id
+                                                    })}
+                                                    onClick={() => {
+                                                        setUpdateEpisode(episode);
 
-                                            <button
-                                                type="button"
-                                                className="rounded bg-red-600 px-2 py-1 text-white"
-                                                onClick={() => {
-                                                    let NewEpisodes = getValues("episodes").filter(
-                                                        (_, i) => i !== index
-                                                    );
-                                                    setEpisodes(NewEpisodes);
-                                                    setValue(`episodes`, NewEpisodes);
-                                                }}
+                                                        if (UpdateEpisode?.name) {
+                                                            const confirm = window.confirm(
+                                                                "Bạn có chắc chắn muốn cập nhật tập phim này không?"
+                                                            );
+
+                                                            if (confirm) {
+                                                                updateEpisodeMutation({
+                                                                    data: {
+                                                                        episode_id: episode.episode_id,
+                                                                        data: { episodes: UpdateEpisode }
+                                                                    },
+                                                                    onError: () => {
+                                                                        toast.error("Cập nhật tập phim thất bại!");
+                                                                    },
+                                                                    onSuccess: () => {
+                                                                        toast.success("Cập nhật tập phim thành công!");
+                                                                        refetchMovieDetail();
+                                                                        setUpdateEpisode({} as Episode);
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+                                                    }}
+                                                >
+                                                    {UpdateEpisode?.episode_id === episode.episode_id
+                                                        ? "Cập nhật"
+                                                        : "Sửa"}
+                                                </button>
+                                            </Spin>
+                                            <Spin
+                                                spinning={
+                                                    isPeddingDeleteEpisode &&
+                                                    DeleteEpisode?.episode_id === episode.episode_id
+                                                }
+                                                indicator={<LoadingOutlined spin />}
                                             >
-                                                Xóa
-                                            </button>
+                                                <button
+                                                    type="button"
+                                                    className="rounded bg-red-600 px-2 py-1 text-white"
+                                                    onClick={() => {
+                                                        setDeleteEpisode(episode);
+
+                                                        const confirm = window.confirm(
+                                                            "Bạn có chắc chắn muốn xóa tập phim này không?"
+                                                        );
+
+                                                        if (confirm) {
+                                                            deleteEpisodeMutation({
+                                                                episode_id: episode.episode_id,
+                                                                onError: () => {
+                                                                    toast.error("Cố lỗi xảy ra!");
+                                                                },
+                                                                onSuccess: () => {
+                                                                    toast.success("Xóa tập phim thành công!");
+                                                                    refetchMovieDetail();
+                                                                }
+                                                            });
+                                                        }
+                                                    }}
+                                                >
+                                                    Xóa
+                                                </button>
+                                            </Spin>
                                         </div>
-                                    )}
+                                    }
                                 </td>
                             </tr>
                         ))}

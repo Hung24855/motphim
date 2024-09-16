@@ -22,6 +22,10 @@ class EndpointUrl {
     create_movie = () => `/phim`;
     update_movie = (id: string) => `/phim/${id}`;
     delete_movie = (id: string) => `/phim/${id}`;
+    //Tap phim
+    delete_episode = (episode: string) => `/phim/tap-phim/${episode}`;
+    create_episodes = (movie_id: string) => `/phim/tap-phim/${movie_id}`;
+    update_episode = (episode_id: string) => `/phim/tap-phim/${episode_id}`;
 
     //Phim theo theo loai
     get_movies_by_genre = (slug: string) => `/the-loai/${slug}`;
