@@ -65,7 +65,7 @@ export default function CreateMoviePage() {
         }
     ];
 
-    const { createMovieMutation, isPeddingCreateMovie } = MoviesService.use_movies();
+    const { createMovieMutation, isPeddingCreateMovie } = MoviesService.use_movies({});
 
     const Submit = (data: FieldValues) => {
         createMovieMutation({

@@ -1,9 +1,9 @@
 "use client";
-
 import Link from "next/link";
-
-import { ConfigProvider, Table } from "antd";
+import { ConfigProvider, Spin, Table } from "antd";
 import { MoviesService } from "@/domain/phim/services";
+import { useState } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const columns = [
     {
@@ -59,7 +59,8 @@ const columns = [
 ];
 
 export default function MovieManagement() {
-    const { data: movies } = MoviesService.use_movies();
+    const [page, setPage] = useState(1);
+    const { data: movies } = MoviesService.use_movies({ page: page, limit: 10 });
 
     return (
         <div>
@@ -77,7 +78,21 @@ export default function MovieManagement() {
                         }
                     }}
                 >
-                    <Table dataSource={movies?.data} columns={columns} loading={!movies} />
+                    <Table
+                        dataSource={movies?.data}
+                        columns={columns}
+                        loading={{
+                            spinning: !movies,
+                            indicator: <Spin size="large" indicator={<LoadingOutlined spin />} />,
+                            tip: "Đang tải dữ liệu..." // Custom message
+                        }}
+                        pagination={{
+                            pageSize: 10,
+                            total: movies?.pagination.totalRows,
+                            onChange: (page) => setPage(page),
+                            position: ["bottomCenter"]
+                        }}
+                    />
                 </ConfigProvider>
             </div>
         </div>

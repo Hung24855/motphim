@@ -149,9 +149,11 @@ export default function Header({ session }: { session: Session | null }) {
                                     {/* Content of the dropdown */}
                                     <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
                                         {genres?.data.map((item) => (
-                                            <div className="whitespace-nowrap hover:text-primary" key={item.id}>
-                                                {item.name}
-                                            </div>
+                                            <Link href={`/the-loai/${item.slug}`}>
+                                                <div className="whitespace-nowrap hover:text-primary" key={item.id}>
+                                                    {item.name}
+                                                </div>
+                                            </Link>
                                         ))}
                                     </div>
                                 </div>
@@ -168,9 +170,11 @@ export default function Header({ session }: { session: Session | null }) {
                                     {/* Content of the dropdown */}
                                     <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
                                         {countries?.data.map((item) => (
-                                            <div className="whitespace-nowrap hover:text-primary" key={item.id}>
-                                                {item.name}
-                                            </div>
+                                            <Link href={`/quoc-gia/${item.slug}`}>
+                                                <div className="whitespace-nowrap hover:text-primary" key={item.id}>
+                                                    {item.name}
+                                                </div>
+                                            </Link>
                                         ))}
                                     </div>
                                 </div>

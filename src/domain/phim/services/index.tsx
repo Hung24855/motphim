@@ -1,9 +1,17 @@
 import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { MoviesApi } from "../api";
-import { DataGetMovieDetailDTO, DataGetMoviesDTO } from "../dto";
+import { DataGetMovieDetailDTO, DataGetMoviesByCountryDTO, DataGetMoviesByGenreDTO, DataGetMoviesDTO } from "../dto";
 import { useMutation } from "@tanstack/react-query";
-import { IDataCreateEpisodeType, IDataCreateMovieType, IDataUpdateEpisodeType, IDataUpdateMovieType } from "../model";
+import {
+    IDataCreateEpisodeType,
+    IDataCreateMovieType,
+    IDataGetAllMoviesByCountry,
+    IDataGetAllMoviesByGenre,
+    IDataGetAllMoviesType,
+    IDataUpdateEpisodeType,
+    IDataUpdateMovieType
+} from "../model";
 
 interface ICreateMovieMutation {
     data: IDataCreateMovieType;
@@ -59,9 +67,15 @@ export class MoviesService {
         return { data, isFetching, isError, refetch };
     }
 
-    static get_movies_by_genre(slug: string) {
-        const { data } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_MOVIE_BY_GENRE, slug], () =>
-            MoviesApi.get_movies_by_genre(slug)
+    static get_movies_by_genre({ slug, page, limit }: IDataGetAllMoviesByGenre) {
+        const { data } = useFetcher<DataGetMoviesByGenreDTO>([QUERY_KEY.GET_MOVIE_BY_GENRE, slug, page], () =>
+            MoviesApi.get_movies_by_genre({ slug, page, limit })
+        );
+        return { data };
+    }
+    static get_movies_by_country({ slug, page, limit }: IDataGetAllMoviesByCountry) {
+        const { data } = useFetcher<DataGetMoviesByCountryDTO>([QUERY_KEY.GET_MOVIE_BY_COUNTRY, slug, page], () =>
+            MoviesApi.get_movies_by_country({ slug, page, limit })
         );
         return { data };
     }
@@ -73,8 +87,10 @@ export class MoviesService {
         return { data };
     }
 
-    static use_movies() {
-        const { data } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_LIST_MOVIES], () => MoviesApi.get_movies());
+    static use_movies({ page, limit }: IDataGetAllMoviesType) {
+        const { data } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_LIST_MOVIES, page], () =>
+            MoviesApi.get_movies({ page, limit })
+        );
         const { mutate: mutateCreate, isPending: isPeddingCreateMovie } = useMutation({
             mutationFn: (data: IDataCreateMovieType) => MoviesApi.create_movie(data)
         });

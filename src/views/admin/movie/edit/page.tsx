@@ -23,7 +23,7 @@ export interface Episode {
 export type FieldValues = IDataUpdateMovieType;
 
 export default function EditMoviePage({ slug }: { slug: string }) {
-    const queryClient = useQueryClient();
+    // const queryClient = useQueryClient();
     const {
         control,
         handleSubmit,
@@ -35,7 +35,7 @@ export default function EditMoviePage({ slug }: { slug: string }) {
         reValidateMode: "onSubmit"
     });
     const { data: response, refetch: refetchMovieDetail } = MoviesService.get_movie(slug);
-    const { updateMovieMutation, isPeddingUpdateMovie } = MoviesService.use_movies();
+    const { updateMovieMutation, isPeddingUpdateMovie } = MoviesService.use_movies({});
     const movie = response?.data[0];
     // const movie = false;
     if (!movie)

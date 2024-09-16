@@ -1,6 +1,14 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
-import { IDataCreateEpisodeType, IDataCreateMovieType, IDataUpdateEpisodeType, IDataUpdateMovieType } from "../model";
+import {
+    IDataCreateEpisodeType,
+    IDataCreateMovieType,
+    IDataGetAllMoviesByCountry,
+    IDataGetAllMoviesByGenre,
+    IDataGetAllMoviesType,
+    IDataUpdateEpisodeType,
+    IDataUpdateMovieType
+} from "../model";
 
 export class MoviesApi {
     static async get_movie(slug: string) {
@@ -11,9 +19,14 @@ export class MoviesApi {
             console.log("Error: get_movie ", error);
         }
     }
-    static async get_movies() {
+    static async get_movies(params: IDataGetAllMoviesType) {
         try {
-            const { data } = await http.get(ENDPOINT_URL.get_movies());
+            const { data } = await http.get(ENDPOINT_URL.get_movies(), {
+                params: {
+                    page: params.page ?? 1,
+                    limit: params.limit ?? 10
+                }
+            });
             return data;
         } catch (error) {
             console.log("Error: get_movies ", error);
@@ -27,19 +40,22 @@ export class MoviesApi {
             console.log("Error: get_movies_by_type ", error);
         }
     }
-    static async get_movies_by_genre(slug: string) {
+    static async get_movies_by_genre(params: IDataGetAllMoviesByGenre) {
         try {
-            const { data } = await http.get(ENDPOINT_URL.get_movies_by_genre(slug));
-            console.log(ENDPOINT_URL.get_movies_by_genre(slug));
+            const { data } = await http.get(ENDPOINT_URL.get_movies_by_genre(params.slug), {
+                params: { page: params?.page ?? 1, limit: params?.limit ?? 20 }
+            });
 
             return data;
         } catch (error) {
             console.log("Error: get_movies_by_genre ", error);
         }
     }
-    static async get_movies_by_country(slug: string) {
+    static async get_movies_by_country(params: IDataGetAllMoviesByCountry) {
         try {
-            const { data } = await http.get(ENDPOINT_URL.get_movies_by_country(slug));
+            const { data } = await http.get(ENDPOINT_URL.get_movies_by_country(params.slug), {
+                params: { page: params?.page ?? 1, limit: params?.limit ?? 20 }
+            });
             return data;
         } catch (error) {
             console.log("Error: get_movies_by_country ", error);

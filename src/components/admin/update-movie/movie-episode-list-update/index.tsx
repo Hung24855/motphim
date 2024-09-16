@@ -93,7 +93,10 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                             <Spin
                                                 indicator={<LoadingOutlined spin />}
                                                 size="large"
-                                                spinning={isPeddingUpdateEpisode}
+                                                spinning={
+                                                    isPeddingUpdateEpisode &&
+                                                    UpdateEpisode?.episode_id === episode.episode_id
+                                                }
                                             >
                                                 <button
                                                     type="button"

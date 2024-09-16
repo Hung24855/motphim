@@ -42,3 +42,16 @@ export type IDataCreateEpisodeType = {
 export type IDataUpdateEpisodeType = {
     episodes: { name: string; link: string; slug: string };
 };
+
+export type IDataGetAllMoviesType = {
+    page?: number;
+    limit?: number;
+};
+
+export type IDataGetAllMoviesByGenre = {
+    slug: string;
+    page?: number;
+    limit?: number;
+};
+
+export type IDataGetAllMoviesByCountry = IDataGetAllMoviesByGenre;

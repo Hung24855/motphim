@@ -1,6 +1,6 @@
-export default function MovieCardSkeleton() {
+export default function MovieCardSkeleton( key:any) {
     return (
-        <div className="animate-pulse overflow-hidden rounded-lg bg-gray-800">
+        <div className="animate-pulse overflow-hidden rounded-lg bg-gray-800" key={key}>
             {/* Movie Poster Skeleton */}
             <div className="h-64 w-full bg-gray-700"></div>
 

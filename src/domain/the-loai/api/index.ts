@@ -1,7 +1,6 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
 import { IDataCreateGenres } from "../model";
-import { GetAllGenresDTO } from "../dto";
 
 export class GenresApi {
     static async get_all_genres() {
@@ -12,7 +11,6 @@ export class GenresApi {
             console.log("Error: get_all_genres ", error);
         }
     }
-
     static async create_genres(data: IDataCreateGenres) {
         try {
             const { data: res } = await http.post(ENDPOINT_URL.create_genre(), data);

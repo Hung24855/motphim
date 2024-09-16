@@ -22,14 +22,14 @@ const TITLE: TitleType[] = [
     }
 ];
 
-const ListMovieSkeleton = () => {
+export const ListMovieSkeleton = () => {
     return (
-        <MaxWidth className="pb-10 pt-24 px-2">
+        <MaxWidth className="px-2 pb-10 pt-24">
             {/* Title */}
             {/* <div className="w-[200px] animate-pulse rounded-md bg-gray-800 py-3 ml-4"></div> */}
             <div className="mt-2 grid grid-cols-2 gap-2 px-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 120].map((_, index) => (
-                    <MovieCardSkeleton />
+                    <MovieCardSkeleton key={index} />
                 ))}
             </div>
         </MaxWidth>
@@ -40,7 +40,6 @@ export default function ListMovie({ params }: { params: { slug: string } }) {
     const isTitle = TITLE.filter((item) => item.slug === params.slug)[0];
     if (!isTitle) return notFound();
     const { data: response } = MoviesService.get_movies_by_type(isTitle.slug);
-  
 
     if (!response) return <ListMovieSkeleton></ListMovieSkeleton>;
 

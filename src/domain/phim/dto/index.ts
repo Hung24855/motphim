@@ -61,3 +61,45 @@ export interface DataGetMoviesDTO {
         totalPages: number;
     };
 }
+
+export interface DataGetMoviesByCountryDTO {
+    status: string;
+    message: string;
+    data: {
+        movie_name: string;
+        slug: string;
+        year: number;
+        image: string;
+        time_per_episode: string;
+        episode_current: string;
+        lang: string;
+        country_name: string;
+    }[];
+    pagination: {
+        totalRows: number;
+        currentPage: number;
+        pageSize: number;
+        totalPages: number;
+    };
+}
+
+export interface DataGetMoviesByGenreDTO {
+    status: string;
+    message: string;
+    data: {
+        movie_name: string;
+        slug: string;
+        year: number;
+        image: string;
+        time_per_episode: string;
+        episode_current: string;
+        lang: string;
+        genre_name: string;
+    }[];
+    pagination: {
+        totalRows: number;
+        currentPage: number;
+        pageSize: number;
+        totalPages: number;
+    };
+}

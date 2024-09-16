@@ -39,7 +39,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     let select =
-        "movies.movie_name, movies.slug, movies.year, movies.content , movies.image, movies.time_per_episode, movies.episode_current,movies.lang";
+        "movies.movie_name, movies.slug, movies.year, movies.content , movies.image, movies.time_per_episode, movies.episode_current,movies.lang,genres.name as genre_name";
 
     let join =
         "INNER JOIN movie_genre ON movies.id = movie_genre.movie_id INNER JOIN genres ON movie_genre.genres_id = genres.id";
@@ -58,7 +58,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         if (movies.rows.length === 0) {
             return NextResponse.json({
                 status: "success",
-                message: "Phim không tồn tại!",
+                message: "Không có phim thuộc thể loại này!",
+                genre: "",
                 data: [],
                 pagination: {
                     totalRows: Number(totalRows.rows[0].count),
