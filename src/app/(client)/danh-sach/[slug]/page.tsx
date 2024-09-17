@@ -2,9 +2,9 @@
 import Pagination from "@/base/libs/pagination";
 import MaxWidth from "@/components/layout/max-width";
 import MovieCard from "@/components/shared/movie-card";
-import MovieCardSkeleton from "@/components/shared/movie-card-skeleton";
 import { MoviesService } from "@/domain/phim/services";
 import { notFound } from "next/navigation";
+
 
 type TitleType = {
     title: string;
@@ -22,26 +22,13 @@ const TITLE: TitleType[] = [
     }
 ];
 
-export const ListMovieSkeleton = () => {
-    return (
-        <MaxWidth className="px-2 pb-10 pt-24">
-            {/* Title */}
-            {/* <div className="w-[200px] animate-pulse rounded-md bg-gray-800 py-3 ml-4"></div> */}
-            <div className="mt-2 grid grid-cols-2 gap-2 px-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 120].map((_, index) => (
-                    <MovieCardSkeleton key={index} />
-                ))}
-            </div>
-        </MaxWidth>
-    );
-};
 
 export default function ListMovie({ params }: { params: { slug: string } }) {
     const isTitle = TITLE.filter((item) => item.slug === params.slug)[0];
     if (!isTitle) return notFound();
     const { data: response } = MoviesService.get_movies_by_type(isTitle.slug);
 
-    if (!response) return <ListMovieSkeleton></ListMovieSkeleton>;
+    if (!response) return null;
 
     // console.log(response.pagination.totalPages);
 

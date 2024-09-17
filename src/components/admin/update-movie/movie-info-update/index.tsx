@@ -99,7 +99,7 @@ export default function MovieInfoUpdate({ control, errors, movie }: Props) {
                             placeholder="45 Phút/tập"
                             required
                             error={errors.time_per_episode}
-                            tranform="buttom"
+                            tranformMessagError="buttom"
                         />
                     )}
                 />
@@ -115,7 +115,7 @@ export default function MovieInfoUpdate({ control, errors, movie }: Props) {
                             placeholder="5"
                             error={errors.episode_current}
                             required
-                            tranform="buttom"
+                            tranformMessagError="buttom"
                         />
                     )}
                 />
@@ -131,7 +131,7 @@ export default function MovieInfoUpdate({ control, errors, movie }: Props) {
                             placeholder="40"
                             error={errors.episode_total}
                             required
-                            tranform="buttom"
+                            tranformMessagError="buttom"
                         />
                     )}
                 />
@@ -147,7 +147,7 @@ export default function MovieInfoUpdate({ control, errors, movie }: Props) {
                             placeholder="2024"
                             error={errors.year}
                             required
-                            tranform="buttom"
+                            tranformMessagError="buttom"
                         />
                     )}
                 />
@@ -163,7 +163,7 @@ export default function MovieInfoUpdate({ control, errors, movie }: Props) {
                             placeholder="HD"
                             error={errors.quality}
                             required
-                            tranform="buttom"
+                            tranformMessagError="buttom"
                         />
                     )}
                 />

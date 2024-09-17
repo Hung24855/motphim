@@ -73,7 +73,7 @@ export default function MovieManagement() {
                     theme={{
                         components: {
                             Table: {
-                                headerBg: "#fafafa"
+                                headerBg: "#f3f4f6"
                             }
                         }
                     }}

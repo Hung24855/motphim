@@ -1,12 +1,14 @@
 "use client";
-import { ListMovieSkeleton } from "@/app/(client)/danh-sach/[slug]/page";
+
 import Pagination from "@/base/libs/pagination";
 import MaxWidth from "@/components/layout/max-width";
 import MovieCard from "@/components/shared/movie-card";
+import { ListMovieSkeleton } from "@/components/shared/movie-card-skeleton";
 import { MoviesService } from "@/domain/phim/services";
 export default function CountriesPage({ slug }: { slug: string }) {
     const { data: movies } = MoviesService.get_movies_by_country({ slug, page: 1, limit: 20 });
     if (!movies) return <ListMovieSkeleton />;
+    
     return (
         <MaxWidth className="min-h-screen text-white">
             {movies.data.length > 0 ? (

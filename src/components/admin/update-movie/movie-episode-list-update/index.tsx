@@ -18,12 +18,21 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
 
     useEffect(() => {
         setEpisodes([...movie.episodes]);
-    }, [movie]);
+    }, [movie.episodes]);
 
-    const [UpdateEpisode, setUpdateEpisode] = useState<Episode>({} as Episode);
-    const [DeleteEpisode, setDeleteEpisode] = useState<Episode>({} as Episode);
+    const [UpdateEpisode, setUpdateEpisode] = useState<Episode | null>(null);
+    const [DeleteEpisode, setDeleteEpisode] = useState<Episode | null>(null);
     const { deleteEpisodeMutation, updateEpisodeMutation, isPeddingDeleteEpisode, isPeddingUpdateEpisode } =
         MoviesService.use_episodes();
+
+    const handleInputChange = (field: keyof Episode, value: string) => {
+        if (UpdateEpisode) {
+            setUpdateEpisode({
+                ...UpdateEpisode,
+                [field]: value
+            });
+        }
+    };
 
     return (
         <div className="min-w-max">
@@ -43,11 +52,13 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                 <td className="border border-gray-300">
                                     <input
                                         type="text"
-                                        placeholder="1"
-                                        defaultValue={episode.name}
-                                        onChange={(e) => {
-                                            setUpdateEpisode({ ...UpdateEpisode, name: e.target.value });
-                                        }}
+                                        placeholder="Tên phim"
+                                        value={
+                                            UpdateEpisode?.episode_id === episode.episode_id
+                                                ? UpdateEpisode.name
+                                                : episode.name
+                                        }
+                                        onChange={(e) => handleInputChange("name", e.target.value)}
                                         disabled={episode.episode_id !== UpdateEpisode?.episode_id}
                                         className={clsx("w-full px-4 py-2 outline-none disabled:bg-gray-200")}
                                     />
@@ -55,11 +66,13 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                 <td className="border border-gray-300">
                                     <input
                                         type="text"
-                                        placeholder="tap-1"
-                                        defaultValue={episode.slug}
-                                        onChange={(e) => {
-                                            setUpdateEpisode({ ...UpdateEpisode, slug: e.target.value });
-                                        }}
+                                        placeholder="Slug"
+                                        value={
+                                            UpdateEpisode?.episode_id === episode.episode_id
+                                                ? UpdateEpisode.slug
+                                                : episode.slug
+                                        }
+                                        onChange={(e) => handleInputChange("slug", e.target.value)}
                                         disabled={episode.episode_id !== UpdateEpisode?.episode_id}
                                         className={clsx("w-full px-4 py-2 outline-none disabled:bg-gray-200")}
                                     />
@@ -68,109 +81,99 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                     <input
                                         type="text"
                                         placeholder="Link phim"
-                                        defaultValue={episode.link}
-                                        onChange={(e) => {
-                                            setUpdateEpisode({ ...UpdateEpisode, link: e.target.value });
-                                        }}
+                                        value={
+                                            UpdateEpisode?.episode_id === episode.episode_id
+                                                ? UpdateEpisode.link
+                                                : episode.link
+                                        }
+                                        onChange={(e) => handleInputChange("link", e.target.value)}
                                         disabled={episode.episode_id !== UpdateEpisode?.episode_id}
                                         className={clsx("w-full px-4 py-2 outline-none disabled:bg-gray-200")}
                                     />
                                 </td>
                                 <td className="w-52 border border-gray-300 px-2">
-                                    {
-                                        <div className="flex gap-x-1">
-                                            {UpdateEpisode?.episode_id === episode.episode_id && (
-                                                <button
-                                                    type="button"
-                                                    className="rounded bg-gray-500 px-2 py-1 text-white"
-                                                    onClick={() => {
-                                                        setUpdateEpisode({} as Episode);
-                                                    }}
-                                                >
-                                                    Hủy
-                                                </button>
-                                            )}
-                                            <Spin
-                                                indicator={<LoadingOutlined spin />}
-                                                size="large"
-                                                spinning={
-                                                    isPeddingUpdateEpisode &&
-                                                    UpdateEpisode?.episode_id === episode.episode_id
-                                                }
+                                    <div className="flex gap-x-1">
+                                        {UpdateEpisode?.episode_id === episode.episode_id && (
+                                            <button
+                                                type="button"
+                                                className="rounded bg-gray-500 px-2 py-1 text-white"
+                                                onClick={() => setUpdateEpisode(null)}
                                             >
-                                                <button
-                                                    type="button"
-                                                    className={clsx("rounded bg-green-600 px-2 py-1 text-white", {
-                                                        "bg-gray-500": UpdateEpisode?.episode_id !== episode.episode_id
-                                                    })}
-                                                    onClick={() => {
-                                                        setUpdateEpisode(episode);
-
-                                                        if (UpdateEpisode?.name) {
-                                                            const confirm = window.confirm(
-                                                                "Bạn có chắc chắn muốn cập nhật tập phim này không?"
-                                                            );
-
-                                                            if (confirm) {
-                                                                updateEpisodeMutation({
-                                                                    data: {
-                                                                        episode_id: episode.episode_id,
-                                                                        data: { episodes: UpdateEpisode }
-                                                                    },
-                                                                    onError: () => {
-                                                                        toast.error("Cập nhật tập phim thất bại!");
-                                                                    },
-                                                                    onSuccess: () => {
-                                                                        toast.success("Cập nhật tập phim thành công!");
-                                                                        refetchMovieDetail();
-                                                                        setUpdateEpisode({} as Episode);
-                                                                    }
-                                                                });
-                                                            }
-                                                        }
-                                                    }}
-                                                >
-                                                    {UpdateEpisode?.episode_id === episode.episode_id
-                                                        ? "Cập nhật"
-                                                        : "Sửa"}
-                                                </button>
-                                            </Spin>
-                                            <Spin
-                                                spinning={
-                                                    isPeddingDeleteEpisode &&
-                                                    DeleteEpisode?.episode_id === episode.episode_id
-                                                }
-                                                indicator={<LoadingOutlined spin />}
-                                            >
-                                                <button
-                                                    type="button"
-                                                    className="rounded bg-red-600 px-2 py-1 text-white"
-                                                    onClick={() => {
-                                                        setDeleteEpisode(episode);
-
+                                                Hủy
+                                            </button>
+                                        )}
+                                        <Spin
+                                            indicator={<LoadingOutlined spin />}
+                                            spinning={
+                                                isPeddingUpdateEpisode &&
+                                                UpdateEpisode?.episode_id === episode.episode_id
+                                            }
+                                        >
+                                            <button
+                                                type="button"
+                                                className={clsx("rounded bg-green-600 px-2 py-1 text-white", {
+                                                    "bg-gray-500": UpdateEpisode?.episode_id !== episode.episode_id
+                                                })}
+                                                onClick={() => {
+                                                    if (UpdateEpisode?.episode_id === episode.episode_id) {
                                                         const confirm = window.confirm(
-                                                            "Bạn có chắc chắn muốn xóa tập phim này không?"
+                                                            "Bạn có chắc chắn muốn cập nhật tập phim này không?"
                                                         );
-
                                                         if (confirm) {
-                                                            deleteEpisodeMutation({
-                                                                episode_id: episode.episode_id,
+                                                            updateEpisodeMutation({
+                                                                data: {
+                                                                    episode_id: episode.episode_id,
+                                                                    data: { episodes: UpdateEpisode }
+                                                                },
                                                                 onError: () => {
-                                                                    toast.error("Cố lỗi xảy ra!");
+                                                                    toast.error("Cập nhật tập phim thất bại!");
                                                                 },
                                                                 onSuccess: () => {
-                                                                    toast.success("Xóa tập phim thành công!");
+                                                                    toast.success("Cập nhật tập phim thành công!");
                                                                     refetchMovieDetail();
+                                                                    setUpdateEpisode(null);
                                                                 }
                                                             });
                                                         }
-                                                    }}
-                                                >
-                                                    Xóa
-                                                </button>
-                                            </Spin>
-                                        </div>
-                                    }
+                                                    } else {
+                                                        setUpdateEpisode(episode);
+                                                    }
+                                                }}
+                                            >
+                                                {UpdateEpisode?.episode_id === episode.episode_id ? "Cập nhật" : "Sửa"}
+                                            </button>
+                                        </Spin>
+                                        <Spin
+                                            spinning={
+                                                isPeddingDeleteEpisode &&
+                                                DeleteEpisode?.episode_id === episode.episode_id
+                                            }
+                                            indicator={<LoadingOutlined spin />}
+                                        >
+                                            <button
+                                                type="button"
+                                                className="rounded bg-red-600 px-2 py-1 text-white"
+                                                onClick={() => {
+                                                    setDeleteEpisode(episode);
+                                                    const confirm = window.confirm(
+                                                        "Bạn có chắc chắn muốn xóa tập phim này không?"
+                                                    );
+                                                    if (confirm) {
+                                                        deleteEpisodeMutation({
+                                                            episode_id: episode.episode_id,
+                                                            onError: () => toast.error("Có lỗi xảy ra!"),
+                                                            onSuccess: () => {
+                                                                toast.success("Xóa tập phim thành công!");
+                                                                refetchMovieDetail();
+                                                            }
+                                                        });
+                                                    }
+                                                }}
+                                            >
+                                                Xóa
+                                            </button>
+                                        </Spin>
+                                    </div>
                                 </td>
                             </tr>
                         ))}

@@ -18,6 +18,10 @@ export default function CreateEpisodeUpdate({
     const { createEpisodeMutation, isPeddingCreateEpisode } = MoviesService.use_episodes();
 
     const CreateEpisodes = () => {
+        if (Episodes.length === 0) {
+            toast.error("Vui lòng thêm tập phim!");
+            return;
+        }
         createEpisodeMutation({
             data: {
                 movie_id: movie_id,

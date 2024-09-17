@@ -1,6 +1,9 @@
-export default function MovieCardSkeleton( key:any) {
+import MaxWidth from "@/components/layout/max-width";
+import { Fragment } from "react";
+
+export function MovieCardSkeleton() {
     return (
-        <div className="animate-pulse overflow-hidden rounded-lg bg-gray-800" key={key}>
+        <div className="animate-pulse overflow-hidden rounded-lg bg-gray-800">
             {/* Movie Poster Skeleton */}
             <div className="h-64 w-full bg-gray-700"></div>
 
@@ -14,3 +17,19 @@ export default function MovieCardSkeleton( key:any) {
         </div>
     );
 }
+
+export const ListMovieSkeleton = () => {
+    return (
+        <MaxWidth className="px-2 pb-10 pt-24">
+            {/* Title */}
+            {/* <div className="w-[200px] animate-pulse rounded-md bg-gray-800 py-3 ml-4"></div> */}
+            <div className="mt-2 grid grid-cols-2 gap-2 px-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => (
+                    <Fragment key={item}>
+                        <MovieCardSkeleton key={item} />
+                    </Fragment>
+                ))}
+            </div>
+        </MaxWidth>
+    );
+};

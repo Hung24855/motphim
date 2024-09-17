@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useState, ReactNode } from "react";
+import React, { useState, ReactNode, HTMLProps } from "react";
 
 interface Tab {
     label: string;
@@ -8,11 +8,11 @@ interface Tab {
 
 interface TabsProps {
     tabs: Tab[];
-    className?: string;
-    contentClassName?: string;
+    buttonHeaderclassName?: HTMLProps<HTMLDivElement>["className"];
+    contentWraperClassName?: HTMLProps<HTMLDivElement>["className"];
 }
 
-const Tabs: React.FC<TabsProps> = ({ tabs, className, contentClassName }) => {
+const Tabs: React.FC<TabsProps> = ({ tabs, buttonHeaderclassName, contentWraperClassName }) => {
     const [activeTab, setActiveTab] = useState(0);
 
     return (
@@ -29,7 +29,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs, className, contentClassName }) => {
                                     activeTab === index,
                                 "border-b-[1px] border-b-blue-200": activeTab !== index
                             },
-                            className
+                            buttonHeaderclassName
                         )}
                         onClick={() => setActiveTab(index)}
                     >
@@ -42,11 +42,11 @@ const Tabs: React.FC<TabsProps> = ({ tabs, className, contentClassName }) => {
             <div
                 className={clsx(
                     "tab-content border border-blue-200 border-t-transparent bg-white px-4 py-2",
-                    contentClassName
+                    contentWraperClassName
                 )}
             >
                 {tabs.map((tab, index) => (
-                    <div key={index} className={clsx({ hidden: activeTab !== index }, contentClassName)}>
+                    <div key={index} className={clsx({ hidden: activeTab !== index })}>
                         {tab.content}
                     </div>
                 ))}

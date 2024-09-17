@@ -2,13 +2,21 @@ interface InputProps {
     label: string;
     placeholder?: string;
     required?: boolean;
-    field: any;
+    field?: any;
     error?: any;
     type?: "password" | "text" | "textarea";
-    tranform?: "right" | "buttom";
+    tranformMessagError?: "right" | "buttom";
 }
 
-const Input = ({ label, placeholder, required, field, error, type = "text", tranform = "right" }: InputProps) => {
+const Input = ({
+    label,
+    placeholder,
+    required,
+    field,
+    error,
+    type = "text",
+    tranformMessagError = "right"
+}: InputProps) => {
     return (
         <div className="mb-3 w-full">
             <div className="flex items-center justify-between">
@@ -16,7 +24,9 @@ const Input = ({ label, placeholder, required, field, error, type = "text", tran
                     {label}
                     {required && <span className="text-red-600">*</span>}
                 </label>
-                {error && tranform === "right" && <span className="text-sm text-red-600">{error?.message}</span>}
+                {error && tranformMessagError === "right" && (
+                    <span className="text-sm text-red-600">{error?.message}</span>
+                )}
             </div>
 
             {type === "textarea" ? (
@@ -35,7 +45,7 @@ const Input = ({ label, placeholder, required, field, error, type = "text", tran
                 />
             )}
             <div className="w-max">
-                {error && tranform === "buttom" && <span className="text-red-600">{error?.message}</span>}
+                {error && tranformMessagError === "buttom" && <span className="text-red-600">{error?.message}</span>}
             </div>
         </div>
     );

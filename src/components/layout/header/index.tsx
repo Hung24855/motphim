@@ -145,11 +145,11 @@ export default function Header({ session }: { session: Session | null }) {
                             </span>
                             {/* Dropdown menu */}
                             {genres?.data && (
-                                <div className="dropdown">
+                                <div className="dropdown" >
                                     {/* Content of the dropdown */}
                                     <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
                                         {genres?.data.map((item) => (
-                                            <Link href={`/the-loai/${item.slug}`}>
+                                            <Link href={`/the-loai/${item.slug}`} key={item.id}>
                                                 <div className="whitespace-nowrap hover:text-primary" key={item.id}>
                                                     {item.name}
                                                 </div>
@@ -170,7 +170,7 @@ export default function Header({ session }: { session: Session | null }) {
                                     {/* Content of the dropdown */}
                                     <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
                                         {countries?.data.map((item) => (
-                                            <Link href={`/quoc-gia/${item.slug}`}>
+                                            <Link href={`/quoc-gia/${item.slug}`} key={item.id}>
                                                 <div className="whitespace-nowrap hover:text-primary" key={item.id}>
                                                     {item.name}
                                                 </div>
