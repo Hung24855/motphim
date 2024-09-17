@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import clsx from "clsx";
 import { Episode, MoviesDTO } from "@/domain/phim/dto";
 import { MoviesService } from "@/domain/phim/services";
 import { toast } from "react-toastify";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import Modal from "@/base/libs/modal";
+import { FaRegEdit, FaEye } from "react-icons/fa";
+import { IoTrashBinSharp } from "react-icons/io5";
 
 interface Props {
     movie: MoviesDTO;
@@ -34,22 +37,53 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
         }
     };
 
+    const HandleChangeEpisode = (type: "update" | "delete") => {
+        if (DeleteEpisode && type === "delete") {
+            deleteEpisodeMutation({
+                episode_id: DeleteEpisode.episode_id,
+                onError: () => toast.error("Có lỗi xảy ra!"),
+                onSuccess: () => {
+                    toast.success("Xóa tập phim thành công!");
+                    refetchMovieDetail();
+                    setDeleteEpisode(null);
+                }
+            });
+        }
+
+        if (UpdateEpisode && type === "update") {
+            updateEpisodeMutation({
+                data: {
+                    episode_id: UpdateEpisode.episode_id,
+                    data: { episodes: UpdateEpisode }
+                },
+                onError: () => {
+                    toast.error("Cập nhật tập phim thất bại!");
+                },
+                onSuccess: () => {
+                    toast.success("Cập nhật tập phim thành công!");
+                    refetchMovieDetail();
+                    setUpdateEpisode(null);
+                }
+            });
+        }
+    };
+
     return (
         <div className="min-w-max">
             <div className="mt-3">
                 <table className="min-w-full border-collapse border border-gray-200">
                     <thead>
                         <tr className="bg-gray-100">
-                            <th className="w-40 border border-gray-300 px-4 py-2 text-left">Tên phim</th>
-                            <th className="w-40 border border-gray-300 px-4 py-2 text-left">Slug</th>
+                            <th className="border border-gray-300 px-4 py-2 text-left">Tên phim</th>
+                            <th className="border border-gray-300 px-4 py-2 text-left">Slug</th>
                             <th className="border border-gray-300 px-4 py-2 text-left">Link phim</th>
                             <th className="border border-gray-300 px-4 py-2 text-left">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         {Episodes.map((episode, index) => (
-                            <tr className="hover:bg-gray-50" key={index}>
-                                <td className="border border-gray-300">
+                            <tr key={index}>
+                                <td className="w-1/5 border border-gray-300">
                                     <input
                                         type="text"
                                         placeholder="Tên phim"
@@ -63,7 +97,7 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                         className={clsx("w-full px-4 py-2 outline-none disabled:bg-gray-200")}
                                     />
                                 </td>
-                                <td className="border border-gray-300">
+                                <td className="w-1/5 border border-gray-300">
                                     <input
                                         type="text"
                                         placeholder="Slug"
@@ -77,7 +111,7 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                         className={clsx("w-full px-4 py-2 outline-none disabled:bg-gray-200")}
                                     />
                                 </td>
-                                <td className="border border-gray-300">
+                                <td className="w-2/5 border border-gray-300">
                                     <input
                                         type="text"
                                         placeholder="Link phim"
@@ -91,8 +125,8 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                         className={clsx("w-full px-4 py-2 outline-none disabled:bg-gray-200")}
                                     />
                                 </td>
-                                <td className="w-52 border border-gray-300 px-2">
-                                    <div className="flex gap-x-1">
+                                <td className="w-1/5 border border-gray-300 px-2">
+                                    <div className="flex items-center justify-center gap-x-1">
                                         {UpdateEpisode?.episode_id === episode.episode_id && (
                                             <button
                                                 type="button"
@@ -111,36 +145,25 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                         >
                                             <button
                                                 type="button"
-                                                className={clsx("rounded bg-green-600 px-2 py-1 text-white", {
-                                                    "bg-gray-500": UpdateEpisode?.episode_id !== episode.episode_id
+                                                className={clsx("flex items-center gap-x-1 rounded px-2 py-1", {
+                                                    "bg-green-600 text-white":
+                                                        UpdateEpisode?.episode_id == episode.episode_id
                                                 })}
                                                 onClick={() => {
                                                     if (UpdateEpisode?.episode_id === episode.episode_id) {
-                                                        const confirm = window.confirm(
-                                                            "Bạn có chắc chắn muốn cập nhật tập phim này không?"
-                                                        );
-                                                        if (confirm) {
-                                                            updateEpisodeMutation({
-                                                                data: {
-                                                                    episode_id: episode.episode_id,
-                                                                    data: { episodes: UpdateEpisode }
-                                                                },
-                                                                onError: () => {
-                                                                    toast.error("Cập nhật tập phim thất bại!");
-                                                                },
-                                                                onSuccess: () => {
-                                                                    toast.success("Cập nhật tập phim thành công!");
-                                                                    refetchMovieDetail();
-                                                                    setUpdateEpisode(null);
-                                                                }
-                                                            });
-                                                        }
+                                                        HandleChangeEpisode("update");
                                                     } else {
                                                         setUpdateEpisode(episode);
                                                     }
                                                 }}
                                             >
-                                                {UpdateEpisode?.episode_id === episode.episode_id ? "Cập nhật" : "Sửa"}
+                                                {UpdateEpisode?.episode_id === episode.episode_id ? (
+                                                    "Cập nhật"
+                                                ) : (
+                                                    <Fragment>
+                                                        <FaRegEdit size={15} /> Sửa
+                                                    </Fragment>
+                                                )}
                                             </button>
                                         </Spin>
                                         <Spin
@@ -152,25 +175,12 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                         >
                                             <button
                                                 type="button"
-                                                className="rounded bg-red-600 px-2 py-1 text-white"
+                                                className="flex items-center gap-x-1 rounded p-2 text-gray-600 hover:text-red-500"
                                                 onClick={() => {
                                                     setDeleteEpisode(episode);
-                                                    const confirm = window.confirm(
-                                                        "Bạn có chắc chắn muốn xóa tập phim này không?"
-                                                    );
-                                                    if (confirm) {
-                                                        deleteEpisodeMutation({
-                                                            episode_id: episode.episode_id,
-                                                            onError: () => toast.error("Có lỗi xảy ra!"),
-                                                            onSuccess: () => {
-                                                                toast.success("Xóa tập phim thành công!");
-                                                                refetchMovieDetail();
-                                                            }
-                                                        });
-                                                    }
                                                 }}
                                             >
-                                                Xóa
+                                                <IoTrashBinSharp size={15} /> Xóa
                                             </button>
                                         </Spin>
                                     </div>
@@ -180,6 +190,22 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                     </tbody>
                 </table>
             </div>
+
+            {/* Modal xóa tập phim */}
+            <Modal
+                textHeader="Xác nhận"
+                onClose={() => {
+                    setDeleteEpisode(null);
+                }}
+                onOk={() => {
+                    HandleChangeEpisode("delete");
+                }}
+                isOpen={!!DeleteEpisode}
+                textOk="Xóa"
+                loading={isPeddingDeleteEpisode}
+            >
+                {`Bạn có chắc chắn muốn xóa tập ${DeleteEpisode?.name} không ?`}
+            </Modal>
         </div>
     );
 }

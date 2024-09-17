@@ -5,6 +5,7 @@ import { MoviesService } from "@/domain/phim/services";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
+import { IoTrashBinSharp } from "react-icons/io5";
 
 export default function CreateEpisodeUpdate({
     movie_id,
@@ -71,8 +72,8 @@ export default function CreateEpisodeUpdate({
                     </thead>
                     <tbody>
                         {Episodes.map((episode, index) => (
-                            <tr className="hover:bg-gray-50" key={index}>
-                                <td className="border border-gray-300">
+                            <tr key={index}>
+                                <td className="border border-gray-300 w-1/5">
                                     <input
                                         type="text"
                                         placeholder="1"
@@ -88,7 +89,7 @@ export default function CreateEpisodeUpdate({
                                         )}
                                     />
                                 </td>
-                                <td className="border border-gray-300">
+                                <td className="border border-gray-300 w-1/5">
                                     <input
                                         type="text"
                                         placeholder="tap-1"
@@ -104,7 +105,7 @@ export default function CreateEpisodeUpdate({
                                         )}
                                     />
                                 </td>
-                                <td className="border border-gray-300">
+                                <td className="border border-gray-300 w-2/5">
                                     <input
                                         type="text"
                                         placeholder="Link phim"
@@ -120,12 +121,12 @@ export default function CreateEpisodeUpdate({
                                         )}
                                     />
                                 </td>
-                                <td className="border border-gray-300 px-4">
+                                <td className="border border-gray-300 px-4 w-1/5">
                                     {
-                                        <div className="flex gap-x-2">
+                                        <div className="flex justify-center gap-x-2">
                                             <button
                                                 type="button"
-                                                className="rounded bg-red-600 px-3 py-1 text-white"
+                                                className="flex items-center gap-x-1 rounded p-2 text-gray-600 hover:text-red-600"
                                                 onClick={() => {
                                                     const newEpisodes = Episodes.filter(
                                                         (item, i) => item.name !== episode.name
@@ -133,7 +134,7 @@ export default function CreateEpisodeUpdate({
                                                     setEpisodes(() => newEpisodes);
                                                 }}
                                             >
-                                                Xóa
+                                                <IoTrashBinSharp size={15} /> Xóa
                                             </button>
                                         </div>
                                     }

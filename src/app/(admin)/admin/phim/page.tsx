@@ -4,6 +4,8 @@ import { ConfigProvider, Spin, Table } from "antd";
 import { MoviesService } from "@/domain/phim/services";
 import { useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
+import { FaRegEdit, FaEye } from "react-icons/fa";
+import { IoTrashBinSharp } from "react-icons/io5";
 
 const columns = [
     {
@@ -47,12 +49,18 @@ const columns = [
         title: "Action",
         key: "action",
         render: (_: any, record: any) => (
-            <div className="flex gap-x-1">
-                <button className="rounded bg-blue-500 px-3 py-2 text-white">Ẩn</button>
+            <div className="flex items-center gap-x-1">
+                <button className="flex items-center gap-x-1 rounded p-2">
+                    <FaEye size={15} /> Ẩn
+                </button>
                 <Link href={`/admin/phim/sua/${record.slug}`}>
-                    <button className="rounded bg-green-500 px-3 py-2 text-white">Sửa</button>
+                    <button className="flex items-center gap-x-1 rounded p-2">
+                        <FaRegEdit size={15} /> Sửa
+                    </button>
                 </Link>
-                <button className="rounded bg-red-500 px-3 py-2 text-white">Xóa</button>
+                <button className="flex items-center gap-x-1 rounded p-2">
+                    <IoTrashBinSharp size={15} /> Xóa
+                </button>
             </div>
         )
     }

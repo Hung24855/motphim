@@ -1,6 +1,4 @@
 "use client";
-
-
 import Pagination from "@/base/libs/pagination";
 import MaxWidth from "@/components/layout/max-width";
 import MovieCard from "@/components/shared/movie-card";

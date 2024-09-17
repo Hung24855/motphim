@@ -10,9 +10,8 @@ import MovieClassificationUpdate from "@/components/admin/update-movie/movie-cla
 import MovieEpisodeListUpdate from "@/components/admin/update-movie/movie-episode-list-update";
 import Link from "next/link";
 import CreateEpisodeUpdate from "@/components/admin/update-movie/create-apisode-update";
-
 import { IDataUpdateMovieType } from "@/domain/phim/model";
-import { useQueryClient } from "@tanstack/react-query";
+
 
 export interface Episode {
     name: string;

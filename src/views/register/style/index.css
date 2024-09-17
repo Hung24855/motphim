@@ -1,4 +1,4 @@
-:where(.css-dev-only-do-not-override-qnu6hi).ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+.ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
     color: white;
     border-color: #295779;
     background: #295779;

@@ -2,7 +2,8 @@ import { Episode, FieldValues } from "@/views/admin/movie/create/page";
 import { Control, Controller, FieldErrors, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { useState } from "react";
 import clsx from "clsx";
-
+import { FaRegEdit, FaEye } from "react-icons/fa";
+import { IoTrashBinSharp } from "react-icons/io5";
 interface Props {
     control: Control<FieldValues, any>;
     errors: FieldErrors<FieldValues>;
@@ -47,7 +48,7 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                     <tbody>
                         {Episodes.map((episode, index) => (
                             <tr className="hover:bg-gray-50" key={index}>
-                                <td className="border border-gray-300 px-4 py-2">
+                                <td className="w-1/5 border border-gray-300 px-4 py-2">
                                     <Controller
                                         control={control}
                                         name={`episodes.${index}.name`}
@@ -66,7 +67,7 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                                         )}
                                     />
                                 </td>
-                                <td className="border border-gray-300 px-4 py-2">
+                                <td className="-1/5 border border-gray-300 px-4 py-2">
                                     <Controller
                                         control={control}
                                         name={`episodes.${index}.slug`}
@@ -85,7 +86,7 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                                         )}
                                     />
                                 </td>
-                                <td className="border border-gray-300 px-4 py-2">
+                                <td className="w-2/5 border border-gray-300 px-4 py-2">
                                     <Controller
                                         control={control}
                                         name={`episodes.${index}.link`}
@@ -104,20 +105,24 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                                         )}
                                     />
                                 </td>
-                                <td className="border border-gray-300 px-4 py-2">
-                                    {index !== 0 && (
-                                        <button
-                                            type="button"
-                                            className="rounded bg-red-600 px-2 text-white"
-                                            onClick={() => {
-                                                let NewEpisodes = getValues("episodes").filter((_, i) => i !== index);
-                                                setEpisodes(NewEpisodes);
-                                                setValue(`episodes`, NewEpisodes);
-                                            }}
-                                        >
-                                            Xóa
-                                        </button>
-                                    )}
+                                <td className="-1/5 border border-gray-300 px-4 py-2">
+                                    <div className="flex items-center justify-center gap-x-1">
+                                        {index !== 0 && (
+                                            <button
+                                                type="button"
+                                                className="flex items-center rounded p-2 text-gray-600 hover:text-red-600 gap-x-1"
+                                                onClick={() => {
+                                                    let NewEpisodes = getValues("episodes").filter(
+                                                        (_, i) => i !== index
+                                                    );
+                                                    setEpisodes(NewEpisodes);
+                                                    setValue(`episodes`, NewEpisodes);
+                                                }}
+                                            >
+                                                <IoTrashBinSharp size={15} /> Xóa
+                                            </button>
+                                        )}
+                                    </div>
                                 </td>
                             </tr>
                         ))}
