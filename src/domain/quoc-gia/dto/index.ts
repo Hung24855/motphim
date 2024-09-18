@@ -1,8 +1,6 @@
 import { ISuccessResponse } from "@/infrastructure/config/types/apiResponse";
 
 export interface CountriesDTO {
-    movie_id: string;
-    country_id: number;
     id: number;
     name: string;
     slug: string;

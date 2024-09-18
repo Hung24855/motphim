@@ -15,6 +15,7 @@ type ModalProps = {
     modalContainerClassName?: HTMLProps<HTMLDivElement>["className"];
     cancelButtonClassName?: HTMLProps<HTMLButtonElement>["className"];
     okButtonClassName?: HTMLProps<HTMLButtonElement>["className"];
+    headerModalClassName?: HTMLProps<HTMLButtonElement>["className"];
     width?: number;
     loading?: boolean;
     sizeSpin?: "small" | "default" | "large";
@@ -35,6 +36,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             modalContainerClassName,
             cancelButtonClassName,
             okButtonClassName,
+            headerModalClassName,
             width,
             isOpen,
             loading = false,
@@ -76,7 +78,9 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
                             >
                                 <IoClose className="cursor-pointer" size={20} />
                             </div>
-                            {textHeader && <div className="font-semibold">{textHeader}</div>}
+                            {textHeader && (
+                                <div className={clsx("font-semibold", headerModalClassName)}>{textHeader}</div>
+                            )}
                             {/* Content */}
                             <div>{children}</div>
                             {/* Footer */}

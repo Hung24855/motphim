@@ -7,12 +7,12 @@ class EndpointUrl {
 
     //the-loai
     get_genres = () => `/the-loai`;
-    create_genre = () => `${this.baseAdmin}/the-loai`;
+    create_genre = () => `/the-loai`;
     update_genre = (id: string) => `${this.baseAdmin}/the-loai/${id}`;
     delete_genre = (id: string) => `${this.baseAdmin}/the-loai/${id}`;
     //quoc-gia
     get_countries = () => `/quoc-gia`;
-    create_country = () => `${this.baseAdmin}/quoc-gia`;
+    create_country = () => `/quoc-gia`;
     update_country = (id: string) => `${this.baseAdmin}/quoc-gia/${id}`;
     delete_country = (id: string) => `${this.baseAdmin}/quoc-gia/${id}`;
     //Phim
@@ -33,4 +33,4 @@ class EndpointUrl {
     get_movies_by_country = (slug: string) => `/quoc-gia/${slug}`;
 }
 
-export const ENDPOINT_URL = new EndpointUrl();
+export const ENDPOINT_URL = new EndpointUrl(); 

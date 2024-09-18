@@ -1,3 +1,6 @@
-export default function GenresPageAmdin() {
-    return <div>GenresPageAmdin</div>;
+import GenresAdminView from "@/views/admin/genres";
+
+
+export default function GenresManegement() {
+    return <GenresAdminView />;
 }

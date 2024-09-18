@@ -7,7 +7,8 @@ const config: Config = {
             colors: {
                 primary: "#e4d804",
                 res: "#772727",
-                bg_primary: "#030A1B"
+                bg_primary: "#030A1B",
+                admin_primary: "#7c69ef"
             },
             backgroundImage: {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

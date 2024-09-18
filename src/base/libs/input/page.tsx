@@ -6,6 +6,8 @@ interface InputProps {
     error?: any;
     type?: "password" | "text" | "textarea";
     tranformMessagError?: "right" | "buttom";
+    [key: string]: any;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = ({
@@ -15,7 +17,9 @@ const Input = ({
     field,
     error,
     type = "text",
-    tranformMessagError = "right"
+    tranformMessagError = "right",
+    onChange,
+    ...rest
 }: InputProps) => {
     return (
         <div className="mb-3 w-full">
@@ -35,6 +39,8 @@ const Input = ({
                     {...field}
                     placeholder={placeholder}
                     rows={4}
+                    onChange={onChange}
+                    {...rest}
                 />
             ) : (
                 <input
@@ -42,6 +48,8 @@ const Input = ({
                     placeholder={placeholder}
                     {...field}
                     type={type}
+                    onChange={onChange}
+                    {...rest}
                 />
             )}
             <div className="w-max">

@@ -23,7 +23,7 @@ export async function POST(request: Request) {
             });
         }
         const res = await pool.query("INSERT INTO genres (name,slug) VALUES ($1,$2) RETURNING *", [body.name, body.slug]);
-        return NextResponse.json({ status: "success", message: "Thêm thể loại thành công", data: res.rows });
+        return NextResponse.json({ status: "success", message: "Thêm thể loại thành công!", data: res.rows });
     } catch (error) {
         console.log("Error: ", error);
 

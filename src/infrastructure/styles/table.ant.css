@@ -1,0 +1,11 @@
+.ant-table-wrapper .ant-table-tbody>tr>td {
+    padding: 4px;
+}
+
+.ant-table-wrapper .ant-table-tbody .ant-table-row >.ant-table-cell-row-hover {
+    background-color: #f2f0fd; 
+  }
+
+.ant-table-wrapper .ant-table-thead >tr>th {
+    background: #efefef;
+}

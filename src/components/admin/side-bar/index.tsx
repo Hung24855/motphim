@@ -3,10 +3,10 @@ import { logout_action } from "@/actions/auth";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BiSolidDashboard } from "react-icons/bi";
-import { FaUser } from "react-icons/fa";
-import { MdCategory, MdMovieFilter } from "react-icons/md";
-import { FaArrowLeft } from "react-icons/fa";
+import { TbLayoutDashboardFilled, TbList } from "react-icons/tb";
+import { GiEarthAsiaOceania } from "react-icons/gi";
+import { MdMovie } from "react-icons/md";
+import { FaArrowLeft, FaUserCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
@@ -32,22 +32,27 @@ export default function AdminSideBar() {
     const ListItem = [
         {
             name: "Dashboard",
-            icon: <BiSolidDashboard size={24} />,
+            icon: <TbLayoutDashboardFilled size={24} />,
             path: "/admin"
         },
         {
             name: "Quản lý phim",
-            icon: <MdMovieFilter size={24} />,
+            icon: <MdMovie size={24} />,
             path: "/admin/phim"
         },
         {
             name: "Thể loại",
-            icon: <MdCategory size={24} />,
+            icon: <TbList size={24} />,
             path: "/admin/the-loai"
         },
         {
+            name: "Quốc gia",
+            icon: <GiEarthAsiaOceania size={24} />,
+            path: "/admin/quoc-gia"
+        },
+        {
             name: "Tài khoản",
-            icon: <FaUser size={24} />,
+            icon: <FaUserCircle size={24} />,
             path: "/admin/tai-khoan"
         }
     ];
@@ -88,7 +93,7 @@ export default function AdminSideBar() {
                                         href={item.path}
                                         className={clsx(
                                             "group flex h-full items-center rounded-lg p-2",
-                                            isActive(item.path) ? "text-[#7c69ef]" : "text-gray-900",
+                                            isActive(item.path) ? "text-admin_primary" : "text-gray-900",
                                             !sidebarOpen && "justify-center"
                                         )}
                                     >
@@ -119,7 +124,19 @@ export default function AdminSideBar() {
                                 )}
                             >
                                 <HiOutlineLogout size={24} />
-                                {sidebarOpen && <span className="ms-3 whitespace-nowrap text-lg">Đăng xuất</span>}
+                                <AnimatePresence>
+                                    {sidebarOpen && (
+                                        <motion.span
+                                            initial="closed"
+                                            animate="open"
+                                            transition={{ duration: 1 }}
+                                            variants={span_variants}
+                                            className="ml-3 block whitespace-nowrap text-lg text-left"
+                                        >
+                                            Đăng xuất
+                                        </motion.span>
+                                    )}
+                                </AnimatePresence>
                             </button>
                         </li>
                     </ul>

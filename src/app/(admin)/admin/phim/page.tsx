@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
-import { ConfigProvider, Spin, Table } from "antd";
+import { ConfigProvider, Spin, Table, Tag } from "antd";
 import { MoviesService } from "@/domain/phim/services";
 import { useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { FaRegEdit, FaEye } from "react-icons/fa";
 import { IoTrashBinSharp } from "react-icons/io5";
+import "@/infrastructure/styles/table.ant.css";
 
 const columns = [
     {
@@ -35,6 +36,18 @@ const columns = [
         key: "lang"
     },
     {
+        title: "Thể loại",
+        key: "tags",
+        dataIndex: "movie_type_id",
+        render: (movie_type: "type1" | "type2") => {
+            if (movie_type === "type1") {
+                return <Tag color="geekblue">Phim bộ</Tag>;
+            } else {
+                return <Tag color="green">Phim lẻ</Tag>;
+            }
+        }
+    },
+    {
         title: "Tập hiện tại",
         dataIndex: "episode_current",
         key: "episode_current"
@@ -46,19 +59,19 @@ const columns = [
     },
 
     {
-        title: "Action",
+        title: "Hành động",
         key: "action",
         render: (_: any, record: any) => (
             <div className="flex items-center gap-x-1">
-                <button className="flex items-center gap-x-1 rounded p-2">
+                <button className="flex items-center gap-x-1 rounded p-1">
                     <FaEye size={15} /> Ẩn
                 </button>
-                <Link href={`/admin/phim/sua/${record.slug}`}>
-                    <button className="flex items-center gap-x-1 rounded p-2">
+                <Link href={`/admin/phim/sua/${record.slug}`} className="hover:text-admin_primary">
+                    <button className="flex items-center gap-x-1 rounded p-1">
                         <FaRegEdit size={15} /> Sửa
                     </button>
                 </Link>
-                <button className="flex items-center gap-x-1 rounded p-2">
+                <button className="flex items-center gap-x-1 rounded p-1">
                     <IoTrashBinSharp size={15} /> Xóa
                 </button>
             </div>
@@ -74,7 +87,7 @@ export default function MovieManagement() {
         <div>
             <h1 className="text-3xl font-semibold">Quản lý phim</h1>
             <Link href={"/admin/phim/them-phim"}>
-                <button className="mt-3 rounded bg-[#7c69ef] px-3 py-2 text-white">Thêm phim</button>
+                <button className="bg-admin_primary mb-1 mt-3 rounded px-3 py-2 text-white">Thêm phim</button>
             </Link>
             <div className="mt-3">
                 <ConfigProvider

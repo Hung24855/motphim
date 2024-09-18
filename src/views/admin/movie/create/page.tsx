@@ -79,8 +79,7 @@ export default function CreateMoviePage() {
             }
         });
     };
-    // const [activeTab, setActiveTab] = useState("info");
-    // const renderContent = () => {
+
     //     switch (activeTab) {
     //         case "info":
     //             return <div>Thông tin phim</div>;
@@ -99,27 +98,6 @@ export default function CreateMoviePage() {
     return (
         <div>
             <div className="mb-4 font-semibold">THÊM PHIM</div>
-            {/* <div className="option mt-2 flex">
-                <button
-                    onClick={() => setActiveTab("info")}
-                    className="rounded border border-b-transparent bg-white px-4 py-2"
-                >
-                    Thông tin phim
-                </button>
-                <button onClick={() => setActiveTab("category")} className="rounded px-4 py-2">
-                    Phân loại
-                </button>
-                <button onClick={() => setActiveTab("episodeList")} className="rounded px-4 py-2">
-                    Danh sách tập phim
-                </button>
-                <button onClick={() => setActiveTab("update")} className="rounded px-4 py-2">
-                    Cập nhật
-                </button>
-                <button onClick={() => setActiveTab("others")} className="rounded px-4 py-2">
-                    Khác
-                </button>
-            </div>
-            <div className="min-h-screen w-full border bg-white px-4 py-2">{renderContent()}</div> */}
             <form onSubmit={handleSubmit(Submit)} method="POST">
                 <Tabs tabs={movieTabs} />
                 <div className="mt-2 flex gap-x-2">
