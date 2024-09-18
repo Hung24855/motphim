@@ -160,9 +160,9 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                                 {UpdateEpisode?.episode_id === episode.episode_id ? (
                                                     "Cập nhật"
                                                 ) : (
-                                                    <Fragment>
+                                                    <span className="flex items-center gap-x-1 hover:text-admin_primary">
                                                         <FaRegEdit size={15} /> Sửa
-                                                    </Fragment>
+                                                    </span>
                                                 )}
                                             </button>
                                         </Spin>
@@ -203,7 +203,7 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                 isOpen={!!DeleteEpisode}
                 textOk="Xóa"
                 loading={isPeddingDeleteEpisode}
-                okButtonClassName="bg-admin_primary"
+                okButtonClassName="!bg-red-500"
             >
                 {`Bạn có chắc chắn muốn xóa tập ${DeleteEpisode?.name} không ?`}
             </Modal>

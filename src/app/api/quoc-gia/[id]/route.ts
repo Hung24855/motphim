@@ -39,7 +39,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     let select =
-        "movies.movie_name, movies.slug, movies.year , movies.image, movies.time_per_episode, movies.episode_current,movies.lang,countries.name as country_name";
+        "movies.movie_name, movies.slug, movies.year , movies.image, movies.time_per_episode, movies.episode_current, movies.episode_total,movies.lang,countries.name as country_name";
 
     let join =
         "INNER JOIN movie_country ON movies.id = movie_country.movie_id INNER JOIN countries ON movie_country.country_id = countries.id";

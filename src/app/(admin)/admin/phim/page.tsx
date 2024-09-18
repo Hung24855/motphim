@@ -71,7 +71,7 @@ const columns = [
                         <FaRegEdit size={15} /> Sửa
                     </button>
                 </Link>
-                <button className="flex items-center gap-x-1 rounded p-1">
+                <button className="flex items-center gap-x-1 rounded p-1 hover:text-red-500">
                     <IoTrashBinSharp size={15} /> Xóa
                 </button>
             </div>
@@ -87,34 +87,24 @@ export default function MovieManagement() {
         <div>
             <h1 className="text-3xl font-semibold">Quản lý phim</h1>
             <Link href={"/admin/phim/them-phim"}>
-                <button className="bg-admin_primary mb-1 mt-3 rounded px-3 py-2 text-white">Thêm phim</button>
+                <button className="mb-1 mt-3 rounded bg-admin_primary px-3 py-2 text-white">Thêm phim</button>
             </Link>
             <div className="mt-3">
-                <ConfigProvider
-                    theme={{
-                        components: {
-                            Table: {
-                                headerBg: "#f3f4f6"
-                            }
-                        }
+                <Table
+                    dataSource={movies?.data}
+                    columns={columns}
+                    loading={{
+                        spinning: !movies,
+                        indicator: <Spin size="large" indicator={<LoadingOutlined spin />} />,
+                        tip: "Loading..."
                     }}
-                >
-                    <Table
-                        dataSource={movies?.data}
-                        columns={columns}
-                        loading={{
-                            spinning: !movies,
-                            indicator: <Spin size="large" indicator={<LoadingOutlined spin />} />,
-                            tip: "Đang tải dữ liệu..." // Custom message
-                        }}
-                        pagination={{
-                            pageSize: 10,
-                            total: movies?.pagination.totalRows,
-                            onChange: (page) => setPage(page),
-                            position: ["bottomCenter"]
-                        }}
-                    />
-                </ConfigProvider>
+                    pagination={{
+                        pageSize: 10,
+                        total: movies?.pagination.totalRows,
+                        onChange: (page) => setPage(page),
+                        position: ["bottomCenter"]
+                    }}
+                />
             </div>
         </div>
     );

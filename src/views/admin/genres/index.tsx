@@ -2,7 +2,7 @@
 import { GenresService } from "@/domain/the-loai/service";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Table } from "antd";
-import { Fragment, useState } from "react";
+import { ChangeEvent, Fragment, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
 import Modal from "@/base/libs/modal";
@@ -26,7 +26,7 @@ const columns = [
         key: "action",
         render: (_: any, record: any) => (
             <div className="flex items-center gap-x-1">
-                <button className="hover:text-admin_primary flex items-center gap-x-1 rounded p-1">
+                <button className="flex items-center gap-x-1 rounded p-1 hover:text-admin_primary">
                     <FaRegEdit size={15} /> Sửa
                 </button>
             </div>
@@ -70,18 +70,17 @@ export default function GenresAdminView() {
         <Fragment>
             <h1 className="text-3xl font-semibold">Quản lý thể loại</h1>
             <button
-                className="bg-admin_primary mb-2 mt-3 rounded px-3 py-2 text-white"
+                className="mb-2 mt-3 rounded bg-admin_primary px-3 py-2 text-white"
                 onClick={() => setModalCreateGenre(true)}
             >
                 Thêm thể loại
             </button>
             <Table
-                dataSource={genres?.data}
+                dataSource={genres ? genres.data : []}
                 columns={columns}
                 loading={{
                     spinning: !genres?.data,
-                    indicator: <Spin size="large" indicator={<LoadingOutlined spin />} />,
-                    tip: "Đang tải dữ liệu..." // Custom message
+                    indicator: <Spin size="large" indicator={<LoadingOutlined spin />} />
                 }}
                 pagination={{
                     position: ["bottomCenter"]
@@ -102,21 +101,21 @@ export default function GenresAdminView() {
                 isOpen={ModalCreateGenre}
                 textOk="Thêm"
                 loading={isPeddingCreateGenre}
-                okButtonClassName="bg-admin_primary"
+                okButtonClassName="!bg-admin_primary"
                 modalContainerClassName="!top-20 w-[500px]"
                 headerModalClassName="text-center text-xl"
             >
                 <Input
                     label="Tên thể loại"
                     placeholder="VD: Cổ trang"
-                    value={genre?.name}
-                    onChange={(e) => setGenre({ ...genre, name: e.target.value })}
+                    value={genre.name}
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setGenre({ ...genre, name: e.target.value })}
                 />
                 <Input
                     label="Đường dẫn tĩnh"
                     placeholder="VD: co-trang"
-                    value={genre?.slug}
-                    onChange={(e) => setGenre({ ...genre, slug: e.target.value })}
+                    value={genre.slug}
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setGenre({ ...genre, slug: e.target.value })}
                 />
                 <div className="text-red-500">{message}</div>
             </Modal>

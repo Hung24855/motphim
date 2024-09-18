@@ -36,7 +36,6 @@ export default function EditMoviePage({ slug }: { slug: string }) {
     const { data: response, refetch: refetchMovieDetail } = MoviesService.get_movie(slug);
     const { updateMovieMutation, isPeddingUpdateMovie } = MoviesService.use_movies({});
     const movie = response?.data[0];
-    // const movie = false;
     if (!movie)
         return (
             <Spin indicator={<LoadingOutlined spin />} size="large">

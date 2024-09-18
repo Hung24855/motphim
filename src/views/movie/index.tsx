@@ -4,6 +4,7 @@ import MaxWidth from "@/components/layout/max-width";
 import { MoviesService } from "@/domain/phim/services";
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
+import { notFound } from "next/navigation";
 import Script from "next/script";
 import { Fragment, useEffect, useState } from "react";
 
@@ -52,15 +53,19 @@ const MovieDetailSkeleton = () => {
 export default function MoviePage(props: Props) {
     const [episode, setEpisode] = useState<string>("1");
     const { data: response } = MoviesService.get_movie(props.slug);
-    const movie = response?.data[0];
-
-    // console.log(response);
+    console.log("check response: ", response);
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
-    if (!movie) return <MovieDetailSkeleton />;
+    if (!response) return <MovieDetailSkeleton />;
+    if (response.data.length === 0)
+        return (
+            <div className="flex h-screen items-center justify-center pb-10 pt-24 text-3xl text-white">Phim không tồn tại ^_^</div>
+        );
+
+    const movie = response.data[0];
 
     return (
         <Fragment>

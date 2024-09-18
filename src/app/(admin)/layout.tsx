@@ -7,6 +7,7 @@ import "swiper/css";
 import ReactQueryProvder from "@/base/provider/react-query";
 import ProgessbarProviders from "@/base/libs/progesbar";
 import Toast from "@/base/libs/toast";
+import AntDesignConfig from "@/base/provider/ant-config";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 
@@ -26,16 +27,18 @@ export default async function RootLayout({
                     <link rel="icon" href="/logo/Logo-light.png" sizes="any" />
                 </head>
                 <body className={inter.className}>
-                    <ReactQueryProvder>
-                        <ProgessbarProviders>
-                            <main className="flex min-h-screen">
-                                <AdminSideBar />
-                                <div className="flex-1 bg-gray-50 p-4">
-                                    <div className="rounded-lg">{children}</div>
-                                </div>
-                            </main>
-                        </ProgessbarProviders>
-                    </ReactQueryProvder>
+                    <AntDesignConfig>
+                        <ReactQueryProvder>
+                            <ProgessbarProviders>
+                                <main className="flex min-h-screen">
+                                    <AdminSideBar />
+                                    <div className="flex-1 bg-gray-50 p-4 px-6">
+                                        <div className="rounded-lg">{children}</div>
+                                    </div>
+                                </main>
+                            </ProgessbarProviders>
+                        </ReactQueryProvder>
+                    </AntDesignConfig>
                     <Toast />
                 </body>
             </html>

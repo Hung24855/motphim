@@ -2,7 +2,7 @@
 import { CountriesService } from "@/domain/quoc-gia/service";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Table } from "antd";
-import { Fragment, useState } from "react";
+import { ChangeEvent, Fragment, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
 import { IDataCreateCountry } from "@/domain/quoc-gia/model";
@@ -26,7 +26,7 @@ const columns = [
         key: "action",
         render: (_: any, record: any) => (
             <div className="flex items-center gap-x-1">
-                <button className="hover:text-admin_primary flex items-center gap-x-1 rounded p-1">
+                <button className="flex items-center gap-x-1 rounded p-1 hover:text-admin_primary">
                     <FaRegEdit size={15} /> Sửa
                 </button>
             </div>
@@ -70,7 +70,7 @@ export default function CountriesAdminView() {
         <Fragment>
             <h1 className="text-3xl font-semibold">Quản lý quốc gia</h1>
             <button
-                className="bg-admin_primary mb-2 mt-3 rounded px-3 py-2 text-white"
+                className="mb-2 mt-3 rounded bg-admin_primary px-3 py-2 text-white"
                 onClick={() => setModalCreateCountry(true)}
             >
                 Thêm quốc gia
@@ -81,7 +81,7 @@ export default function CountriesAdminView() {
                 loading={{
                     spinning: !countries?.data,
                     indicator: <Spin size="large" indicator={<LoadingOutlined spin />} />,
-                    tip: "Đang tải dữ liệu..." // Custom message
+                    tip: "Loading..."
                 }}
                 pagination={{
                     position: ["bottomCenter"]
@@ -102,7 +102,7 @@ export default function CountriesAdminView() {
                 isOpen={ModalCreateCountry}
                 textOk="Thêm"
                 loading={isPeddingCreateCountry}
-                okButtonClassName="bg-admin_primary"
+                okButtonClassName="!bg-admin_primary"
                 modalContainerClassName="!top-20 w-[500px]"
                 headerModalClassName="text-center text-xl"
             >
@@ -110,13 +110,13 @@ export default function CountriesAdminView() {
                     label="Tên quốc gia"
                     placeholder="VD: Việt Nam"
                     value={country?.name}
-                    onChange={(e) => setCountry({ ...country, name: e.target.value })}
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCountry({ ...country, name: e.target.value })}
                 />
                 <Input
                     label="Đường dẫn tĩnh"
                     placeholder="VD: viet-nam"
                     value={country?.slug}
-                    onChange={(e) => setCountry({ ...country, slug: e.target.value })}
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCountry({ ...country, slug: e.target.value })}
                 />
                 <div className="text-red-500">{message}</div>
             </Modal>

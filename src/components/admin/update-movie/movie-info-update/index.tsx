@@ -11,8 +11,6 @@ interface Props {
 }
 
 export default function MovieInfoUpdate({ control, errors, movie }: Props) {
-    // console.log("dfghjdsghfjkhgdkfhsd", movie);
-
     return (
         <div className="w-max">
             <Controller

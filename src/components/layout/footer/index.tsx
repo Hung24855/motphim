@@ -1,8 +1,9 @@
 import React from "react";
 
-import { FaGithub, FaFacebook } from "@/icons";
+
 import Link from "next/link";
 import MaxWidth from "../max-width";
+import { FaFacebook, FaGithub } from "react-icons/fa";
 
 export default function Footer() {
     return (

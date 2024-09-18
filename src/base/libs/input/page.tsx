@@ -7,7 +7,6 @@ interface InputProps {
     type?: "password" | "text" | "textarea";
     tranformMessagError?: "right" | "buttom";
     [key: string]: any;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = ({
@@ -18,7 +17,6 @@ const Input = ({
     error,
     type = "text",
     tranformMessagError = "right",
-    onChange,
     ...rest
 }: InputProps) => {
     return (
@@ -39,7 +37,6 @@ const Input = ({
                     {...field}
                     placeholder={placeholder}
                     rows={4}
-                    onChange={onChange}
                     {...rest}
                 />
             ) : (
@@ -48,7 +45,6 @@ const Input = ({
                     placeholder={placeholder}
                     {...field}
                     type={type}
-                    onChange={onChange}
                     {...rest}
                 />
             )}

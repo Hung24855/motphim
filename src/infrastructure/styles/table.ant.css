@@ -9,3 +9,12 @@
 .ant-table-wrapper .ant-table-thead >tr>th {
     background: #efefef;
 }
+
+.ant-pagination .ant-pagination-item-active {
+    background-color: #ffffff;
+    border-color: #7c69ef;
+}
+
+.ant-pagination .ant-pagination-item-active a {
+    color: #7c69ef;
+}
