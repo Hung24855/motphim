@@ -9,6 +9,7 @@ import Modal from "@/base/libs/modal";
 import { IDataCreateGenres } from "@/domain/the-loai/model";
 import { toast } from "react-toastify";
 import Input from "@/base/libs/input/page";
+import Loading from "@/base/libs/loading";
 
 const columns = [
     {
@@ -75,12 +76,13 @@ export default function GenresAdminView() {
             >
                 Thêm thể loại
             </button>
+
             <Table
                 dataSource={genres ? genres.data : []}
                 columns={columns}
                 loading={{
                     spinning: !genres?.data,
-                    indicator: <Spin size="large" indicator={<LoadingOutlined spin />} />
+                    indicator: <Loading loading={!genres?.data} />
                 }}
                 pagination={{
                     position: ["bottomCenter"]

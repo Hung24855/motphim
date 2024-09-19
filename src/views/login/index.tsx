@@ -1,6 +1,5 @@
 "use client";
 import Input from "@/base/libs/input/page";
-import { Button } from "antd";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -8,6 +7,7 @@ import "./style/index.css";
 import { signInSchema, SignInType } from "@/utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { login_action } from "@/actions/auth";
+import Button from "@/base/libs/button";
 
 export default function LoginPage() {
     const [globalMessage, setGlobalMessage] = useState<string>("");
@@ -97,13 +97,8 @@ export default function LoginPage() {
                                         Quên mật khẩu?
                                     </a>
                                 </div>
-                                <div className="text-right">{globalMessage}</div>
-                                <Button
-                                    block
-                                    htmlType="submit"
-                                    className="bg-[#295779] py-5 text-white hover:text-red-500"
-                                    loading={isSubmitting}
-                                >
+                                <div className="text-right text-red-500">{globalMessage}</div>
+                                <Button type="submit" block loading={isSubmitting}>
                                     Đăng nhập
                                 </Button>
                                 <p className="text-sm font-light text-[#295779]">

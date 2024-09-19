@@ -9,6 +9,7 @@ import { IDataCreateCountry } from "@/domain/quoc-gia/model";
 import Modal from "@/base/libs/modal";
 import Input from "@/base/libs/input/page";
 import { toast } from "react-toastify";
+import Loading from "@/base/libs/loading";
 
 const columns = [
     {
@@ -80,8 +81,7 @@ export default function CountriesAdminView() {
                 columns={columns}
                 loading={{
                     spinning: !countries?.data,
-                    indicator: <Spin size="large" indicator={<LoadingOutlined spin />} />,
-                    tip: "Loading..."
+                    indicator: <Loading loading={!countries?.data} />
                 }}
                 pagination={{
                     position: ["bottomCenter"]

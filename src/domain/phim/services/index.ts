@@ -88,7 +88,7 @@ export class MoviesService {
     }
 
     static use_movies({ page, limit }: IDataGetAllMoviesType) {
-        const { data } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_LIST_MOVIES, page], () =>
+        const { data,isFetching } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_LIST_MOVIES, page], () =>
             MoviesApi.get_movies({ page, limit })
         );
         const { mutate: mutateCreate, isPending: isPeddingCreateMovie } = useMutation({
@@ -116,6 +116,7 @@ export class MoviesService {
 
         return {
             data,
+            isFetching,
             createMovieMutation,
             updateMovieMutation,
             deleteMovieMutation,

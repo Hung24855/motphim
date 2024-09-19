@@ -22,10 +22,10 @@ export default async function RootLayout({
 }>) {
     return (
         <Fragment>
-            <html lang="en">
                 <head>
                     <link rel="icon" href="/logo/Logo-light.png" sizes="any" />
                 </head>
+            <html lang="en">
                 <body className={inter.className}>
                     <AntDesignConfig>
                         <ReactQueryProvder>
@@ -33,7 +33,7 @@ export default async function RootLayout({
                                 <main className="flex min-h-screen">
                                     <AdminSideBar />
                                     <div className="flex-1 bg-gray-50 p-4 px-6">
-                                        <div className="rounded-lg">{children}</div>
+                                        <div className="rounded-lg h-full">{children}</div>
                                     </div>
                                 </main>
                             </ProgessbarProviders>

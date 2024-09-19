@@ -11,7 +11,8 @@ import MovieEpisodeListUpdate from "@/components/admin/update-movie/movie-episod
 import Link from "next/link";
 import CreateEpisodeUpdate from "@/components/admin/update-movie/create-apisode-update";
 import { IDataUpdateMovieType } from "@/domain/phim/model";
-
+import "@/infrastructure/styles/uiverse.io.css";
+import Loading from "@/base/libs/loading";
 
 export interface Episode {
     name: string;
@@ -22,7 +23,6 @@ export interface Episode {
 export type FieldValues = IDataUpdateMovieType;
 
 export default function EditMoviePage({ slug }: { slug: string }) {
-    // const queryClient = useQueryClient();
     const {
         control,
         handleSubmit,
@@ -36,14 +36,7 @@ export default function EditMoviePage({ slug }: { slug: string }) {
     const { data: response, refetch: refetchMovieDetail } = MoviesService.get_movie(slug);
     const { updateMovieMutation, isPeddingUpdateMovie } = MoviesService.use_movies({});
     const movie = response?.data[0];
-    if (!movie)
-        return (
-            <Spin indicator={<LoadingOutlined spin />} size="large">
-                <div className="min-h-screen"></div>
-            </Spin>
-        );
-
-    // console.log("Chi tiết phim", movie);
+    if (!movie) return <Loading loading={true} backgroundOverlayClassName="bg-black/5"></Loading>;
 
     const movieTabs = [
         { label: "Thông tin phim", content: <MovieInfoUpdate control={control} errors={errors} movie={movie} /> },
@@ -70,8 +63,6 @@ export default function EditMoviePage({ slug }: { slug: string }) {
     ];
 
     const Submit = (data: FieldValues) => {
-        console.log("ghfkjhgkjfhdgkjfhd kgfhdgjfd h gkfdhkg", data);
-
         updateMovieMutation({
             data: { data: data, id: movie.id },
             onError: () => {
@@ -101,7 +92,7 @@ export default function EditMoviePage({ slug }: { slug: string }) {
                         </button>
                     </Spin>
                     <Link href={"/admin/phim"}>
-                        <button className="rounded bg-gray-600 px-3 py-2 text-white">Hủy bỏ</button>
+                        <button className="rounded bg-gray-400 px-3 py-2 text-white">Hủy bỏ</button>
                     </Link>
                 </div>
             </form>

@@ -16,7 +16,6 @@ type ModalProps = {
     cancelButtonClassName?: HTMLProps<HTMLButtonElement>["className"];
     okButtonClassName?: HTMLProps<HTMLButtonElement>["className"];
     headerModalClassName?: HTMLProps<HTMLButtonElement>["className"];
-    width?: number;
     loading?: boolean;
     sizeSpin?: "small" | "default" | "large";
 };
@@ -37,7 +36,6 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             cancelButtonClassName,
             okButtonClassName,
             headerModalClassName,
-            width,
             isOpen,
             loading = false,
             sizeSpin = "default"
@@ -66,8 +64,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
                         <div
                             ref={ref}
                             className={clsx(
-                                "absolute top-60 flex max-w-[80vw] flex-col gap-y-2 rounded-lg bg-white p-3 shadow",
-                                width && `w-[${width}px]`,
+                                "absolute top-60 flex max-w-[80vw] animate-zoom-in duration-100 flex-col gap-y-2 rounded-lg bg-white p-3 shadow",
                                 modalContainerClassName
                             )}
                             onClick={handleModalClick} // Ngăn chặn sự kiện click lan ra ngoài

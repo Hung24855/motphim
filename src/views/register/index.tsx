@@ -1,6 +1,5 @@
 "use client";
 import Input from "@/base/libs/input/page";
-import { Button } from "antd";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -10,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { register_action } from "@/actions/auth";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import Button from "@/base/libs/button";
 
 export default function RegisternPage() {
     const [globalMessage, setGlobalMessage] = useState<string>("");
@@ -18,8 +18,6 @@ export default function RegisternPage() {
         control,
         handleSubmit,
         formState: { errors, isSubmitting },
-        reset,
-        watch
     } = useForm<SignUpType>({
         mode: "onSubmit",
         reValidateMode: "onSubmit",
@@ -113,12 +111,7 @@ export default function RegisternPage() {
                                 </div>
 
                                 <div className="text-right">{globalMessage}</div>
-                                <Button
-                                    htmlType="submit"
-                                    block
-                                    className="bg-[#295779] py-5 text-white hover:text-red-500"
-                                    loading={isSubmitting}
-                                >
+                                <Button type="submit" block loading={isSubmitting}>
                                     Đăng ký
                                 </Button>
                                 <p className="text-sm font-light text-[#295779]">

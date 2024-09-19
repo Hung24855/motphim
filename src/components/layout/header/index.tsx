@@ -14,7 +14,7 @@ import { GenresService } from "@/domain/the-loai/service";
 import { CountriesService } from "@/domain/quoc-gia/service";
 import { logout_action } from "@/actions/auth";
 import { Session } from "next-auth";
-import { Button, Popover } from "antd";
+import { Popover } from "antd";
 
 function Search({ session }: { session: Session | null }) {
     const [search, setSearch] = useState<string>("");
@@ -145,7 +145,7 @@ export default function Header({ session }: { session: Session | null }) {
                             </span>
                             {/* Dropdown menu */}
                             {genres?.data && (
-                                <div className="dropdown" >
+                                <div className="dropdown">
                                     {/* Content of the dropdown */}
                                     <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
                                         {genres?.data.map((item) => (

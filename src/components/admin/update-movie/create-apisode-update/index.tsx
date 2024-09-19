@@ -45,7 +45,7 @@ export default function CreateEpisodeUpdate({
         <div className="min-w-max">
             <button
                 type="button"
-                className="rounded bg-orange-400 px-3 py-2 text-white"
+                className="rounded bg-admin_primary px-3 py-2 text-white"
                 onClick={() => {
                     setEpisodes((prevState) => [
                         ...prevState,

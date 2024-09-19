@@ -7,6 +7,7 @@
   }
 
 .ant-table-wrapper .ant-table-thead >tr>th {
+    padding: 16px;
     background: #efefef;
 }
 
@@ -18,3 +19,19 @@
 .ant-pagination .ant-pagination-item-active a {
     color: #7c69ef;
 }
+
+.ant-table-content table {
+    min-width: 100%;
+  
+}
+
+.ant-empty-image {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+.ant-empty-description {
+    text-align: center;
+}
+

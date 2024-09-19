@@ -111,7 +111,7 @@ export default function CreateMoviePage() {
                         </button>
                     </Spin>
                     <Link href={"/admin/phim"}>
-                        <button className="rounded bg-gray-600 px-3 py-2 text-white">Hủy bỏ</button>
+                        <button className="rounded bg-gray-400 px-3 py-2 text-white">Hủy bỏ</button>
                     </Link>
                 </div>
             </form>
