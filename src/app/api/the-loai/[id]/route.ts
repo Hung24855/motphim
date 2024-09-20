@@ -51,7 +51,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                 [params.id]
             ),
             pool.query(
-                `SELECT COUNT(*) FROM movies ${join} WHERE ${where} genres.slug = $1 ${orderBy} ${limitSql} ${offset}`,
+                `SELECT COUNT(*) FROM movies ${join} WHERE ${where} genres.slug = $1 ${orderBy} `,
                 [params.id]
             )
         ]);

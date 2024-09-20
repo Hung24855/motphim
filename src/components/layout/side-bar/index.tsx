@@ -19,7 +19,7 @@ export default function SideBarMenu({ countries, genres }: SideBarProps) {
     return (
         <div className="md:hidden">
             <motion.div onClick={() => setOpen(!open)} whileTap={{ scale: 0.8 }}>
-                <GiHamburgerMenu size={35} className={`mr-4 cursor-pointer md:hidden ${open && "hidden"}`} />
+                <GiHamburgerMenu size={35} className={`mr-4 cursor-pointer md:hidden ${open && "opacity-0"}`} />
             </motion.div>
 
             {/* Sidebar */}

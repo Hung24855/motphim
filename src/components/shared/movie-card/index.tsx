@@ -8,10 +8,10 @@ export default function MovieCard({ movie }: { movie: Movie }) {
     return (
         <Link href={"/phim/" + movie.slug} scroll={true}>
             <motion.div
-                className="relative cursor-pointer rounded border border-gray-600 p-1 min-h-64"
-                initial={{ opacity: 0, y: 100 }}
+                className="relative min-h-64 cursor-pointer rounded border border-gray-700 p-1"
+                initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, type: "tween" }}
+                transition={{ duration: 0.4 }}
                 viewport={{ once: true }}
             >
                 <img src={movie.image} alt="img" className="aspect-[2/3]" loading="lazy" />

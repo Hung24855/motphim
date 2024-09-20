@@ -77,8 +77,7 @@ export default function EditMoviePage({ slug }: { slug: string }) {
 
     return (
         <div>
-            <div className="mb-4 font-semibold">CẬP NHẬT THÔNG TIN PHIM</div>
-
+            <div className="mb-4 text-center font-semibold text-xl">CẬP NHẬT THÔNG TIN PHIM</div>
             <form onSubmit={handleSubmit(Submit)} method="POST">
                 <Tabs tabs={movieTabs} />
                 <div className="mt-2 flex gap-x-2">

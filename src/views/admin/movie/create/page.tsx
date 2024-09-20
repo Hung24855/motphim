@@ -97,7 +97,7 @@ export default function CreateMoviePage() {
     // };
     return (
         <div>
-            <div className="mb-4 font-semibold">THÊM PHIM</div>
+            <div className="mb-4 font-semibold text-2xl text-center">THÊM PHIM</div>
             <form onSubmit={handleSubmit(Submit)} method="POST">
                 <Tabs tabs={movieTabs} />
                 <div className="mt-2 flex gap-x-2">

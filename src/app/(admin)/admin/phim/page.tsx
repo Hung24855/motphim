@@ -86,7 +86,7 @@ export default function MovieManagement() {
 
     return (
         <div>
-            <h1 className="text-3xl font-semibold">Quản lý phim</h1>
+            <h1 className="text-3xl font-semibold text-center">Quản lý phim</h1>
             <Link href={"/admin/phim/them-phim"}>
                 <button className="mb-1 mt-3 rounded bg-admin_primary px-3 py-2 text-white">Thêm phim</button>
             </Link>
@@ -104,6 +104,7 @@ export default function MovieManagement() {
                         onChange: (page) => setPage(page),
                         position: ["bottomCenter"]
                     }}
+                    // bordered
                 />
             </div>
         </div>

@@ -17,7 +17,7 @@ export default async function DB_Connect() {
     client?.query("SELECT NOW()", (err, result) => {
       release();
       if (err) {
-        console.error("Lỗi khi truy vấn định danh: ", err.stack);
+        console.error("Lỗi khi connect đến postgres: ", err.stack);
       }
       console.log("Kết nối cơ sở dữ liệu thành công! ", result.rows[0].now);
     });

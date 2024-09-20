@@ -8,6 +8,7 @@ import ReactQueryProvder from "@/base/provider/react-query";
 import ProgessbarProviders from "@/base/libs/progesbar";
 import Toast from "@/base/libs/toast";
 import AntDesignConfig from "@/base/provider/ant-config";
+import Image from "next/image";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 
@@ -22,9 +23,9 @@ export default async function RootLayout({
 }>) {
     return (
         <Fragment>
-                <head>
-                    <link rel="icon" href="/logo/Logo-light.png" sizes="any" />
-                </head>
+            <head>
+                <link rel="icon" href="/logo/Logo-light.png" sizes="any" />
+            </head>
             <html lang="en">
                 <body className={inter.className}>
                     <AntDesignConfig>
@@ -32,8 +33,18 @@ export default async function RootLayout({
                             <ProgessbarProviders>
                                 <main className="flex min-h-screen">
                                     <AdminSideBar />
-                                    <div className="flex-1 bg-gray-50 p-4 px-6">
-                                        <div className="rounded-lg h-full">{children}</div>
+                                    <div className="flex flex-1 flex-col bg-gray-50 px-6 pb-4">
+                                        <div className="flex items-center justify-end gap-x-4 pb-4 pt-1">
+                                            <div className="size-10 overflow-hidden rounded-full bg-gray-200">
+                                                <Image
+                                                    src={"/avatar/avatar.jpg"}
+                                                    width={40}
+                                                    height={40}
+                                                    alt="avatar"
+                                                ></Image>
+                                            </div>
+                                        </div>
+                                        <div className="h-full rounded-lg">{children}</div>
                                     </div>
                                 </main>
                             </ProgessbarProviders>

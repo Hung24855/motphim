@@ -69,12 +69,14 @@ export default function AdminSideBar() {
             initial="open"
             animate={sidebarOpen ? "open" : "closed"}
             variants={sidebar_variants}
+            transition={{ duration: 0.25 }}
             className="relative z-40 border-r-[1px] bg-gray-100"
         >
             <motion.div
                 initial="open"
                 animate={sidebarOpen ? "open" : "closed"}
                 variants={sidebar_variants}
+                transition={{ duration: 0.25 }}
                 className="sticky top-0 h-screen"
             >
                 <div className="h-full overflow-y-auto overflow-x-hidden px-3">
@@ -103,7 +105,7 @@ export default function AdminSideBar() {
                                                 <motion.span
                                                     initial="closed"
                                                     animate="open"
-                                                    transition={{ duration: 1 }}
+                                                    transition={{ duration: 0.25 }}
                                                     variants={span_variants}
                                                     className="ml-3 block flex-1 whitespace-nowrap text-lg"
                                                 >
@@ -129,7 +131,7 @@ export default function AdminSideBar() {
                                         <motion.span
                                             initial="closed"
                                             animate="open"
-                                            transition={{ duration: 1 }}
+                                            transition={{ duration: 0.25 }}
                                             variants={span_variants}
                                             className="ml-3 block whitespace-nowrap text-lg text-left"
                                         >

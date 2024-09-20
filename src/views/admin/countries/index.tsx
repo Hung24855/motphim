@@ -10,17 +10,18 @@ import { toast } from "react-toastify";
 import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
 
-
 const columns = [
     {
         title: "Tên quốc gia",
         dataIndex: "name",
-        key: "genre_name"
+        key: "genre_name",
+        width: "45%"
     },
     {
         title: "Đường dẫn tĩnh",
         dataIndex: "slug",
-        key: "slug"
+        key: "slug",
+        width: "45%"
     },
     {
         title: "Hành động",
@@ -69,7 +70,7 @@ export default function CountriesAdminView() {
     };
     return (
         <Fragment>
-            <h1 className="text-3xl font-semibold">Quản lý quốc gia</h1>
+            <h1 className="text-center text-3xl font-semibold">Quản lý quốc gia</h1>
             <button
                 className="mb-2 mt-3 rounded bg-admin_primary px-3 py-2 text-white"
                 onClick={() => setModalCreateCountry(true)}
@@ -86,6 +87,7 @@ export default function CountriesAdminView() {
                 pagination={{
                     position: ["bottomCenter"]
                 }}
+                bordered
             />
 
             {/* Modal thêm quốc gia */}

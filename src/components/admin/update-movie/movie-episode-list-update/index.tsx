@@ -203,6 +203,7 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                 isOpen={!!DeleteEpisode}
                 textOk="Xóa"
                 loading={isPeddingDeleteEpisode}
+                modalContainerClassName="!gap-y-4"
                 okButtonClassName="!bg-red-500"
             >
                 {`Bạn có chắc chắn muốn xóa tập ${DeleteEpisode?.name} không ?`}

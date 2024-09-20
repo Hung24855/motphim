@@ -73,7 +73,7 @@ export const ModalMotion = forwardRef<HTMLDivElement, ModalProps>(
                             >
                                 <motion.div
                                     className={clsx(
-                                        "fixed top-60 z-50 max-w-[80vw] flex-col gap-y-2 rounded-lg bg-white p-3 shadow",
+                                        "fixed top-60 z-50 max-w-[80vw] flex flex-col gap-y-2 rounded-lg bg-white p-3 shadow",
                                         modalContainerClassName
                                     )}
                                     onClick={handleModalClick} // Ngăn chặn sự kiện click lan ra ngoài
