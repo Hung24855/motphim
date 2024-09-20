@@ -1,15 +1,15 @@
 "use client";
 import { CountriesService } from "@/domain/quoc-gia/service";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin, Table } from "antd";
+import { Table } from "antd";
 import { ChangeEvent, Fragment, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
 import { IDataCreateCountry } from "@/domain/quoc-gia/model";
-import Modal from "@/base/libs/modal";
 import Input from "@/base/libs/input/page";
 import { toast } from "react-toastify";
 import Loading from "@/base/libs/loading";
+import { ModalMotion } from "@/base/libs/modal";
+
 
 const columns = [
     {
@@ -81,7 +81,7 @@ export default function CountriesAdminView() {
                 columns={columns}
                 loading={{
                     spinning: !countries?.data,
-                    indicator: <Loading loading={!countries?.data} />
+                    indicator: <Loading loading={!countries?.data} containerClassName="pt-20" />
                 }}
                 pagination={{
                     position: ["bottomCenter"]
@@ -89,7 +89,7 @@ export default function CountriesAdminView() {
             />
 
             {/* Modal thêm quốc gia */}
-            <Modal
+            <ModalMotion
                 textHeader="Thêm quốc gia"
                 onClose={() => {
                     setModalCreateCountry(false);
@@ -119,7 +119,7 @@ export default function CountriesAdminView() {
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCountry({ ...country, slug: e.target.value })}
                 />
                 <div className="text-red-500">{message}</div>
-            </Modal>
+            </ModalMotion>
         </Fragment>
     );
 }

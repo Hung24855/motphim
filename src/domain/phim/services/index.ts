@@ -8,6 +8,7 @@ import {
     IDataCreateMovieType,
     IDataGetAllMoviesByCountry,
     IDataGetAllMoviesByGenre,
+    IDataGetAllMoviesByType,
     IDataGetAllMoviesType,
     IDataUpdateEpisodeType,
     IDataUpdateMovieType
@@ -80,15 +81,17 @@ export class MoviesService {
         return { data };
     }
 
-    static get_movies_by_type(slug: "phim-bo" | "phim-le") {
-        const { data } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_MOVIE_BY_TYPE, slug], () =>
-            MoviesApi.get_movies_by_type(slug)
+    static get_movies_by_type({ slug, page, limit }: IDataGetAllMoviesByType) {
+        console.log("slug, page, limit", slug, page, limit);
+        
+        const { data } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_MOVIE_BY_TYPE, slug, page], () =>
+            MoviesApi.get_movies_by_type({ slug, page, limit })
         );
         return { data };
     }
 
     static use_movies({ page, limit }: IDataGetAllMoviesType) {
-        const { data,isFetching } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_LIST_MOVIES, page], () =>
+        const { data, isFetching } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_LIST_MOVIES, page], () =>
             MoviesApi.get_movies({ page, limit })
         );
         const { mutate: mutateCreate, isPending: isPeddingCreateMovie } = useMutation({

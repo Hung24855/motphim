@@ -1,15 +1,14 @@
 "use client";
 import { GenresService } from "@/domain/the-loai/service";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin, Table } from "antd";
+import { Table } from "antd";
 import { ChangeEvent, Fragment, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
-import Modal from "@/base/libs/modal";
 import { IDataCreateGenres } from "@/domain/the-loai/model";
 import { toast } from "react-toastify";
 import Input from "@/base/libs/input/page";
 import Loading from "@/base/libs/loading";
+import { ModalMotion } from "@/base/libs/modal";
 
 const columns = [
     {
@@ -82,7 +81,7 @@ export default function GenresAdminView() {
                 columns={columns}
                 loading={{
                     spinning: !genres?.data,
-                    indicator: <Loading loading={!genres?.data} />
+                    indicator: <Loading loading={!genres?.data} containerClassName="pt-20" />
                 }}
                 pagination={{
                     position: ["bottomCenter"]
@@ -90,7 +89,7 @@ export default function GenresAdminView() {
             />
 
             {/* Modal thêm thể loại */}
-            <Modal
+            <ModalMotion
                 textHeader="Thêm thể loại"
                 onClose={() => {
                     setModalCreateGenre(false);
@@ -120,7 +119,7 @@ export default function GenresAdminView() {
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setGenre({ ...genre, slug: e.target.value })}
                 />
                 <div className="text-red-500">{message}</div>
-            </Modal>
+            </ModalMotion>
         </Fragment>
     );
 }

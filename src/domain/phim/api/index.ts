@@ -5,6 +5,7 @@ import {
     IDataCreateMovieType,
     IDataGetAllMoviesByCountry,
     IDataGetAllMoviesByGenre,
+    IDataGetAllMoviesByType,
     IDataGetAllMoviesType,
     IDataUpdateEpisodeType,
     IDataUpdateMovieType
@@ -32,9 +33,11 @@ export class MoviesApi {
             console.log("Error: get_movies ", error);
         }
     }
-    static async get_movies_by_type(slug: "phim-le" | "phim-bo") {
+    static async get_movies_by_type(params: IDataGetAllMoviesByType) {
         try {
-            const { data } = await http.get(ENDPOINT_URL.get_movies_by_type(slug));
+            const { data } = await http.get(ENDPOINT_URL.get_movies_by_type(params.slug), {
+                params: { page: params?.page ?? 1, limit: params?.limit ?? 20 }
+            });
             return data;
         } catch (error) {
             console.log("Error: get_movies_by_type ", error);

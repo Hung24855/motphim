@@ -5,9 +5,9 @@ import { MoviesService } from "@/domain/phim/services";
 import { toast } from "react-toastify";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import Modal from "@/base/libs/modal";
 import { FaRegEdit, FaEye } from "react-icons/fa";
 import { IoTrashBinSharp } from "react-icons/io5";
+import { ModalMotion } from "@/base/libs/modal";
 
 interface Props {
     movie: MoviesDTO;
@@ -192,7 +192,7 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
             </div>
 
             {/* Modal xóa tập phim */}
-            <Modal
+            <ModalMotion
                 textHeader="Xác nhận"
                 onClose={() => {
                     setDeleteEpisode(null);
@@ -206,7 +206,7 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                 okButtonClassName="!bg-red-500"
             >
                 {`Bạn có chắc chắn muốn xóa tập ${DeleteEpisode?.name} không ?`}
-            </Modal>
+            </ModalMotion>
         </div>
     );
 }

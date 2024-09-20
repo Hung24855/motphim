@@ -13,11 +13,8 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
 
     try {
         const [movies, totalRows] = await Promise.all([
-            pool.query(`${sql} ${join} WHERE movie_type.slug = $1`, [params.slug]),
-            pool.query(
-                `SELECT COUNT(*) FROM movies ${join} WHERE ${where} movie_type.slug = $1 ${orderBy} ${limitSql} ${offset}`,
-                [params.slug]
-            )
+            pool.query(`${sql} ${join} WHERE movie_type.slug = $1  ${orderBy} ${limitSql} ${offset}`, [params.slug]),
+            pool.query(`SELECT COUNT(*) FROM movies ${join} WHERE ${where} movie_type.slug = $1 `, [params.slug])
         ]);
 
         if (movies.rows.length === 0) {

@@ -44,14 +44,19 @@ export type IDataUpdateEpisodeType = {
 };
 
 export type IDataGetAllMoviesType = {
-    page?: number;
-    limit?: number;
+    page?: number | string;
+    limit?: number | string;
 };
 
 export type IDataGetAllMoviesByGenre = {
     slug: string;
-    page?: number;
-    limit?: number;
+    page?: number | string;
+    limit?: number | string;
+};
+export type IDataGetAllMoviesByType = {
+    slug: "phim-le" | "phim-bo";
+    page?: number | string;
+    limit?: number | string;
 };
 
 export type IDataGetAllMoviesByCountry = IDataGetAllMoviesByGenre;

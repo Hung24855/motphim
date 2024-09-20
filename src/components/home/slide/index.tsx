@@ -61,7 +61,7 @@ export default function Slide() {
             slideRef.current.style.transformOrigin = `${mousePosition.x}% ${mousePosition.y}%`;
             slideRef.current.classList.add("scale-up");
         }
-    }, [slides]);
+    }, [slides,mousePosition.x,mousePosition.y]);
 
     const changeSlide = (type: "next" | "prev") => {
         setOldSlides(slides[2]);
