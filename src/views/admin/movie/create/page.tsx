@@ -40,7 +40,6 @@ export default function CreateMoviePage() {
         formState: { errors },
         setValue,
         getValues,
-        reset
     } = useForm<FieldValues>({
         mode: "onSubmit",
         reValidateMode: "onSubmit",

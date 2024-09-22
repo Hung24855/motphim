@@ -25,7 +25,7 @@ export async function POST(request: Request) {
         const res = await pool.query("INSERT INTO countries (name,slug) VALUES ($1,$2)", [body.name, body.slug]);
         return NextResponse.json({ status: "success", message: "Thêm quốc gia thành công", data: res.rows });
     } catch (error) {
-        console.log("Error: ", error);
+        console.log("Error: POST country", error);
 
         return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
     }

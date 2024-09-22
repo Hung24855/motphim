@@ -1,11 +1,11 @@
 "use client";
-import { handleSortSlide } from "@/base/utils/function";
-import MaxWidth from "@/components/layout/max-width";
 import clsx from "clsx";
-import { MouseEvent, useEffect, useRef, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { IoPlay } from "react-icons/io5";
 import { motion } from "framer-motion";
+import { MouseEvent, useEffect, useRef, useState } from "react";
+import MaxWidth from "@/components/layout/max-width";
+import { handleSortSlide } from "@/base/utils/function";
 
 type slide = {
     img: string;
@@ -61,7 +61,7 @@ export default function Slide() {
             slideRef.current.style.transformOrigin = `${mousePosition.x}% ${mousePosition.y}%`;
             slideRef.current.classList.add("scale-up");
         }
-    }, [slides,mousePosition.x,mousePosition.y]);
+    }, [slides]);
 
     const changeSlide = (type: "next" | "prev") => {
         setOldSlides(slides[2]);
@@ -105,7 +105,7 @@ export default function Slide() {
 
     return (
         <div
-            className="relative h-screen cursor-grab bg-cover bg-clip-padding bg-center bg-no-repeat"
+            className="relative h-screen cursor-grab bg-cover bg-clip-padding bg-center bg-no-repeat duration-300"
             style={{ backgroundImage: `url(${oldSlides.img})` }}
             onMouseUp={handleMouseUp}
             onMouseDown={handleMouseDown}

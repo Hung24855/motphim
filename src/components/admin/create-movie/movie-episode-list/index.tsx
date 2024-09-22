@@ -36,19 +36,19 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
             </button>
 
             <div className="mt-3">
-                <table className="min-w-full border-collapse border border-gray-200">
+                <table className="min-w-full border-collapse border">
                     <thead>
-                        <tr className="bg-gray-100">
-                            <th className="border border-gray-300 px-4 py-2 text-left">Tên phim</th>
-                            <th className="border border-gray-300 px-4 py-2 text-left">Slug</th>
-                            <th className="border border-gray-300 px-4 py-2 text-left">Link phim</th>
-                            <th className="border border-gray-300 px-4 py-2 text-left">Hành động</th>
+                        <tr className="bg-[#f3f4f6]">
+                            <th className="border p-2 text-left">Tên phim</th>
+                            <th className="border p-2 text-left">Đường dẫn tĩnh</th>
+                            <th className="border p-2 text-left">Link phim</th>
+                            <th className="border p-2 text-left">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         {Episodes.map((episode, index) => (
-                            <tr className="hover:bg-gray-50" key={index}>
-                                <td className="w-1/5 border border-gray-300 px-4 py-2">
+                            <tr className="hover:bg-[#f2f0fd]" key={index}>
+                                <td className="w-1/5 border">
                                     <Controller
                                         control={control}
                                         name={`episodes.${index}.name`}
@@ -60,14 +60,14 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                                                 type="text"
                                                 placeholder="1"
                                                 className={clsx(
-                                                    "w-full p-1 outline-none",
+                                                    "w-full p-2 outline-none h-full",
                                                     errors.episodes?.[index]?.name && "border border-b-red-500"
                                                 )}
                                             />
                                         )}
                                     />
                                 </td>
-                                <td className="-1/5 border border-gray-300 px-4 py-2">
+                                <td className="w-1/5 border">
                                     <Controller
                                         control={control}
                                         name={`episodes.${index}.slug`}
@@ -79,14 +79,14 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                                                 type="text"
                                                 placeholder="tap-1"
                                                 className={clsx(
-                                                    "w-full p-1 outline-none",
+                                                    "w-full p-2 outline-none h-full",
                                                     errors.episodes?.[index]?.slug && "border border-b-red-500"
                                                 )}
                                             />
                                         )}
                                     />
                                 </td>
-                                <td className="w-2/5 border border-gray-300 px-4 py-2">
+                                <td className="w-2/5 border">
                                     <Controller
                                         control={control}
                                         name={`episodes.${index}.link`}
@@ -98,19 +98,19 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                                                 type="text"
                                                 placeholder="Link phim"
                                                 className={clsx(
-                                                    "w-full p-1 outline-none",
+                                                    "w-full p-2 outline-none h-full",
                                                     errors.episodes?.[index]?.link && "border border-b-red-500"
                                                 )}
                                             />
                                         )}
                                     />
                                 </td>
-                                <td className="-1/5 border border-gray-300 px-4 py-2">
+                                <td className="w-1/5 border">
                                     <div className="flex items-center justify-center gap-x-1">
                                         {index !== 0 && (
                                             <button
                                                 type="button"
-                                                className="flex items-center rounded p-2 text-gray-600 hover:text-red-600 gap-x-1"
+                                                className="flex items-center gap-x-1 rounded p-2 text-gray-600 hover:text-red-600"
                                                 onClick={() => {
                                                     let NewEpisodes = getValues("episodes").filter(
                                                         (_, i) => i !== index

@@ -1,4 +1,5 @@
 import MaxWidth from "@/components/layout/max-width";
+import clsx from "clsx";
 import { Fragment } from "react";
 
 export function MovieCardSkeleton() {
@@ -18,17 +19,27 @@ export function MovieCardSkeleton() {
     );
 }
 
-export const ListMovieSkeleton = () => {
+export const ListMovieSkeleton = ({
+    number = 10,
+    containerClassName,
+    showTitle = false
+}: {
+    number?: number;
+    containerClassName?: string;
+    showTitle?: boolean;
+}) => {
     return (
-        <MaxWidth className="px-2 pb-10 pt-24">
+        <MaxWidth className={clsx("px-2 pb-10 pt-24", containerClassName)}>
             {/* Title */}
-            {/* <div className="w-[200px] animate-pulse rounded-md bg-gray-800 py-3 ml-4"></div> */}
+            {showTitle && <div className="ml-2 w-[200px] animate-pulse rounded-md bg-gray-700 py-3"></div>}
             <div className="mt-2 grid grid-cols-2 gap-2 px-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => (
-                    <Fragment key={item}>
-                        <MovieCardSkeleton key={item} />
-                    </Fragment>
-                ))}
+                {Array(number)
+                    .fill(0)
+                    .map((item, index) => (
+                        <Fragment key={index}>
+                            <MovieCardSkeleton key={index} />
+                        </Fragment>
+                    ))}
             </div>
         </MaxWidth>
     );

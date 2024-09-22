@@ -1,4 +1,4 @@
-import Favourite from "@/views/favourite";
+import Favourite from "@/views/client/favourite";
 
 export default function FavouritePage() {
     return <Favourite />;

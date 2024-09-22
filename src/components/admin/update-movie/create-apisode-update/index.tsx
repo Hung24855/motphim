@@ -64,16 +64,16 @@ export default function CreateEpisodeUpdate({
                 <table className="min-w-full border-collapse border border-gray-200">
                     <thead>
                         <tr className="bg-gray-100">
-                            <th className="border border-gray-300 px-4 py-2 text-left">Tên phim</th>
-                            <th className="border border-gray-300 px-4 py-2 text-left">Slug</th>
-                            <th className="border border-gray-300 px-4 py-2 text-left">Link phim</th>
-                            <th className="border border-gray-300 px-4 py-2 text-left">Hành động</th>
+                            <th className="border p-2 text-left">Tên phim</th>
+                            <th className="border p-2 text-left">Đường dẫn tĩnh</th>
+                            <th className="border p-2 text-left">Link phim</th>
+                            <th className="border p-2 text-left">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         {Episodes.map((episode, index) => (
                             <tr key={index}>
-                                <td className="border border-gray-300 w-1/5">
+                                <td className="w-1/5 border">
                                     <input
                                         type="text"
                                         placeholder="1"
@@ -84,12 +84,12 @@ export default function CreateEpisodeUpdate({
                                             setEpisodes(newEpisodes);
                                         }}
                                         className={clsx(
-                                            "w-full px-4 py-2 outline-none disabled:bg-gray-200"
+                                            "w-full p-2 outline-none disabled:bg-gray-200"
                                             // errors.episodes?.[index]?.name && "border border-b-red-500"
                                         )}
                                     />
                                 </td>
-                                <td className="border border-gray-300 w-1/5">
+                                <td className="w-1/5 border">
                                     <input
                                         type="text"
                                         placeholder="tap-1"
@@ -100,12 +100,12 @@ export default function CreateEpisodeUpdate({
                                             setEpisodes(newEpisodes);
                                         }}
                                         className={clsx(
-                                            "w-full px-4 py-2 outline-none disabled:bg-gray-200"
+                                            "w-full p-2 outline-none disabled:bg-gray-200"
                                             // errors.episodes?.[index]?.slug && "border border-b-red-500"
                                         )}
                                     />
                                 </td>
-                                <td className="border border-gray-300 w-2/5">
+                                <td className="w-2/5 border">
                                     <input
                                         type="text"
                                         placeholder="Link phim"
@@ -116,12 +116,12 @@ export default function CreateEpisodeUpdate({
                                             setEpisodes(newEpisodes);
                                         }}
                                         className={clsx(
-                                            "w-full px-4 py-2 outline-none disabled:bg-gray-200"
+                                            "w-full p-2 outline-none disabled:bg-gray-200"
                                             // errors.episodes?.[index]?.link && "border border-b-red-500"
                                         )}
                                     />
                                 </td>
-                                <td className="border border-gray-300 px-4 w-1/5">
+                                <td className="w-1/5 border px-4">
                                     {
                                         <div className="flex justify-center gap-x-2">
                                             <button

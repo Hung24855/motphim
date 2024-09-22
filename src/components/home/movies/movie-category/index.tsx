@@ -1,11 +1,12 @@
 "use client";
 import { useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
-import MovieCard from "@/components/shared/movie-card";
-import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
-import { MoviesService } from "@/domain/phim/services";
 import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
+import MovieCard from "@/components/shared/movie-card";
+import { MoviesService } from "@/domain/phim/services";
+import { ListMovieSkeleton } from "@/components/shared/movie-card-skeleton";
 
 type props = {
     title: string;
@@ -18,11 +19,11 @@ export default function MovieCategory(props: props) {
     const { title, pathAll, slidesPerView = 5, slug } = props;
     const swiperRef = useRef<SwiperCore>();
 
-    const { data } = MoviesService.get_movies_by_genre({
+    const { data: movies } = MoviesService.get_movies_by_genre({
         slug
     });
 
-    if (!data) return <></>;
+    if (!movies) return <ListMovieSkeleton number={5} containerClassName="!pt-0" showTitle />;
 
     return (
         <div className="mb-5">
@@ -76,13 +77,7 @@ export default function MovieCategory(props: props) {
                     }
                 }}
             >
-                {/* {[1, 2, 3, 4, 5, 6].map((_, index) => (
-                    <SwiperSlide key={index}>
-                        <MovieCard />
-                    </SwiperSlide>
-                ))} */}
-
-                {data.data.map((movie, index) => (
+                {movies.data.map((movie, index) => (
                     <SwiperSlide key={index}>
                         <MovieCard movie={movie} />
                     </SwiperSlide>

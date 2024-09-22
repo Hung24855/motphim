@@ -27,7 +27,6 @@ import { v4 as uuidv4 } from "uuid";
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        // console.log(body);
 
         const requiredFields = [
             "countriesId",
@@ -59,7 +58,7 @@ export async function POST(request: Request) {
         (id, movie_name, slug,content,title_head,image,time_per_episode, episode_current,episode_total,movie_type_id,trailer_youtube_url) 
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`;
 
-        const result = await pool.query(
+        await pool.query(
             sql_insert_movie,
             [
                 movie_id,
@@ -76,6 +75,7 @@ export async function POST(request: Request) {
             ],
             (Error, Result) => {
                 if (Error) {
+                    console.log("Error insert movie", Error);
                     return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
                 }
 
@@ -96,9 +96,6 @@ export async function POST(request: Request) {
                         };
                     })
                 ];
-
-                // console.log("queries", queries);
-
                 // Run all queries
                 const promises = queries.map(({ query, values }) => pool.query(query, values));
                 Promise.all(promises)
@@ -112,10 +109,9 @@ export async function POST(request: Request) {
             }
         );
 
-        // return NextResponse.json({ status: "success", message: "Thêm phim thành công", data: [] });
         return NextResponse.json({ status: "success", message: "Thêm phim thành công", data: [] });
     } catch (error) {
-        console.log("Error: ", error);
+        console.log("Error: POST movie", error);
 
         return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
     }

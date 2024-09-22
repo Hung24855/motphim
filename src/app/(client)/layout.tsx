@@ -20,17 +20,13 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
-    children,
-
+    children
 }: Readonly<{
     children: React.ReactNode;
-
 }>) {
     DB_Connect();
 
-    // const isAdmin = false;
     const session = await auth();
-    // console.log("session: ", session);
 
     return (
         <NextAuthProvider session={session}>
@@ -44,7 +40,7 @@ export default async function RootLayout({
                             <Fragment>
                                 <Fragment>
                                     <Header session={session} />
-                                    <main className="bg-bg_primary min-h-screen md:px-0">{children}</main>
+                                    <main className="min-h-screen bg-bg_primary md:px-0">{children}</main>
                                     <Footer />
                                 </Fragment>
                             </Fragment>

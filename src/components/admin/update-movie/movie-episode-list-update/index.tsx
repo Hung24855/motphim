@@ -71,19 +71,19 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
     return (
         <div className="min-w-max">
             <div className="mt-3">
-                <table className="min-w-full border-collapse border border-gray-200">
+                <table className="min-w-full border-collapse border ">
                     <thead>
-                        <tr className="bg-gray-100">
-                            <th className="border border-gray-300 px-4 py-2 text-left">Tên phim</th>
-                            <th className="border border-gray-300 px-4 py-2 text-left">Slug</th>
-                            <th className="border border-gray-300 px-4 py-2 text-left">Link phim</th>
-                            <th className="border border-gray-300 px-4 py-2 text-left">Hành động</th>
+                        <tr className="bg-[#f3f4f6]">
+                            <th className="border p-2 text-left">Tên phim</th>
+                            <th className="border p-2 text-left">Đường dẫn tĩnh</th>
+                            <th className="border p-2 text-left">Link phim</th>
+                            <th className="border p-2 text-left">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         {Episodes.map((episode, index) => (
-                            <tr key={index}>
-                                <td className="w-1/5 border border-gray-300">
+                            <tr key={index} className="hover:bg-[#f2f0fd]">
+                                <td className="w-1/5 border">
                                     <input
                                         type="text"
                                         placeholder="Tên phim"
@@ -94,10 +94,10 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                         }
                                         onChange={(e) => handleInputChange("name", e.target.value)}
                                         disabled={episode.episode_id !== UpdateEpisode?.episode_id}
-                                        className={clsx("w-full px-4 py-2 outline-none disabled:bg-gray-200")}
+                                        className={clsx("w-full p-2 outline-none disabled:bg-gray-200")}
                                     />
                                 </td>
-                                <td className="w-1/5 border border-gray-300">
+                                <td className="w-1/5 border">
                                     <input
                                         type="text"
                                         placeholder="Slug"
@@ -108,10 +108,10 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                         }
                                         onChange={(e) => handleInputChange("slug", e.target.value)}
                                         disabled={episode.episode_id !== UpdateEpisode?.episode_id}
-                                        className={clsx("w-full px-4 py-2 outline-none disabled:bg-gray-200")}
+                                        className={clsx("w-full p-2 outline-none disabled:bg-gray-200")}
                                     />
                                 </td>
-                                <td className="w-2/5 border border-gray-300">
+                                <td className="w-2/5 border">
                                     <input
                                         type="text"
                                         placeholder="Link phim"
@@ -122,10 +122,10 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                         }
                                         onChange={(e) => handleInputChange("link", e.target.value)}
                                         disabled={episode.episode_id !== UpdateEpisode?.episode_id}
-                                        className={clsx("w-full px-4 py-2 outline-none disabled:bg-gray-200")}
+                                        className={clsx("w-full p-2 outline-none disabled:bg-gray-200")}
                                     />
                                 </td>
-                                <td className="w-1/5 border border-gray-300 px-2">
+                                <td className="w-1/5 border px-2">
                                     <div className="flex items-center justify-center gap-x-1">
                                         {UpdateEpisode?.episode_id === episode.episode_id && (
                                             <button

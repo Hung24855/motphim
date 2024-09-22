@@ -36,7 +36,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
         return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
     }
 }
-
+// Danh sách phim theo thể loại
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     let select =
         "movies.movie_name, movies.slug, movies.year, movies.content , movies.image, movies.time_per_episode, movies.episode_current, movies.episode_total,movies.lang,genres.name as genre_name";
@@ -50,16 +50,12 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                 `SELECT ${select} FROM movies ${join} WHERE ${where} genres.slug = $1 ${orderBy} ${limitSql} ${offset}`,
                 [params.id]
             ),
-            pool.query(
-                `SELECT COUNT(*) FROM movies ${join} WHERE ${where} genres.slug = $1 ${orderBy} `,
-                [params.id]
-            )
+            pool.query(`SELECT COUNT(*) FROM movies ${join} WHERE ${where} genres.slug = $1 ${orderBy} `, [params.id])
         ]);
         if (movies.rows.length === 0) {
             return NextResponse.json({
                 status: "success",
                 message: "Không có phim thuộc thể loại này!",
-                genre: "",
                 data: [],
                 pagination: {
                     totalRows: Number(totalRows.rows[0].count),

@@ -1,5 +1,4 @@
 import { pool } from "@/database/connect";
-import { Episode } from "@/domain/phim/dto";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
@@ -24,7 +23,9 @@ export async function GET(request: Request, { params }: { params: { slug: string
         //Lấy thông tin thể loại
         const genres = (
             await pool.query(
-                "SELECT movie_genre.*,genres.name ,genres.slug FROM movie_genre INNER JOIN genres ON movie_genre.genres_id = genres.id WHERE movie_id = $1",
+                "SELECT movie_genre.*,genres.name ,genres.slug FROM movie_genre" +
+                    " INNER JOIN genres ON movie_genre.genres_id = genres.id" +
+                    " WHERE movie_id = $1",
                 [res.rows[0]?.id]
             )
         ).rows;
@@ -32,7 +33,9 @@ export async function GET(request: Request, { params }: { params: { slug: string
         //Lấy thông tin quốc gia
         const countries = (
             await pool.query(
-                "SELECT movie_country.*,countries.name,countries.slug FROM movie_country INNER JOIN countries ON movie_country.country_id = countries.id WHERE movie_id = $1",
+                "SELECT movie_country.*,countries.name,countries.slug FROM movie_country" +
+                    " INNER JOIN countries ON movie_country.country_id = countries.id " +
+                    " WHERE movie_id = $1",
                 [res.rows[0]?.id]
             )
         ).rows;

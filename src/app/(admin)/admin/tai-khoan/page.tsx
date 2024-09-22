@@ -1,3 +1,5 @@
+import AccountAdminView from "@/views/admin/account";
+
 export default function AccountManagement() {
-    return <div>AccountManagement</div>;
+    return <AccountAdminView />;
 }
