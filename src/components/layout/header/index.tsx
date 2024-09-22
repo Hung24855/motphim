@@ -15,6 +15,7 @@ import { CountriesService } from "@/domain/quoc-gia/service";
 import { logout_action } from "@/actions/auth";
 import { Session } from "next-auth";
 import { Popover } from "antd";
+import { useRouter } from "next/navigation";
 
 function Search({ session }: { session: Session | null }) {
     const [search, setSearch] = useState<string>("");
@@ -29,6 +30,18 @@ function Search({ session }: { session: Session | null }) {
             inputRef.current.focus();
         }
     }, [showSearch]);
+
+    const router = useRouter();
+
+    const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            const keyWord = search.replace(/\s+/g, "-");
+
+            //Thay các khoản trắng liên tiếp thành +
+            router.push(`/tim-kiem?q=${keyWord}`);
+            setSearch("");
+        }
+    };
 
     const content = (
         <Fragment>
@@ -74,6 +87,7 @@ function Search({ session }: { session: Session | null }) {
                     placeholder="Tên phim..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
+                    onKeyDown={onKeyDown}
                     ref={inputRef}
                 />
 

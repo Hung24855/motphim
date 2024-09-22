@@ -39,7 +39,7 @@ const Pagination = ({ initPage = 1, totalPage }: { totalPage: number; initPage: 
         // Luôn hiển thị trang đầu tiên
         pages.push(
             <span
-                className={`mx-1 cursor-pointer rounded border px-2 py-1 md:px-4 md:py-2 ${pageActive === 1 && "bg-primary text-white ring-1"}`}
+                className={`mx-1 cursor-pointer rounded border px-2 py-1 md:px-4 md:py-2 ${pageActive === 1 && "bg-primary text-black ring-1"}`}
                 key={1}
                 onClick={() => handleSelectPage(1)}
             >
@@ -62,7 +62,7 @@ const Pagination = ({ initPage = 1, totalPage }: { totalPage: number; initPage: 
         for (let i = startPage; i <= endPage; i++) {
             pages.push(
                 <span
-                    className={`mx-1 cursor-pointer rounded border px-2 py-1 md:px-4 md:py-2 ${pageActive === i && "bg-primary text-white ring-1"}`}
+                    className={`mx-1 cursor-pointer rounded border px-2 py-1 md:px-4 md:py-2 ${pageActive === i && "bg-primary text-black ring-1"}`}
                     key={i}
                     onClick={() => handleSelectPage(i)}
                 >
@@ -84,7 +84,7 @@ const Pagination = ({ initPage = 1, totalPage }: { totalPage: number; initPage: 
         if (totalPage > 1) {
             pages.push(
                 <span
-                    className={`mx-1 cursor-pointer rounded border px-2 py-1 md:px-4 md:py-2 ${pageActive === totalPage && "bg-primary text-white ring-1"}`}
+                    className={`mx-1 cursor-pointer rounded border px-2 py-1 md:px-4 md:py-2 ${pageActive === totalPage && "bg-primary text-black ring-1"}`}
                     key={totalPage}
                     onClick={() => handleSelectPage(totalPage)}
                 >

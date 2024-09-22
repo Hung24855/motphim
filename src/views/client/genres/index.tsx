@@ -4,10 +4,16 @@ import MaxWidth from "@/components/layout/max-width";
 import MovieCard from "@/components/shared/movie-card";
 import { ListMovieSkeleton } from "@/components/shared/movie-card-skeleton";
 import { MoviesService } from "@/domain/phim/services";
+import { useSearchParams } from "next/navigation";
 
 export default function GenresPage({ slug }: { slug: string }) {
-    const { data: movies } = MoviesService.get_movies_by_genre({ slug, page: 1, limit: 20 });
-    
+    const SearchParams = useSearchParams();
+    const { data: movies } = MoviesService.get_movies_by_genre({
+        slug,
+        page: SearchParams.get("page") ?? 1,
+        limit: 20
+    });
+
     if (!movies) return <ListMovieSkeleton />;
 
     return (
@@ -27,7 +33,10 @@ export default function GenresPage({ slug }: { slug: string }) {
 
                     {movies.pagination.totalPages > 1 && (
                         <div className="flex items-center justify-center pb-10 pt-16">
-                            <Pagination totalPage={movies.pagination.totalPages} initPage={Number(1)} />
+                            <Pagination
+                                totalPage={movies.pagination.totalPages}
+                                initPage={Number(SearchParams.get("page") ?? 1)}
+                            />
                         </div>
                     )}
                 </div>

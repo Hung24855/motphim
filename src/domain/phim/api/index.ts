@@ -114,4 +114,18 @@ export class MoviesApi {
             console.log("Error: update_episodes ", error);
         }
     }
+
+    // Search phim
+    static async search_movie(query: string) {
+        try {
+            console.log("query", query);
+            
+            const { data } = await http.get(ENDPOINT_URL.search_movie(), {
+                params: { q: query }
+            });
+            return data;
+        } catch (error) {
+            console.log("Error: search_movie ", error);
+        }
+    }
 }

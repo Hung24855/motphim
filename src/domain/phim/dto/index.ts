@@ -52,7 +52,7 @@ export interface DataGetMoviesDTO {
         image: string;
         time_per_episode: string;
         episode_current: string;
-        episode_total:string;
+        episode_total: string;
         lang: string;
     }[];
     pagination: {
@@ -62,6 +62,7 @@ export interface DataGetMoviesDTO {
         totalPages: number;
     };
 }
+export type DataSearchMovieDTO = Pick<DataGetMoviesDTO, "status" | "message" | "data">;
 
 export interface DataGetMoviesByCountryDTO {
     status: string;
@@ -73,7 +74,7 @@ export interface DataGetMoviesByCountryDTO {
         image: string;
         time_per_episode: string;
         episode_current: string;
-        episode_total:string;
+        episode_total: string;
         lang: string;
         country_name: string;
     }[];
@@ -95,7 +96,7 @@ export interface DataGetMoviesByGenreDTO {
         image: string;
         time_per_episode: string;
         episode_current: string;
-        episode_total:string;
+        episode_total: string;
         lang: string;
         genre_name: string;
     }[];

@@ -1,7 +1,13 @@
 import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { MoviesApi } from "../api";
-import { DataGetMovieDetailDTO, DataGetMoviesByCountryDTO, DataGetMoviesByGenreDTO, DataGetMoviesDTO } from "../dto";
+import {
+    DataGetMovieDetailDTO,
+    DataGetMoviesByCountryDTO,
+    DataGetMoviesByGenreDTO,
+    DataGetMoviesDTO,
+    DataSearchMovieDTO
+} from "../dto";
 import { useMutation } from "@tanstack/react-query";
 import {
     IDataCreateEpisodeType,
@@ -83,7 +89,7 @@ export class MoviesService {
 
     static get_movies_by_type({ slug, page, limit }: IDataGetAllMoviesByType) {
         console.log("slug, page, limit", slug, page, limit);
-        
+
         const { data } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_MOVIE_BY_TYPE, slug, page], () =>
             MoviesApi.get_movies_by_type({ slug, page, limit })
         );
@@ -169,5 +175,15 @@ export class MoviesService {
             isPeddingCreateEpisode,
             isPeddingUpdateEpisode
         };
+    }
+
+    // Tim kiem phim
+
+    static get_search_movie(query: string) {
+        const { data, isFetching, isError, refetch } = useFetcher<DataSearchMovieDTO>(
+            [QUERY_KEY.GET_SEARCH_MOVIE, query],
+            () => MoviesApi.search_movie(query)
+        );
+        return { data, isFetching, isError, refetch };
     }
 }

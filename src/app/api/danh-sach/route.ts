@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     const sql = `SELECT 
     movies.movie_name, movies.slug, movies.year , movies.movie_type_id,
     movies.image, movies.time_per_episode, movies.episode_current,movies.episode_total,
-    movies.lang FROM movies ${where} ${orderBy} ${limitSql} ${offset}`;
+    movies.lang FROM movies WHERE ${where} ${orderBy} ${limitSql} ${offset}`;
 
     try {
         const [movies, totalRows] = await Promise.all([

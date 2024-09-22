@@ -20,3 +20,7 @@ export function handleSortSlide(arr: any[], index: number) {
 export function isEmail(email: string) {
     return REGEX.email.test(email);
 }
+// Bỏ dấu khỏi từ tiếng việt
+export function removeMark(str: string) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
