@@ -33,6 +33,9 @@ class EndpointUrl {
     get_movies_by_country = (slug: string) => `/quoc-gia/${slug}`;
     // Tim kiem
     search_movie = () => `/tim-kiem`;
+
+    // Ẩn hiện phim
+    change_visible_movie = (movie_id: string) => `/phim/an-hien/${movie_id}`;
 }
 
 export const ENDPOINT_URL = new EndpointUrl(); 

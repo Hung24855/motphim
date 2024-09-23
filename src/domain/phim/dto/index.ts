@@ -46,6 +46,7 @@ export interface DataGetMoviesDTO {
     status: string;
     message: string;
     data: {
+        id:string
         movie_name: string;
         slug: string;
         year: number;
@@ -54,6 +55,7 @@ export interface DataGetMoviesDTO {
         episode_current: string;
         episode_total: string;
         lang: string;
+        is_visible:boolean
     }[];
     pagination: {
         totalRows: number;
@@ -68,6 +70,7 @@ export interface DataGetMoviesByCountryDTO {
     status: string;
     message: string;
     data: {
+        id:string
         movie_name: string;
         slug: string;
         year: number;
@@ -90,6 +93,7 @@ export interface DataGetMoviesByGenreDTO {
     status: string;
     message: string;
     data: {
+        id:string
         movie_name: string;
         slug: string;
         year: number;

@@ -175,7 +175,7 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                         >
                                             <button
                                                 type="button"
-                                                className="flex items-center gap-x-1 rounded p-2 text-gray-600 hover:text-red-500"
+                                                className="flex items-center gap-x-1 rounded p-2 text-red-500"
                                                 onClick={() => {
                                                     setDeleteEpisode(episode);
                                                 }}

@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
             "SELECT movies.movie_name, movies.slug, movies.year, movies.movie_type_id, movies.image, " +
             "movies.time_per_episode, movies.episode_current, movies.episode_total, movies.lang " +
             "FROM movies " +
-            "WHERE (" +
+            "WHERE is_visible = true AND (" +
             [...query]
                 .map(
                     (str, index) =>

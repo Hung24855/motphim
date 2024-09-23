@@ -117,7 +117,7 @@ export default function AdminSideBar() {
                                 <li className={clsx("min-h-12 rounded")} key={index}>
                                     <span
                                         className={clsx(
-                                            "group flex h-full cursor-pointer items-center rounded-lg px-1 py-2 hover:text-admin_primary",
+                                            "group flex h-full cursor-pointer items-center rounded-lg px-1 py-2 hover:text-admin_primary hover:bg-gray-300",
                                             isActive(item.path ?? "") ||
                                                 item.subMenu?.find((subItem) => isActive(subItem.path ?? ""))
                                                 ? "bg-gray-300 text-admin_primary"
@@ -171,7 +171,7 @@ export default function AdminSideBar() {
                                                     key={subIndex}
                                                     className={clsx(
                                                         "flex cursor-pointer select-none items-center gap-x-2 rounded p-2",
-                                                        "hover:text-admin_primary",
+                                                        "hover:text-admin_primary hover:bg-gray-300",
                                                         isActive(subItem.path ?? "") && "bg-gray-300 text-admin_primary"
                                                     )}
                                                     onClick={() => {

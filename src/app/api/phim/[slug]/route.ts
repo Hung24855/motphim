@@ -1,6 +1,6 @@
 import { pool } from "@/database/connect";
 import { NextResponse } from "next/server";
-import { v4 as uuidv4 } from "uuid";
+
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
     try {
         let join = `INNER JOIN movie_genre ON movies.id = movie_genre.movie_id 
@@ -21,32 +21,51 @@ export async function GET(request: Request, { params }: { params: { slug: string
         }
 
         //Lấy thông tin thể loại
-        const genres = (
-            await pool.query(
+        // const genres = (
+        //     await pool.query(
+        //         "SELECT movie_genre.*,genres.name ,genres.slug FROM movie_genre" +
+        //             " INNER JOIN genres ON movie_genre.genres_id = genres.id" +
+        //             " WHERE movie_id = $1",
+        //         [res.rows[0]?.id]
+        //     )
+        // ).rows;
+
+        //Lấy thông tin quốc gia
+        // const countries = (
+        //     await pool.query(
+        //         "SELECT movie_country.*,countries.name,countries.slug FROM movie_country" +
+        //             " INNER JOIN countries ON movie_country.country_id = countries.id " +
+        //             " WHERE movie_id = $1",
+        //         [res.rows[0]?.id]
+        //     )
+        // ).rows;
+
+        // const episodes = (
+        //     await pool.query(
+        //         "SELECT * FROM episodes WHERE movie_id = $1 ORDER BY CAST(REGEXP_REPLACE(name, '\\D', '', 'g') AS INTEGER)",
+        //         [res.rows[0]?.id]
+        //     )
+        // ).rows;
+
+        const [genres, countries, episodes] = await Promise.all([
+            pool.query(
                 "SELECT movie_genre.*,genres.name ,genres.slug FROM movie_genre" +
                     " INNER JOIN genres ON movie_genre.genres_id = genres.id" +
                     " WHERE movie_id = $1",
                 [res.rows[0]?.id]
-            )
-        ).rows;
-
-        //Lấy thông tin quốc gia
-        const countries = (
-            await pool.query(
+            ),
+            pool.query(
                 "SELECT movie_country.*,countries.name,countries.slug FROM movie_country" +
                     " INNER JOIN countries ON movie_country.country_id = countries.id " +
                     " WHERE movie_id = $1",
                 [res.rows[0]?.id]
-            )
-        ).rows;
-
-        //Chuyển tập phim sang number vì ban đầu name của nó là chuỗi nên không order_by được
-        const episodes = (
-            await pool.query(
+            ),
+            // //Chuyển tập phim sang number vì ban đầu name của nó là chuỗi nên không order_by được
+            pool.query(
                 "SELECT * FROM episodes WHERE movie_id = $1 ORDER BY CAST(REGEXP_REPLACE(name, '\\D', '', 'g') AS INTEGER)",
                 [res.rows[0]?.id]
             )
-        ).rows;
+        ]);
 
         return NextResponse.json({
             status: "success",
@@ -54,9 +73,9 @@ export async function GET(request: Request, { params }: { params: { slug: string
             data: [
                 {
                     ...res.rows[0],
-                    episodes,
-                    genres,
-                    countries
+                    episodes: episodes.rows,
+                    genres: genres.rows,
+                    countries: countries.rows
                 }
             ]
         });
@@ -179,6 +198,18 @@ export async function PUT(request: Request, { params }: { params: { slug: string
         return NextResponse.json({ status: "success", message: "Cập nhật phim thành công!", data: [] });
     } catch (error) {
         console.log("Error: update_movie", error);
+
+        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+    }
+}
+
+export async function DELETE(request: Request, { params }: { params: { slug: string } }) {
+    //slug là id phim
+    try {
+        await pool.query("DELETE FROM movies WHERE id = $1", [params.slug]);
+        return NextResponse.json({ status: "success", message: "Xóa phim thành công!", data: [] });
+    } catch (error) {
+        console.log("Error: delete_movie", error);
 
         return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
     }

@@ -119,13 +119,25 @@ export class MoviesApi {
     static async search_movie(query: string) {
         try {
             console.log("query", query);
-            
+
             const { data } = await http.get(ENDPOINT_URL.search_movie(), {
                 params: { q: query }
             });
             return data;
         } catch (error) {
             console.log("Error: search_movie ", error);
+        }
+    }
+
+    // Ẩn hiện phim
+    static async change_visible_movie({ movie_id, is_visible }: { movie_id: string; is_visible: boolean }) {
+        try {
+            const { data: res } = await http.put(ENDPOINT_URL.change_visible_movie(movie_id), {
+                is_visible
+            });
+            return res;
+        } catch (error) {
+            console.log("Error: change_visible_movie ", error);
         }
     }
 }

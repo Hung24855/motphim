@@ -14,7 +14,7 @@ export default function GenresPage({ slug }: { slug: string }) {
         limit: 20
     });
 
-    if (!movies) return <ListMovieSkeleton />;
+    if (!movies) return <ListMovieSkeleton showTitle />;
 
     return (
         <MaxWidth className="min-h-screen text-white">

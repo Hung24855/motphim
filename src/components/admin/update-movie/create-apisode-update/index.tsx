@@ -126,7 +126,7 @@ export default function CreateEpisodeUpdate({
                                         <div className="flex justify-center gap-x-2">
                                             <button
                                                 type="button"
-                                                className="flex items-center gap-x-1 rounded p-2 text-gray-600 hover:text-red-600"
+                                                className="flex items-center gap-x-1 rounded p-2 text-red-600"
                                                 onClick={() => {
                                                     const newEpisodes = Episodes.filter(
                                                         (item, i) => item.name !== episode.name

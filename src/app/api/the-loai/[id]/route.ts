@@ -23,6 +23,8 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 
         return NextResponse.json({ status: "success", message: "Cập nhật thể loại thành công", data: res.rows });
     } catch (error) {
+        console.log("Error: PUT the-loai/[id]", error);
+
         return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
     }
 }
@@ -39,7 +41,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 // Danh sách phim theo thể loại
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     let select =
-        "movies.movie_name, movies.slug, movies.year, movies.content , movies.image, movies.time_per_episode, movies.episode_current, movies.episode_total,movies.lang,genres.name as genre_name";
+        "movies.id,movies.movie_name, movies.slug, movies.year, movies.content , movies.image, movies.time_per_episode, movies.episode_current, movies.episode_total,movies.lang,genres.name as genre_name";
 
     let join =
         "INNER JOIN movie_genre ON movies.id = movie_genre.movie_id INNER JOIN genres ON movie_genre.genres_id = genres.id";
@@ -47,10 +49,13 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         const { limitSql, offset, orderBy, where, page, limit } = Filter(request);
         const [movies, totalRows] = await Promise.all([
             pool.query(
-                `SELECT ${select} FROM movies ${join} WHERE ${where} genres.slug = $1 ${orderBy} ${limitSql} ${offset}`,
+                `SELECT ${select} FROM movies ${join} WHERE is_visible = true AND ${where} genres.slug = $1 ${orderBy} ${limitSql} ${offset}`,
                 [params.id]
             ),
-            pool.query(`SELECT COUNT(*) FROM movies ${join} WHERE ${where} genres.slug = $1 ${orderBy} `, [params.id])
+            pool.query(
+                `SELECT COUNT(*) FROM movies ${join} WHERE is_visible = true AND ${where} genres.slug = $1 ${orderBy} `,
+                [params.id]
+            )
         ]);
         if (movies.rows.length === 0) {
             return NextResponse.json({

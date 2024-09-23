@@ -12,7 +12,7 @@ export default function CountriesPage({ slug }: { slug: string }) {
         page: SearchParams.get("page") ?? 1,
         limit: 20
     });
-    if (!movies) return <ListMovieSkeleton />;
+    if (!movies) return <ListMovieSkeleton showTitle />;
 
     return (
         <MaxWidth className="min-h-screen text-white">

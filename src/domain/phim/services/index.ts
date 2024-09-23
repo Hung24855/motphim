@@ -64,6 +64,14 @@ interface IUpdateEpisodeMutation {
     onSuccess: (data: any) => void;
     onError: (e: any) => void;
 }
+interface IChangeVisibleMovieMutation {
+    data: {
+        movie_id: string;
+        is_visible: boolean;
+    };
+    onSuccess: (data: { status: string; message: string }) => void;
+    onError: (e: any) => void;
+}
 
 export class MoviesService {
     static get_movie(slug: string) {
@@ -97,7 +105,7 @@ export class MoviesService {
     }
 
     static use_movies({ page, limit }: IDataGetAllMoviesType) {
-        const { data, isFetching } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_LIST_MOVIES, page], () =>
+        const { data, isFetching,refetch:refetchMovies } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_LIST_MOVIES, page], () =>
             MoviesApi.get_movies({ page, limit })
         );
         const { mutate: mutateCreate, isPending: isPeddingCreateMovie } = useMutation({
@@ -126,6 +134,7 @@ export class MoviesService {
         return {
             data,
             isFetching,
+            refetchMovies,
             createMovieMutation,
             updateMovieMutation,
             deleteMovieMutation,
@@ -178,12 +187,23 @@ export class MoviesService {
     }
 
     // Tim kiem phim
-
     static get_search_movie(query: string) {
         const { data, isFetching, isError, refetch } = useFetcher<DataSearchMovieDTO>(
             [QUERY_KEY.GET_SEARCH_MOVIE, query],
             () => MoviesApi.search_movie(query)
         );
         return { data, isFetching, isError, refetch };
+    }
+
+    static change_visible_movie() {
+        const { mutate, isPending: isPendingChangeVisibleMovie } = useMutation({
+            mutationFn: ({ movie_id, is_visible }: { movie_id: string; is_visible: boolean }) =>
+                MoviesApi.change_visible_movie({ movie_id, is_visible })
+        });
+
+        const mutateChangeVisibleMovie = ({ data, onError, onSuccess }: IChangeVisibleMovieMutation) => {
+            mutate(data, { onSuccess: onSuccess, onError: onError });
+        };
+        return { mutateChangeVisibleMovie, isPendingChangeVisibleMovie };
     }
 }
