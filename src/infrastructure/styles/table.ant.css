@@ -7,8 +7,12 @@
   }
 
 .ant-table-wrapper .ant-table-thead >tr>th {
-    padding:  16px 0;
+    padding:  16px 4px;
     background: #efefef;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    color: #212121;
 }
 
 .ant-pagination .ant-pagination-item-active {

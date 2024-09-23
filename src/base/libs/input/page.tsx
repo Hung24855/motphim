@@ -33,7 +33,7 @@ const Input = ({
 
             {type === "textarea" ? (
                 <textarea
-                    className="w-full rounded-md border border-blue-200 p-2"
+                    className="w-full rounded-md border border-blue-200 p-2 outline-none"
                     {...field}
                     placeholder={placeholder}
                     rows={4}

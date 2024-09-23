@@ -32,7 +32,7 @@ export default function ListMovie({ params }: { params: { slug: string } }) {
         limit: 20
     });
 
-    if (!response) return <ListMovieSkeleton />;
+    if (!response) return <ListMovieSkeleton showTitle/>;
 
     return (
         <MaxWidth className="min-h-screen text-white">
