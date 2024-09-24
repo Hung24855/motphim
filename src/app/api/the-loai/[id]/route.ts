@@ -41,7 +41,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 // Danh sách phim theo thể loại
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     let select =
-        "movies.id,movies.movie_name, movies.slug, movies.year, movies.content , movies.image, movies.time_per_episode, movies.episode_current, movies.episode_total,movies.lang,genres.name as genre_name";
+        "movies.id,movies.movie_name, movies.slug, movies.year, movies.image, movies.time_per_episode, movies.episode_current, movies.episode_total,movies.lang,genres.name as genre_name";
 
     let join =
         "INNER JOIN movie_genre ON movies.id = movie_genre.movie_id INNER JOIN genres ON movie_genre.genres_id = genres.id";

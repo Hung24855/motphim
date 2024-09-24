@@ -6,6 +6,7 @@ import {
     DataGetMoviesByCountryDTO,
     DataGetMoviesByGenreDTO,
     DataGetMoviesDTO,
+    DataGetMoviesFavoriteDTO,
     DataSearchMovieDTO
 } from "../dto";
 import { useMutation } from "@tanstack/react-query";
@@ -16,6 +17,7 @@ import {
     IDataGetAllMoviesByGenre,
     IDataGetAllMoviesByType,
     IDataGetAllMoviesType,
+    IDataGetFavoriteMovies,
     IDataUpdateEpisodeType,
     IDataUpdateMovieType
 } from "../model";
@@ -96,7 +98,7 @@ export class MoviesService {
     }
 
     static get_movies_by_type({ slug, page, limit }: IDataGetAllMoviesByType) {
-        console.log("slug, page, limit", slug, page, limit);
+        // console.log("slug, page, limit", slug, page, limit);
 
         const { data } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_MOVIE_BY_TYPE, slug, page], () =>
             MoviesApi.get_movies_by_type({ slug, page, limit })
@@ -104,8 +106,13 @@ export class MoviesService {
         return { data };
     }
 
+    // CRUD phim
     static use_movies({ page, limit }: IDataGetAllMoviesType) {
-        const { data, isFetching,refetch:refetchMovies } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_LIST_MOVIES, page], () =>
+        const {
+            data,
+            isFetching,
+            refetch: refetchMovies
+        } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_LIST_MOVIES, page], () =>
             MoviesApi.get_movies({ page, limit })
         );
         const { mutate: mutateCreate, isPending: isPeddingCreateMovie } = useMutation({
@@ -143,7 +150,7 @@ export class MoviesService {
             isPeddingDeleteMovie
         };
     }
-
+    // Quản lý tập phim
     static use_episodes() {
         const { mutate: mutateDelete, isPending: isPeddingDeleteEpisode } = useMutation({
             mutationFn: (episode_id: string) => MoviesApi.delete_episode(episode_id)
@@ -185,7 +192,6 @@ export class MoviesService {
             isPeddingUpdateEpisode
         };
     }
-
     // Tim kiem phim
     static get_search_movie(query: string) {
         const { data, isFetching, isError, refetch } = useFetcher<DataSearchMovieDTO>(
@@ -194,7 +200,7 @@ export class MoviesService {
         );
         return { data, isFetching, isError, refetch };
     }
-
+    // Ẩn hiện phim
     static change_visible_movie() {
         const { mutate, isPending: isPendingChangeVisibleMovie } = useMutation({
             mutationFn: ({ movie_id, is_visible }: { movie_id: string; is_visible: boolean }) =>
@@ -205,5 +211,25 @@ export class MoviesService {
             mutate(data, { onSuccess: onSuccess, onError: onError });
         };
         return { mutateChangeVisibleMovie, isPendingChangeVisibleMovie };
+    }
+    // Yêu thích và bỏ yêu thích phim
+    static use_favorite_movie({ user_id }: IDataGetFavoriteMovies) {
+        const {
+            data: moviesFavoriteByUser,
+            isFetching: isFetchingMoviesFavorite,
+            refetch: refetchMoviesFavorite
+        } = useFetcher<DataGetMoviesFavoriteDTO>(
+            [QUERY_KEY.GET_FAVORITE_MOVIES, user_id],
+            () => MoviesApi.get_favorite_movies(user_id),
+            {
+                enabled: !!user_id
+            }
+        );
+
+        return {
+            moviesFavoriteByUser,
+            isFetchingMoviesFavorite,
+            refetchMoviesFavorite
+        };
     }
 }

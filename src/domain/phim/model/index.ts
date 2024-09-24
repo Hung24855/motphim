@@ -60,3 +60,7 @@ export type IDataGetAllMoviesByType = {
 };
 
 export type IDataGetAllMoviesByCountry = IDataGetAllMoviesByGenre;
+
+export type IDataGetFavoriteMovies = {
+    user_id:string;
+};

@@ -140,4 +140,35 @@ export class MoviesApi {
             console.log("Error: change_visible_movie ", error);
         }
     }
+
+    static async get_favorite_movies(user_id: string) {
+        try {
+            const { data } = await http.get(ENDPOINT_URL.get_favorite_movies(user_id));
+            return data;
+        } catch (error) {
+            console.log("Error: get_favorite movies ", error);
+        }
+    }
+
+    // Yêu thích
+    static async favorite_movie({ movie_id, user_id }: { movie_id: string; user_id: string }) {
+        try {
+            const { data } = await http.post(ENDPOINT_URL.favorite_movie(movie_id), {
+                user_id
+            });
+            return data;
+        } catch (error) {
+            console.log("Error: favorite_movie ", error);
+        }
+    }
+
+    // Bỏ yêu thích
+    static async unfavorite_movie({ movie_id, user_id }: { movie_id: string; user_id: string }) {
+        try {
+            const { data } = await http.delete(ENDPOINT_URL.favorite_movie(movie_id), { data: { user_id } });
+            return data;
+        } catch (error) {
+            console.log("Error: unfavorite_movie ", error);
+        }
+    }
 }

@@ -26,16 +26,18 @@ class EndpointUrl {
     delete_episode = (episode: string) => `/phim/tap-phim/${episode}`;
     create_episodes = (movie_id: string) => `/phim/tap-phim/${movie_id}`;
     update_episode = (episode_id: string) => `/phim/tap-phim/${episode_id}`;
-
     //Phim theo theo loai
     get_movies_by_genre = (slug: string) => `/the-loai/${slug}`;
     //Phim theo theo quoc gia
     get_movies_by_country = (slug: string) => `/quoc-gia/${slug}`;
     // Tim kiem
     search_movie = () => `/tim-kiem`;
-
     // Ẩn hiện phim
     change_visible_movie = (movie_id: string) => `/phim/an-hien/${movie_id}`;
+    // Yêu thích và bỏ yêu thích
+    favorite_movie = (movie_id: string) => `/phim/yeu-thich/${movie_id}`;
+    // Danh sách phim yêu thích
+    get_favorite_movies = (user_id: string) => `phim/yeu-thich/${user_id}`;
 }
 
-export const ENDPOINT_URL = new EndpointUrl(); 
+export const ENDPOINT_URL = new EndpointUrl();

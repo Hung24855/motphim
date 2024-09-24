@@ -1,5 +1,7 @@
+import { auth } from "@/auth";
 import Favourite from "@/views/client/favourite";
 
-export default function FavouritePage() {
-    return <Favourite />;
+export default async function FavouritePage() {
+    const session = await auth();
+    return <Favourite session={session} />;
 }

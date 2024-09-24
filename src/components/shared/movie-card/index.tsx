@@ -2,7 +2,7 @@ import { DataGetMoviesDTO } from "@/domain/phim/dto";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-type Movie = DataGetMoviesDTO["data"][0];
+type Movie = Omit<DataGetMoviesDTO["data"][0], "is_visible">;
 // const img = "https://img.ophim.live/uploads/movies/du-phuong-hanh-thumb.jpg";
 export default function MovieCard({ movie }: { movie: Movie }) {
     return (

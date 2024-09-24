@@ -52,7 +52,6 @@ const MovieDetailSkeleton = () => {
 export default function MoviePage(props: Props) {
     const [episode, setEpisode] = useState<string>("1");
     const { data: response } = MoviesService.get_movie(props.slug);
-    // console.log("check response: ", response);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -67,6 +66,23 @@ export default function MoviePage(props: Props) {
         );
 
     const movie = response.data[0];
+
+    // Chức năng chia sẻ
+    const handleShare = async () => {
+        if (navigator.share && typeof window !== "undefined" && movie) {
+            try {
+                await navigator.share({
+                    title: "Chia sẻ",
+                    text: movie.movie_name,
+                    url: window.location.href
+                });
+            } catch (error) {
+                console.error("Chia sẻ nội dung thất bại!", error);
+            }
+        } else {
+            alert("Web Share API is not supported in your browser.");
+        }
+    };
 
     return (
         <Fragment>
@@ -123,13 +139,16 @@ export default function MoviePage(props: Props) {
                                 </div>
                                 <div className="movie-content max-h-80 overflow-auto text-sm">{movie.content}</div>
                                 <div className="mt-8 flex w-max items-center gap-1.5 rounded-lg border border-white/5 bg-white/5 px-4 py-4 md:gap-5 md:px-7">
-                                    <button className="flex flex-col items-center justify-center gap-1 text-sm hover:text-primary">
+                                    <button
+                                        className="flex flex-col items-center justify-center gap-1 text-sm hover:text-primary"
+                                        onClick={handleShare}
+                                    >
                                         <Icon icon="solar:share-bold" height={18} />
                                         Share
                                     </button>
                                     <span className="h-12 w-0.5 bg-white/10 md:block" />
                                     <div className="flex items-center gap-3 text-sm font-bold">
-                                        <a href="#viđeo">
+                                        <a href="#video">
                                             <button className="rounded-full bg-primary px-8 py-3 text-black disabled:bg-zinc-600 disabled:text-white disabled:hover:bg-zinc-600">
                                                 Xem
                                             </button>
@@ -188,7 +207,7 @@ export default function MoviePage(props: Props) {
                     </div>
 
                     {/* Xem video */}
-                    <div className="mt-20 px-2 md:px-0" id="viđeo">
+                    <div className="mt-20 px-2 md:px-0" id="video">
                         <iframe
                             src={movie.episodes.find((item) => item.name === episode)?.link}
                             className="aspect-video w-full overflow-hidden rounded-md bg-stone-900"
