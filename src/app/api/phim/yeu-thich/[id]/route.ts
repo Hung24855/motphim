@@ -1,4 +1,5 @@
 import { pool } from "@/database/connect";
+import { truncate } from "fs";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request, { params }: { params: { id: string } }) {
@@ -16,7 +17,15 @@ export async function POST(request: Request, { params }: { params: { id: string 
 
         await pool.query("INSERT INTO favorites (user_id, movie_id) VALUES ($1, $2)", [body.user_id, params.id]);
 
-        return NextResponse.json({ status: "success", message: "Yêu thích phim thành công!", data: [] });
+        return NextResponse.json({
+            status: "success",
+            message: "Yêu thích phim thành công!",
+            data: [
+                {
+                    isFavorites: true
+                }
+            ]
+        });
     } catch (error) {
         console.log("Error: POST yeu-thich", error);
 
@@ -39,7 +48,15 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 
         await pool.query("DELETE FROM favorites WHERE user_id = $1 AND movie_id = $2", [body.user_id, params.id]);
 
-        return NextResponse.json({ status: "success", message: "Bỏ yêu thích phim thành công!", data: [] });
+        return NextResponse.json({
+            status: "success",
+            message: "Bỏ yêu thích phim thành công!",
+            data: [
+                {
+                    isFavorites: false
+                }
+            ]
+        });
     } catch (error) {
         console.log("Error: DELETE bỏ yeu-thich", error);
 

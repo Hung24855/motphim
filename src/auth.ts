@@ -35,28 +35,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     body: JSON.stringify({ email, password })
                 }).then((res) => res.json());
 
-                // console.log("response: ", response);
-
                 if (response.status === "error") return null;
 
                 if (response.data) user = response.data[0];
                 return user;
-
-                // console.log("email, password: ", email, password);
-                //Kiểm tra tài khoản đã tồn tại chưa
-                // const existUser = await pool.query(
-                //     "SELECT users.email, users.password  FROM users  WHERE users.email = $1",
-                //     [email]
-                // );
-                // console.log("existUser: ", existUser.rows , existUser.rows.length === 0);
-
-                // if (existUser.rows.length === 0) return null;
-                //Check mật khẩu
-                // const isMatch = bcrypt.compareSync(password as string | Buffer, existUser.rows[0]?.password);
-
-                // if (!isMatch) return null;
-
-                // return existUser.rows[0];
             }
         })
     ],
@@ -64,7 +46,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         authorized({ request: { nextUrl }, auth }) {
             const isLoggedIn = !!auth?.user;
             const { pathname } = nextUrl;
-
             const role = auth?.user?.role || "user";
             if (pathname.startsWith("/dang-nhap") && isLoggedIn) {
                 return Response.redirect(new URL("/", nextUrl));
@@ -75,6 +56,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return !!auth;
         },
         jwt({ token, user, trigger, session }) {
+            // console.log("🚀 ~ jwt ~ token, user, trigger, session:", token, user, trigger, session);
+
             if (user) {
                 token.id = user.id as string;
                 token.role = user.role as string;
@@ -85,6 +68,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return token;
         },
         session({ session, token }) {
+            // console.log("🚀 ~ session ~  session, token:",  session, token)
             session.user.id = token.id;
             session.user.role = token.role;
             return session;

@@ -1,14 +1,20 @@
 "use client";
 import MovieCategory from "@/components/home/movies/movie-category";
 import MaxWidth from "@/components/layout/max-width";
+import { DataGetMoviesFavoriteDTO, MovieForCardDTO } from "@/domain/phim/dto";
 import { MoviesService } from "@/domain/phim/services";
+import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { Icon } from "@iconify/react";
+import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
+import { Session } from "next-auth";
 import Script from "next/script";
 import { Fragment, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 type Props = {
     slug: string;
+    session: Session | null;
 };
 
 const MovieDetailSkeleton = () => {
@@ -50,8 +56,18 @@ const MovieDetailSkeleton = () => {
 };
 
 export default function MoviePage(props: Props) {
+    const queryClient = useQueryClient();
+
     const [episode, setEpisode] = useState<string>("1");
+
     const { data: response } = MoviesService.get_movie(props.slug);
+
+    const { mutateUnFavoriteMovie, mutateFavoriteMovie } = MoviesService.use_favorite_action();
+
+    const { checkFavoriteMovie } = MoviesService.check_favorite_movie({
+        movie_id: response?.data[0].id ?? "",
+        user_id: props.session?.user.id ?? ""
+    });
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -81,6 +97,41 @@ export default function MoviePage(props: Props) {
             }
         } else {
             alert("Web Share API is not supported in your browser.");
+        }
+    };
+    // Chức năng yêu thích
+    const handleFavoriteMovie = (text: "favorite" | "unfavorite") => {
+        const user_id = props.session?.user.id;
+        if (user_id) {
+            if (text === "favorite") {
+                mutateFavoriteMovie(
+                    { user_id: user_id, movie: movie as MovieForCardDTO },
+                    {
+                        onSuccess(data) {
+                            if (data.status === "success")
+                                queryClient.setQueryData([QUERY_KEY.GET_CHECK_FAVORITE_MOVIE, movie.id], data);
+                        },
+                        onError(e) {
+                            toast.error("Có lỗi xảy ra thử lại sau!");
+                        }
+                    }
+                );
+            } else {
+                mutateUnFavoriteMovie(
+                    { user_id, movie_id: movie.id },
+                    {
+                        onSuccess(data) {
+                            if (data.status === "success")
+                                queryClient.setQueryData([QUERY_KEY.GET_CHECK_FAVORITE_MOVIE, movie.id], data);
+                        },
+                        onError(e) {
+                            toast.error("Có lỗi xảy ra thử lại sau!");
+                        }
+                    }
+                );
+            }
+        } else {
+            toast.warning("Bạn cần đăng nhập để yêu thích phim!");
         }
     };
 
@@ -153,13 +204,29 @@ export default function MoviePage(props: Props) {
                                                 Xem
                                             </button>
                                         </a>
-                                        <button className="flex items-center gap-2 rounded-full border-2 border-primary bg-black/70 px-5 py-2.5 duration-300 hover:bg-primary hover:text-black">
+                                        <button
+                                            className={clsx(
+                                                "flex items-center gap-2 rounded-full border-2 border-primary bg-black/70 px-5 py-2.5 duration-300",
+                                                checkFavoriteMovie?.data[0]?.isFavorites
+                                                    ? "bg-red-500 text-white"
+                                                    : "hover:bg-primary hover:text-black"
+                                            )}
+                                            onClick={() => {
+                                                const option = checkFavoriteMovie?.data[0]?.isFavorites
+                                                    ? "unfavorite"
+                                                    : "favorite";
+                                                handleFavoriteMovie(option);
+                                            }}
+                                        >
                                             <Icon
-                                                // icon={isFavourite ? "ph:heart-break-fill" : "solar:heart-linear"}
-                                                icon="solar:heart-linear"
+                                                icon={
+                                                    checkFavoriteMovie?.data[0]?.isFavorites
+                                                        ? "ph:heart-break-fill"
+                                                        : "solar:heart-linear"
+                                                }
                                                 height={20}
                                             />
-                                            Yêu thích
+                                            {checkFavoriteMovie?.data[0]?.isFavorites ? "Bỏ thích" : "Yêu thích"}
                                         </button>
                                     </div>
                                 </div>
@@ -191,23 +258,11 @@ export default function MoviePage(props: Props) {
                                     </button>
                                 );
                             })}
-                            {/* {[1, 2, 3, 4, 5].map((item) => {
-                                return (
-                                    <button
-                                        className={clsx(
-                                            "rounded bg-[#191919] px-2 py-2 text-center hover:bg-primary hover:text-black md:px-10"
-                                        )}
-                                        key={item}
-                                    >
-                                        {item}
-                                    </button>
-                                );
-                            })} */}
                         </div>
                     </div>
 
                     {/* Xem video */}
-                    <div className="mt-20 px-2 md:px-0" id="video">
+                    {/* <div className="mt-20 px-2 md:px-0" id="video">
                         <iframe
                             src={movie.episodes.find((item) => item.name === episode)?.link}
                             className="aspect-video w-full overflow-hidden rounded-md bg-stone-900"
@@ -215,10 +270,10 @@ export default function MoviePage(props: Props) {
                             referrerPolicy="no-referrer"
                             loading="lazy"
                         />
-                    </div>
+                    </div> */}
 
                     {/* Tích hợp comment */}
-                    <div id="disqus_thread" className="mx-auto my-16 max-w-5xl px-5"></div>
+                    {/* <div id="disqus_thread" className="mx-auto my-16 max-w-5xl px-5"></div>
                     <Script id="my-script">
                         {`(function() { // DON'T EDIT BELOW THIS LINE
                             var d = document, s = d.createElement('script');
@@ -226,7 +281,7 @@ export default function MoviePage(props: Props) {
                             s.setAttribute('data-timestamp', +new Date());
                             (d.head || d.body).appendChild(s);
                             })();`}
-                    </Script>
+                    </Script> */}
 
                     <div className="px-2 py-2">
                         <MovieCategory title={"Phim " + movie.genres[0].name} slug={movie.genres[0].slug} />

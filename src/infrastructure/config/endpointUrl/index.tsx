@@ -37,7 +37,9 @@ class EndpointUrl {
     // Yêu thích và bỏ yêu thích
     favorite_movie = (movie_id: string) => `/phim/yeu-thich/${movie_id}`;
     // Danh sách phim yêu thích
-    get_favorite_movies = (user_id: string) => `phim/yeu-thich/${user_id}`;
+    get_favorite_movies = (user_id: string) => `/phim/yeu-thich/${user_id}`;
+    // Check phim được yêu thích chưa
+    check_favorite_movie = (movie_id: string) => `/phim/yeu-thich/kiem-tra/${movie_id}`;
 }
 
 export const ENDPOINT_URL = new EndpointUrl();

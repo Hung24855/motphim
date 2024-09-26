@@ -20,6 +20,7 @@ export interface MoviesDTO {
     episode_current: string;
     episode_total: string;
     movie_type_id: string;
+    is_visible: boolean;
     episodes: Episode[];
     genres: {
         id: number;
@@ -35,7 +36,18 @@ export interface MoviesDTO {
         slug: string;
     }[];
 }
-
+export interface MovieForCardDTO {
+    id: string;
+    movie_name: string;
+    slug: string;
+    year: number;
+    image: string;
+    time_per_episode: string;
+    episode_current: string;
+    episode_total: string;
+    lang: string;
+    is_visible: boolean;
+}
 export interface DataGetMovieDetailDTO {
     status: string;
     message: string;
@@ -111,4 +123,14 @@ export interface DataGetMoviesByGenreDTO {
         pageSize: number;
         totalPages: number;
     };
+}
+
+export interface DataCheckFavoriteMovieDTO {
+    status: "succes" | "error";
+    message: string;
+    data: [
+        {
+            isFavorites: boolean;
+        }
+    ];
 }

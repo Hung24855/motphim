@@ -171,4 +171,14 @@ export class MoviesApi {
             console.log("Error: unfavorite_movie ", error);
         }
     }
+
+    // Kiểm tra phim yêu thích
+    static async check_favorite_movie(movie_id: string) {
+        try {
+            const { data } = await http.get(ENDPOINT_URL.check_favorite_movie(movie_id));
+            return data;
+        } catch (error) {
+            console.log("Error: check_favorite_movie ", error);
+        }
+    }
 }

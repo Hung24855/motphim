@@ -2,14 +2,16 @@ import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { MoviesApi } from "../api";
 import {
+    DataCheckFavoriteMovieDTO,
     DataGetMovieDetailDTO,
     DataGetMoviesByCountryDTO,
     DataGetMoviesByGenreDTO,
     DataGetMoviesDTO,
     DataGetMoviesFavoriteDTO,
-    DataSearchMovieDTO
+    DataSearchMovieDTO,
+    MovieForCardDTO
 } from "../dto";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
     IDataCreateEpisodeType,
     IDataCreateMovieType,
@@ -84,7 +86,7 @@ export class MoviesService {
         return { data, isFetching, isError, refetch };
     }
 
-    static get_movies_by_genre({ slug, page, limit }: IDataGetAllMoviesByGenre) {
+    static get_movies_by_genre({ slug, page = 1, limit }: IDataGetAllMoviesByGenre) {
         const { data } = useFetcher<DataGetMoviesByGenreDTO>([QUERY_KEY.GET_MOVIE_BY_GENRE, slug, page], () =>
             MoviesApi.get_movies_by_genre({ slug, page, limit })
         );
@@ -212,14 +214,14 @@ export class MoviesService {
         };
         return { mutateChangeVisibleMovie, isPendingChangeVisibleMovie };
     }
-    // Yêu thích và bỏ yêu thích phim
+    // Get đanh sách phim yêu thích
     static use_favorite_movie({ user_id }: IDataGetFavoriteMovies) {
         const {
             data: moviesFavoriteByUser,
             isFetching: isFetchingMoviesFavorite,
             refetch: refetchMoviesFavorite
         } = useFetcher<DataGetMoviesFavoriteDTO>(
-            [QUERY_KEY.GET_FAVORITE_MOVIES, user_id],
+            [QUERY_KEY.GET_FAVORITE_MOVIES],
             () => MoviesApi.get_favorite_movies(user_id),
             {
                 enabled: !!user_id
@@ -230,6 +232,107 @@ export class MoviesService {
             moviesFavoriteByUser,
             isFetchingMoviesFavorite,
             refetchMoviesFavorite
+        };
+    }
+
+    //Yêu thích và bỏ yêu thích phim
+    static use_favorite_action() {
+        const queryClient = useQueryClient();
+
+        // Optimistic Updates
+        const { mutate: mutateFavoriteMovie } = useMutation({
+            mutationFn: ({ user_id, movie }: { user_id: string; movie: MovieForCardDTO }) =>
+                MoviesApi.favorite_movie({
+                    user_id,
+                    movie_id: movie.id
+                }),
+            onMutate: async ({ movie, user_id }) => {
+                if (!user_id) {
+                    return;
+                }
+
+                const queryKey = [QUERY_KEY.GET_FAVORITE_MOVIES];
+                await queryClient.cancelQueries({ queryKey });
+
+                const previousData = queryClient.getQueryData<DataGetMoviesFavoriteDTO>(queryKey);
+                if (previousData) {
+                    queryClient.setQueryData<DataGetMoviesFavoriteDTO>(queryKey, {
+                        status: "success",
+                        message: "Lấy danh sách sản phẩm thành công!",
+                        data: [...previousData.data, movie]
+                    });
+                }
+
+                return {
+                    previousData
+                };
+            },
+            onError(_, __, context) {
+                queryClient.setQueryData<DataGetMoviesFavoriteDTO>(
+                    [QUERY_KEY.GET_FAVORITE_MOVIES],
+                    context?.previousData
+                );
+            }
+            // onSettled(_, __) {
+            //     queryClient.invalidateQueries({ queryKey: [QUERY_KEY.GET_FAVORITE_MOVIES] });
+            // }
+        });
+
+        const { mutate: mutateUnFavoriteMovie } = useMutation({
+            mutationFn: ({ user_id, movie_id }: { user_id: string; movie_id: string }) =>
+                MoviesApi.unfavorite_movie({
+                    user_id,
+                    movie_id
+                }),
+            onMutate: async ({ user_id, movie_id }) => {
+                if (!user_id) {
+                    return;
+                }
+
+                const queryKey = [QUERY_KEY.GET_FAVORITE_MOVIES];
+                await queryClient.cancelQueries({ queryKey });
+
+                const previousData = queryClient.getQueryData<DataGetMoviesFavoriteDTO>(queryKey);
+                if (previousData) {
+                    queryClient.setQueryData<DataGetMoviesFavoriteDTO>(queryKey, {
+                        status: "success",
+                        message: "Lấy danh sách sản phẩm thành công!",
+                        data: [...previousData.data.filter((movie) => movie.id !== movie_id)]
+                    });
+                }
+
+                return {
+                    previousData
+                };
+            },
+            onError(_, __, context) {
+                queryClient.setQueryData<DataGetMoviesFavoriteDTO>(
+                    [QUERY_KEY.GET_FAVORITE_MOVIES],
+                    context?.previousData
+                );
+            }
+        });
+
+        return {
+            mutateFavoriteMovie,
+            mutateUnFavoriteMovie
+        };
+    }
+    // Check phim yêu thích hay chưa
+    static check_favorite_movie({ movie_id, user_id }: { movie_id: string; user_id: string }) {
+        const {
+            data: checkFavoriteMovie,
+            isFetching: isFetchingCheckFavoriteMovie,
+            refetch: refetchCheckFavoriteMovie
+        } = useFetcher<DataCheckFavoriteMovieDTO>(
+            [QUERY_KEY.GET_CHECK_FAVORITE_MOVIE, movie_id],
+            () => MoviesApi.check_favorite_movie(movie_id),
+            { enabled: !!user_id && !!movie_id }
+        );
+        return {
+            checkFavoriteMovie,
+            isFetchingCheckFavoriteMovie,
+            refetchCheckFavoriteMovie
         };
     }
 }
