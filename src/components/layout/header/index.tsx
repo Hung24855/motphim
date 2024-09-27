@@ -45,23 +45,25 @@ function Search({ session }: { session: Session | null }) {
 
     const content = (
         <Fragment>
-            <div className="cursor-pointer gap-y-2">
+            <div className="w-28 cursor-pointer gap-y-2 py-1">
                 {session?.user ? (
                     <div>
-                        <Link href={"/admin"} className="w-full">
-                            {session?.user?.role === "admin" && <div>Trang quản trị</div>}
+                        <Link href={"/admin"} className="w-full hover:text-black">
+                            {session?.user?.role === "admin" && (
+                                <div className="px-2 py-1 hover:bg-gray-200">Trang quản trị</div>
+                            )}
                         </Link>
-                        <div className="hover:text-red-500 hover:underline" onClick={() => logout_action()}>
+                        <div className="px-2 py-1 text-red-500 hover:bg-gray-200" onClick={() => logout_action()}>
                             Đăng xuất
                         </div>
                     </div>
                 ) : (
                     <Fragment>
-                        <Link href="/dang-ky">
-                            <div className="hover:underline">Đăng ký</div>
+                        <Link href="/dang-ky" className="hover:text-black">
+                            <div className="px-2 py-1 hover:bg-gray-200">Đăng ký</div>
                         </Link>
-                        <Link href="/dang-nhap">
-                            <div className="hover:underline">Đăng nhập</div>
+                        <Link href="/dang-nhap" className="hover:text-black">
+                            <div className="px-2 py-1 hover:bg-gray-200">Đăng nhập</div>
                         </Link>
                     </Fragment>
                 )}
@@ -99,7 +101,7 @@ function Search({ session }: { session: Session | null }) {
                 <FaBell size={20} />
                 <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
             </button>
-            <Popover content={content} trigger="click" className="px-0">
+            <Popover content={content} trigger="click" className="!px-0">
                 <button>
                     <FaUser size={20} />
                     {/* <div className="absolute right-1/2 top-full hidden w-max translate-x-1/2 gap-y-2 rounded bg-white p-2 text-black group-hover:block">

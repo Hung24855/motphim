@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
-import "./globals.css";
 import DB_Connect from "@/database/connect";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import ProgessbarProviders from "@/base/libs/progesbar";
 import ReactQueryProvder from "@/base/libs/react-query";
-import "swiper/css";
 import { Fragment } from "react";
 import Toast from "@/base/libs/toast";
 import NextAuthProvider from "@/base/provider/next-auth";
 import { auth } from "@/auth";
+import "./globals.css";
+import "swiper/css";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 

@@ -3,6 +3,7 @@ import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { MoviesApi } from "../api";
 import {
     DataCheckFavoriteMovieDTO,
+    DataGetFeaturedMoviesDTO,
     DataGetMovieDetailDTO,
     DataGetMoviesByCountryDTO,
     DataGetMoviesByGenreDTO,
@@ -333,6 +334,18 @@ export class MoviesService {
             checkFavoriteMovie,
             isFetchingCheckFavoriteMovie,
             refetchCheckFavoriteMovie
+        };
+    }
+
+    // Danh sách phim có views nhiều nhất
+    static get_featured_movies() {
+        const { data: featuredMovies, isFetching: isFetchingFeaturedMovies } = useFetcher<DataGetFeaturedMoviesDTO>(
+            [QUERY_KEY.GET_LIST_FEATURED_MOVIES],
+            () => MoviesApi.get_featured_movies()
+        );
+        return {
+            featuredMovies,
+            isFetchingFeaturedMovies
         };
     }
 }

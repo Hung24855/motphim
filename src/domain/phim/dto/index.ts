@@ -78,6 +78,17 @@ export interface DataGetMoviesDTO {
 }
 export type DataSearchMovieDTO = Pick<DataGetMoviesDTO, "status" | "message" | "data">;
 export type DataGetMoviesFavoriteDTO = DataSearchMovieDTO;
+export type DataGetFeaturedMoviesDTO = {
+    status: string;
+    message: string;
+    data: {
+        id: string;
+        movie_name: string;
+        slug: string;
+        image: string;
+        content: string;
+    }[];
+};
 
 export interface DataGetMoviesByCountryDTO {
     status: string;

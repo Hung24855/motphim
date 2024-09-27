@@ -43,3 +43,9 @@ body::-webkit-scrollbar-thumb {
 :where(.css-dev-only-do-not-override-qnu6hi).ant-spin-nested-loading >div>.ant-spin {
   max-height: 100vh;
 }
+
+/* Custom tolltip */
+.ant-popover .ant-popover-inner  {
+  padding: 0;
+  overflow: hidden;
+}

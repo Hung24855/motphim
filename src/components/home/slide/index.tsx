@@ -6,11 +6,14 @@ import { motion } from "framer-motion";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import MaxWidth from "@/components/layout/max-width";
 import { handleSortSlide } from "@/base/utils/function";
+import { MoviesService } from "@/domain/phim/services";
+import Link from "next/link";
 
 type slide = {
     img: string;
     description: string;
     title: string;
+    slug?: string;
 };
 
 const arr = [
@@ -50,6 +53,8 @@ export default function Slide() {
     const [oldSlides, setOldSlides] = useState<slide>(slides[2]); //2 ở đây là index miđle của mảng - Thiết lập Background cũ khi chuyển slide . Làm hiệu ứng chuyển nhìn đỡ thô hơn
     const slideRef = useRef<HTMLImageElement>(null);
     const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({ x: 50, y: 50 });
+    const { featuredMovies } = MoviesService.get_featured_movies();
+    // console.log("🚀 ~ Slide ~ featuredMovies:", featuredMovies);
 
     useEffect(() => {
         if (slideRef.current) {
@@ -62,6 +67,18 @@ export default function Slide() {
             slideRef.current.classList.add("scale-up");
         }
     }, [slides]);
+
+    useEffect(() => {
+        if (featuredMovies) {
+            const arrSlides: slide[] = featuredMovies.data.map((item) => ({
+                title: item.movie_name,
+                img: item.image,
+                description: item.content,
+                slug: item.slug
+            }));
+            setslides(arrSlides);
+        }
+    }, [featuredMovies]);
 
     const changeSlide = (type: "next" | "prev") => {
         setOldSlides(slides[2]);
@@ -105,7 +122,7 @@ export default function Slide() {
 
     return (
         <div
-            className="relative h-screen cursor-grab bg-cover bg-clip-padding bg-center bg-no-repeat duration-300"
+            className="relative h-screen w-full bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${oldSlides.img})` }}
             onMouseUp={handleMouseUp}
             onMouseDown={handleMouseDown}
@@ -138,10 +155,12 @@ export default function Slide() {
                             <FaStar />
                         </div>
                         <div className="mt-4">
-                            <button className="flex items-center gap-x-1 rounded-lg bg-blue-500 px-3 py-1 text-white">
-                                <IoPlay />
-                                Xem phim
-                            </button>
+                            <Link href={`/phim/${slides[2]?.slug}`}>
+                                <button className="flex items-center gap-x-1 rounded-lg bg-blue-500 px-3 py-1 text-white">
+                                    <IoPlay />
+                                    Xem phim
+                                </button>
+                            </Link>
                         </div>
                     </motion.div>
                     <motion.div
@@ -153,16 +172,13 @@ export default function Slide() {
                         {slides.map((item, index) => (
                             <div
                                 key={index}
-                                className={clsx(
-                                    "h-40 w-40 cursor-pointer rounded-2xl border border-blue-300 bg-red-400",
-                                    {
-                                        "z-10 translate-x-28 scale-90": index === 0,
-                                        "z-20 translate-x-12": index === 1,
-                                        "z-30 scale-125": index === 2,
-                                        "z-20 -translate-x-12": index === 3,
-                                        "z-10 -translate-x-28 scale-90": index === 4
-                                    }
-                                )}
+                                className={clsx("h-40 w-40 cursor-pointer rounded-2xl border", {
+                                    "z-10 translate-x-28 scale-90": index === 0,
+                                    "z-20 translate-x-12": index === 1,
+                                    "z-30 scale-125": index === 2,
+                                    "z-20 -translate-x-12": index === 3,
+                                    "z-10 -translate-x-28 scale-90": index === 4
+                                })}
                                 style={{ background: `center/cover no-repeat url(${item.img})` }}
                                 onClick={(event) => {
                                     //Thay đỏi background thành background cũ

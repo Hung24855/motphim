@@ -85,7 +85,7 @@ export default function MovieCategory(props: props) {
                 ))}
             </Swiper>
             <div className="mt-6 flex justify-center">
-                <Link href={"the-loai/" + slug}>
+                <Link href={"/the-loai/" + slug}>
                     <button className="rounded border border-primary px-4 py-2 hover:bg-primary hover:text-black">
                         Xem thêm
                     </button>

@@ -64,7 +64,9 @@ export async function GET(request: Request, { params }: { params: { slug: string
             pool.query(
                 "SELECT * FROM episodes WHERE movie_id = $1 ORDER BY CAST(REGEXP_REPLACE(name, '\\D', '', 'g') AS INTEGER)",
                 [res.rows[0]?.id]
-            )
+            ),
+            // Tăng lượt xem
+            pool.query("UPDATE movies SET views = views + 1 WHERE id = $1", [res.rows[0]?.id])
         ]);
 
         return NextResponse.json({

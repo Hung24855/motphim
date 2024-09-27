@@ -5,7 +5,7 @@ type ButtonProps = {
     loading?: boolean;
     sizeSpin?: "small" | "default" | "large";
     buttonClssName?: string;
-    onClick?: () => void;
+    onClick?: (e:any) => void;
     type?: "button" | "submit" | "reset";
     block?: boolean;
 };

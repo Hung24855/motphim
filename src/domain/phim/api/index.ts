@@ -181,4 +181,14 @@ export class MoviesApi {
             console.log("Error: check_favorite_movie ", error);
         }
     }
+
+    // Danh sách phim có nhiều views nhiều nhất
+    static async get_featured_movies() {
+        try {
+            const { data } = await http.get(ENDPOINT_URL.get_featured_movies());
+            return data;
+        } catch (error) {
+            console.log("Error: get_featured_movies ", error);
+        }
+    }
 }

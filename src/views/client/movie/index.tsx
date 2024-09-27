@@ -8,8 +8,11 @@ import { Icon } from "@iconify/react";
 import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { Session } from "next-auth";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+
 import Script from "next/script";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 type Props = {
@@ -57,6 +60,9 @@ const MovieDetailSkeleton = () => {
 
 export default function MoviePage(props: Props) {
     const queryClient = useQueryClient();
+    const pathName = usePathname();
+    const router = useRouter();
+    const videoRef = useRef<HTMLDivElement>(null);
 
     const [episode, setEpisode] = useState<string>("1");
 
@@ -138,7 +144,7 @@ export default function MoviePage(props: Props) {
     return (
         <Fragment>
             <div
-                style={{ backgroundImage: `url(${movie?.image})` }}
+                style={{ backgroundImage: `url(${movie.image})` }}
                 className="relative min-h-screen w-full bg-cover bg-center lg:max-h-[800px]"
             >
                 {/* Thông tin phim */}
@@ -167,7 +173,7 @@ export default function MoviePage(props: Props) {
                                     </span>
                                     <span className="flex items-center gap-2">
                                         <Icon icon="akar-icons:clock" className="text-primary" height={16} />
-                                        {movie?.time_per_episode ?? "Đang cập nhật"}
+                                        {movie.time_per_episode ?? "Đang cập nhật"}
                                     </span>
                                     <span className="flex items-center gap-2">
                                         <Icon icon="tdesign:subtitle" className="text-primary" height={16} />
@@ -199,11 +205,20 @@ export default function MoviePage(props: Props) {
                                     </button>
                                     <span className="h-12 w-0.5 bg-white/10 md:block" />
                                     <div className="flex items-center gap-3 text-sm font-bold">
-                                        <a href="#video">
-                                            <button className="rounded-full bg-primary px-8 py-3 text-black disabled:bg-zinc-600 disabled:text-white disabled:hover:bg-zinc-600">
-                                                Xem
-                                            </button>
-                                        </a>
+                                        {/* <a href="#video" className="scroll-smooth"> */}
+                                        <button
+                                            className="rounded-full bg-primary px-8 py-3 text-black disabled:bg-zinc-600 disabled:text-white disabled:hover:bg-zinc-600"
+                                            onClick={() => {
+                                                // router.push(`${pathName}#video`);
+                                                window.scrollTo({
+                                                    top: videoRef.current?.getBoundingClientRect().y,
+                                                    behavior: "smooth"
+                                                });
+                                            }}
+                                        >
+                                            Xem
+                                        </button>
+                                        {/* </a> */}
                                         <button
                                             className={clsx(
                                                 "flex items-center gap-2 rounded-full border-2 border-primary bg-black/70 px-5 py-2.5 duration-300",
@@ -262,7 +277,7 @@ export default function MoviePage(props: Props) {
                     </div>
 
                     {/* Xem video */}
-                    {/* <div className="mt-20 px-2 md:px-0" id="video">
+                    <div className="mt-20 px-2 md:px-0" id="video" ref={videoRef}>
                         <iframe
                             src={movie.episodes.find((item) => item.name === episode)?.link}
                             className="aspect-video w-full overflow-hidden rounded-md bg-stone-900"
@@ -270,10 +285,10 @@ export default function MoviePage(props: Props) {
                             referrerPolicy="no-referrer"
                             loading="lazy"
                         />
-                    </div> */}
+                    </div>
 
                     {/* Tích hợp comment */}
-                    {/* <div id="disqus_thread" className="mx-auto my-16 max-w-5xl px-5"></div>
+                    <div id="disqus_thread" className="mx-auto my-16 max-w-5xl px-5"></div>
                     <Script id="my-script">
                         {`(function() { // DON'T EDIT BELOW THIS LINE
                             var d = document, s = d.createElement('script');
@@ -281,7 +296,7 @@ export default function MoviePage(props: Props) {
                             s.setAttribute('data-timestamp', +new Date());
                             (d.head || d.body).appendChild(s);
                             })();`}
-                    </Script> */}
+                    </Script>
 
                     <div className="px-2 py-2">
                         <MovieCategory title={"Phim " + movie.genres[0].name} slug={movie.genres[0].slug} />
