@@ -1,6 +1,6 @@
 import { pool } from "@/database/connect";
 import { NextResponse } from "next/server";
-
+export const revalidate = 3600;
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
     try {
         let join = `INNER JOIN movie_genre ON movies.id = movie_genre.movie_id 

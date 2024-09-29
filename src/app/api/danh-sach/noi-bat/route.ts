@@ -1,6 +1,6 @@
 import { pool } from "@/database/connect";
 import { NextResponse, NextRequest } from "next/server";
-
+export const revalidate = 3600;
 export async function GET(request: NextRequest) {
     try {
         const movies = await pool.query(

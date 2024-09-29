@@ -41,7 +41,7 @@ export default function GenresPage({ slug }: { slug: string }) {
                     )}
                 </div>
             ) : (
-                <div className="flex h-screen items-center justify-center pb-10 pt-24 text-3xl">
+                <div className="flex h-screen items-center justify-center pb-10 pt-24 text-3xl px-2">
                     Hiện tại chưa có phim cho thể loại này!
                 </div>
             )}

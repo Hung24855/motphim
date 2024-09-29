@@ -15,7 +15,7 @@ import { CountriesService } from "@/domain/quoc-gia/service";
 import { logout_action } from "@/actions/auth";
 import { Session } from "next-auth";
 import { Popover } from "antd";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 function Search({ session }: { session: Session | null }) {
     const [search, setSearch] = useState<string>("");
@@ -46,7 +46,7 @@ function Search({ session }: { session: Session | null }) {
     const content = (
         <Fragment>
             <div className="w-28 cursor-pointer gap-y-2 py-1">
-                {session?.user ? (
+                {session?.user && (
                     <div>
                         <Link href={"/admin"} className="w-full hover:text-black">
                             {session?.user?.role === "admin" && (
@@ -57,21 +57,12 @@ function Search({ session }: { session: Session | null }) {
                             Đăng xuất
                         </div>
                     </div>
-                ) : (
-                    <Fragment>
-                        <Link href="/dang-ky" className="hover:text-black">
-                            <div className="px-2 py-1 hover:bg-gray-200">Đăng ký</div>
-                        </Link>
-                        <Link href="/dang-nhap" className="hover:text-black">
-                            <div className="px-2 py-1 hover:bg-gray-200">Đăng nhập</div>
-                        </Link>
-                    </Fragment>
                 )}
             </div>
         </Fragment>
     );
     return (
-        <div className="flex items-center gap-x-6">
+        <div className="flex items-center gap-x-4">
             <button
                 className={clsx("duration-400 flex items-center rounded-md transition-all", {
                     "bg-white/20": showSearch
@@ -101,33 +92,24 @@ function Search({ session }: { session: Session | null }) {
                 <FaBell size={20} />
                 <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
             </button>
-            <Popover content={content} trigger="click" className="!px-0">
-                <button>
-                    <FaUser size={20} />
-                    {/* <div className="absolute right-1/2 top-full hidden w-max translate-x-1/2 gap-y-2 rounded bg-white p-2 text-black group-hover:block">
-                    {!session?.user ? (
-                        <Fragment>
-                            <Link href="/dang-ky">
-                                <div className="py-1 hover:underline">Đăng ký</div>
-                            </Link>
-                            <Link href="/dang-nhap">
-                                <div className="py-1 hover:underline">Đăng nhập</div>
-                            </Link>
-                        </Fragment>
-                    ) : (
-                        <div>
-                            <Link href={"/admin"}>{session?.user?.role === "admin" && "Admin"}</Link>
-                            <div className="py-1 hover:underline" onClick={() => logout_action()}>
-                                Đăng xuất
-                            </div>
-                        </div>
-                    )}
-                </div> */}
-                </button>
-            </Popover>
-            <button>
+            {session?.user ? (
+                <Popover content={content} trigger="click" className="!px-0">
+                    <button>
+                        <FaUser size={20} />
+                    </button>
+                </Popover>
+            ) : (
+                <Fragment>
+                    <Link href={"/dang-ky"}>Đăng ký</Link>
+                    <Link href={"/dang-nhap"}>
+                        <button className="ml-1 rounded bg-white/20 p-2 hover:bg-black/15">Đăng nhập</button>
+                    </Link>
+                </Fragment>
+            )}
+
+            {/* <button>
                 <MdSunny size={22} />
-            </button>
+            </button> */}
         </div>
     );
 }
@@ -135,6 +117,11 @@ function Search({ session }: { session: Session | null }) {
 export default function Header({ session }: { session: Session | null }) {
     const { data: genres } = GenresService.useGenres();
     const { data: countries } = CountriesService.useCountries();
+    const pathName = usePathname();
+    const isActive = (path: string) => {
+        return pathName.startsWith(path);
+    };
+    
 
     return (
         <nav className="h-18 fixed top-0 z-50 w-full text-white md:mt-2">
@@ -145,17 +132,18 @@ export default function Header({ session }: { session: Session | null }) {
                         <Link href="/" className="flex cursor-pointer items-center">
                             <Image src="/logo/Logo-light.png" alt="logo" width={65} height={65} /> MOTPHIM
                         </Link>
-                        <div className="cursor-pointer text-blue-500">Trang chủ</div>
-
+                        <Link href="/" className="flex cursor-pointer items-center">
+                            <div className={clsx(pathName === "/" && "text-blue-500")}>Trang chủ</div>
+                        </Link>
                         <Link href={"/danh-sach/phim-le"}>
-                            <div className="cursor-pointer">Phim lẻ</div>
+                            <div className={clsx(isActive("/danh-sach/phim-le") && "text-blue-500")}>Phim lẻ</div>
                         </Link>
                         <Link href={"/danh-sach/phim-bo"}>
-                            <div className="cursor-pointer">Phim bộ</div>
+                            <div className={clsx(isActive("/danh-sach/phim-bo") && "text-blue-500")}>Phim bộ</div>
                         </Link>
 
                         <div className="group relative flex cursor-pointer items-center py-3 group-hover:text-primary">
-                            Thể loại{" "}
+                            <span className={clsx(isActive("/the-loai") && "text-blue-500")}>Thể loại</span>
                             <span>
                                 <RiArrowDropDownLine size={25} />
                             </span>
@@ -176,7 +164,7 @@ export default function Header({ session }: { session: Session | null }) {
                             )}
                         </div>
                         <div className="group relative flex cursor-pointer items-center py-3 group-hover:text-primary">
-                            Quốc gia{" "}
+                            <span className={clsx(isActive("/quoc-gia") && "text-blue-500")}>Quốc gia</span>
                             <span>
                                 <RiArrowDropDownLine size={25} />
                             </span>
@@ -197,7 +185,7 @@ export default function Header({ session }: { session: Session | null }) {
                             )}
                         </div>
                         <Link href={"/yeu-thich"}>
-                            <div className="cursor-pointer">Yêu thích</div>
+                            <div className={clsx(isActive("/yeu-thich") && "text-blue-500")}>Yêu thích</div>
                         </Link>
                     </div>
                     {/* side bar */}

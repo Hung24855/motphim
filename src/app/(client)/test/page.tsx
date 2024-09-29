@@ -10,7 +10,6 @@ export default function TestModal() {
     const ref = useRef<HTMLDivElement>(null);
     const router = useRouter();
     const modalRef = useRef<ModalRef>(null);
-
     return (
         <Fragment>
             <MaxWidth className="flex min-h-screen items-center pt-40">
@@ -37,21 +36,24 @@ export default function TestModal() {
                     Test modal ref
                 </Modal>
             </MaxWidth>
-
             <MaxWidth>
                 <Button
                     onClick={(e) => {
                         e.preventDefault();
-                        if (ref.current) {
-                            ref.current.scrollIntoView({
-                                behavior: "smooth"
-                            });
-                        }
+                        // window.scrollTo({ top: 1500, behavior: "smooth" });
+                        // ref.current?.scrollIntoView({ behavior: "smooth" });
+                        router.push("#testscroll");
+
+                        // window.requestAnimationFrame(() => {
+                        //     window.scrollTo({
+                        //         top: 1500,
+                        //         behavior: "smooth"
+                        //     });
+                        // });
                     }}
                 >
                     Test scroll
                 </Button>
-
                 <div className="h-screen bg-red-400"></div>
                 <div className="h-screen bg-blue-200" ref={ref} id="testscroll"></div>
             </MaxWidth>

@@ -82,7 +82,7 @@ export default function MoviePage(props: Props) {
     if (!response) return <MovieDetailSkeleton />;
     if (response.data.length === 0)
         return (
-            <div className="flex h-screen items-center justify-center pb-10 pt-24 text-3xl text-white">
+            <div className="flex h-screen items-center justify-center pb-10 pt-24 text-3xl px-2 text-white">
                 Phim không tồn tại ^_^
             </div>
         );
@@ -205,20 +205,11 @@ export default function MoviePage(props: Props) {
                                     </button>
                                     <span className="h-12 w-0.5 bg-white/10 md:block" />
                                     <div className="flex items-center gap-3 text-sm font-bold">
-                                        {/* <a href="#video" className="scroll-smooth"> */}
-                                        <button
-                                            className="rounded-full bg-primary px-8 py-3 text-black disabled:bg-zinc-600 disabled:text-white disabled:hover:bg-zinc-600"
-                                            onClick={() => {
-                                                // router.push(`${pathName}#video`);
-                                                window.scrollTo({
-                                                    top: videoRef.current?.getBoundingClientRect().y,
-                                                    behavior: "smooth"
-                                                });
-                                            }}
-                                        >
-                                            Xem
-                                        </button>
-                                        {/* </a> */}
+                                        <a href="#video" className="scroll-smooth">
+                                            <button className="rounded-full bg-primary px-8 py-3 text-black disabled:bg-zinc-600 disabled:text-white disabled:hover:bg-zinc-600">
+                                                Xem
+                                            </button>
+                                        </a>
                                         <button
                                             className={clsx(
                                                 "flex items-center gap-2 rounded-full border-2 border-primary bg-black/70 px-5 py-2.5 duration-300",
