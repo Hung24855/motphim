@@ -142,8 +142,6 @@ export default function MoviesAdminView() {
                     toast.error("Có lỗi xảy ra thử lại sau!");
                 }
             });
-
-           
         }
     };
 

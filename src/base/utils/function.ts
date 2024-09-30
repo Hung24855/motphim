@@ -24,3 +24,37 @@ export function isEmail(email: string) {
 export function removeMark(str: string) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
+
+// Convert thười gian
+export function convertTime(inputTime: string): string {
+    const now: Date = new Date();
+    const pastTime: Date = new Date(inputTime);
+    const diffInSeconds: number = Math.floor((now.getTime() - pastTime.getTime()) / 1000); // Khoảng cách thời gian tính bằng giây
+
+    // Tính toán các khoảng thời gian
+    const seconds: number = diffInSeconds % 60;
+    const minutes: number = Math.floor(diffInSeconds / 60) % 60;
+    const hours: number = Math.floor(diffInSeconds / 3600) % 24;
+    const days: number = Math.floor(diffInSeconds / 86400);
+
+    // Tạo chuỗi kết quả
+    let result: string = "";
+
+    if (days > 0) {
+        result += `${days} ngày `;
+    }
+
+    if (hours > 0) {
+        result += `${hours} giờ `;
+    }
+
+    if (minutes > 0) {
+        result += `${minutes} phút `;
+    }
+
+    if (seconds > 0 && result === "") {
+        result = `${seconds} giây `;
+    }
+
+    return result.trim() + " trước";
+}

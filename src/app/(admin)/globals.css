@@ -35,6 +35,10 @@ body::-webkit-scrollbar-thumb {
   background-color: #888;
 }
 
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 .scale-up {
   @apply animate-zoom-in;
 }

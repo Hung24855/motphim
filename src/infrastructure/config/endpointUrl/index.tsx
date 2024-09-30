@@ -42,6 +42,8 @@ class EndpointUrl {
     check_favorite_movie = (movie_id: string) => `/phim/yeu-thich/kiem-tra/${movie_id}`;
     // Danh sách phim nổi bật
     get_featured_movies = () => `/danh-sach/noi-bat`;
+    // Thống kê
+    get_statistical = () => "/thong-ke";
 }
 
 export const ENDPOINT_URL = new EndpointUrl();

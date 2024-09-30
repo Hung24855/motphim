@@ -21,7 +21,7 @@ const SlideSkeleton = () => {
         <div className="relative h-screen w-full animate-pulse">
             <MaxWidth className="relative px-4">
                 <div className="absolute bottom-48 h-32 max-w-[32rem] text-white">
-                    <div className="h-14 w-[16rem] rounded bg-gray-700"></div>
+                    <div className="h-10 w-[16rem] rounded bg-gray-700"></div>
 
                     <div className="mt-4 h-20 w-[32rem] rounded bg-gray-700"></div>
                     <div className="mt-4 h-6 w-[14rem] rounded bg-gray-700"></div>

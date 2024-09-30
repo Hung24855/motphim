@@ -1,9 +1,5 @@
-import { Fragment } from "react";
+import Doashboard from "@/views/admin/dashboard";
 
 export default function AdminPage() {
-    return (
-        <Fragment>
-            <h1 className="text-3xl font-semibold text-center">Trang chủ</h1>
-        </Fragment>
-    );
+    return <Doashboard />;
 }

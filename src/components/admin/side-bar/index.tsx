@@ -94,7 +94,7 @@ export default function AdminSideBar() {
             animate={sidebarOpen ? "open" : "closed"}
             variants={sidebar_variants}
             transition={{ duration: 0.25 }}
-            className="relative z-40 select-none border-r-[1px] bg-gray-100"
+            className="relative z-40 select-none border-r-[1px] bg-white"
         >
             <motion.div
                 initial="open"
@@ -117,10 +117,10 @@ export default function AdminSideBar() {
                                 <li className={clsx("min-h-12 rounded")} key={index}>
                                     <span
                                         className={clsx(
-                                            "group flex h-full cursor-pointer items-center rounded-lg px-1 py-2 hover:text-admin_primary hover:bg-gray-300",
+                                            "group flex h-full cursor-pointer items-center rounded-lg px-1 py-2 hover:bg-gray-200 hover:text-admin_primary",
                                             isActive(item.path ?? "") ||
                                                 item.subMenu?.find((subItem) => isActive(subItem.path ?? ""))
-                                                ? "bg-gray-300 text-admin_primary"
+                                                ? "bg-gray-200 text-admin_primary"
                                                 : "text-gray-900",
                                             !sidebarOpen && "justify-center"
                                         )}
@@ -171,7 +171,7 @@ export default function AdminSideBar() {
                                                     key={subIndex}
                                                     className={clsx(
                                                         "flex cursor-pointer select-none items-center gap-x-2 rounded p-2",
-                                                        "hover:text-admin_primary hover:bg-gray-300",
+                                                        "hover:bg-gray-200 hover:text-admin_primary",
                                                         isActive(subItem.path ?? "") && "bg-gray-300 text-admin_primary"
                                                     )}
                                                     onClick={() => {
@@ -192,7 +192,7 @@ export default function AdminSideBar() {
                         <li onClick={() => logout_action()} className="absolute bottom-5 right-0 w-full px-2">
                             <button
                                 className={clsx(
-                                    "group flex w-full items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 hover:text-red-500",
+                                    "group flex w-full items-center rounded-lg p-2 text-gray-900 hover:bg-gray-200 hover:text-red-500",
                                     !sidebarOpen && "justify-center"
                                 )}
                             >
@@ -217,7 +217,7 @@ export default function AdminSideBar() {
                 <motion.div
                     animate={sidebarOpen ? "open" : "closed"}
                     variants={arrow_variants}
-                    className="absolute -right-4 top-2 cursor-pointer rounded-full bg-gray-200 p-2 hover:bg-gray-300"
+                    className="absolute -right-4 top-2 cursor-pointer rounded-full bg-gray-200 p-2 hover:bg-gray-200"
                     onClick={() => {
                         setSidebarOpen(!sidebarOpen);
                         // Đóng hết các menu con khi đóng side bar
