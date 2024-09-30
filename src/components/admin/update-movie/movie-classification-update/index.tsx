@@ -69,7 +69,7 @@ export default function MovieClassificationUpdate({ control, errors, setValue, g
             <div className="the-loai mt-4 w-full">
                 <span className="font-semibold">Thể loại</span> <span className="ml-0.5 text-red-600">*</span>
                 <div className="grid w-full grid-cols-5 gap-x-6">
-                    {genres?.data.map((item, index) => (
+                    {genres?.map((item, index) => (
                         <Controller
                             name="genresId"
                             control={control}

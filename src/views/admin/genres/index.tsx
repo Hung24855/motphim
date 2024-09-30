@@ -4,15 +4,18 @@ import { Table } from "antd";
 import { ChangeEvent, Fragment, useMemo, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
-import { IDataCreateGenres, IDataUpdateGenres } from "@/domain/the-loai/model";
+import { DataCreateGenres, DataUpdateGenres, TResGetAllGenre } from "@/domain/the-loai/model";
 import { toast } from "react-toastify";
 import Input from "@/base/libs/input/page";
 import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 
-const initGenre: IDataCreateGenres | IDataUpdateGenres = { name: "", slug: "" };
+const initGenre: DataCreateGenres | DataUpdateGenres = { name: "", slug: "" };
 
 export default function GenresAdminView() {
+    const queryClient = useQueryClient();
     const {
         data: genres,
         refetch: refetchGenres,
@@ -23,7 +26,7 @@ export default function GenresAdminView() {
     } = GenresService.useGenres();
 
     const [ModalCreateOrUpdateGenre, setModalCreateOrUpdateGenre] = useState<boolean>(false);
-    const [genre, setGenre] = useState<IDataCreateGenres | IDataUpdateGenres>(initGenre);
+    const [genre, setGenre] = useState<DataCreateGenres | DataUpdateGenres>(initGenre);
     const [message, setMessage] = useState<string>("");
 
     const isTypeUpdateGenre = useMemo(() => "id" in genre && genre.id !== undefined, [genre]);
@@ -35,11 +38,18 @@ export default function GenresAdminView() {
                 onError: () => {
                     toast.error("Có lỗi xảy ra!");
                 },
-                onSuccess: () => {
+                onSuccess: (data) => {
                     toast.success("Thêm thể loại thành công!");
                     setGenre(initGenre);
                     setModalCreateOrUpdateGenre(false);
-                    refetchGenres();
+
+                    const previousData = queryClient.getQueryData<TResGetAllGenre>([QUERY_KEY.GET_ALL_GENRES]);
+                    if (previousData) {
+                        queryClient.setQueryData<TResGetAllGenre>(
+                            [QUERY_KEY.GET_ALL_GENRES],
+                            [data[0], ...previousData]
+                        );
+                    }
                 }
             });
         } else {
@@ -49,7 +59,7 @@ export default function GenresAdminView() {
 
     const handleUpdateGenre = () => {
         if (isTypeUpdateGenre && genre.name && genre.slug) {
-            const _genre = { ...genre } as IDataUpdateGenres;
+            const _genre = { ...genre } as DataUpdateGenres;
             updateGenreMutation(
                 { genre_id: _genre.id, data: _genre },
                 {
@@ -84,7 +94,7 @@ export default function GenresAdminView() {
         {
             title: "Hành động",
             key: "action",
-            render: (_: any, record: IDataUpdateGenres) => (
+            render: (_: any, record: DataUpdateGenres) => (
                 <div className="flex items-center gap-x-1">
                     <button
                         className="flex items-center gap-x-1 rounded p-1 hover:text-admin_primary"
@@ -111,11 +121,11 @@ export default function GenresAdminView() {
             </button>
 
             <Table
-                dataSource={genres ? genres.data : []}
+                dataSource={genres ?? []}
                 columns={columns}
                 loading={{
-                    spinning: !genres?.data,
-                    indicator: <Loading loading={!genres?.data} containerClassName="pt-20" />
+                    spinning: !genres,
+                    indicator: <Loading loading={!genres} containerClassName="pt-20" />
                 }}
                 pagination={{
                     position: ["bottomCenter"]

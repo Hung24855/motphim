@@ -1,7 +1,7 @@
 import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { StatisticalApi } from "../api";
-import { IStatisticalDTO } from "../dto";
+import { TResGetStatistical } from "../model";
 
 export class StatisticalService {
     static get_statistical() {
@@ -10,7 +10,7 @@ export class StatisticalService {
             isFetching,
             isError,
             refetch
-        } = useFetcher<IStatisticalDTO>([QUERY_KEY.GET_STATISTICAL], () => StatisticalApi.get_statistical());
+        } = useFetcher<TResGetStatistical>([QUERY_KEY.GET_STATISTICAL], () => StatisticalApi.get_statistical());
         return { statistical_data, isFetching, isError, refetch };
     }
 }

@@ -155,11 +155,11 @@ export default function Header({ session }: { session: Session | null }) {
                                 <RiArrowDropDownLine size={25} />
                             </span>
                             {/* Dropdown menu */}
-                            {genres?.data && (
+                            {genres && (
                                 <div className="dropdown">
                                     {/* Content of the dropdown */}
                                     <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
-                                        {genres?.data.map((item) => (
+                                        {genres.map((item) => (
                                             <Link href={`/the-loai/${item.slug}`} key={item.id}>
                                                 <div className="whitespace-nowrap hover:text-primary" key={item.id}>
                                                     {item.name}
@@ -196,7 +196,7 @@ export default function Header({ session }: { session: Session | null }) {
                         </Link>
                     </div>
                     {/* side bar */}
-                    <SideBarMenu genres={genres?.data} countries={countries?.data} />
+                    <SideBarMenu genres={genres} countries={countries?.data} />
                     {/* tim kiem */}
                     <Search session={session} />
                 </div>

@@ -25,7 +25,7 @@ export function removeMark(str: string) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-// Convert thười gian
+// Convert thời gian
 export function convertTime(inputTime: string): string {
     const now: Date = new Date();
     const pastTime: Date = new Date(inputTime);
@@ -59,3 +59,4 @@ export function convertTime(inputTime: string): string {
     return result.trim() + " trước";
 }
 
+export const delay = (m: number) => new Promise((r) => setTimeout(r, m));

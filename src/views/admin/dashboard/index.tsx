@@ -7,32 +7,31 @@ import { Fragment } from "react";
 
 export default function Doashboard() {
     const { statistical_data, isFetching } = StatisticalService.get_statistical();
-
     return (
         <Fragment>
             <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <div className="rounded-lg bg-white p-6 shadow-md">
                     <h3 className="mb-2 text-lg font-semibold">Tổng số phim</h3>
                     <p className="text-3xl font-bold">
-                        <Counter number={statistical_data?.data.total_movies ?? 0} />
+                        <Counter number={statistical_data?.total_movies ?? 0} />
                     </p>
                 </div>
                 <div className="rounded-lg bg-white p-6 shadow-md">
                     <h3 className="mb-2 text-lg font-semibold">Tống số tập</h3>
                     <p className="text-3xl font-bold">
-                        <Counter number={statistical_data?.data.total_episodes ?? 0} />
+                        <Counter number={statistical_data?.total_episodes ?? 0} />
                     </p>
                 </div>
                 <div className="rounded-lg bg-white p-6 shadow-md">
                     <h3 className="mb-2 text-lg font-semibold">Tổng số người dùng</h3>
                     <p className="text-3xl font-bold">
-                        <Counter number={statistical_data?.data.total_users ?? 0} />
+                        <Counter number={statistical_data?.total_users ?? 0} />
                     </p>
                 </div>
                 <div className="rounded-lg bg-white p-6 shadow-md">
                     <h3 className="mb-2 text-lg font-semibold">Phim mới trong tháng</h3>
                     <p className="text-3xl font-bold">
-                        <Counter number={statistical_data?.data.total_movies_create_this_month ?? 0} />
+                        <Counter number={statistical_data?.total_movies_create_this_month ?? 0} />
                     </p>
                 </div>
             </div>
@@ -47,7 +46,7 @@ export default function Doashboard() {
                                 <span>Lượt xem</span>
                             </li>
 
-                            {statistical_data?.data.rankView?.map((movie) => (
+                            {statistical_data?.rankView?.map((movie) => (
                                 <li
                                     key={movie.movie_name}
                                     className="flex items-center justify-between px-2 py-3 hover:bg-[#e5e7e9]"
@@ -69,7 +68,7 @@ export default function Doashboard() {
                                 <span>Thời gian cập nhật</span>
                             </li>
 
-                            {statistical_data?.data.new_update_movie?.map((movie) => (
+                            {statistical_data?.new_update_movie?.map((movie) => (
                                 <li
                                     className="flex items-center justify-between px-2 py-3 hover:bg-[#e5e7e9]"
                                     key={movie.movie_name}
