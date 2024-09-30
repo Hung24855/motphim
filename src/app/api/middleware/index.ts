@@ -14,7 +14,6 @@ const checkAdmin = async (request: NextRequest) => {
         //     exp: 1729911791,
         //     jti: 'e3287e36-e416-4e41-b81e-9addd405ab48'
         //   }
-
         const token = await getToken({ req: request, secret: secret, salt: "authjs.session-token" });
         if (!token || token.role !== "admin") {
             return false;

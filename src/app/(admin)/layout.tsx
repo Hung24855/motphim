@@ -44,7 +44,7 @@ export default async function RootLayout({
                                                 ></Image>
                                             </div>
                                         </div>
-                                        <div className="h-full rounded-lg">{children}</div>
+                                        <div className="h-full rounded-lg pb-4">{children}</div>
                                     </div>
                                 </main>
                             </ProgessbarProviders>

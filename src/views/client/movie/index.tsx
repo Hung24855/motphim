@@ -60,18 +60,13 @@ const MovieDetailSkeleton = () => {
 
 export default function MoviePage(props: Props) {
     const queryClient = useQueryClient();
-    const pathName = usePathname();
-    const router = useRouter();
     const videoRef = useRef<HTMLDivElement>(null);
-
     const [episode, setEpisode] = useState<string>("1");
-
+    
     const { data: response } = MoviesService.get_movie(props.slug);
-
     const { mutateUnFavoriteMovie, mutateFavoriteMovie } = MoviesService.use_favorite_action();
-
     const { checkFavoriteMovie } = MoviesService.check_favorite_movie({
-        movie_id: response?.data[0].id ?? "",
+        movie_id: response?.data[0]?.id ?? "",
         user_id: props.session?.user.id ?? ""
     });
 
@@ -82,7 +77,7 @@ export default function MoviePage(props: Props) {
     if (!response) return <MovieDetailSkeleton />;
     if (response.data.length === 0)
         return (
-            <div className="flex h-screen items-center justify-center pb-10 pt-24 text-3xl px-2 text-white">
+            <div className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl text-white">
                 Phim không tồn tại ^_^
             </div>
         );

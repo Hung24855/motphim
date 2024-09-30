@@ -14,16 +14,15 @@ import { GenresService } from "@/domain/the-loai/service";
 import { CountriesService } from "@/domain/quoc-gia/service";
 import { logout_action } from "@/actions/auth";
 import { Session } from "next-auth";
-import { Popover } from "antd";
+import { Popover, Spin } from "antd";
 import { usePathname, useRouter } from "next/navigation";
+import { LoadingOutlined } from "@ant-design/icons";
 
 function Search({ session }: { session: Session | null }) {
     const [search, setSearch] = useState<string>("");
     const [showSearch, setShowSearch] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
-    // console.log("session", session);
-
-    //Auth
+    const [logoutLoading, setLogoutLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (inputRef.current && showSearch) {
@@ -53,9 +52,18 @@ function Search({ session }: { session: Session | null }) {
                                 <div className="px-2 py-1 hover:bg-gray-200">Trang quản trị</div>
                             )}
                         </Link>
-                        <div className="px-2 py-1 text-red-500 hover:bg-gray-200" onClick={() => logout_action()}>
-                            Đăng xuất
-                        </div>
+                        <Spin spinning={logoutLoading} indicator={<LoadingOutlined spin />}>
+                            <div
+                                className="px-2 py-1 text-red-500 hover:bg-gray-200"
+                                onClick={async () => {
+                                    setLogoutLoading(true);
+                                    await logout_action();
+                                    setLogoutLoading(false);
+                                }}
+                            >
+                                Đăng xuất
+                            </div>
+                        </Spin>
                     </div>
                 )}
             </div>
@@ -121,7 +129,6 @@ export default function Header({ session }: { session: Session | null }) {
     const isActive = (path: string) => {
         return pathName.startsWith(path);
     };
-    
 
     return (
         <nav className="h-18 fixed top-0 z-50 w-full text-white md:mt-2">

@@ -14,6 +14,8 @@ import { FaArrowLeft, FaUserCircle } from "react-icons/fa";
 import { TbLayoutDashboardFilled, TbList } from "react-icons/tb";
 import { logout_action } from "@/actions/auth";
 import { SideBarList } from "./type";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
 const sidebar_variants = {
     open: { opacity: 1, x: 0, width: "16rem" },
@@ -33,6 +35,7 @@ export default function AdminSideBar() {
     const router = useRouter();
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const [openMenus, setOpenMenus] = useState<string[]>([]);
+    const [logoutLoading, setLogoutLoading] = useState<boolean>(false);
 
     const toggleSubMenu = (name: string) => {
         if (openMenus.includes(name)) {
@@ -189,28 +192,37 @@ export default function AdminSideBar() {
                             );
                         })}
 
-                        <li onClick={() => logout_action()} className="absolute bottom-5 right-0 w-full px-2">
-                            <button
-                                className={clsx(
-                                    "group flex w-full items-center rounded-lg p-2 text-gray-900 hover:bg-gray-200 hover:text-red-500",
-                                    !sidebarOpen && "justify-center"
-                                )}
-                            >
-                                <HiOutlineLogout size={24} />
-                                <AnimatePresence>
-                                    {sidebarOpen && (
-                                        <motion.span
-                                            initial="closed"
-                                            animate="open"
-                                            transition={{ duration: 0.25 }}
-                                            variants={span_variants}
-                                            className="ml-3 block whitespace-nowrap text-left text-lg"
-                                        >
-                                            Đăng xuất
-                                        </motion.span>
+                        <li
+                            onClick={async () => {
+                                setLogoutLoading(true);
+                                await logout_action();
+                                setLogoutLoading(false);
+                            }}
+                            className="absolute bottom-5 right-0 w-full px-2"
+                        >
+                            <Spin spinning={logoutLoading} indicator={<LoadingOutlined spin />}>
+                                <button
+                                    className={clsx(
+                                        "group flex w-full items-center rounded-lg p-2 text-gray-900 hover:bg-gray-200 hover:text-red-500",
+                                        !sidebarOpen && "justify-center"
                                     )}
-                                </AnimatePresence>
-                            </button>
+                                >
+                                    <HiOutlineLogout size={24} />
+                                    <AnimatePresence>
+                                        {sidebarOpen && (
+                                            <motion.span
+                                                initial="closed"
+                                                animate="open"
+                                                transition={{ duration: 0.25 }}
+                                                variants={span_variants}
+                                                className="ml-3 block whitespace-nowrap text-left text-lg"
+                                            >
+                                                Đăng xuất
+                                            </motion.span>
+                                        )}
+                                    </AnimatePresence>
+                                </button>
+                            </Spin>
                         </li>
                     </ul>
                 </div>

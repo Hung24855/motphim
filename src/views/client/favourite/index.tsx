@@ -13,7 +13,7 @@ export default function Favourite({ session }: { session: Session | null }) {
         return (
             <MaxWidth className="min-h-screen text-white">
                 <div className="flex h-screen items-center justify-center pb-10 pt-24 text-3xl px-2">
-                    Bạn cần dăng nhập để xem phim yêu thích!
+                    Bạn cần đăng nhập để xem phim yêu thích!
                 </div>
             </MaxWidth>
         );

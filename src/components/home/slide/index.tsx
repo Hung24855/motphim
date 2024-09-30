@@ -192,7 +192,7 @@ export default function Slide() {
                         {slides.map((item, index) => (
                             <div
                                 key={index}
-                                className={clsx("h-40 w-40 cursor-pointer rounded-2xl border", {
+                                className={clsx("aspect-square h-40 w-40 cursor-pointer rounded-2xl border", {
                                     "z-10 translate-x-72 scale-90": index === 0,
                                     "z-20 translate-x-52": index === 1,
                                     "z-30 translate-x-36 scale-125": index === 2,
