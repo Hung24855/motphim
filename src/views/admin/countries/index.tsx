@@ -1,54 +1,32 @@
 "use client";
 import { CountriesService } from "@/domain/quoc-gia/service";
 import { Table } from "antd";
-import { ChangeEvent, Fragment, useState } from "react";
+import { ChangeEvent, Fragment, useMemo, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
-import { IDataCreateCountry } from "@/domain/quoc-gia/model";
+import { IDataCreateCountry, IDataUpdateCountry } from "@/domain/quoc-gia/model";
 import Input from "@/base/libs/input/page";
 import { toast } from "react-toastify";
 import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
 
-const columns = [
-    {
-        title: "Tên quốc gia",
-        dataIndex: "name",
-        key: "genre_name",
-        width: "45%"
-    },
-    {
-        title: "Đường dẫn tĩnh",
-        dataIndex: "slug",
-        key: "slug",
-        width: "45%"
-    },
-    {
-        title: "Hành động",
-        key: "action",
-        render: (_: any, record: any) => (
-            <div className="flex items-center gap-x-1">
-                <button className="flex items-center gap-x-1 rounded p-1 hover:text-admin_primary">
-                    <FaRegEdit size={15} /> Sửa
-                </button>
-            </div>
-        )
-    }
-];
-
-const initCountry: IDataCreateCountry = { name: "", slug: "" };
+const initCountry: IDataCreateCountry | IDataUpdateCountry = { name: "", slug: "" };
 
 export default function CountriesAdminView() {
     const {
         data: countries,
         createCountryMutation,
+        updateCountryMutation,
         isPeddingCreateCountry,
+        isPeddingUpdateCountry,
         refetch: refetchCountries
     } = CountriesService.useCountries();
 
-    const [ModalCreateCountry, setModalCreateCountry] = useState<boolean>(false);
-    const [country, setCountry] = useState<IDataCreateCountry>(initCountry);
+    const [ModalCreateOrUpdateCountry, setModalCreateOrUpdateCountry] = useState<boolean>(false);
+    const [country, setCountry] = useState<IDataCreateCountry | IDataUpdateCountry>(initCountry);
     const [message, setMessage] = useState<string>("");
+
+    const isTypeUpdateCountry = useMemo(() => "id" in country && country.id !== undefined, [country]);
 
     const handleCreateCountry = () => {
         if (country && country.name && country.slug) {
@@ -60,7 +38,7 @@ export default function CountriesAdminView() {
                 onSuccess: () => {
                     toast.success("Thêm quốc gia thành công!");
                     setCountry(initCountry);
-                    setModalCreateCountry(false);
+                    setModalCreateOrUpdateCountry(false);
                     refetchCountries();
                 }
             });
@@ -68,12 +46,65 @@ export default function CountriesAdminView() {
             setMessage("Vui lòng điền đầy đủ thông tin!");
         }
     };
+
+    const handleUpdateCountry = () => {
+        if (isTypeUpdateCountry && country && country.name && country.slug) {
+            const _country = { ...country } as IDataUpdateCountry;
+            updateCountryMutation(
+                { country_id: _country.id, data: _country },
+                {
+                    onSuccess: () => {
+                        toast.success("Cập nhật quốc gia thành công!");
+                        setCountry(initCountry);
+                        setModalCreateOrUpdateCountry(false);
+                    },
+                    onError: () => {
+                        toast.error("Có lỗi xảy ra!");
+                    }
+                }
+            );
+        } else {
+            setMessage("Vui là điền đầy đủ thông tin!");
+        }
+    };
+
+    const columns = [
+        {
+            title: "Tên quốc gia",
+            dataIndex: "name",
+            key: "genre_name",
+            width: "45%"
+        },
+        {
+            title: "Đường dẫn tĩnh",
+            dataIndex: "slug",
+            key: "slug",
+            width: "45%"
+        },
+        {
+            title: "Hành động",
+            key: "action",
+            render: (_: any, record: IDataUpdateCountry) => (
+                <div className="flex items-center gap-x-1">
+                    <button
+                        className="flex items-center gap-x-1 rounded p-1 hover:text-admin_primary"
+                        onClick={() => {
+                            setCountry(record);
+                            setModalCreateOrUpdateCountry(true);
+                        }}
+                    >
+                        <FaRegEdit size={15} /> Sửa
+                    </button>
+                </div>
+            )
+        }
+    ];
     return (
         <Fragment>
             <h1 className="text-center text-3xl font-semibold">Quản lý quốc gia</h1>
             <button
                 className="mb-2 mt-3 rounded bg-admin_primary px-3 py-2 text-white"
-                onClick={() => setModalCreateCountry(true)}
+                onClick={() => setModalCreateOrUpdateCountry(true)}
             >
                 Thêm quốc gia
             </button>
@@ -92,18 +123,22 @@ export default function CountriesAdminView() {
 
             {/* Modal thêm quốc gia */}
             <ModalMotion
-                textHeader="Thêm quốc gia"
+                textHeader={isTypeUpdateCountry ? "Cập nhật quốc gia" : "Thêm quốcgia"}
                 onClose={() => {
-                    setModalCreateCountry(false);
+                    setModalCreateOrUpdateCountry(false);
                     setMessage("");
                     setCountry(initCountry);
                 }}
                 onOk={() => {
-                    handleCreateCountry();
+                    if (isTypeUpdateCountry) {
+                        handleUpdateCountry();
+                    } else {
+                        handleCreateCountry();
+                    }
                 }}
-                isOpen={ModalCreateCountry}
-                textOk="Thêm"
-                loading={isPeddingCreateCountry}
+                isOpen={ModalCreateOrUpdateCountry}
+                textOk={isTypeUpdateCountry ? "Cập nhật" : "Thêm"}
+                loading={isPeddingCreateCountry || isPeddingUpdateCountry}
                 okButtonClassName="!bg-admin_primary"
                 modalContainerClassName="!top-20 w-[500px]"
                 headerModalClassName="text-center text-xl"

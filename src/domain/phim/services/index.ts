@@ -253,9 +253,9 @@ export class MoviesService {
                 }
 
                 const queryKey = [QUERY_KEY.GET_FAVORITE_MOVIES];
-                await queryClient.cancelQueries({ queryKey });
+                    await queryClient.cancelQueries({ queryKey });
 
-                const previousData = queryClient.getQueryData<DataGetMoviesFavoriteDTO>(queryKey);
+                    const previousData = queryClient.getQueryData<DataGetMoviesFavoriteDTO>(queryKey);
                 if (previousData) {
                     queryClient.setQueryData<DataGetMoviesFavoriteDTO>(queryKey, {
                         status: "success",
@@ -274,6 +274,7 @@ export class MoviesService {
                     context?.previousData
                 );
             }
+            // Nếu thành công, tự động refetch để cập nhật lại dữ liệu mới từ server
             // onSettled(_, __) {
             //     queryClient.invalidateQueries({ queryKey: [QUERY_KEY.GET_FAVORITE_MOVIES] });
             // }

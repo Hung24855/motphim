@@ -1,7 +1,7 @@
 import { pool } from "@/database/connect";
 import { NextResponse, NextRequest } from "next/server";
 import { Filter } from "../utils/filter";
-
+export const revalidate = 60;
 export async function GET(request: NextRequest) {
     const { limitSql, offset, orderBy, where, page, limit } = Filter(request);
 

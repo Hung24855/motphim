@@ -8,13 +8,13 @@ class EndpointUrl {
     //the-loai
     get_genres = () => `/the-loai`;
     create_genre = () => `/the-loai`;
-    update_genre = (id: string) => `${this.baseAdmin}/the-loai/${id}`;
-    delete_genre = (id: string) => `${this.baseAdmin}/the-loai/${id}`;
+    update_genre = (id: number) => `/the-loai/${id}`;
+    delete_genre = (id: number) => `/the-loai/${id}`;
     //quoc-gia
     get_countries = () => `/quoc-gia`;
     create_country = () => `/quoc-gia`;
-    update_country = (id: string) => `${this.baseAdmin}/quoc-gia/${id}`;
-    delete_country = (id: string) => `${this.baseAdmin}/quoc-gia/${id}`;
+    update_country = (id: number) => `/quoc-gia/${id}`;
+    delete_country = (id: number) => `/quoc-gia/${id}`;
     //Phim
     get_movies = () => `/danh-sach`;
     get_movies_by_type = (slug: "phim-bo" | "phim-le") => `/danh-sach/${slug}`;

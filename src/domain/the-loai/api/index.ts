@@ -1,6 +1,6 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
-import { IDataCreateGenres } from "../model";
+import { IDataCreateGenres, IDataUpdateGenres } from "../model";
 
 export class GenresApi {
     static async get_all_genres() {
@@ -19,7 +19,7 @@ export class GenresApi {
             console.log("Error: create_genres ", error);
         }
     }
-    static async update_genres(data: IDataCreateGenres, id: string) {
+    static async update_genres({ data, id }: { data: IDataUpdateGenres; id: number }) {
         try {
             const { data: res } = await http.put(ENDPOINT_URL.update_genre(id), data);
             return res;
@@ -27,12 +27,12 @@ export class GenresApi {
             console.log("Error: update_genres ", error);
         }
     }
-    static async delete_genres(id: string) {
-        try {
-            const { data: res } = await http.delete(ENDPOINT_URL.delete_genre(id));
-            return res;
-        } catch (error) {
-            console.log("Error: delete_genres ", error);
-        }
-    }
+    // static async delete_genres(id: number) {
+    //     try {
+    //         const { data: res } = await http.delete(ENDPOINT_URL.delete_genre(id));
+    //         return res;
+    //     } catch (error) {
+    //         console.log("Error: delete_genres ", error);
+    //     }
+    // }
 }
