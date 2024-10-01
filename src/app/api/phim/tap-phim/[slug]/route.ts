@@ -1,3 +1,5 @@
+import { responseError, responseRequired } from "@/app/api/utils/response";
+import { status } from "@/app/api/utils/status";
 import { pool } from "@/database/connect";
 import { Episode } from "@/domain/phim/dto";
 import { NextRequest, NextResponse } from "next/server";
@@ -13,11 +15,7 @@ export async function POST(request: NextRequest, { params }: { params: { slug: s
         const body = (await request.json()) as PostEpisodesFields;
 
         if (!body.episodes || body.episodes.length === 0) {
-            return NextResponse.json({
-                status: "error",
-                message: `Vui là điền dữ liệu: [episodes]`,
-                data: []
-            });
+            return NextResponse.json(responseRequired);
         }
 
         const queries = [
@@ -32,16 +30,16 @@ export async function POST(request: NextRequest, { params }: { params: { slug: s
         const promises = queries.map(({ query, values }) => pool.query(query, [...values]));
         Promise.all(promises)
             .then(() => {
-                return NextResponse.json({ status: "success", message: "Thêm tập phim thành công!", data: [] });
+                return NextResponse.json({ status: status.success, message: "Thêm tập phim thành công!", data: [] });
             })
             .catch((error) => {
                 console.log("Error: ", error);
-                return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+                return NextResponse.json(responseError);
             });
-        return NextResponse.json({ status: "success", message: "Thêm tập phim thành công!", data: [] });
+        return NextResponse.json({ status: status.success, message: "Thêm tập phim thành công!", data: [] });
     } catch (error) {
         console.log("Error: ", error);
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }
 
@@ -49,10 +47,16 @@ export async function DELETE(request: NextRequest, { params }: { params: { slug:
     //slug = episode_id
     try {
         const res = await pool.query("DELETE FROM episodes WHERE episode_id = $1", [params.slug]);
-        return NextResponse.json({ status: "success", message: "Xóa tập phim thành công!", data: [] });
+        return NextResponse.json({
+            status: status.success,
+            message: "Xóa tập phim thành công!",
+            data: {
+                id: params.slug
+            }
+        });
     } catch (error) {
         console.log("Error: ", error);
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }
 type PutEpisodesFields = {
@@ -64,11 +68,7 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
         const body = (await request.json()) as PutEpisodesFields;
 
         if (!body.episodes) {
-            return NextResponse.json({
-                status: "error",
-                message: `Vui là điền dữ liệu: [episodes]`,
-                data: []
-            });
+            return NextResponse.json(responseRequired);
         }
 
         const res = await pool.query(
@@ -76,10 +76,9 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
             [body.episodes.name, body.episodes.link, body.episodes.slug, params.slug]
         );
 
-        return NextResponse.json({ status: "success", message: "Cập nhật tập phim thành công!", data: res.rows });
+        return NextResponse.json({ status: status.success, message: "Cập nhật tập phim thành công!", data: res.rows });
     } catch (error) {
         console.log("Error: ", error);
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }
-

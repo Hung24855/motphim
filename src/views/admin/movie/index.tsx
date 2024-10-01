@@ -2,16 +2,19 @@
 import Link from "next/link";
 import { Table, Tag } from "antd";
 import { MoviesService } from "@/domain/phim/services";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { FaRegEdit, FaEye, FaEyeSlash } from "react-icons/fa";
 import { IoTrashBinSharp } from "react-icons/io5";
 import "@/infrastructure/styles/table.ant.css";
 import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
 import { toast } from "react-toastify";
-import { set } from "zod";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEY } from "@/infrastructure/constant/query-key";
+import { TResGetMovies } from "@/domain/phim/model";
 
 export default function MoviesAdminView() {
+    const queryClient = useQueryClient();
     const [page, setPage] = useState(1);
     const [isShowModal, setIsShowModal] = useState<boolean>(false);
     const [isShowModalDeleteMovie, setIsShowModalDeleteMovie] = useState<boolean>(false);
@@ -128,34 +131,40 @@ export default function MoviesAdminView() {
 
     const handleChangeIsVisibleMovie = () => {
         if (movieSelect) {
-            mutateChangeVisibleMovie({
-                data: { movie_id: movieSelect.movie_id, is_visible: !movieSelect.is_visible },
-                onSuccess(data) {
-                    if (data.status === "success") {
-                        toast.success(data.message);
+            mutateChangeVisibleMovie(
+                { movie_id: movieSelect.movie_id, is_visible: !movieSelect.is_visible },
+                {
+                    onSuccess(data) {
+                        toast.success("Cập nhật hiện thị thành công.");
                         setIsShowModal(false);
                         setMovieSelect(null);
-                        refetchMovies();
+                        queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page], (prevData: TResGetMovies) => ({
+                            ...prevData,
+                            data: prevData.data.map((movie) => ({
+                                ...movie,
+                                is_visible: movie.id === data.id ? data.is_visible : movie.is_visible
+                            }))
+                        }));
+                    },
+                    onError(e) {
+                        toast.error("Có lỗi xảy ra thử lại sau!");
                     }
-                },
-                onError(e) {
-                    toast.error("Có lỗi xảy ra thử lại sau!");
                 }
-            });
+            );
         }
     };
 
     const handleDeleteMovie = () => {
         if (movieSelect) {
-            deleteMovieMutation({
-                id: movieSelect.movie_id,
+            deleteMovieMutation(movieSelect.movie_id, {
                 onSuccess(data) {
-                    if (data.status === "success") {
-                        toast.success(data.message);
-                        setIsShowModalDeleteMovie(false);
-                        setMovieSelect(null);
-                        refetchMovies();
-                    }
+                    toast.success("Xóa phim thành công.!");
+                    setIsShowModalDeleteMovie(false);
+                    setMovieSelect(null);
+                    queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page], (prevData: TResGetMovies) => ({
+                        ...prevData,
+                        data: prevData.data.filter((movie) => movie.id !== data.id)
+                    }));
                 },
                 onError(e) {
                     toast.error("Có lỗi xảy ra thử lại sau!");
@@ -179,7 +188,7 @@ export default function MoviesAdminView() {
                     }}
                     pagination={{
                         pageSize: 10,
-                        total: movies?.pagination.totalRows,
+                        total: movies?.pagination?.totalPages,
                         onChange: (page) => setPage(page),
                         position: ["bottomCenter"]
                     }}

@@ -7,6 +7,6 @@ export interface CountriesDTO {
 }
 
 export type GetAllCountriesDTO = ISuccessResponse<CountriesDTO[]>;
-export type CreateCountriesDTO = ISuccessResponse<CountriesDTO[]>;
-export type UpdateCountriesDTO = ISuccessResponse<CountriesDTO[]>;
-export type DeleteCountriesDTO = ISuccessResponse<CountriesDTO[]>;
+export type CreateCountryDTO = ISuccessResponse<CountriesDTO[]>;
+export type UpdateCountryDTO = ISuccessResponse<CountriesDTO[]>;
+

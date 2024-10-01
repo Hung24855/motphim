@@ -32,7 +32,7 @@ export default function ListMovie({ params }: { params: { slug: string } }) {
         limit: 20
     });
 
-    if (!response) return <ListMovieSkeleton showTitle/>;
+    if (!response) return <ListMovieSkeleton showTitle />;
 
     return (
         <MaxWidth className="min-h-screen text-white">
@@ -46,7 +46,7 @@ export default function ListMovie({ params }: { params: { slug: string } }) {
 
                 {/* Phân trang */}
 
-                {response.pagination.totalPages > 1 && (
+                {response.pagination && response.pagination.totalPages > 1 && (
                     <div className="flex items-center justify-center pb-10 pt-16">
                         <Pagination
                             totalPage={response.pagination.totalPages}

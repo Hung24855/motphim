@@ -39,7 +39,7 @@ export default function CreateMoviePage() {
         handleSubmit,
         formState: { errors },
         setValue,
-        getValues,
+        getValues
     } = useForm<FieldValues>({
         mode: "onSubmit",
         reValidateMode: "onSubmit",
@@ -67,8 +67,7 @@ export default function CreateMoviePage() {
     const { createMovieMutation, isPeddingCreateMovie } = MoviesService.use_movies({});
 
     const Submit = (data: FieldValues) => {
-        createMovieMutation({
-            data,
+        createMovieMutation(data, {
             onError: () => {
                 toast.error("Cố lỗi xảy ra!");
             },
@@ -79,24 +78,10 @@ export default function CreateMoviePage() {
         });
     };
 
-    //     switch (activeTab) {
-    //         case "info":
-    //             return <div>Thông tin phim</div>;
-    //         case "category":
-    //             return <div>Phân loại</div>;
-    //         case "episodeList":
-    //             return <div>Danh sách tập phim</div>;
-    //         case "update":
-    //             return <div>Cập nhật</div>;
-    //         case "others":
-    //             return <div>Khác</div>;
-    //         default:
-    //             return null;
-    //     }
-    // };
+
     return (
         <div>
-            <div className="mb-4 font-semibold text-2xl text-center">THÊM PHIM</div>
+            <div className="mb-4 text-center text-2xl font-semibold">THÊM PHIM</div>
             <form onSubmit={handleSubmit(Submit)} method="POST">
                 <Tabs tabs={movieTabs} />
                 <div className="mt-2 flex gap-x-2">

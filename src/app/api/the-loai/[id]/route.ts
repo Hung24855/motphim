@@ -1,6 +1,8 @@
 import { pool } from "@/database/connect";
 import { NextRequest, NextResponse } from "next/server";
 import { Filter } from "../../utils/filter";
+import { responseError, responseRequired } from "../../utils/response";
+import { status } from "../../utils/status";
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
     try {
@@ -8,11 +10,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         const requiredFields = ["name", "slug"].filter((field) => !body[field]);
 
         if (requiredFields.length > 0) {
-            return NextResponse.json({
-                status: "error",
-                message: `Vui lòng điền đầy đủ các trường: [${requiredFields.join(", ")}]`,
-                data: []
-            });
+            return NextResponse.json(responseRequired);
         }
 
         const res = await pool.query("UPDATE genres SET name = $1, slug = $2 WHERE id = $3 RETURNING *", [
@@ -21,11 +19,10 @@ export async function PUT(request: Request, { params }: { params: { id: string }
             params.id
         ]);
 
-        return NextResponse.json({ status: "success", message: "Cập nhật thể loại thành công", data: res.rows });
+        return NextResponse.json({ status: status.success, message: "Cập nhật thể loại thành công", data: res.rows });
     } catch (error) {
         console.log("Error: PUT the-loai/[id]", error);
-
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }
 
@@ -33,9 +30,9 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     try {
         const res = await pool.query("DELETE FROM genres WHERE id = $1 RETURNING *", [params.id]);
 
-        return NextResponse.json({ status: "success", message: "Xóa thể loại thành công", data: res.rows });
+        return NextResponse.json({ status: status.success, message: "Xóa thể loại thành công", data: res.rows });
     } catch (error) {
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }
 // Danh sách phim theo thể loại
@@ -59,7 +56,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         ]);
         if (movies.rows.length === 0) {
             return NextResponse.json({
-                status: "success",
+                status: status.success,
                 message: "Không có phim thuộc thể loại này!",
                 data: [],
                 pagination: {
@@ -72,7 +69,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         }
 
         return NextResponse.json({
-            status: "success",
+            status: status.success,
             message: "Lấy phim theo thể loại thành công!",
             data: movies.rows,
             pagination: {
@@ -84,6 +81,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         });
     } catch (error) {
         console.log("Error: ", error);
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }

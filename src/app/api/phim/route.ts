@@ -2,6 +2,8 @@ import { pool } from "@/database/connect";
 import { Episode } from "@/domain/phim/dto";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
+import { responseError, responseRequired } from "../utils/response";
+import { status } from "../utils/status";
 
 // type RequestBodyType = {
 //     countriesId: number[];
@@ -45,11 +47,7 @@ export async function POST(request: Request) {
         ].filter((field) => !body[field]);
 
         if (requiredFields.length > 0) {
-            return NextResponse.json({
-                status: "error",
-                message: `Vui lòng điền đầy đủ các trường: [${requiredFields.join(", ")}]`,
-                data: []
-            });
+            return NextResponse.json(responseRequired);
         }
 
         const movie_id = uuidv4();
@@ -76,7 +74,7 @@ export async function POST(request: Request) {
             (Error, Result) => {
                 if (Error) {
                     console.log("Error insert movie", Error);
-                    return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+                    return NextResponse.json(responseError);
                 }
 
                 const queries = [
@@ -100,19 +98,19 @@ export async function POST(request: Request) {
                 const promises = queries.map(({ query, values }) => pool.query(query, values));
                 Promise.all(promises)
                     .then(() => {
-                        return NextResponse.json({ status: "success", message: "Thêm phim thành công", data: [] });
+                        return NextResponse.json({ status: status.success, message: "Thêm phim thành công", data: [] });
                     })
                     .catch((error) => {
                         console.log("Error: ", error);
-                        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+                        return NextResponse.json(responseError);
                     });
             }
         );
 
-        return NextResponse.json({ status: "success", message: "Thêm phim thành công", data: [] });
+        return NextResponse.json({ status: status.success, message: "Thêm phim thành công", data: [] });
     } catch (error) {
         console.log("Error: POST movie", error);
 
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }

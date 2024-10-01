@@ -23,23 +23,24 @@ export default function CreateEpisodeUpdate({
             toast.error("Vui lòng thêm tập phim!");
             return;
         }
-        createEpisodeMutation({
-            data: {
+        createEpisodeMutation(
+            {
                 movie_id: movie_id,
                 data: {
                     episodes: Episodes
                 }
             },
-
-            onError: () => {
-                toast.error("Tạo tập phim thất bại!");
-            },
-            onSuccess: () => {
-                setEpisodes([{ name: "1", link: "link-1", slug: "tap-1" }]);
-                toast.success("Tạo tập phim thành công!");
-                refetchMovieDetail();
+            {
+                onError: () => {
+                    toast.error("Tạo tập phim thất bại!");
+                },
+                onSuccess: () => {
+                    setEpisodes([{ name: "1", link: "link-1", slug: "tap-1" }]);
+                    toast.success("Tạo tập phim thành công!");
+                    refetchMovieDetail();
+                }
             }
-        });
+        );
     };
     return (
         <div className="min-w-max">

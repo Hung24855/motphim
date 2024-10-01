@@ -68,7 +68,7 @@ export default function Slide() {
 
     useEffect(() => {
         if (featuredMovies) {
-            const arrSlides: slide[] = featuredMovies.data.map((item) => ({
+            const arrSlides: slide[] = featuredMovies.map((item) => ({
                 movie_name: item.movie_name,
                 image: item.image,
                 content: item.content,

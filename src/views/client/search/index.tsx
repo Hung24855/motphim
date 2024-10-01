@@ -13,12 +13,12 @@ export default function SearchMovieView() {
 
     return (
         <MaxWidth className="min-h-screen text-white">
-            {movies.data.length > 0 ? (
+            {movies.length > 0 ? (
                 <div className="pb-10 pt-24">
                     <div className="px-2 text-2xl">Tìm kiếm phim</div>
                     {
                         <div className="mt-2 grid grid-cols-2 gap-2 px-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                            {movies.data.map((movie) => (
+                            {movies.map((movie) => (
                                 <MovieCard key={movie.slug} movie={movie} />
                             ))}
                         </div>

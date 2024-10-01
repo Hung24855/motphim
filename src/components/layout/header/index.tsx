@@ -4,7 +4,6 @@ import MaxWidth from "../max-width";
 import { CiSearch } from "react-icons/ci";
 import { FaBell } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
-import { MdSunny } from "react-icons/md";
 import { Fragment, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { RiArrowDropDownLine } from "react-icons/ri";
@@ -176,11 +175,11 @@ export default function Header({ session }: { session: Session | null }) {
                                 <RiArrowDropDownLine size={25} />
                             </span>
                             {/* Dropdown menu */}
-                            {countries?.data && (
+                            {countries && (
                                 <div className="dropdown">
                                     {/* Content of the dropdown */}
                                     <div className="grid w-max grid-cols-2 gap-x-5 gap-y-2 text-start md:grid-cols-3 lg:grid-cols-4">
-                                        {countries?.data.map((item) => (
+                                        {countries.map((item) => (
                                             <Link href={`/quoc-gia/${item.slug}`} key={item.id}>
                                                 <div className="whitespace-nowrap hover:text-primary" key={item.id}>
                                                     {item.name}
@@ -196,7 +195,7 @@ export default function Header({ session }: { session: Session | null }) {
                         </Link>
                     </div>
                     {/* side bar */}
-                    <SideBarMenu genres={genres} countries={countries?.data} />
+                    <SideBarMenu genres={genres} countries={countries} />
                     {/* tim kiem */}
                     <Search session={session} />
                 </div>

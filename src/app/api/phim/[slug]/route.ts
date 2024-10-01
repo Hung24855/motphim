@@ -1,5 +1,7 @@
 import { pool } from "@/database/connect";
 import { NextResponse } from "next/server";
+import { responseError, responseRequired } from "../../utils/response";
+import { status } from "../../utils/status";
 export const revalidate = 3600;
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
     try {
@@ -14,7 +16,7 @@ export async function GET(request: Request, { params }: { params: { slug: string
         );
         if (res.rows.length === 0) {
             return NextResponse.json({
-                status: "success",
+                status: status.success,
                 message: "Phim không tồn tại!",
                 data: []
             });
@@ -70,7 +72,7 @@ export async function GET(request: Request, { params }: { params: { slug: string
         ]);
 
         return NextResponse.json({
-            status: "success",
+            status: status.success,
             message: "Lấy thông tin chi tiết phim thành công!",
             data: [
                 {
@@ -83,8 +85,7 @@ export async function GET(request: Request, { params }: { params: { slug: string
         });
     } catch (error) {
         console.log("Error: get_movie", error);
-
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }
 
@@ -114,7 +115,6 @@ export async function PUT(request: Request, { params }: { params: { slug: string
             "genresId",
             "episode_current",
             "time_per_episode",
-            // "episodes",
             "movie_name",
             "quality",
             "image",
@@ -126,11 +126,7 @@ export async function PUT(request: Request, { params }: { params: { slug: string
         // Check missing fields
         const missingFields = requiredFields.filter((key) => !(key in body));
         if (missingFields.length > 0) {
-            return NextResponse.json({
-                status: "error",
-                message: `Thiếu các trường sau: ${missingFields.join(", ")}`,
-                data: []
-            });
+            return NextResponse.json(responseRequired);
         }
 
         // Cập nhật phim
@@ -157,7 +153,7 @@ export async function PUT(request: Request, { params }: { params: { slug: string
             ],
             async (Error, Result) => {
                 if (Error) {
-                    return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+                    return NextResponse.json(responseError);
                 }
 
                 //C1: Xóa danh mục cũ và thêm danh mục mới
@@ -177,31 +173,27 @@ export async function PUT(request: Request, { params }: { params: { slug: string
                         query: "INSERT INTO movie_genre (movie_id,genres_id) VALUES ($1,$2)",
                         values: [params.slug, genre_id]
                     }))
-                    // ...body.episodes.map((episode: Episode) => {
-                    //     let episode_id = uuidv4();
-                    //     return {
-                    //         query: "INSERT INTO episodes (episode_id,movie_id, name, link, slug) VALUES ($1, $2, $3, $4, $5)",
-                    //         values: [episode_id, params.slug, episode.name, episode.link, episode.slug]
-                    //     };
-                    // })
                 ];
                 const promises = queries.map(({ query, values }) => pool.query(query, [...values]));
                 Promise.all(promises)
                     .then(() => {
-                        return NextResponse.json({ status: "success", message: "Cập nhật phim thành công", data: [] });
+                        return NextResponse.json({
+                            status: status.success,
+                            message: "Cập nhật phim thành công",
+                            data: []
+                        });
                     })
                     .catch((error) => {
                         console.log("Error: ", error);
-                        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+                        return NextResponse.json(responseError);
                     });
             }
         );
 
-        return NextResponse.json({ status: "success", message: "Cập nhật phim thành công!", data: [] });
+        return NextResponse.json({ status: status.success, message: "Cập nhật phim thành công!", data: [] });
     } catch (error) {
         console.log("Error: update_movie", error);
-
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }
 
@@ -209,10 +201,15 @@ export async function DELETE(request: Request, { params }: { params: { slug: str
     //slug là id phim
     try {
         await pool.query("DELETE FROM movies WHERE id = $1", [params.slug]);
-        return NextResponse.json({ status: "success", message: "Xóa phim thành công!", data: [] });
+        return NextResponse.json({
+            status: status.success,
+            message: "Xóa phim thành công!",
+            data: {
+                id: params.slug
+            }
+        });
     } catch (error) {
         console.log("Error: delete_movie", error);
-
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }

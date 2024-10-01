@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import clsx from "clsx";
-import { Episode, MoviesDTO } from "@/domain/phim/dto";
+import { Episode, MoviesDetailDTO } from "@/domain/phim/dto";
 import { MoviesService } from "@/domain/phim/services";
 import { toast } from "react-toastify";
 import { Spin } from "antd";
@@ -10,7 +10,7 @@ import { IoTrashBinSharp } from "react-icons/io5";
 import { ModalMotion } from "@/base/libs/modal";
 
 interface Props {
-    movie: MoviesDTO;
+    movie: MoviesDetailDTO;
     refetchMovieDetail: () => void;
 }
 
@@ -39,8 +39,7 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
 
     const HandleChangeEpisode = (type: "update" | "delete") => {
         if (DeleteEpisode && type === "delete") {
-            deleteEpisodeMutation({
-                episode_id: DeleteEpisode.episode_id,
+            deleteEpisodeMutation(DeleteEpisode.episode_id, {
                 onError: () => toast.error("Có lỗi xảy ra!"),
                 onSuccess: () => {
                     toast.success("Xóa tập phim thành công!");
@@ -51,27 +50,29 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
         }
 
         if (UpdateEpisode && type === "update") {
-            updateEpisodeMutation({
-                data: {
+            updateEpisodeMutation(
+                {
                     episode_id: UpdateEpisode.episode_id,
                     data: { episodes: UpdateEpisode }
                 },
-                onError: () => {
-                    toast.error("Cập nhật tập phim thất bại!");
-                },
-                onSuccess: () => {
-                    toast.success("Cập nhật tập phim thành công!");
-                    refetchMovieDetail();
-                    setUpdateEpisode(null);
+                {
+                    onError: () => {
+                        toast.error("Cập nhật tập phim thất bại!");
+                    },
+                    onSuccess: () => {
+                        toast.success("Cập nhật tập phim thành công!");
+                        refetchMovieDetail();
+                        setUpdateEpisode(null);
+                    }
                 }
-            });
+            );
         }
     };
 
     return (
         <div className="min-w-max">
             <div className="mt-3">
-                <table className="min-w-full border-collapse border ">
+                <table className="min-w-full border-collapse border">
                     <thead>
                         <tr className="bg-[#f3f4f6]">
                             <th className="border p-2 text-left">Tên phim</th>

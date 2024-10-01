@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import { pool } from "@/database/connect";
 import { NextResponse } from "next/server";
+import { responseError, responseRequired } from "../../utils/response";
+import { status } from "../../utils/status";
 type BodyRegisterField = {
     email: string;
     password: string;
@@ -11,11 +13,7 @@ export async function POST(request: Request) {
         const body: BodyRegisterField = await request.json();
 
         if (!body.email || !body.password) {
-            return NextResponse.json({
-                status: "error",
-                message: `Vui lòng điền đầy đủ các trường`,
-                data: []
-            });
+            return NextResponse.json(responseRequired);
         }
 
         //Kiểm tra tài khoản đã tồn tại chưa
@@ -25,8 +23,8 @@ export async function POST(request: Request) {
         );
         if (existUser.rows.length == 0) {
             return NextResponse.json({
-                status: "error",
-                message: `Thông tin tài khoản hoặc mật khẩu không chính xác!`,
+                status: status.error,
+                message: `Tài khoản đã tồn tại!`,
                 data: []
             });
         }
@@ -38,7 +36,7 @@ export async function POST(request: Request) {
 
         if (!isMatch) {
             return NextResponse.json({
-                status: "error",
+                status: status.error,
                 message: `Thông tin tài khoản hoặc mật khẩu không chính xác!`,
                 data: []
             });
@@ -46,10 +44,9 @@ export async function POST(request: Request) {
 
         //Bỏ mật khẩu khỏi response
         const { password, ...user } = existUser.rows[0];
-        return NextResponse.json({ status: "success", message: "Đăng nhập thành công!", data: [{ ...user }] });
+        return NextResponse.json({ status: status.success, message: "Đăng nhập thành công!", data: [{ ...user }] });
     } catch (error) {
         console.log("Error: login", error);
-
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }

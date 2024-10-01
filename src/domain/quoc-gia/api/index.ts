@@ -1,31 +1,37 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
-import { IDataCreateCountry, IDataUpdateCountry } from "../model";
+import {
+    DataCreateCountry,
+    DataUpdateCountry,
+    TResCreateCountry,
+    TResGetAllCountries,
+    TResUpdateCountry
+} from "../model";
+import { requester } from "@/infrastructure/config/request/requester";
+import { CreateCountryDTO, GetAllCountriesDTO, UpdateCountryDTO } from "../dto";
 
 export class CountriesApi {
     static async get_all_countries() {
-        try {
-            const res = await http.get(ENDPOINT_URL.get_countries());
-            return res.data;
-        } catch (error) {
-            console.log("Error: get_all_countries ", error);
-        }
-    }
-    static async create_country(data: IDataCreateCountry) {
-        try {
-            const { data: res } = await http.post(ENDPOINT_URL.create_country(), data);
-            return res;
-        } catch (error) {
-            console.log("Error: create_country ", error);
-        }
+        const get_all = await requester<TResGetAllCountries>({
+            requestFunc: () => http.get(ENDPOINT_URL.get_countries()),
+            handleData: (data: GetAllCountriesDTO) => data.data
+        })();
+        return get_all;
     }
 
-    static async update_country({ data, id }: { data: IDataUpdateCountry; id: number }) {
-        try {
-            const { data: res } = await http.put(ENDPOINT_URL.update_country(id), data);
-            return res;
-        } catch (error) {
-            console.log("Error: update_country ", error);
-        }
+    static async create_country(data: DataCreateCountry) {
+        const res = await requester<TResCreateCountry>({
+            requestFunc: () => http.post(ENDPOINT_URL.create_country(), data),
+            handleData: (data: CreateCountryDTO) => data.data
+        })();
+        return res;
+    }
+
+    static async update_country({ data, id }: { data: DataUpdateCountry; id: number }) {
+        const res = await requester<TResUpdateCountry>({
+            requestFunc: () => http.put(ENDPOINT_URL.update_genre(id), data),
+            handleData: (data: UpdateCountryDTO) => data.data
+        })();
+        return res;
     }
 }

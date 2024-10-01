@@ -1,6 +1,8 @@
 import { pool } from "@/database/connect";
 import { NextResponse, NextRequest } from "next/server";
 import { Filter } from "../utils/filter";
+import { responseError } from "../utils/response";
+import { status } from "../utils/status";
 export const revalidate = 60;
 export async function GET(request: NextRequest) {
     const { limitSql, offset, orderBy, where, page, limit } = Filter(request);
@@ -17,7 +19,7 @@ export async function GET(request: NextRequest) {
         ]);
 
         return NextResponse.json({
-            status: "success",
+            status: status.success,
             message: "Lấy thông tin danh sách phim thành công!",
             data: movies.rows,
             pagination: {
@@ -29,7 +31,6 @@ export async function GET(request: NextRequest) {
         });
     } catch (error) {
         console.log("Error: ", error);
-
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }

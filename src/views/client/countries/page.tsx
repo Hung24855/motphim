@@ -27,7 +27,7 @@ export default function CountriesPage({ slug }: { slug: string }) {
                         </div>
                     }
                     {/* Phân trang */}
-                    {movies.pagination.totalPages > 1 && (
+                    {movies.pagination && movies.pagination.totalPages > 1 && (
                         <div className="flex items-center justify-center pb-10 pt-16">
                             <Pagination
                                 totalPage={movies.pagination.totalPages}
@@ -37,7 +37,7 @@ export default function CountriesPage({ slug }: { slug: string }) {
                     )}
                 </div>
             ) : (
-                <div className="flex h-screen items-center justify-center pb-10 pt-24 text-3xl px-2">
+                <div className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl">
                     Hiện tại chưa có phim cho quốc gia này!
                 </div>
             )}

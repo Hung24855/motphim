@@ -11,7 +11,6 @@ export default function GenresPage({ slug }: { slug: string }) {
     const { data: movies } = MoviesService.get_movies_by_genre({
         slug,
         page: SearchParams.get("page") ?? 1,
-        limit: 20
     });
 
     if (!movies) return <ListMovieSkeleton showTitle />;
@@ -30,8 +29,7 @@ export default function GenresPage({ slug }: { slug: string }) {
                     }
 
                     {/* Phân trang */}
-
-                    {movies.pagination.totalPages > 1 && (
+                    {movies.pagination && movies.pagination.totalPages > 1 && (
                         <div className="flex items-center justify-center pb-10 pt-16">
                             <Pagination
                                 totalPage={movies.pagination.totalPages}
@@ -41,7 +39,7 @@ export default function GenresPage({ slug }: { slug: string }) {
                     )}
                 </div>
             ) : (
-                <div className="flex h-screen items-center justify-center pb-10 pt-24 text-3xl px-2">
+                <div className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl">
                     Hiện tại chưa có phim cho thể loại này!
                 </div>
             )}

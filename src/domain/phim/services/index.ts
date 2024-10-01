@@ -1,145 +1,96 @@
 import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { MoviesApi } from "../api";
-import {
-    DataCheckFavoriteMovieDTO,
-    DataGetFeaturedMoviesDTO,
-    DataGetMovieDetailDTO,
-    DataGetMoviesByCountryDTO,
-    DataGetMoviesByGenreDTO,
-    DataGetMoviesDTO,
-    DataGetMoviesFavoriteDTO,
-    DataSearchMovieDTO,
-    MovieForCardDTO
-} from "../dto";
+import { MovieForCardDTO } from "../dto";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-    IDataCreateEpisodeType,
-    IDataCreateMovieType,
-    IDataGetAllMoviesByCountry,
-    IDataGetAllMoviesByGenre,
-    IDataGetAllMoviesByType,
-    IDataGetAllMoviesType,
-    IDataGetFavoriteMovies,
-    IDataUpdateEpisodeType,
-    IDataUpdateMovieType
+    DataCreateEpisode,
+    DataCreateMovie,
+    DataGetAllMoviesByCountry,
+    DataGetAllMoviesByGenre,
+    DataGetAllMoviesByType,
+    DataGetAllMovies,
+    DataGetFavoriteMovies,
+    DataUpdateEpisode,
+    DataUpdateMovie,
+    TResFavoriteMovie,
+    TResGetFeaturedMovies,
+    TResGetMovie,
+    TResGetMovies,
+    TResGetMoviesByCountry,
+    TResGetMoviesByGenre,
+    TResGetMoviesByType,
+    TResGetMoviesFavorite,
+    TResGetSearchMovies
 } from "../model";
-
-interface ICreateMovieMutation {
-    data: IDataCreateMovieType;
-    onSuccess: (data: any) => void;
-    onError: (e: any) => void;
-}
-
-interface IUpdateMovieMutation {
-    data: {
-        id: string;
-        data: IDataUpdateMovieType;
-    };
-    onSuccess: (data: any) => void;
-    onError: (e: any) => void;
-}
-
-interface IDeleteMovieMutation {
-    id: string;
-    onSuccess: (data: any) => void;
-    onError: (e: any) => void;
-}
-
-interface IDeleteEpisodeMutation {
-    episode_id: string;
-    onSuccess: (data: any) => void;
-    onError: (e: any) => void;
-}
-
-interface ICreateEpisodeMutation {
-    data: {
-        movie_id: string;
-        data: IDataCreateEpisodeType;
-    };
-    onSuccess: (data: any) => void;
-    onError: (e: any) => void;
-}
-
-interface IUpdateEpisodeMutation {
-    data: {
-        episode_id: string;
-        data: IDataUpdateEpisodeType;
-    };
-    onSuccess: (data: any) => void;
-    onError: (e: any) => void;
-}
-interface IChangeVisibleMovieMutation {
-    data: {
-        movie_id: string;
-        is_visible: boolean;
-    };
-    onSuccess: (data: { status: string; message: string }) => void;
-    onError: (e: any) => void;
-}
 
 export class MoviesService {
     static get_movie(slug: string) {
-        const { data, isFetching, isError, refetch } = useFetcher<DataGetMovieDetailDTO>(
+        const { data, isFetching, isError, refetch } = useFetcher<TResGetMovie>(
             [QUERY_KEY.GET_MOVIE_DETAIL, slug],
             () => MoviesApi.get_movie(slug)
         );
         return { data, isFetching, isError, refetch };
     }
 
-    static get_movies_by_genre({ slug, page = 1, limit }: IDataGetAllMoviesByGenre) {
-        const { data } = useFetcher<DataGetMoviesByGenreDTO>([QUERY_KEY.GET_MOVIE_BY_GENRE, slug, page], () =>
+    static get_movies_by_genre({ slug, page = 1, limit = 20 }: DataGetAllMoviesByGenre) {
+        const { data } = useFetcher<TResGetMoviesByGenre>([QUERY_KEY.GET_MOVIE_BY_GENRE, slug, page], () =>
             MoviesApi.get_movies_by_genre({ slug, page, limit })
         );
         return { data };
     }
-    static get_movies_by_country({ slug, page, limit }: IDataGetAllMoviesByCountry) {
-        const { data } = useFetcher<DataGetMoviesByCountryDTO>([QUERY_KEY.GET_MOVIE_BY_COUNTRY, slug, page], () =>
+    static get_movies_by_country({ slug, page, limit }: DataGetAllMoviesByCountry) {
+        const { data } = useFetcher<TResGetMoviesByCountry>([QUERY_KEY.GET_MOVIE_BY_COUNTRY, slug, page], () =>
             MoviesApi.get_movies_by_country({ slug, page, limit })
         );
         return { data };
     }
 
-    static get_movies_by_type({ slug, page, limit }: IDataGetAllMoviesByType) {
-        // console.log("slug, page, limit", slug, page, limit);
-
-        const { data } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_MOVIE_BY_TYPE, slug, page], () =>
+    static get_movies_by_type({ slug, page, limit }: DataGetAllMoviesByType) {
+        const { data } = useFetcher<TResGetMoviesByType>([QUERY_KEY.GET_MOVIE_BY_TYPE, slug, page], () =>
             MoviesApi.get_movies_by_type({ slug, page, limit })
         );
         return { data };
     }
 
     // CRUD phim
-    static use_movies({ page, limit }: IDataGetAllMoviesType) {
+    static use_movies({ page, limit }: DataGetAllMovies) {
+        const queryClient = useQueryClient();
         const {
             data,
             isFetching,
             refetch: refetchMovies
-        } = useFetcher<DataGetMoviesDTO>([QUERY_KEY.GET_LIST_MOVIES, page], () =>
-            MoviesApi.get_movies({ page, limit })
-        );
-        const { mutate: mutateCreate, isPending: isPeddingCreateMovie } = useMutation({
-            mutationFn: (data: IDataCreateMovieType) => MoviesApi.create_movie(data)
+        } = useFetcher<TResGetMovies>([QUERY_KEY.GET_LIST_MOVIES, page], () => MoviesApi.get_movies({ page, limit }));
+        const { mutate: createMovieMutation, isPending: isPeddingCreateMovie } = useMutation({
+            mutationFn: (data: DataCreateMovie) => MoviesApi.create_movie(data)
         });
 
-        const { mutate: mutateUpdate, isPending: isPeddingUpdateMovie } = useMutation({
-            mutationFn: (data: { data: IDataUpdateMovieType; id: string }) =>
+        const { mutate: updateMovieMutation, isPending: isPeddingUpdateMovie } = useMutation({
+            mutationFn: (data: { data: DataUpdateMovie; id: string }) =>
                 MoviesApi.update_movie({ data: data.data, id: data.id })
         });
-        const { mutate: mutateDelete, isPending: isPeddingDeleteMovie } = useMutation({
-            mutationFn: (id: string) => MoviesApi.delete_movie(id)
+        const { mutate: deleteMovieMutation, isPending: isPeddingDeleteMovie } = useMutation({
+            mutationFn: (id: string) => MoviesApi.delete_movie(id),
+            onMutate: async (id) => {
+                const queryKey = [QUERY_KEY.GET_LIST_MOVIES, page];
+                await queryClient.cancelQueries({ queryKey });
+
+                const previousData = queryClient.getQueryData<TResGetMovies>(queryKey);
+                if (previousData) {
+                    queryClient.setQueryData<TResGetMovies>(queryKey, {
+                        ...previousData,
+                        data: [...previousData.data.filter((movie) => movie.id !== id)]
+                    });
+                }
+
+                return {
+                    previousData
+                };
+            },
+            onError(_, __, context) {
+                queryClient.setQueryData<TResGetMovies>([QUERY_KEY.GET_FAVORITE_MOVIES], context?.previousData);
+            }
         });
-
-        const createMovieMutation = ({ data, onError, onSuccess }: ICreateMovieMutation) => {
-            mutateCreate(data, { onSuccess: onSuccess, onError: onError });
-        };
-
-        const updateMovieMutation = ({ data, onError, onSuccess }: IUpdateMovieMutation) => {
-            mutateUpdate(data, { onSuccess: onSuccess, onError: onError });
-        };
-        const deleteMovieMutation = ({ id, onError, onSuccess }: IDeleteMovieMutation) => {
-            mutateDelete(id, { onSuccess: onSuccess, onError: onError });
-        };
 
         return {
             data,
@@ -155,36 +106,24 @@ export class MoviesService {
     }
     // Quản lý tập phim
     static use_episodes() {
-        const { mutate: mutateDelete, isPending: isPeddingDeleteEpisode } = useMutation({
-            mutationFn: (episode_id: string) => MoviesApi.delete_episode(episode_id)
-        });
-
-        const deleteEpisodeMutation = ({ episode_id, onError, onSuccess }: IDeleteEpisodeMutation) => {
-            mutateDelete(episode_id, { onSuccess: onSuccess, onError: onError });
-        };
-
-        const { mutate: mutateCreate, isPending: isPeddingCreateEpisode } = useMutation({
-            mutationFn: ({ movie_id, data }: { movie_id: string; data: IDataCreateEpisodeType }) =>
+        const { mutate: createEpisodeMutation, isPending: isPeddingCreateEpisode } = useMutation({
+            mutationFn: ({ movie_id, data }: { movie_id: string; data: DataCreateEpisode }) =>
                 MoviesApi.create_episodes({
                     movie_id,
                     data
                 })
         });
+        const { mutate: deleteEpisodeMutation, isPending: isPeddingDeleteEpisode } = useMutation({
+            mutationFn: (episode_id: string) => MoviesApi.delete_episode(episode_id)
+        });
 
-        const createEpisodeMutation = ({ data, onError, onSuccess }: ICreateEpisodeMutation) => {
-            mutateCreate(data, { onSuccess: onSuccess, onError: onError });
-        };
-
-        const { mutate: mutateUpdate, isPending: isPeddingUpdateEpisode } = useMutation({
-            mutationFn: ({ episode_id, data }: { episode_id: string; data: IDataUpdateEpisodeType }) =>
+        const { mutate: updateEpisodeMutation, isPending: isPeddingUpdateEpisode } = useMutation({
+            mutationFn: ({ episode_id, data }: { episode_id: string; data: DataUpdateEpisode }) =>
                 MoviesApi.update_episode({
                     episode_id,
                     data
                 })
         });
-        const updateEpisodeMutation = ({ data, onError, onSuccess }: IUpdateEpisodeMutation) => {
-            mutateUpdate(data, { onSuccess: onSuccess, onError: onError });
-        };
 
         return {
             deleteEpisodeMutation,
@@ -197,7 +136,7 @@ export class MoviesService {
     }
     // Tim kiem phim
     static get_search_movie(query: string) {
-        const { data, isFetching, isError, refetch } = useFetcher<DataSearchMovieDTO>(
+        const { data, isFetching, isError, refetch } = useFetcher<TResGetSearchMovies>(
             [QUERY_KEY.GET_SEARCH_MOVIE, query],
             () => MoviesApi.search_movie(query)
         );
@@ -205,23 +144,20 @@ export class MoviesService {
     }
     // Ẩn hiện phim
     static change_visible_movie() {
-        const { mutate, isPending: isPendingChangeVisibleMovie } = useMutation({
+        const { mutate: mutateChangeVisibleMovie, isPending: isPendingChangeVisibleMovie } = useMutation({
             mutationFn: ({ movie_id, is_visible }: { movie_id: string; is_visible: boolean }) =>
                 MoviesApi.change_visible_movie({ movie_id, is_visible })
         });
 
-        const mutateChangeVisibleMovie = ({ data, onError, onSuccess }: IChangeVisibleMovieMutation) => {
-            mutate(data, { onSuccess: onSuccess, onError: onError });
-        };
         return { mutateChangeVisibleMovie, isPendingChangeVisibleMovie };
     }
     // Get đanh sách phim yêu thích
-    static use_favorite_movie({ user_id }: IDataGetFavoriteMovies) {
+    static use_favorite_movie({ user_id }: DataGetFavoriteMovies) {
         const {
             data: moviesFavoriteByUser,
             isFetching: isFetchingMoviesFavorite,
             refetch: refetchMoviesFavorite
-        } = useFetcher<DataGetMoviesFavoriteDTO>(
+        } = useFetcher<TResGetMoviesFavorite>(
             [QUERY_KEY.GET_FAVORITE_MOVIES],
             () => MoviesApi.get_favorite_movies(user_id),
             {
@@ -253,15 +189,11 @@ export class MoviesService {
                 }
 
                 const queryKey = [QUERY_KEY.GET_FAVORITE_MOVIES];
-                    await queryClient.cancelQueries({ queryKey });
+                await queryClient.cancelQueries({ queryKey });
 
-                    const previousData = queryClient.getQueryData<DataGetMoviesFavoriteDTO>(queryKey);
+                const previousData = queryClient.getQueryData<TResGetMoviesFavorite>(queryKey);
                 if (previousData) {
-                    queryClient.setQueryData<DataGetMoviesFavoriteDTO>(queryKey, {
-                        status: "success",
-                        message: "Lấy danh sách sản phẩm thành công!",
-                        data: [...previousData.data, movie]
-                    });
+                    queryClient.setQueryData<TResGetMoviesFavorite>(queryKey, [...previousData, movie]);
                 }
 
                 return {
@@ -269,12 +201,9 @@ export class MoviesService {
                 };
             },
             onError(_, __, context) {
-                queryClient.setQueryData<DataGetMoviesFavoriteDTO>(
-                    [QUERY_KEY.GET_FAVORITE_MOVIES],
-                    context?.previousData
-                );
+                queryClient.setQueryData<TResGetMoviesFavorite>([QUERY_KEY.GET_FAVORITE_MOVIES], context?.previousData);
             }
-            // Nếu thành công, tự động refetch để cập nhật lại dữ liệu mới từ server
+            // Nếu thành công, khi truy cập vào route thì sẽ gọi lại API để đồng bộ dữ liệu
             // onSettled(_, __) {
             //     queryClient.invalidateQueries({ queryKey: [QUERY_KEY.GET_FAVORITE_MOVIES] });
             // }
@@ -294,13 +223,11 @@ export class MoviesService {
                 const queryKey = [QUERY_KEY.GET_FAVORITE_MOVIES];
                 await queryClient.cancelQueries({ queryKey });
 
-                const previousData = queryClient.getQueryData<DataGetMoviesFavoriteDTO>(queryKey);
+                const previousData = queryClient.getQueryData<TResGetMoviesFavorite>(queryKey);
                 if (previousData) {
-                    queryClient.setQueryData<DataGetMoviesFavoriteDTO>(queryKey, {
-                        status: "success",
-                        message: "Lấy danh sách sản phẩm thành công!",
-                        data: [...previousData.data.filter((movie) => movie.id !== movie_id)]
-                    });
+                    queryClient.setQueryData<TResGetMoviesFavorite>(queryKey, [
+                        ...previousData.filter((movie) => movie.id !== movie_id)
+                    ]);
                 }
 
                 return {
@@ -308,10 +235,7 @@ export class MoviesService {
                 };
             },
             onError(_, __, context) {
-                queryClient.setQueryData<DataGetMoviesFavoriteDTO>(
-                    [QUERY_KEY.GET_FAVORITE_MOVIES],
-                    context?.previousData
-                );
+                queryClient.setQueryData<TResGetMoviesFavorite>([QUERY_KEY.GET_FAVORITE_MOVIES], context?.previousData);
             }
         });
 
@@ -326,7 +250,7 @@ export class MoviesService {
             data: checkFavoriteMovie,
             isFetching: isFetchingCheckFavoriteMovie,
             refetch: refetchCheckFavoriteMovie
-        } = useFetcher<DataCheckFavoriteMovieDTO>(
+        } = useFetcher<TResFavoriteMovie>(
             [QUERY_KEY.GET_CHECK_FAVORITE_MOVIE, movie_id],
             () => MoviesApi.check_favorite_movie(movie_id),
             { enabled: !!user_id && !!movie_id }
@@ -340,7 +264,7 @@ export class MoviesService {
 
     // Danh sách phim có views nhiều nhất
     static get_featured_movies() {
-        const { data: featuredMovies, isFetching: isFetchingFeaturedMovies } = useFetcher<DataGetFeaturedMoviesDTO>(
+        const { data: featuredMovies, isFetching: isFetchingFeaturedMovies } = useFetcher<TResGetFeaturedMovies>(
             [QUERY_KEY.GET_LIST_FEATURED_MOVIES],
             () => MoviesApi.get_featured_movies()
         );

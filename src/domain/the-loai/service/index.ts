@@ -34,7 +34,7 @@ export class GenresService {
 
                 if (previousData) {
                     queryClient.setQueryData<TResGetAllGenre>(this.queryKey, [
-                        ...previousData.map((genre) => (genre.id === genre_id ? { ...data, id: genre_id } : genre))
+                        ...previousData.map((genre) => (genre.id === genre_id ? data : genre))
                     ]);
                 }
 
@@ -43,7 +43,7 @@ export class GenresService {
                 };
             },
             onError(_, __, context) {
-                queryClient.setQueryData<GenresDTO[]>([QUERY_KEY.GET_ALL_GENRES], context?.previousData);
+                queryClient.setQueryData<TResGetAllGenre>([QUERY_KEY.GET_ALL_GENRES], context?.previousData);
             }
         });
         return { data, refetch, createEGenreMutation, updateGenreMutation, isPeddingUpdateGenre, isPeddingCreateGenre };

@@ -3,11 +3,11 @@ import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { GetAllCountriesDTO } from "../dto";
 import { CountriesApi } from "../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { IDataCreateCountry, IDataUpdateCountry } from "../model";
+import { DataCreateCountry, DataUpdateCountry, TResGetAllCountries } from "../model";
 
 interface ICreateCountryMutation {
-    data: IDataCreateCountry;
-    onSuccess: (data: any) => void;
+    data: DataCreateCountry;
+    onSuccess: (data: TResGetAllCountries) => void;
     onError: (e: any) => void;
 }
 
@@ -16,12 +16,12 @@ export class CountriesService {
 
     static useCountries() {
         const queryClient = useQueryClient();
-        const { data, refetch } = useFetcher<GetAllCountriesDTO>([QUERY_KEY.GET_ALL_COUNTRIES], () =>
+        const { data, refetch } = useFetcher<TResGetAllCountries>([QUERY_KEY.GET_ALL_COUNTRIES], () =>
             CountriesApi.get_all_countries()
         );
 
         const { mutate: mutateCreate, isPending: isPeddingCreateCountry } = useMutation({
-            mutationFn: (data: IDataCreateCountry) => CountriesApi.create_country(data)
+            mutationFn: (data: DataCreateCountry) => CountriesApi.create_country(data)
         });
 
         const createCountryMutation = ({ data, onError, onSuccess }: ICreateCountryMutation) => {
@@ -29,21 +29,18 @@ export class CountriesService {
         };
 
         const { mutate: updateCountryMutation, isPending: isPeddingUpdateCountry } = useMutation({
-            mutationFn: ({ country_id, data }: { country_id: number; data: IDataUpdateCountry }) =>
+            mutationFn: ({ country_id, data }: { country_id: number; data: DataUpdateCountry }) =>
                 CountriesApi.update_country({ id: country_id, data }),
             onMutate: ({ data, country_id }) => {
                 queryClient.cancelQueries({ queryKey: this.queryKey });
-                const previousData = queryClient.getQueryData<GetAllCountriesDTO>(this.queryKey);
+                const previousData = queryClient.getQueryData<TResGetAllCountries>(this.queryKey);
 
                 if (previousData) {
-                    queryClient.setQueryData<GetAllCountriesDTO>(this.queryKey, {
-                        ...previousData,
-                        data: [
-                            ...previousData.data.map((country) =>
-                                country.id === country_id ? { ...data, id: country_id } : country
-                            )
-                        ]
-                    });
+                    queryClient.setQueryData<TResGetAllCountries>(this.queryKey, [
+                        ...previousData.map((country) =>
+                            country.id === country_id ? data : country
+                        )
+                    ]);
                 }
 
                 return {
@@ -51,7 +48,7 @@ export class CountriesService {
                 };
             },
             onError(_, __, context) {
-                queryClient.setQueryData<GetAllCountriesDTO>([QUERY_KEY.GET_ALL_COUNTRIES], context?.previousData);
+                queryClient.setQueryData<TResGetAllCountries>([QUERY_KEY.GET_ALL_COUNTRIES], context?.previousData);
             }
         });
         return {

@@ -10,7 +10,7 @@ import MovieClassificationUpdate from "@/components/admin/update-movie/movie-cla
 import MovieEpisodeListUpdate from "@/components/admin/update-movie/movie-episode-list-update";
 import Link from "next/link";
 import CreateEpisodeUpdate from "@/components/admin/update-movie/create-apisode-update";
-import { IDataUpdateMovieType } from "@/domain/phim/model";
+import { DataUpdateMovie } from "@/domain/phim/model";
 import "@/infrastructure/styles/uiverse.io.css";
 import Loading from "@/base/libs/loading";
 
@@ -20,7 +20,7 @@ export interface Episode {
     link: string;
 }
 
-export type FieldValues = IDataUpdateMovieType;
+export type FieldValues = DataUpdateMovie;
 
 export default function EditMoviePage({ slug }: { slug: string }) {
     const {
@@ -33,13 +33,13 @@ export default function EditMoviePage({ slug }: { slug: string }) {
         mode: "onSubmit",
         reValidateMode: "onSubmit"
     });
-    const { data: response, refetch: refetchMovieDetail } = MoviesService.get_movie(slug);
+    const { data: movie, refetch: refetchMovieDetail } = MoviesService.get_movie(slug);
     const { updateMovieMutation, isPeddingUpdateMovie } = MoviesService.use_movies({});
-    const movie = response?.data[0];
+
     if (!movie) return <Loading loading={true} backgroundOverlayClassName="bg-black/5"></Loading>;
 
     const movieTabs = [
-        { label: "Thông tin phim", content: <MovieInfoUpdate control={control} errors={errors} movie={movie} /> },
+        { label: "Thông tin phim", content: <MovieInfoUpdate control={control} errors={errors} movie={movie[0]} /> },
         {
             label: "Phân loại",
             content: (
@@ -48,36 +48,38 @@ export default function EditMoviePage({ slug }: { slug: string }) {
                     errors={errors}
                     setValue={setValue}
                     getValues={getValues}
-                    movie={movie}
+                    movie={movie[0]}
                 />
             )
         },
         {
             label: "Thêm tập phim",
-            content: <CreateEpisodeUpdate movie_id={movie.id} refetchMovieDetail={refetchMovieDetail} />
+            content: <CreateEpisodeUpdate movie_id={movie[0].id} refetchMovieDetail={refetchMovieDetail} />
         },
         {
             label: "Danh sách tập phim",
-            content: <MovieEpisodeListUpdate movie={movie} refetchMovieDetail={refetchMovieDetail} />
+            content: <MovieEpisodeListUpdate movie={movie[0]} refetchMovieDetail={refetchMovieDetail} />
         }
     ];
 
     const Submit = (data: FieldValues) => {
-        updateMovieMutation({
-            data: { data: data, id: movie.id },
-            onError: () => {
-                toast.error("Cố lỗi xảy ra!");
-            },
-            onSuccess: () => {
-                toast.success("Cập nhật phim thành công!");
-                refetchMovieDetail();
+        updateMovieMutation(
+            { data: data, id: movie[0].id },
+            {
+                onError: () => {
+                    toast.error("Cố lỗi xảy ra!");
+                },
+                onSuccess: () => {
+                    toast.success("Cập nhật phim thành công!");
+                    refetchMovieDetail();
+                }
             }
-        });
+        );
     };
 
     return (
         <div>
-            <div className="mb-4 text-center font-semibold text-xl">CẬP NHẬT THÔNG TIN PHIM</div>
+            <div className="mb-4 text-center text-xl font-semibold">CẬP NHẬT THÔNG TIN PHIM</div>
             <form onSubmit={handleSubmit(Submit)} method="POST">
                 <Tabs tabs={movieTabs} />
                 <div className="mt-2 flex gap-x-2">

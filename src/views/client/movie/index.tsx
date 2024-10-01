@@ -1,15 +1,13 @@
 "use client";
 import MovieCategory from "@/components/home/movies/movie-category";
 import MaxWidth from "@/components/layout/max-width";
-import { DataGetMoviesFavoriteDTO, MovieForCardDTO } from "@/domain/phim/dto";
+import { MovieForCardDTO } from "@/domain/phim/dto";
 import { MoviesService } from "@/domain/phim/services";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { Icon } from "@iconify/react";
 import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { Session } from "next-auth";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 
 import Script from "next/script";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -62,27 +60,30 @@ export default function MoviePage(props: Props) {
     const queryClient = useQueryClient();
     const videoRef = useRef<HTMLDivElement>(null);
     const [episode, setEpisode] = useState<string>("1");
-    
+
     const { data: response } = MoviesService.get_movie(props.slug);
     const { mutateUnFavoriteMovie, mutateFavoriteMovie } = MoviesService.use_favorite_action();
     const { checkFavoriteMovie } = MoviesService.check_favorite_movie({
-        movie_id: response?.data[0]?.id ?? "",
+        movie_id: response ? response[0].id : "",
         user_id: props.session?.user.id ?? ""
     });
+
+    console.log("checkFavoriteMovie", checkFavoriteMovie);
+    
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
     if (!response) return <MovieDetailSkeleton />;
-    if (response.data.length === 0)
+    if (response.length === 0)
         return (
             <div className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl text-white">
                 Phim không tồn tại ^_^
             </div>
         );
 
-    const movie = response.data[0];
+    const movie = response[0];
 
     // Chức năng chia sẻ
     const handleShare = async () => {
@@ -109,8 +110,7 @@ export default function MoviePage(props: Props) {
                     { user_id: user_id, movie: movie as MovieForCardDTO },
                     {
                         onSuccess(data) {
-                            if (data.status === "success")
-                                queryClient.setQueryData([QUERY_KEY.GET_CHECK_FAVORITE_MOVIE, movie.id], data);
+                            queryClient.setQueryData([QUERY_KEY.GET_CHECK_FAVORITE_MOVIE, movie.id], data);
                         },
                         onError(e) {
                             toast.error("Có lỗi xảy ra thử lại sau!");
@@ -122,8 +122,7 @@ export default function MoviePage(props: Props) {
                     { user_id, movie_id: movie.id },
                     {
                         onSuccess(data) {
-                            if (data.status === "success")
-                                queryClient.setQueryData([QUERY_KEY.GET_CHECK_FAVORITE_MOVIE, movie.id], data);
+                            queryClient.setQueryData([QUERY_KEY.GET_CHECK_FAVORITE_MOVIE, movie.id], data);
                         },
                         onError(e) {
                             toast.error("Có lỗi xảy ra thử lại sau!");
@@ -208,12 +207,12 @@ export default function MoviePage(props: Props) {
                                         <button
                                             className={clsx(
                                                 "flex items-center gap-2 rounded-full border-2 border-primary bg-black/70 px-5 py-2.5 duration-300",
-                                                checkFavoriteMovie?.data[0]?.isFavorites
+                                                checkFavoriteMovie?.is_favorites
                                                     ? "bg-red-500 text-white"
                                                     : "hover:bg-primary hover:text-black"
                                             )}
                                             onClick={() => {
-                                                const option = checkFavoriteMovie?.data[0]?.isFavorites
+                                                const option = checkFavoriteMovie?.is_favorites
                                                     ? "unfavorite"
                                                     : "favorite";
                                                 handleFavoriteMovie(option);
@@ -221,13 +220,13 @@ export default function MoviePage(props: Props) {
                                         >
                                             <Icon
                                                 icon={
-                                                    checkFavoriteMovie?.data[0]?.isFavorites
+                                                    checkFavoriteMovie?.is_favorites
                                                         ? "ph:heart-break-fill"
                                                         : "solar:heart-linear"
                                                 }
                                                 height={20}
                                             />
-                                            {checkFavoriteMovie?.data[0]?.isFavorites ? "Bỏ thích" : "Yêu thích"}
+                                            {checkFavoriteMovie?.is_favorites ? "Bỏ thích" : "Yêu thích"}
                                         </button>
                                     </div>
                                 </div>

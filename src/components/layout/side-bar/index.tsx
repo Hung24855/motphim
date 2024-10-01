@@ -6,10 +6,11 @@ import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosArrowForward, IoMdClose } from "react-icons/io";
 import { motion } from "framer-motion";
+import { CountriesDTO } from "@/domain/quoc-gia/dto";
 
 type SideBarProps = {
     genres?: GenresDTO[];
-    countries?: any[];
+    countries?: CountriesDTO[];
 };
 
 export default function SideBarMenu({ countries, genres }: SideBarProps) {
@@ -78,7 +79,7 @@ export default function SideBarMenu({ countries, genres }: SideBarProps) {
                                     openSubMenuGenre ? "max-h-52" : "max-h-0"
                                 }`}
                             >
-                                {genres?.map((item) => (
+                                {genres && genres.map((item) => (
                                     <Link href={`/the-loai/${item.slug}`} key={item.id}>
                                         <li
                                             className="cursor-pointer rounded py-2 pl-4 hover:bg-slate-100/60"
@@ -110,7 +111,7 @@ export default function SideBarMenu({ countries, genres }: SideBarProps) {
                                     openSubMenuCountry ? "max-h-52" : "max-h-0"
                                 }`}
                             >
-                                {countries?.map((item) => (
+                                {countries&& countries.map((item) => (
                                     <Link href={`/quoc-gia/${item.slug}`} key={item.id}>
                                         <li
                                             className="cursor-pointer rounded py-2 pl-4 hover:bg-slate-100/60"

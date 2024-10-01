@@ -2,6 +2,8 @@ import { removeMark } from "@/base/utils/function";
 import { pool } from "@/database/connect";
 import { NextResponse } from "next/server";
 import { type NextRequest } from "next/server";
+import { status } from "../utils/status";
+import { responseError } from "../utils/response";
 
 export async function GET(request: NextRequest) {
     try {
@@ -27,13 +29,10 @@ export async function GET(request: NextRequest) {
                 .join(" + ") +
             ") >= 2";
 
-        // console.log("sql tim-kiem phim ===> ", sql);
-
         const res = await pool.query(sql);
-        return NextResponse.json({ status: "success", message: "Tìm kiếm phim thành công!", data: res.rows });
+        return NextResponse.json({ status: status.success, message: "Tìm kiếm phim thành công!", data: res.rows });
     } catch (error) {
         console.log("Error: GET tim-kiem", error);
-
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(responseError);
     }
 }

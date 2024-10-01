@@ -1,5 +1,5 @@
 import Input from "@/base/libs/input/page";
-import { MoviesDTO } from "@/domain/phim/dto";
+import { MoviesDetailDTO } from "@/domain/phim/dto";
 import { FieldValues } from "@/views/admin/movie/edit/page";
 
 import { Control, Controller, FieldErrors } from "react-hook-form";
@@ -7,7 +7,7 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 interface Props {
     control: Control<FieldValues, any>;
     errors: FieldErrors<FieldValues>;
-    movie: MoviesDTO;
+    movie: MoviesDetailDTO;
 }
 
 export default function MovieInfoUpdate({ control, errors, movie }: Props) {

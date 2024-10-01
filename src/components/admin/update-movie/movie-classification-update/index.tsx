@@ -1,16 +1,17 @@
-import { MoviesDTO } from "@/domain/phim/dto";
+
 import { CountriesService } from "@/domain/quoc-gia/service";
 import { GenresService } from "@/domain/the-loai/service";
 import { Control, Controller, FieldErrors, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { FieldValues } from "@/views/admin/movie/edit/page";
+import { MoviesDetailDTO } from "@/domain/phim/dto";
 
 interface Props {
     control: Control<FieldValues, any>;
     errors: FieldErrors<FieldValues>;
     setValue: UseFormSetValue<FieldValues>;
     getValues: UseFormGetValues<FieldValues>;
-    movie: MoviesDTO;
+    movie: MoviesDetailDTO;
 }
 
 export default function MovieClassificationUpdate({ control, errors, setValue, getValues, movie }: Props) {
@@ -107,7 +108,7 @@ export default function MovieClassificationUpdate({ control, errors, setValue, g
             <div className="khu-vuc mt-4 w-full">
                 <span className="font-semibold">Khu vực</span> <span className="ml-0.5 text-red-600">*</span>
                 <div className="grid w-full grid-cols-5 gap-x-6">
-                    {countries?.data.map((item, index) => (
+                    {countries?.map((item, index) => (
                         <Controller
                             name="countriesId"
                             control={control}

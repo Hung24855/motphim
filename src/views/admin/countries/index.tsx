@@ -4,15 +4,18 @@ import { Table } from "antd";
 import { ChangeEvent, Fragment, useMemo, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
-import { IDataCreateCountry, IDataUpdateCountry } from "@/domain/quoc-gia/model";
+import { DataCreateCountry, DataUpdateCountry, TResGetAllCountries } from "@/domain/quoc-gia/model";
 import Input from "@/base/libs/input/page";
 import { toast } from "react-toastify";
 import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 
-const initCountry: IDataCreateCountry | IDataUpdateCountry = { name: "", slug: "" };
+const initCountry: DataCreateCountry | DataUpdateCountry = { name: "", slug: "" };
 
 export default function CountriesAdminView() {
+    const queryClient = useQueryClient();
     const {
         data: countries,
         createCountryMutation,
@@ -23,7 +26,7 @@ export default function CountriesAdminView() {
     } = CountriesService.useCountries();
 
     const [ModalCreateOrUpdateCountry, setModalCreateOrUpdateCountry] = useState<boolean>(false);
-    const [country, setCountry] = useState<IDataCreateCountry | IDataUpdateCountry>(initCountry);
+    const [country, setCountry] = useState<DataCreateCountry | DataUpdateCountry>(initCountry);
     const [message, setMessage] = useState<string>("");
 
     const isTypeUpdateCountry = useMemo(() => "id" in country && country.id !== undefined, [country]);
@@ -35,11 +38,20 @@ export default function CountriesAdminView() {
                 onError: () => {
                     toast.error("Có lỗi xảy ra!");
                 },
-                onSuccess: () => {
+                onSuccess: (data) => {
+                    console.log("data", data);
+
                     toast.success("Thêm quốc gia thành công!");
                     setCountry(initCountry);
                     setModalCreateOrUpdateCountry(false);
-                    refetchCountries();
+
+                    const previousData = queryClient.getQueryData<TResGetAllCountries>([QUERY_KEY.GET_ALL_COUNTRIES]);
+                    if (previousData) {
+                        queryClient.setQueryData<TResGetAllCountries>(
+                            [QUERY_KEY.GET_ALL_COUNTRIES],
+                            [data[0], ...previousData]
+                        );
+                    }
                 }
             });
         } else {
@@ -49,7 +61,7 @@ export default function CountriesAdminView() {
 
     const handleUpdateCountry = () => {
         if (isTypeUpdateCountry && country && country.name && country.slug) {
-            const _country = { ...country } as IDataUpdateCountry;
+            const _country = { ...country } as DataUpdateCountry;
             updateCountryMutation(
                 { country_id: _country.id, data: _country },
                 {
@@ -84,7 +96,7 @@ export default function CountriesAdminView() {
         {
             title: "Hành động",
             key: "action",
-            render: (_: any, record: IDataUpdateCountry) => (
+            render: (_: any, record: DataUpdateCountry) => (
                 <div className="flex items-center gap-x-1">
                     <button
                         className="flex items-center gap-x-1 rounded p-1 hover:text-admin_primary"
@@ -109,11 +121,11 @@ export default function CountriesAdminView() {
                 Thêm quốc gia
             </button>
             <Table
-                dataSource={countries?.data}
+                dataSource={countries}
                 columns={columns}
                 loading={{
-                    spinning: !countries?.data,
-                    indicator: <Loading loading={!countries?.data} containerClassName="pt-20" />
+                    spinning: !countries,
+                    indicator: <Loading loading={!countries} containerClassName="pt-20" />
                 }}
                 pagination={{
                     position: ["bottomCenter"]
