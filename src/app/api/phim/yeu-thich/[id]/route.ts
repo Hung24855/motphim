@@ -1,4 +1,5 @@
-import { responseError, responseRequired } from "@/app/api/utils/response";
+
+import { Exception } from "@/app/api/utils/Exception";
 import { status } from "@/app/api/utils/status";
 import { pool } from "@/database/connect";
 import { NextResponse } from "next/server";
@@ -9,7 +10,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
         const body: { user_id: boolean } = await request.json();
 
         if (!body.user_id) {
-            return NextResponse.json(responseRequired);
+            throw new Error("Vui lòng đăng nhập để thực hiện chức năng này!")
         }
 
         await pool.query("INSERT INTO favorites (user_id, movie_id) VALUES ($1, $2)", [body.user_id, params.id]);
@@ -23,9 +24,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
             }
         });
     } catch (error) {
-        console.log("Error: POST yeu-thich", error);
-
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }
 
@@ -35,7 +34,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
         const body: { user_id: boolean } = await request.json();
 
         if (!body.user_id) {
-            return NextResponse.json(responseRequired);
+            throw new Error("Vui lòng đăng nhập để thực hiện chức năng này!")
         }
 
         await pool.query("DELETE FROM favorites WHERE user_id = $1 AND movie_id = $2", [body.user_id, params.id]);
@@ -49,8 +48,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
             }
         });
     } catch (error) {
-        console.log("Error: DELETE bỏ yeu-thich", error);
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }
 
@@ -70,7 +68,6 @@ export async function GET(request: Request, { params }: { params: { id: string }
             data: res.rows
         });
     } catch (error) {
-        console.log("Error: GET phim yeu thich", error);
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }

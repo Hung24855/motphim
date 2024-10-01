@@ -35,9 +35,7 @@ export default function GenresAdminView() {
         if (genre && genre.name && genre.slug) {
             createEGenreMutation({
                 data: genre,
-                onError: () => {
-                    toast.error("Có lỗi xảy ra!");
-                },
+                onError: () => {},
                 onSuccess: (data) => {
                     toast.success("Thêm thể loại thành công!");
                     setGenre(initGenre);
@@ -68,9 +66,7 @@ export default function GenresAdminView() {
                         setGenre(initGenre);
                         setModalCreateOrUpdateGenre(false);
                     },
-                    onError: () => {
-                        toast.error("Có lỗi xảy ra!");
-                    }
+                    onError: () => {}
                 }
             );
         } else {

@@ -1,33 +1,19 @@
 import { pool } from "@/database/connect";
 import { Episode } from "@/domain/phim/dto";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
-import { responseError, responseRequired } from "../utils/response";
 import { status } from "../utils/status";
+import { Exception } from "../utils/Exception";
+import CheckAdmin from "../middleware";
 
-// type RequestBodyType = {
-//     countriesId: number[];
-//     genresId: number[];
-//     episode_current: string;
-//     time_per_episode: string;
-//     episodes: {
-//         name: string;
-//         link: string;
-//         slug: string;
-//     }[];
-//     movie_name: string;
-//     movie_type_id: string;
-//     quality: string;
-//     image: string;
-//     episode_total: string;
-//     trailer_youtube_url: string;
-//     year: string;
-//     slug: string;
-//     content: string;
-// };
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
+        const is_admin = await CheckAdmin(request);
+        if (!is_admin) {
+            throw new Error("Bạn không đủ quyền hạn để làm điều này!");
+        }
+
         const body = await request.json();
 
         const requiredFields = [
@@ -47,7 +33,7 @@ export async function POST(request: Request) {
         ].filter((field) => !body[field]);
 
         if (requiredFields.length > 0) {
-            return NextResponse.json(responseRequired);
+            throw new Error("Vui lòng điền đầu đủ thông tin");
         }
 
         const movie_id = uuidv4();
@@ -71,10 +57,9 @@ export async function POST(request: Request) {
                 body.movie_type_id,
                 body.trailer_youtube_url
             ],
-            (Error, Result) => {
-                if (Error) {
-                    console.log("Error insert movie", Error);
-                    return NextResponse.json(responseError);
+            (error, Result) => {
+                if (error) {
+                    throw new Error(error.message);
                 }
 
                 const queries = [
@@ -101,16 +86,13 @@ export async function POST(request: Request) {
                         return NextResponse.json({ status: status.success, message: "Thêm phim thành công", data: [] });
                     })
                     .catch((error) => {
-                        console.log("Error: ", error);
-                        return NextResponse.json(responseError);
+                        throw new Error(error.message);
                     });
             }
         );
 
         return NextResponse.json({ status: status.success, message: "Thêm phim thành công", data: [] });
     } catch (error) {
-        console.log("Error: POST movie", error);
-
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }

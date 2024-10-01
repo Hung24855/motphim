@@ -2,10 +2,17 @@ import { pool } from "@/database/connect";
 import { NextResponse } from "next/server";
 import { type NextRequest } from "next/server";
 import { status } from "../utils/status";
-import { responseError } from "../utils/response";
+import { Exception } from "../utils/Exception";
+import CheckAdmin from "../middleware";
 export const revalidate = 10;
 export async function GET(request: NextRequest) {
     try {
+
+        const is_admin = await CheckAdmin(request);
+        if (!is_admin) {
+            throw new Error("Bạn không đủ quyền hạn để làm điều này!");
+        }
+
         const toltal_movies = "SELECT count(*) FROM movies";
         const total_episodes = "SELECT count(*) FROM episodes";
         const total_users = "SELECT count(*) FROM users";
@@ -34,8 +41,7 @@ export async function GET(request: NextRequest) {
                 new_update_movie: res[5].rows
             }
         });
-    } catch (error) {
-        console.log("Error: GET tim-kiem", error);
-        return NextResponse.json(responseError);
+    } catch (error: unknown) {
+        return NextResponse.json(Exception(error));
     }
 }

@@ -1,16 +1,22 @@
 import { pool } from "@/database/connect";
 import { NextRequest, NextResponse } from "next/server";
 import { Filter } from "../../utils/filter";
-import { responseError, responseRequired } from "../../utils/response";
 import { status } from "../../utils/status";
+import { Exception } from "../../utils/Exception";
+import CheckAdmin from "../../middleware";
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
+
+        const is_admin = await CheckAdmin(request);
+        if (!is_admin) {
+            throw new Error("Bạn không đủ quyền hạn để làm điều này!");
+        }
         const body = await request.json();
         const requiredFields = ["name", "slug"].filter((field) => !body[field]);
 
         if (requiredFields.length > 0) {
-            return NextResponse.json(responseRequired);
+           throw new Error("Vui lòng điền đầu đủ thông tin")
         }
 
         const res = await pool.query("UPDATE genres SET name = $1, slug = $2 WHERE id = $3 RETURNING *", [
@@ -20,19 +26,21 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         ]);
 
         return NextResponse.json({ status: status.success, message: "Cập nhật thể loại thành công", data: res.rows });
-    } catch (error) {
-        console.log("Error: PUT the-loai/[id]", error);
-        return NextResponse.json(responseError);
+    } catch (error: unknown) {
+        return NextResponse.json(Exception(error));
     }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
     try {
+        const is_admin = await CheckAdmin(request);
+        if (!is_admin) {
+            throw new Error("Bạn không đủ quyền hạn để làm điều này!");
+        }
         const res = await pool.query("DELETE FROM genres WHERE id = $1 RETURNING *", [params.id]);
-
         return NextResponse.json({ status: status.success, message: "Xóa thể loại thành công", data: res.rows });
-    } catch (error) {
-        return NextResponse.json(responseError);
+    } catch (error: unknown) {
+        return NextResponse.json(Exception(error));
     }
 }
 // Danh sách phim theo thể loại
@@ -79,8 +87,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                 totalPages: Math.ceil(totalRows.rows[0].count / Number(limit))
             }
         });
-    } catch (error) {
-        console.log("Error: ", error);
-        return NextResponse.json(responseError);
+    } catch (error:unknown) {
+        return NextResponse.json(Exception(error));
     }
 }

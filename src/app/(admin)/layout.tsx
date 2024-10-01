@@ -13,7 +13,7 @@ import Image from "next/image";
 const inter = Nunito({ subsets: ["latin"], preload: true });
 
 export const metadata: Metadata = {
-    title: "Dashboard"
+    title: "Quản trị"
 };
 
 export default async function RootLayout({

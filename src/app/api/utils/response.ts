@@ -1,20 +1,19 @@
 import { status } from "./status";
 
-export const responseError = {
+export const response_error = (message: string) => ({
     status: status.error,
-    message: "Có lỗi xảy ra",
+    message: message,
     data: []
-};
+});
 
-export const responseRequired = {
+export const response_required = (message: string) => ({
     status: status.error,
-    message: "Vui lòng điền đẩy đủ thông tin",
+    message: message ?? "Vui lòng điền đẩy đủ thông tin",
     data: []
-};
+});
 
-
-export const responseAuthenError = {
+export const response_authen_error = (message: string) => ({
     status: status.error,
-    message: "Lỗi xác thực",
+    message: message ?? "Lỗi xác thực",
     data: []
-};
+});

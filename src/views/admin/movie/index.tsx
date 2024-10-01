@@ -27,7 +27,7 @@ export default function MoviesAdminView() {
         isPeddingDeleteMovie,
         deleteMovieMutation
     } = MoviesService.use_movies({ page: page, limit: 10 });
-        
+
     const { isPendingChangeVisibleMovie, mutateChangeVisibleMovie } = MoviesService.change_visible_movie();
 
     const columns = [
@@ -146,9 +146,7 @@ export default function MoviesAdminView() {
                             }))
                         }));
                     },
-                    onError(e) {
-                        toast.error("Có lỗi xảy ra thử lại sau!");
-                    }
+                    onError(e) {}
                 }
             );
         }
@@ -166,9 +164,7 @@ export default function MoviesAdminView() {
                         data: prevData.data.filter((movie) => movie.id !== data.id)
                     }));
                 },
-                onError(e) {
-                    toast.error("Có lỗi xảy ra thử lại sau!");
-                }
+                onError(e) {}
             });
         }
     };

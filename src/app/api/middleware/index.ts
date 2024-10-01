@@ -1,7 +1,8 @@
+import { pool } from "@/database/connect";
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
 const secret = process.env.NEXTAUTH_SECRET ?? "";
-const checkAdmin = async (request: NextRequest) => {
+const CheckAdmin = async (request: NextRequest) => {
     try {
         // const token = await getToken({ req: request, secret: secret, salt: "authjs.session-token" });
         // console.log("token", token);
@@ -15,10 +16,12 @@ const checkAdmin = async (request: NextRequest) => {
         //     jti: 'e3287e36-e416-4e41-b81e-9addd405ab48'
         //   }
         const token = await getToken({ req: request, secret: secret, salt: "authjs.session-token" });
+        const check_admin_in_DB = await pool.query("SELECT role FROM users WHERE id = $1", [token?.id]);
+
         if (!token || token.role !== "admin") {
             return false;
         }
-        if (token.role === "admin") {
+        if (token.role === "admin" && check_admin_in_DB.rows[0].role === "admin") {
             return true;
         }
     } catch (error) {
@@ -38,4 +41,4 @@ export const getUserIdByTokenNextAuth = async (request: NextRequest) => {
         return null;
     }
 };
-export default checkAdmin;
+export default CheckAdmin;

@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import { pool } from "@/database/connect";
 import { NextResponse } from "next/server";
-import { responseError, responseRequired } from "../../utils/response";
 import { status } from "../../utils/status";
+import { Exception } from "../../utils/Exception";
 type BodyRegisterField = {
     email: string;
     password: string;
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
         const body: BodyRegisterField = await request.json();
 
         if (!body.email || !body.password) {
-            return NextResponse.json(responseRequired);
+            throw new Error("Vui lòng đièn đầy đủ thông tin!");
         }
 
         //Kiểm tra tài khoản đã tồn tại chưa
@@ -22,31 +22,21 @@ export async function POST(request: Request) {
             [body.email]
         );
         if (existUser.rows.length == 0) {
-            return NextResponse.json({
-                status: status.error,
-                message: `Tài khoản đã tồn tại!`,
-                data: []
-            });
+            throw new Error("Tài khoản đã tồn tại!");
         }
 
-        // console.log("existUser: ", existUser.rows);
 
         //Check mật khẩu
         const isMatch = bcrypt.compareSync(body.password, existUser.rows[0].password);
 
         if (!isMatch) {
-            return NextResponse.json({
-                status: status.error,
-                message: `Thông tin tài khoản hoặc mật khẩu không chính xác!`,
-                data: []
-            });
+            throw new Error("Thông tin tài khoản hoặc mật khẩu không chính xác!");
         }
 
         //Bỏ mật khẩu khỏi response
         const { password, ...user } = existUser.rows[0];
         return NextResponse.json({ status: status.success, message: "Đăng nhập thành công!", data: [{ ...user }] });
     } catch (error) {
-        console.log("Error: login", error);
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }

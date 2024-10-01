@@ -1,5 +1,5 @@
 import { getUserIdByTokenNextAuth } from "@/app/api/middleware";
-import { responseAuthenError, responseError } from "@/app/api/utils/response";
+import { Exception } from "@/app/api/utils/Exception";
 import { status } from "@/app/api/utils/status";
 import { pool } from "@/database/connect";
 import { NextRequest, NextResponse } from "next/server";
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         const user_id = await getUserIdByTokenNextAuth(request);
    
         if (!user_id) {
-            return NextResponse.json(responseAuthenError);
+            throw new Error("Lỗi xác thực vui lòng thử lại!")
         }
 
         const res = await pool.query("SELECT * FROM favorites WHERE user_id= $1 AND movie_id=$2", [user_id, params.id]);
@@ -24,7 +24,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             }
         });
     } catch (error) {
-        console.log("Error: GET kiểm tra phim yeu thich", error);
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }

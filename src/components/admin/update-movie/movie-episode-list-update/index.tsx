@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { Episode, MoviesDetailDTO } from "@/domain/phim/dto";
 import { MoviesService } from "@/domain/phim/services";
@@ -40,7 +40,7 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
     const HandleChangeEpisode = (type: "update" | "delete") => {
         if (DeleteEpisode && type === "delete") {
             deleteEpisodeMutation(DeleteEpisode.episode_id, {
-                onError: () => toast.error("Có lỗi xảy ra!"),
+                onError: () => {},
                 onSuccess: () => {
                     toast.success("Xóa tập phim thành công!");
                     refetchMovieDetail();

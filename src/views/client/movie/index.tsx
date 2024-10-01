@@ -69,7 +69,6 @@ export default function MoviePage(props: Props) {
     });
 
     console.log("checkFavoriteMovie", checkFavoriteMovie);
-    
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -112,9 +111,7 @@ export default function MoviePage(props: Props) {
                         onSuccess(data) {
                             queryClient.setQueryData([QUERY_KEY.GET_CHECK_FAVORITE_MOVIE, movie.id], data);
                         },
-                        onError(e) {
-                            toast.error("Có lỗi xảy ra thử lại sau!");
-                        }
+                        onError(e) {}
                     }
                 );
             } else {
@@ -124,9 +121,7 @@ export default function MoviePage(props: Props) {
                         onSuccess(data) {
                             queryClient.setQueryData([QUERY_KEY.GET_CHECK_FAVORITE_MOVIE, movie.id], data);
                         },
-                        onError(e) {
-                            toast.error("Có lỗi xảy ra thử lại sau!");
-                        }
+                        onError(e) {}
                     }
                 );
             }

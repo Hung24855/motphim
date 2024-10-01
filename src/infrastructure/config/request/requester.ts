@@ -1,6 +1,7 @@
 import { delay } from "@/base/utils/function";
 import http from ".";
 import { IResponseData, ISuccessResponse } from "../types/apiResponse";
+import { toast } from "react-toastify";
 
 interface RequesterOptions<Model> {
     requestFunc?: (url: string) => Promise<{ data: IResponseData }>;
@@ -21,10 +22,12 @@ export const requester =
 
             if (data?.status === "success") return await handleData(data as ISuccessResponse);
             else {
-                throw new Error(data?.message);
+                throw new Error(data.message);
             }
         } catch (error) {
-            console.log("Có lỗi xảy ra", error);
+            if (error instanceof Error) {
+                toast.error(error.message);
+            }
             throw error;
         }
     };

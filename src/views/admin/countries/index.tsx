@@ -35,9 +35,7 @@ export default function CountriesAdminView() {
         if (country && country.name && country.slug) {
             createCountryMutation({
                 data: country,
-                onError: () => {
-                    toast.error("Có lỗi xảy ra!");
-                },
+                onError: () => {},
                 onSuccess: (data) => {
                     console.log("data", data);
 
@@ -70,9 +68,7 @@ export default function CountriesAdminView() {
                         setCountry(initCountry);
                         setModalCreateOrUpdateCountry(false);
                     },
-                    onError: () => {
-                        toast.error("Có lỗi xảy ra!");
-                    }
+                    onError: () => {}
                 }
             );
         } else {

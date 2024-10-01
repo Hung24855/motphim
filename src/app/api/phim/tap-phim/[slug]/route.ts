@@ -1,4 +1,5 @@
-import { responseError, responseRequired } from "@/app/api/utils/response";
+import CheckAdmin from "@/app/api/middleware";
+import { Exception } from "@/app/api/utils/Exception";
 import { status } from "@/app/api/utils/status";
 import { pool } from "@/database/connect";
 import { Episode } from "@/domain/phim/dto";
@@ -12,10 +13,14 @@ type PostEpisodesFields = {
 export async function POST(request: NextRequest, { params }: { params: { slug: string } }) {
     //slug = movie_id
     try {
+        const is_admin = await CheckAdmin(request);
+        if (!is_admin) {
+            throw new Error("Bạn không đủ quyền hạn để làm điều này!");
+        }
         const body = (await request.json()) as PostEpisodesFields;
 
         if (!body.episodes || body.episodes.length === 0) {
-            return NextResponse.json(responseRequired);
+            throw new Error("Vui lòng điền đầy đủ thông tin!");
         }
 
         const queries = [
@@ -33,20 +38,22 @@ export async function POST(request: NextRequest, { params }: { params: { slug: s
                 return NextResponse.json({ status: status.success, message: "Thêm tập phim thành công!", data: [] });
             })
             .catch((error) => {
-                console.log("Error: ", error);
-                return NextResponse.json(responseError);
+                throw new Error(error.message);
             });
         return NextResponse.json({ status: status.success, message: "Thêm tập phim thành công!", data: [] });
     } catch (error) {
-        console.log("Error: ", error);
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { slug: string } }) {
     //slug = episode_id
     try {
-        const res = await pool.query("DELETE FROM episodes WHERE episode_id = $1", [params.slug]);
+        const is_admin = await CheckAdmin(request);
+        if (!is_admin) {
+            throw new Error("Bạn không đủ quyền hạn để làm điều này!");
+        }
+        await pool.query("DELETE FROM episodes WHERE episode_id = $1", [params.slug]);
         return NextResponse.json({
             status: status.success,
             message: "Xóa tập phim thành công!",
@@ -55,8 +62,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { slug:
             }
         });
     } catch (error) {
-        console.log("Error: ", error);
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }
 type PutEpisodesFields = {
@@ -65,10 +71,14 @@ type PutEpisodesFields = {
 export async function PUT(request: NextRequest, { params }: { params: { slug: string } }) {
     //slug = episode_id
     try {
+        const is_admin = await CheckAdmin(request);
+        if (!is_admin) {
+            throw new Error("Bạn không đủ quyền hạn để làm điều này!");
+        }
         const body = (await request.json()) as PutEpisodesFields;
 
         if (!body.episodes) {
-            return NextResponse.json(responseRequired);
+            throw new Error("Vui lòng điền đầy đủ thông tin");
         }
 
         const res = await pool.query(
@@ -78,7 +88,6 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
 
         return NextResponse.json({ status: status.success, message: "Cập nhật tập phim thành công!", data: res.rows });
     } catch (error) {
-        console.log("Error: ", error);
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }

@@ -1,7 +1,8 @@
 import { pool } from "@/database/connect";
-import { NextResponse } from "next/server";
-import { responseError, responseRequired } from "../../utils/response";
+import { NextRequest, NextResponse } from "next/server";
 import { status } from "../../utils/status";
+import { Exception } from "../../utils/Exception";
+import CheckAdmin from "../../middleware";
 export const revalidate = 3600;
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
     try {
@@ -84,8 +85,7 @@ export async function GET(request: Request, { params }: { params: { slug: string
             ]
         });
     } catch (error) {
-        console.log("Error: get_movie", error);
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }
 
@@ -106,9 +106,13 @@ type UpdateMovieFields = {
     movie_type_id: string;
 };
 
-export async function PUT(request: Request, { params }: { params: { slug: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: { slug: string } }) {
     //slug là id phim
     try {
+        const is_admin = await CheckAdmin(request);
+        if (!is_admin) {
+            throw new Error("Bạn không đủ quyền hạn để làm điều này!");
+        }
         const body = (await request.json()) as UpdateMovieFields;
         const requiredFields: Array<keyof UpdateMovieFields> = [
             "countriesId",
@@ -126,7 +130,7 @@ export async function PUT(request: Request, { params }: { params: { slug: string
         // Check missing fields
         const missingFields = requiredFields.filter((key) => !(key in body));
         if (missingFields.length > 0) {
-            return NextResponse.json(responseRequired);
+            throw new Error("Vui lòng điền đầy đủ thông tin");
         }
 
         // Cập nhật phim
@@ -151,9 +155,9 @@ export async function PUT(request: Request, { params }: { params: { slug: string
                 body.trailer_youtube_url,
                 params.slug
             ],
-            async (Error, Result) => {
-                if (Error) {
-                    return NextResponse.json(responseError);
+            async (error, Result) => {
+                if (error) {
+                    throw new Error(error.message);
                 }
 
                 //C1: Xóa danh mục cũ và thêm danh mục mới
@@ -184,22 +188,25 @@ export async function PUT(request: Request, { params }: { params: { slug: string
                         });
                     })
                     .catch((error) => {
-                        console.log("Error: ", error);
-                        return NextResponse.json(responseError);
+                        throw new Error(error.message);
                     });
             }
         );
 
         return NextResponse.json({ status: status.success, message: "Cập nhật phim thành công!", data: [] });
     } catch (error) {
-        console.log("Error: update_movie", error);
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }
 
-export async function DELETE(request: Request, { params }: { params: { slug: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: { slug: string } }) {
     //slug là id phim
     try {
+        const is_admin = await CheckAdmin(request);
+        if (!is_admin) {
+            throw new Error("Bạn không đủ quyền hạn để làm điều này!");
+        }
+
         await pool.query("DELETE FROM movies WHERE id = $1", [params.slug]);
         return NextResponse.json({
             status: status.success,
@@ -209,7 +216,6 @@ export async function DELETE(request: Request, { params }: { params: { slug: str
             }
         });
     } catch (error) {
-        console.log("Error: delete_movie", error);
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }

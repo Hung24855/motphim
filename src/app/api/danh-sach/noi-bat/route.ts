@@ -1,5 +1,6 @@
 import { pool } from "@/database/connect";
 import { NextResponse, NextRequest } from "next/server";
+import { Exception } from "../../utils/Exception";
 export const revalidate = 3600;
 export async function GET(request: NextRequest) {
     try {
@@ -14,8 +15,6 @@ export async function GET(request: NextRequest) {
             data: movies.rows
         });
     } catch (error) {
-        console.log("Error: GET danh sách nổi bật", error);
-
-        return NextResponse.json({ status: "error", message: "Có lỗi xảy ra", data: [] });
+        return NextResponse.json(Exception(error));
     }
 }

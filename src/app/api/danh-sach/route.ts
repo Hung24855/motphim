@@ -1,8 +1,8 @@
 import { pool } from "@/database/connect";
 import { NextResponse, NextRequest } from "next/server";
 import { Filter } from "../utils/filter";
-import { responseError } from "../utils/response";
 import { status } from "../utils/status";
+import { Exception } from "../utils/Exception";
 export const revalidate = 60;
 export async function GET(request: NextRequest) {
     const { limitSql, offset, orderBy, where, page, limit } = Filter(request);
@@ -30,7 +30,6 @@ export async function GET(request: NextRequest) {
             }
         });
     } catch (error) {
-        console.log("Error: ", error);
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }

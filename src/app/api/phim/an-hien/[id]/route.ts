@@ -1,14 +1,20 @@
-import { responseError, responseRequired } from "@/app/api/utils/response";
+
+import CheckAdmin from "@/app/api/middleware";
+import { Exception } from "@/app/api/utils/Exception";
 import { status } from "@/app/api/utils/status";
 import { pool } from "@/database/connect";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
-        const body: { is_visible: boolean } = await request.json();
+        const is_admin = await CheckAdmin(request);
+        if (!is_admin) {
+            throw new Error("Bạn không đủ quyền hạn để làm điều này!");
+        }
 
+        const body: { is_visible: boolean } = await request.json();
         if (!body.is_visible === undefined) {
-            return NextResponse.json(responseRequired);
+            throw new Error("Vui lòng điền đầy đủ thông tin");
         }
 
         await pool.query("UPDATE movies SET is_visible = $1 WHERE id = $2 RETURNING *", [body.is_visible, params.id]);
@@ -22,7 +28,6 @@ export async function PUT(request: Request, { params }: { params: { id: string }
             }
         });
     } catch (error) {
-        console.log("Error: PUT cập nhật is_visible phim", error);
-        return NextResponse.json(responseError);
+        return NextResponse.json(Exception(error));
     }
 }
