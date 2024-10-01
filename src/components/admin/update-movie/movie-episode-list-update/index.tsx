@@ -1,11 +1,11 @@
-import { Fragment, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import clsx from "clsx";
 import { Episode, MoviesDetailDTO } from "@/domain/phim/dto";
 import { MoviesService } from "@/domain/phim/services";
 import { toast } from "react-toastify";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { FaRegEdit, FaEye } from "react-icons/fa";
+import { FaRegEdit } from "react-icons/fa";
 import { IoTrashBinSharp } from "react-icons/io5";
 import { ModalMotion } from "@/base/libs/modal";
 

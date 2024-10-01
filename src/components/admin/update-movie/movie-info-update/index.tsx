@@ -5,7 +5,7 @@ import { FieldValues } from "@/views/admin/movie/edit/page";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 
 interface Props {
-    control: Control<FieldValues, any>;
+    control: Control<FieldValues>;
     errors: FieldErrors<FieldValues>;
     movie: MoviesDetailDTO;
 }

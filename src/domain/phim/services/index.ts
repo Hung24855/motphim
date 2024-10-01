@@ -55,7 +55,7 @@ export class MoviesService {
 
     // CRUD phim
     static use_movies({ page, limit }: DataGetAllMovies) {
-        const queryClient = useQueryClient();
+        
         const {
             data,
             isFetching,
@@ -70,26 +70,26 @@ export class MoviesService {
                 MoviesApi.update_movie({ data: data.data, id: data.id })
         });
         const { mutate: deleteMovieMutation, isPending: isPeddingDeleteMovie } = useMutation({
-            mutationFn: (id: string) => MoviesApi.delete_movie(id),
-            onMutate: async (id) => {
-                const queryKey = [QUERY_KEY.GET_LIST_MOVIES, page];
-                await queryClient.cancelQueries({ queryKey });
+            mutationFn: (id: string) => MoviesApi.delete_movie(id)
+            // onMutate: async (id) => {
+            //     const queryKey = [QUERY_KEY.GET_LIST_MOVIES, page];
+            //     await queryClient.cancelQueries({ queryKey });
 
-                const previousData = queryClient.getQueryData<TResGetMovies>(queryKey);
-                if (previousData) {
-                    queryClient.setQueryData<TResGetMovies>(queryKey, {
-                        ...previousData,
-                        data: [...previousData.data.filter((movie) => movie.id !== id)]
-                    });
-                }
+            //     const previousData = queryClient.getQueryData<TResGetMovies>(queryKey);
+            //     if (previousData) {
+            //         queryClient.setQueryData<TResGetMovies>(queryKey, {
+            //             ...previousData,
+            //             data: [...previousData.data.filter((movie) => movie.id !== id)]
+            //         });
+            //     }
 
-                return {
-                    previousData
-                };
-            },
-            onError(_, __, context) {
-                queryClient.setQueryData<TResGetMovies>([QUERY_KEY.GET_FAVORITE_MOVIES], context?.previousData);
-            }
+            //     return {
+            //         previousData
+            //     };
+            // },
+            // onError(_, __, context) {
+            //     queryClient.setQueryData<TResGetMovies>([QUERY_KEY.GET_FAVORITE_MOVIES], context?.previousData);
+            // }
         });
 
         return {
@@ -136,11 +136,10 @@ export class MoviesService {
     }
     // Tim kiem phim
     static get_search_movie(query: string) {
-        const { data, isFetching, isError, refetch } = useFetcher<TResGetSearchMovies>(
-            [QUERY_KEY.GET_SEARCH_MOVIE, query],
-            () => MoviesApi.search_movie(query)
+        const { data, isFetching, isError } = useFetcher<TResGetSearchMovies>([QUERY_KEY.GET_SEARCH_MOVIE, query], () =>
+            MoviesApi.search_movie(query)
         );
-        return { data, isFetching, isError, refetch };
+        return { data, isFetching, isError };
     }
     // Ẩn hiện phim
     static change_visible_movie() {

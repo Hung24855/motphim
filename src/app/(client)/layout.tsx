@@ -25,7 +25,6 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     DB_Connect();
-
     const session = await auth();
 
     return (

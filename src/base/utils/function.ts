@@ -32,17 +32,18 @@ export function convertTime(inputTime: string): string {
     const diffInSeconds: number = Math.floor((now.getTime() - pastTime.getTime()) / 1000); // Khoảng cách thời gian tính bằng giây
 
     // Tính toán các khoảng thời gian
-    const seconds: number = diffInSeconds % 60;
-    const minutes: number = Math.floor(diffInSeconds / 60) % 60;
-    const hours: number = Math.floor(diffInSeconds / 3600) % 24;
     const days: number = Math.floor(diffInSeconds / 86400);
+    const hours: number = Math.floor(diffInSeconds / 3600) % 24;
+    const minutes: number = Math.floor(diffInSeconds / 60) % 60;
+    const seconds: number = diffInSeconds % 60;
 
-    // Tạo chuỗi kết quả
-    let result: string = "";
-
+    // Nếu thời gian lớn hơn 1 ngày, chỉ trả về chuỗi ngày
     if (days > 0) {
-        result += `${days} ngày `;
+        return `${days} ngày trước`;
     }
+
+    // Tạo chuỗi kết quả cho giờ, phút, giây nếu < 1 ngày
+    let result: string = "";
 
     if (hours > 0) {
         result += `${hours} giờ `;

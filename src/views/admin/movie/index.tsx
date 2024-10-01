@@ -24,10 +24,10 @@ export default function MoviesAdminView() {
     const {
         data: movies,
         isFetching,
-        refetchMovies,
         isPeddingDeleteMovie,
         deleteMovieMutation
     } = MoviesService.use_movies({ page: page, limit: 10 });
+        
     const { isPendingChangeVisibleMovie, mutateChangeVisibleMovie } = MoviesService.change_visible_movie();
 
     const columns = [
@@ -188,7 +188,7 @@ export default function MoviesAdminView() {
                     }}
                     pagination={{
                         pageSize: 10,
-                        total: movies?.pagination?.totalPages,
+                        total: movies?.pagination ? movies.pagination.totalRows : 1,
                         onChange: (page) => setPage(page),
                         position: ["bottomCenter"]
                     }}

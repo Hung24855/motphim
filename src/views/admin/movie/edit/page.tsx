@@ -36,7 +36,12 @@ export default function EditMoviePage({ slug }: { slug: string }) {
     const { data: movie, refetch: refetchMovieDetail } = MoviesService.get_movie(slug);
     const { updateMovieMutation, isPeddingUpdateMovie } = MoviesService.use_movies({});
 
-    if (!movie) return <Loading loading={true} backgroundOverlayClassName="bg-black/5"></Loading>;
+    if (!movie) return <Loading loading={true} />;
+
+    if (movie.length === 0) {
+        toast.error("Phim không tồn tại");
+        return null;
+    }
 
     const movieTabs = [
         { label: "Thông tin phim", content: <MovieInfoUpdate control={control} errors={errors} movie={movie[0]} /> },

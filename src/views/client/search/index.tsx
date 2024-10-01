@@ -3,11 +3,11 @@ import MaxWidth from "@/components/layout/max-width";
 import MovieCard from "@/components/shared/movie-card";
 import { ListMovieSkeleton } from "@/components/shared/movie-card-skeleton";
 import { MoviesService } from "@/domain/phim/services";
-import { notFound, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function SearchMovieView() {
     const SearchParams = useSearchParams().get("q");
-    const { data: movies, refetch } = MoviesService.get_search_movie(SearchParams ?? "");
+    const { data: movies } = MoviesService.get_search_movie(SearchParams ?? "");
 
     if (!movies) return <ListMovieSkeleton />;
 

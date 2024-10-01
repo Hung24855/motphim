@@ -2,19 +2,18 @@
 import { CountriesService } from "@/domain/quoc-gia/service";
 import { GenresService } from "@/domain/the-loai/service";
 import { Control, Controller, FieldErrors, UseFormGetValues, UseFormSetValue } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
 import { FieldValues } from "@/views/admin/movie/edit/page";
 import { MoviesDetailDTO } from "@/domain/phim/dto";
 
 interface Props {
-    control: Control<FieldValues, any>;
+    control: Control<FieldValues>;
     errors: FieldErrors<FieldValues>;
     setValue: UseFormSetValue<FieldValues>;
     getValues: UseFormGetValues<FieldValues>;
     movie: MoviesDetailDTO;
 }
 
-export default function MovieClassificationUpdate({ control, errors, setValue, getValues, movie }: Props) {
+export default function MovieClassificationUpdate({ control, setValue, getValues, movie }: Props) {
     const { data: genres } = GenresService.useGenres();
     const { data: countries } = CountriesService.useCountries();
 
@@ -147,7 +146,7 @@ export default function MovieClassificationUpdate({ control, errors, setValue, g
                     ))}
                 </div>
             </div>
-            {/* <DevTool control={control} /> */}
+
         </div>
     );
 }

@@ -49,7 +49,7 @@ export default function AdminSideBar() {
 
     const ListItem: SideBarList[] = [
         {
-            name: "Dashboard",
+            name: "Trang chủ",
             icon: <TbLayoutDashboardFilled size={24} />,
             path: "/admin"
         },
@@ -114,7 +114,7 @@ export default function AdminSideBar() {
                         </Link>
                     </div>
 
-                    <ul className="space-y-2 pt-4 font-medium">
+                    <ul className="space-y-1 pt-4 font-semibold">
                         {ListItem.map((item, index) => {
                             return (
                                 <li className={clsx("min-h-12 rounded")} key={index}>
@@ -173,9 +173,9 @@ export default function AdminSideBar() {
                                                 <li
                                                     key={subIndex}
                                                     className={clsx(
-                                                        "flex cursor-pointer select-none items-center gap-x-2 rounded p-2",
+                                                        "mb-1 flex cursor-pointer select-none items-center gap-x-2 rounded p-2",
                                                         "hover:bg-gray-200 hover:text-admin_primary",
-                                                        isActive(subItem.path ?? "") && "bg-gray-300 text-admin_primary"
+                                                        isActive(subItem.path ?? "") && "bg-gray-200 text-admin_primary"
                                                     )}
                                                     onClick={() => {
                                                         if (subItem.path) {
