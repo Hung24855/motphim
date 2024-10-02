@@ -103,7 +103,7 @@ export default function AccountAdminView() {
 
                         <Button
                             type="primary"
-                            loading={loading}
+                            loading={loading && user_id === record.id}
                             disabled={!role || user_id !== record.id}
                             onClick={handleChangePermission}
                         >

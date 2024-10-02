@@ -107,7 +107,7 @@ export default function CountriesAdminView() {
             render: (_: any, record: DataUpdateCountry) => (
                 <div className="flex items-center gap-x-1">
                     <button
-                        className="flex items-center gap-x-1 rounded p-1 hover:text-admin_primary"
+                        className="flex items-center gap-x-1 rounded p-1 text-admin_primary"
                         onClick={() => {
                             setCountry(record);
                             setModalCreateOrUpdateCountry(true);

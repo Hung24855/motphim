@@ -68,8 +68,6 @@ export default function MoviePage(props: Props) {
         user_id: props.session?.user.id ?? ""
     });
 
-    console.log("checkFavoriteMovie", checkFavoriteMovie);
-
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);

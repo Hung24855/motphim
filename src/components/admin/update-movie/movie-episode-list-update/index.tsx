@@ -161,7 +161,7 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                                 {UpdateEpisode?.episode_id === episode.episode_id ? (
                                                     "Cập nhật"
                                                 ) : (
-                                                    <span className="flex items-center gap-x-1 hover:text-admin_primary">
+                                                    <span className="flex items-center gap-x-1 text-admin_primary">
                                                         <FaRegEdit size={15} /> Sửa
                                                     </span>
                                                 )}

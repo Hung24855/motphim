@@ -16,12 +16,17 @@ import { Session } from "next-auth";
 import { Popover, Spin } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
+import { authFirebase } from "@/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { signOut } from "firebase/auth";
 
 function Search({ session }: { session: Session | null }) {
     const [search, setSearch] = useState<string>("");
     const [showSearch, setShowSearch] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const [logoutLoading, setLogoutLoading] = useState<boolean>(false);
+    // const [user] = useAuthState(authFirebase);
+
 
     useEffect(() => {
         if (inputRef.current && showSearch) {
@@ -56,6 +61,7 @@ function Search({ session }: { session: Session | null }) {
                                 className="px-2 py-1 text-red-500 hover:bg-gray-200"
                                 onClick={async () => {
                                     setLogoutLoading(true);
+                                    await signOut(authFirebase);
                                     await logout_action();
                                     setLogoutLoading(false);
                                 }}

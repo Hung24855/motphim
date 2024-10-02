@@ -10,6 +10,8 @@ import { register_action } from "@/actions/auth";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Button from "@/base/libs/button";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { authFirebase } from "@/firebase";
 
 export default function RegisternPage() {
     const [globalMessage, setGlobalMessage] = useState<string>("");
@@ -17,7 +19,7 @@ export default function RegisternPage() {
     const {
         control,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { errors, isSubmitting }
     } = useForm<SignUpType>({
         mode: "onSubmit",
         reValidateMode: "onSubmit",
@@ -29,6 +31,15 @@ export default function RegisternPage() {
         if (res.status === "success") {
             toast.success(res.message);
             router.push("/dang-nhap");
+
+            // Đăng ký tài khoản Firebase
+            createUserWithEmailAndPassword(authFirebase, data.email, data.password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                })
+                .catch((error) => {
+                    toast.error("Đăng ký Firebase thất bại!");
+                });
         } else {
             setGlobalMessage(res.message);
         }

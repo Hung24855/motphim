@@ -8,6 +8,9 @@ import { signInSchema, SignInType } from "@/utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { login_action } from "@/actions/auth";
 import Button from "@/base/libs/button";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { authFirebase } from "@/firebase";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
     const [globalMessage, setGlobalMessage] = useState<string>("");
@@ -24,6 +27,17 @@ export default function LoginPage() {
     const Submit = async (data: SignInType) => {
         try {
             const result = await login_action(data);
+            // Đăng nhập firebase
+            signInWithEmailAndPassword(authFirebase, data.email, data.password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                })
+                .catch((error) => {
+                    toast.error("Đăng nhập Firebase thất bại!");
+                    console.log("Đăng nhập Firebase thất bại!", error.message);
+                });
+
             if (result?.message) {
                 setGlobalMessage(result.message);
             }

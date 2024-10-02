@@ -39,7 +39,8 @@ export default function CreateMoviePage() {
         handleSubmit,
         formState: { errors },
         setValue,
-        getValues
+        getValues,
+        reset
     } = useForm<FieldValues>({
         mode: "onSubmit",
         reValidateMode: "onSubmit",
@@ -73,11 +74,10 @@ export default function CreateMoviePage() {
             },
             onSuccess: () => {
                 toast.success("Tạo phim thành công!");
-                window.location.reload();
+                reset();
             }
         });
     };
-
 
     return (
         <div>

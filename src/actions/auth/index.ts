@@ -1,11 +1,11 @@
 "use server";
-
 import { signOut, signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import { IResponseData } from "@/infrastructure/config/types/apiResponse";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+
 
 export const register_action = async ({
     email,
@@ -16,7 +16,6 @@ export const register_action = async ({
     password: string;
     username: string;
 }): Promise<IResponseData> => {
-    // console.log("email, password: ", email, password);
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_API;
     try {
         const response = await fetch(baseUrl + "/auth/dang-ky", {
@@ -41,7 +40,6 @@ export const register_action = async ({
 export const login_action = async ({ email, password }: { email: string; password: string }) => {
     try {
         await signIn("credentials", { email, password, redirectTo: "/" });
-        revalidatePath("/");
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -60,9 +58,9 @@ export const login_action = async ({ email, password }: { email: string; passwor
 };
 
 export async function logout_action() {
+    
     await signOut();
     revalidatePath("/");
-    redirect("/");
 }
 
 export const Permissions = async ({ user_id, role }: { user_id: string; role: "admin" | "user" }) => {
@@ -80,7 +78,7 @@ export const Permissions = async ({ user_id, role }: { user_id: string; role: "a
                 cookie: "authjs.session-token=" + session
             },
             body: JSON.stringify({ role })
-        }).then((res) => res.json());
+        }).then((res) => res.json()); 
         return response;
     } catch (error) {
         throw new Error("Có lỗi xảy ra thử lại sau!");

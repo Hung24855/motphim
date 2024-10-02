@@ -104,7 +104,7 @@ export default function GenresAdminView() {
             render: (_: any, record: DataUpdateGenres) => (
                 <div className="flex items-center gap-x-1">
                     <button
-                        className="flex items-center gap-x-1 rounded p-1 hover:text-admin_primary"
+                        className="flex items-center gap-x-1 rounded p-1 text-admin_primary"
                         onClick={() => {
                             setGenre(record);
                             setModalCreateOrUpdateGenre(true);
