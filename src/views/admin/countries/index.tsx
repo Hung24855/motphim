@@ -1,6 +1,6 @@
 "use client";
 import { CountriesService } from "@/domain/quoc-gia/service";
-import { Table } from "antd";
+import { Table, Tag } from "antd";
 import { ChangeEvent, Fragment, useMemo, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
@@ -80,14 +80,26 @@ export default function CountriesAdminView() {
         {
             title: "Tên quốc gia",
             dataIndex: "name",
-            key: "genre_name",
-            width: "45%"
+            key: "genre_name"
         },
         {
             title: "Đường dẫn tĩnh",
             dataIndex: "slug",
-            key: "slug",
-            width: "45%"
+            key: "slug"
+        },
+        {
+            title: "Số phim thuộc quốc gia",
+            key: "movie_count",
+            render: () => {
+                return <Tag color="geekblue">Chưa cập nhật</Tag>;
+            }
+        },
+        {
+            title: "SEO Title",
+            key: "movie_count",
+            render: () => {
+                return <Tag color="green">Chưa cập nhật</Tag>;
+            }
         },
         {
             title: "Hành động",

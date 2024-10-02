@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
             throw new Error("Bạn không đủ quyền hạn để làm điều này!");
         }
 
-        const res = await pool.query("SELECT users.id, users.email,users.username,users.role FROM users");
+        const res = await pool.query("SELECT users.id, users.email,users.username,users.role,users.created_at,users.updated_at FROM users WHERE email != 'admin@gmail.com'");
         return NextResponse.json({
             status: status.success,
             message: "Lấy danh sách tài khoản thành công!",

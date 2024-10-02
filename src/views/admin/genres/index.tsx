@@ -1,6 +1,6 @@
 "use client";
 import { GenresService } from "@/domain/the-loai/service";
-import { Table } from "antd";
+import { Table, Tag } from "antd";
 import { ChangeEvent, Fragment, useMemo, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
@@ -18,7 +18,6 @@ export default function GenresAdminView() {
     const queryClient = useQueryClient();
     const {
         data: genres,
-        refetch: refetchGenres,
         createEGenreMutation,
         updateGenreMutation,
         isPeddingCreateGenre,
@@ -78,14 +77,26 @@ export default function GenresAdminView() {
         {
             title: "Tên thể loại",
             dataIndex: "name",
-            key: "genre_name",
-            width: "45%"
+            key: "genre_name"
         },
         {
             title: "Đường dẫn tĩnh",
             dataIndex: "slug",
-            key: "slug",
-            width: "45%"
+            key: "slug"
+        },
+        {
+            title: "Số phim thuộc thể loại",
+            key: "movie_count",
+            render: () => {
+                return <Tag color="geekblue">Chưa cập nhật</Tag>;
+            }
+        },
+        {
+            title: "SEO Title",
+            key: "movie_count",
+            render: () => {
+                return <Tag color="green">Chưa cập nhật</Tag>;
+            }
         },
         {
             title: "Hành động",

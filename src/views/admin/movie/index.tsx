@@ -63,7 +63,7 @@ export default function MoviesAdminView() {
             dataIndex: "movie_type_id",
             render: (movie_type: "type1" | "type2") => {
                 if (movie_type === "type1") {
-                    return <Tag color="geekblue">Phim bộ</Tag>;
+                    return <Tag color="gold">Phim bộ</Tag>;
                 } else {
                     return <Tag color="green">Phim lẻ</Tag>;
                 }
