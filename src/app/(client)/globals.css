@@ -49,3 +49,7 @@ body::-webkit-scrollbar-thumb {
   padding: 0;
   overflow: hidden;
 }
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
