@@ -7,7 +7,7 @@ import { FaFacebook, FaGithub } from "react-icons/fa";
 
 export default function Footer() {
     return (
-        <div className="text-white bg-bg_primary">
+        <div className="text-white bg-bg_primary z-50">
             <MaxWidth>
                 <div className="flex h-20 w-full flex-wrap items-center justify-between border-t-[1px] border-gray-700  px-2 text-sm text-white">
                     <div className="flex flex-wrap gap-1 gap-x-6">

@@ -27,16 +27,21 @@ export default function LoginPage() {
     const Submit = async (data: SignInType) => {
         try {
             const result = await login_action(data);
+         
+
+            if (!result?.message) {
+                signInWithEmailAndPassword(authFirebase, data.email, data.password)
+                    .then((userCredential) => {
+                        // Signed in
+                        const user = userCredential.user;
+                    })
+                    .catch((error) => {
+                        toast.error("Đăng nhập Firebase thất bại!");
+                        console.log("Đăng nhập Firebase thất bại!", error.message);
+                    });
+            }
+
             // Đăng nhập firebase
-            signInWithEmailAndPassword(authFirebase, data.email, data.password)
-                .then((userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                })
-                .catch((error) => {
-                    toast.error("Đăng nhập Firebase thất bại!");
-                    console.log("Đăng nhập Firebase thất bại!", error.message);
-                });
 
             if (result?.message) {
                 setGlobalMessage(result.message);

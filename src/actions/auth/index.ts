@@ -5,7 +5,7 @@ import { IResponseData } from "@/infrastructure/config/types/apiResponse";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-
+import { status } from "@/app/api/utils/status";
 
 export const register_action = async ({
     email,
@@ -45,10 +45,12 @@ export const login_action = async ({ email, password }: { email: string; passwor
             switch (error.type) {
                 case "CredentialsSignin":
                     return {
+                        status: "error",
                         message: "Tài khoản hoặc mật khẩu không chính xác!"
                     };
                 default:
                     return {
+                        status: "error",
                         message: "Có lỗi xảy ra!."
                     };
             }
@@ -58,7 +60,6 @@ export const login_action = async ({ email, password }: { email: string; passwor
 };
 
 export async function logout_action() {
-    
     await signOut();
     revalidatePath("/");
 }
@@ -78,7 +79,7 @@ export const Permissions = async ({ user_id, role }: { user_id: string; role: "a
                 cookie: "authjs.session-token=" + session
             },
             body: JSON.stringify({ role })
-        }).then((res) => res.json()); 
+        }).then((res) => res.json());
         return response;
     } catch (error) {
         throw new Error("Có lỗi xảy ra thử lại sau!");

@@ -10,8 +10,10 @@ import { register_action } from "@/actions/auth";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Button from "@/base/libs/button";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { authFirebase } from "@/firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { authFirebase, dbFirebase } from "@/firebase";
+import { addDoc, collection } from "firebase/firestore";
+import { handle_add_doc_firebase } from "@/database/firebase.services";
 
 export default function RegisternPage() {
     const [globalMessage, setGlobalMessage] = useState<string>("");
@@ -34,11 +36,26 @@ export default function RegisternPage() {
 
             // Đăng ký tài khoản Firebase
             createUserWithEmailAndPassword(authFirebase, data.email, data.password)
-                .then((userCredential) => {
+                .then(async (userCredential) => {
                     const user = userCredential.user;
+
+                    // Cập nhật displayName
+                    await updateProfile(user, {
+                        displayName: data.username
+                    });
+                    
+                    // Ghi thông tin người dùng vài firestore
+                    await handle_add_doc_firebase({
+                        collectionName: "USERS",
+                        data: {
+                            name: data.username,
+                            email: data.email,
+                            uid: user.uid
+                        }
+                    });
                 })
                 .catch((error) => {
-                    toast.error("Đăng ký Firebase thất bại!");
+                    toast.error("Tài khoản đã tồn tại!");
                 });
         } else {
             setGlobalMessage(res.message);

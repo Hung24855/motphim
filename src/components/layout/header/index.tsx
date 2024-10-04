@@ -199,6 +199,10 @@ export default function Header({ session }: { session: Session | null }) {
                         <Link href={"/yeu-thich"}>
                             <div className={clsx(isActive("/yeu-thich") && "text-blue-500")}>Yêu thích</div>
                         </Link>
+                        <Link href={"/phong-xem-phim"}>
+                            <div className={clsx(isActive("/phong-xem-phim") && "text-blue-500")}>Phòng xem phim</div>
+                        </Link>
+                        
                     </div>
                     {/* side bar */}
                     <SideBarMenu genres={genres} countries={countries} />
