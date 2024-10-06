@@ -45,6 +45,7 @@ export default function ChatRoomView({ session }: { session: Session | null }) {
     const handleSend = async () => {
         if (!message) return;
         try {
+            setMessage("");
             // 2 người chưa từng chat với nhau
             if (Chats?.length === 0) {
                 await handle_add_doc_firebase({
@@ -78,8 +79,6 @@ export default function ChatRoomView({ session }: { session: Session | null }) {
                     })
                 });
             }
-
-            setMessage("");
         } catch (error) {
             console.log("error", error);
             toast.error("Gửi tin nhắn thất bại! Vui lòng thử lại");

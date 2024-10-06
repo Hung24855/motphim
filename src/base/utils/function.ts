@@ -61,3 +61,35 @@ export function convertTime(inputTime: string): string {
 }
 
 export const delay = (m: number) => new Promise((r) => setTimeout(r, m));
+
+export function checkNullOrUndefinedInObject(obj: Record<string, any>): boolean {
+    for (let key in obj) {
+        if (obj[key] === null || obj[key] === undefined) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// remove all undefined or null value in object, if allowNull = true, object is not remove null value.
+export function removeNullAndUndefinedFromObject({
+    obj,
+    allowNull = false
+}: {
+    obj: Record<string, any>;
+    allowNull: boolean;
+}): Record<string, any> {
+    const result: Record<string, any> = {};
+
+    for (let key in obj) {
+        if (obj[key] !== undefined && (allowNull || obj[key] !== null)) {
+            result[key] = obj[key];
+        }
+    }
+
+    return result;
+}
+// remove all undefined or null value in array, if allowNull = true, array is not remove null value.
+export function removeNullAndUndefinedFromArray({ arr, allowNull = false }: { arr: any[]; allowNull: boolean }): any[] {
+    return arr.filter((item) => item !== undefined && (allowNull || item !== null));
+}

@@ -17,7 +17,6 @@ import { Popover, Spin } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
 import { authFirebase } from "@/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 
 function Search({ session }: { session: Session | null }) {
@@ -25,8 +24,6 @@ function Search({ session }: { session: Session | null }) {
     const [showSearch, setShowSearch] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const [logoutLoading, setLogoutLoading] = useState<boolean>(false);
-    // const [user] = useAuthState(authFirebase);
-
 
     useEffect(() => {
         if (inputRef.current && showSearch) {
@@ -55,6 +52,9 @@ function Search({ session }: { session: Session | null }) {
                             {session?.user?.role === "admin" && (
                                 <div className="px-2 py-1 hover:bg-gray-200">Trang quản trị</div>
                             )}
+                        </Link>
+                        <Link href={"/trang-ca-nhan"} className="w-full hover:text-black">
+                            <div className="px-2 py-1 hover:bg-gray-200">Trang cá nhân</div>
                         </Link>
                         <Spin spinning={logoutLoading} indicator={<LoadingOutlined spin />}>
                             <div
@@ -202,7 +202,6 @@ export default function Header({ session }: { session: Session | null }) {
                         <Link href={"/phong-xem-phim"}>
                             <div className={clsx(isActive("/phong-xem-phim") && "text-blue-500")}>Phòng xem phim</div>
                         </Link>
-                        
                     </div>
                     {/* side bar */}
                     <SideBarMenu genres={genres} countries={countries} />

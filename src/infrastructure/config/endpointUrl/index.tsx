@@ -44,8 +44,9 @@ class EndpointUrl {
     get_featured_movies = () => `/danh-sach/noi-bat`;
     // Thống kê
     get_statistical = () => "/thong-ke";
-    // Danh sách tài khoản
+    // Tài khoản
     get_accounts = () => `/danh-sach/tai-khoan`;
+    update_user_info = () => `/thong-tin-ca-nhan`;
 }
 
 export const ENDPOINT_URL = new EndpointUrl();

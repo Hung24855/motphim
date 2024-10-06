@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { getStorage, ref } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_API_KEY_FIRE_BASE,
@@ -16,5 +16,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const appFirebase = initializeApp(firebaseConfig);
 export const authFirebase = getAuth(appFirebase);
-export const dbFirebase = getFirestore(appFirebase);//Lưu trữ tin nhắn real-time
-export const storageFirebase = getStorage(appFirebase);//Lưu trữ hình ảnh
+export const dbFirebase = getFirestore(appFirebase); //Lưu trữ tin nhắn real-time
+export const storageFirebase = getStorage(appFirebase); //Lưu trữ hình ảnh
+

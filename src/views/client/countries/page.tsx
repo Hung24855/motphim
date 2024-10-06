@@ -15,7 +15,7 @@ export default function CountriesPage({ slug }: { slug: string }) {
     if (!movies) return <ListMovieSkeleton showTitle />;
 
     return (
-        <MaxWidth className="min-h-screen text-white">
+       <MaxWidth className="min-h-screen text-white">
             {movies.data.length > 0 ? (
                 <div className="pb-10 pt-24">
                     <div className="px-2 text-2xl">Phim {movies.data[0].country_name}</div>
@@ -41,6 +41,6 @@ export default function CountriesPage({ slug }: { slug: string }) {
                     Hiện tại chưa có phim cho quốc gia này!
                 </div>
             )}
-        </MaxWidth>
+        </MaxWidth> 
     );
 }

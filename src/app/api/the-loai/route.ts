@@ -3,13 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { status } from "../utils/status";
 import { Exception } from "../utils/Exception";
 import CheckAdmin from "../middleware";
-
+export const revalidate = 0;
 export async function GET(request: Request) {
     try {
         const res = await pool.query("SELECT * FROM genres");
         return NextResponse.json({
             status: status.success,
-            message: "Lấy thông tin thể loại thành công",
+            message: "Lấy thông tin thể loại thành công!",
             data: res.rows
         });
     } catch (error: unknown) {
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
             body.name,
             body.slug
         ]);
-        return NextResponse.json({ status: status.success, message: "Thêm thể loại thành công!", data: res.rows });
+        return NextResponse.json({ status: status.success, message: "Thêm thể loại thành công", data: res.rows });
     } catch (error: unknown) {
         return NextResponse.json(Exception(error));
     }

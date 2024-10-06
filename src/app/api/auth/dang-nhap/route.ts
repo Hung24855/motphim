@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 
         //Kiểm tra tài khoản đã tồn tại chưa
         const existUser = await pool.query(
-            "SELECT users.id, users.email,users.password,users.username,users.role  FROM users  WHERE users.email = $1",
+            "SELECT *  FROM users  WHERE users.email = $1",
             [body.email]
         );
         if (existUser.rows.length == 0) {

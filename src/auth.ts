@@ -9,7 +9,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
-        maxAge: 60 * 60 * 14, // 1 Ngày hết hạn sesstion
+        maxAge: 60 * 60 * 14 // 1 Ngày hết hạn sesstion
         // updateAge: 60 * 60 * 2 // Làm mới lại sesstion sau 2 giờ
     },
     trustHost: true,
@@ -55,14 +55,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             if (pathname.startsWith("/admin") && role !== "admin") {
                 return Response.redirect(new URL("/", nextUrl));
             }
+            if (pathname.startsWith("/trang-ca-nhan") && !isLoggedIn) {
+                return Response.redirect(new URL("/", nextUrl));
+            }
             return !!auth;
         },
         jwt({ token, user, trigger, session }) {
-            // console.log("🚀 ~ jwt ~ token, user, trigger, session:", token, user, trigger, session);
-
+            //người dùng vừa đăng nhập, hàm này thêm id và role của người dùng vào token.
             if (user) {
                 token.id = user.id as string;
                 token.role = user.role as string;
+                token.username = user.username as string;
+                token.avatar = user.avatar as string;
             }
             if (trigger === "update" && session) {
                 token = { ...token, ...session };
@@ -70,9 +74,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return token;
         },
         session({ session, token }) {
-            // console.log("🚀 ~ session ~  session, token:",  session, token)
+            //Nó cho phép bạn tùy chỉnh nội dung của session trước khi nó được gửi đến client.
             session.user.id = token.id;
             session.user.role = token.role;
+            session.user.username = token.username;
+            session.user.avatar = token.avatar;
             return session;
         }
     },
