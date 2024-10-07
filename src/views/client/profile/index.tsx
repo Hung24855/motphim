@@ -2,19 +2,16 @@
 import { sessionContext } from "@/base/provider/next-auth";
 import MaxWidth from "@/components/layout/max-width";
 import { AccountsService } from "@/domain/tai-khoan/services";
-import { dbFirebase, storageFirebase } from "@/firebase";
+import { storageFirebase } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Image from "next/image";
 import { ChangeEvent, FormEvent, useContext, useMemo, useState } from "react";
 import { TbEdit } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
-import clsx from "clsx";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
-import { doc, updateDoc } from "firebase/firestore";
 import { handle_update_doc_firebase } from "@/database/firebase.services";
-import { ConditionType, useFirestore } from "@/infrastructure/hooks/useFirestore";
+import Button from "@/base/libs/button";
+import Input from "@/base/libs/input";
 
 const initFormData = {
     username: "",
@@ -72,6 +69,7 @@ export default function ProfileView() {
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         UpdateUserMutation(
                             { username: formData.username, avatar: downloadURL },
+
                             {
                                 onSuccess: () => {
                                     toast.success("Cập nhật thông tin thành công!");
@@ -92,8 +90,6 @@ export default function ProfileView() {
                                             avatar: downloadURL
                                         }
                                     });
-
-                                    setFileAvatar(undefined);
                                 }
                             }
                         );
@@ -148,7 +144,7 @@ export default function ProfileView() {
                                                     alt="Avatar preview"
                                                     width={80}
                                                     height={80}
-                                                    className="h-20 w-20 rounded-full object-cover ring-4 ring-purple-300"
+                                                    className="h-20 w-20 rounded-full object-cover ring-2 ring-purple-300"
                                                 />
                                             ) : session?.user.avatar ? (
                                                 <Image
@@ -156,7 +152,7 @@ export default function ProfileView() {
                                                     alt="Avatar preview"
                                                     width={80}
                                                     height={80}
-                                                    className="h-20 w-20 rounded-full object-cover ring-4 ring-purple-300"
+                                                    className="h-20 w-20 rounded-full object-cover ring-2 ring-purple-300"
                                                 />
                                             ) : (
                                                 <div className="flex h-20 w-20 items-center justify-center rounded-full bg-purple-100 ring-4 ring-purple-300">
@@ -181,70 +177,40 @@ export default function ProfileView() {
                                     </div>
                                 </div>
                                 <div className="space-y-1">
-                                    <label htmlFor="name" className="block text-lg font-medium text-gray-700">
-                                        Họ và tên
-                                    </label>
-                                    <input
-                                        type="text"
+                                    <Input
+                                        label="Họ và tên"
                                         name="username"
                                         id="name"
                                         value={formData.username}
                                         onChange={handleInputChange}
-                                        required
-                                        className={clsx(
-                                            "block w-full rounded-md bg-gray-100 p-3 focus:outline-none",
-                                            !formData.username && "border border-red-500"
-                                        )}
                                         placeholder="Họ và tên"
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <label htmlFor="email" className="block text-lg font-medium text-gray-700">
-                                        Email
-                                    </label>
-                                    <input
-                                        type="email"
-                                        name="email"
+                                    <Input
+                                        label="Email"
+                                        disabled
                                         id="email"
                                         value={formData.email}
-                                        disabled
-                                        className="block w-full rounded-md bg-gray-200 p-3"
                                         placeholder="Email"
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <label htmlFor="bio" className="block text-lg font-medium text-gray-700">
-                                        Giới thiệu bản thân
-                                    </label>
-                                    <textarea
+                                    <Input
+                                        label="Giới thiệu bản thân"
                                         name="bio"
                                         id="bio"
-                                        rows={3}
                                         value={formData.bio}
-                                        onChange={handleInputChange}
-                                        className="block w-full rounded-md bg-gray-100 p-3 focus:outline-none"
                                         placeholder="Giới thiệu bản thân"
+                                        onChange={handleInputChange}
+                                        type="textarea"
+                                        rows={3}
                                     />
                                 </div>
-                                <Spin
-                                    indicator={<LoadingOutlined spin />}
-                                    size="large"
-                                    spinning={isPending || process !== 0}
-                                >
-                                    <button
-                                        type="submit"
-                                        disabled={isPending || !formData.username || process !== 0} // process !==0 là đang upload ảnh lên firebase
-                                        className={clsx(
-                                            "w-full rounded-lg px-4 py-3 font-semibold shadow-md transition-all duration-300",
-                                            "hover:from-purple-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50",
-                                            !formData.username
-                                                ? "cursor-not-allowed bg-gray-200 text-gray-600"
-                                                : "bg-gradient-to-r from-purple-500 to-indigo-600 text-white"
-                                        )}
-                                    >
-                                        {process !== 0 ? `${process}%` : "Cập nhật"}
-                                    </button>
-                                </Spin>
+
+                                <Button block loading={isPending || process !== 0} type="submit">
+                                    {process !== 0 ? `${process}%` : "Cập nhật"}
+                                </Button>
                             </form>
                         </div>
                     </div>

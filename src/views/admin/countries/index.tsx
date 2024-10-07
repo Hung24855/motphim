@@ -5,7 +5,7 @@ import { ChangeEvent, Fragment, useMemo, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
 import { DataCreateCountry, DataUpdateCountry, TResGetAllCountries } from "@/domain/quoc-gia/model";
-import Input from "@/base/libs/input/page";
+import Input from "@/base/libs/input";
 import { toast } from "react-toastify";
 import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";

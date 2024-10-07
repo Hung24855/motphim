@@ -6,6 +6,7 @@ interface InputProps {
     error?: any;
     type?: "password" | "text" | "textarea";
     tranformMessagError?: "right" | "buttom";
+    disabled?: boolean;
     [key: string]: any;
 }
 
@@ -17,6 +18,7 @@ const Input = ({
     error,
     type = "text",
     tranformMessagError = "right",
+    disabled,
     ...rest
 }: InputProps) => {
     return (
@@ -33,9 +35,10 @@ const Input = ({
 
             {type === "textarea" ? (
                 <textarea
-                    className="w-full rounded-md border border-blue-200 p-2 outline-none"
+                    className="w-full rounded-md bg-[#F0F3F6] px-2 py-1 text-[#295779] placeholder-[#BAC9D4] outline-none"
                     {...field}
                     placeholder={placeholder}
+                    disabled={disabled}
                     rows={4}
                     {...rest}
                 />
@@ -45,6 +48,7 @@ const Input = ({
                     placeholder={placeholder}
                     {...field}
                     type={type}
+                    disabled={disabled}
                     {...rest}
                 />
             )}

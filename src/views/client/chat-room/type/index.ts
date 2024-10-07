@@ -8,6 +8,7 @@ export type RoomType = {
     messages: {
         send_id: string;
         msg: string;
+        name: string;
         time: Timestamp;
     }[];
     movie_link: string;
@@ -17,5 +18,4 @@ export type RoomType = {
 
 export type RoomsType = RoomType[];
 
-
-export type AddRoomType = Omit<RoomType, "createdAt" | "doc_id">
+export type AddRoomType = Omit<RoomType, "createdAt" | "doc_id">;

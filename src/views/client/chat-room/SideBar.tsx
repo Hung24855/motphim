@@ -1,31 +1,23 @@
-import Input from "@/base/libs/input/page";
+import Input from "@/base/libs/input";
 import { ModalMotion } from "@/base/libs/modal";
 import { authFirebase } from "@/firebase";
 import { useFirestore } from "@/infrastructure/hooks/useFirestore";
-import { ChangeEvent, Dispatch, useState } from "react";
+import { ChangeEvent, Dispatch, useContext, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { AddRoomType, RoomsType, RoomType } from "./type";
 import { CONLLECTION, handle_add_doc_firebase } from "@/database/firebase.services";
 import { toast } from "react-toastify";
+import { ChatRoomContext } from ".";
 
 const initCreateRoomForm = {
     movie_name: ""
 };
 
-export default function SideBar({
-    selectedUser,
-    setSelectedUser,
-    setSelectedRoom,
-    selectedRoom
-}: {
-    selectedUser: any;
-    setSelectedUser: Dispatch<any>;
-    setSelectedRoom: Dispatch<any>;
-    selectedRoom: RoomType | null;
-    // setSelectedRoom: Dispatch<any>;
-}) {
+export default function SideBar() {
+    const { selectedRoom, setSelectedRoom } = useContext(ChatRoomContext);
     const [ModalCreateRoom, setModalCreateRoom] = useState<boolean>(false);
     const [RoomCreateForm, setRoomCreateForm] = useState(initCreateRoomForm);
+    const [loading, setloading] = useState<boolean>(false);
     const [user] = useAuthState(authFirebase);
 
     //Lắng nghe danh sách user
@@ -51,6 +43,7 @@ export default function SideBar({
 
     const handleCreateRoom = async () => {
         if (!RoomCreateForm.movie_name) return toast.error("Vui lòng nhập tên phòng!");
+        setloading(true);
         await handle_add_doc_firebase<AddRoomType>({
             docInfo: { collectionName: CONLLECTION.ROOM_MOVIES, docId: Date.now().toString() },
             data: {
@@ -62,7 +55,8 @@ export default function SideBar({
                 owner: user?.email as string
             }
         });
-        onCloseModal()
+        setloading(false);
+        onCloseModal();
         toast.success("Tạo phòng mới thành công!");
     };
 
@@ -71,7 +65,7 @@ export default function SideBar({
         setRoomCreateForm(initCreateRoomForm);
     };
     return (
-        <div className={`flex h-full flex-col border-r ${selectedRoom ? "hidden md:block" : ""} w-full md:w-64`}>
+        <div className={`flex h-full flex-col border-r ${selectedRoom ? "hidden" : "block"} w-full md:w-64`}>
             {/* Search */}
             {/* <div className="relative mb-2 mr-2 flex">
                 <input
@@ -132,6 +126,7 @@ export default function SideBar({
                     {Rooms?.length > 0 &&
                         Rooms.map((room) => (
                             <div
+                                key={room.doc_id}
                                 className="mb-2 flex cursor-pointer items-center rounded p-2 hover:bg-gray-700"
                                 onClick={() => setSelectedRoom(room)}
                             >
@@ -162,7 +157,7 @@ export default function SideBar({
                 }}
                 isOpen={ModalCreateRoom}
                 textOk="Tạo phòng"
-                // loading={isPeddingCreateGenre || isPeddingUpdateGenre}
+                loading={loading}
                 okButtonClassName="!bg-admin_primary"
                 modalContainerClassName="!top-40 w-[500px]"
                 headerModalClassName="text-center text-xl"

@@ -1,27 +1,19 @@
 import Image from "next/image";
-import { Dispatch } from "react";
+import { Dispatch, useContext } from "react";
 import { RoomType } from "./type";
 import { Avatar, Tooltip } from "antd";
 import { AntDesignOutlined, UserOutlined } from "@ant-design/icons";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { authFirebase } from "@/firebase";
 import Button from "@/base/libs/button";
+import { ChatRoomContext } from ".";
 
-export default function ChatHeader({
-    selectedUser,
-    setSelectedUser,
-    selectedRoom,
-    setSelectedRoom
-}: {
-    setSelectedUser: Dispatch<any>;
-    selectedUser: any;
-    selectedRoom: RoomType | null;
-    setSelectedRoom: Dispatch<any>;
-}) {
+export default function ChatHeader() {
     const [user] = useAuthState(authFirebase);
+    const {selectedRoom,setSelectedRoom} = useContext(ChatRoomContext);
     return (
         <div className="flex items-center border-b p-2">
-            <button className="mr-2 md:hidden" onClick={() => setSelectedRoom(null)}>
+            <button className="mr-2" onClick={() => setSelectedRoom(null)}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6 text-white"

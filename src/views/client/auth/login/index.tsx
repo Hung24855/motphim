@@ -1,5 +1,5 @@
 "use client";
-import Input from "@/base/libs/input/page";
+import Input from "@/base/libs/input";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -27,7 +27,6 @@ export default function LoginPage() {
     const Submit = async (data: SignInType) => {
         try {
             const result = await login_action(data);
-         
 
             if (!result?.message) {
                 signInWithEmailAndPassword(authFirebase, data.email, data.password)

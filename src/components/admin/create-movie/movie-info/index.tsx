@@ -1,4 +1,4 @@
-import Input from "@/base/libs/input/page";
+import Input from "@/base/libs/input";
 import { FieldValues } from "@/views/admin/movie/create/page";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 

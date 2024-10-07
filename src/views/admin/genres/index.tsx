@@ -6,7 +6,7 @@ import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
 import { DataCreateGenres, DataUpdateGenres, TResGetAllGenre } from "@/domain/the-loai/model";
 import { toast } from "react-toastify";
-import Input from "@/base/libs/input/page";
+import Input from "@/base/libs/input";
 import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
 import { useQueryClient } from "@tanstack/react-query";

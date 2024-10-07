@@ -3,7 +3,7 @@ import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { createContext } from "react";
 
-export const sessionContext = createContext({} as { session: Session | null });
+export const sessionContext = createContext({ session: null } as { session: Session | null });
 export default function NextAuthProvider({
     children,
     session

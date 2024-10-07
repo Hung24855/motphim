@@ -1,5 +1,5 @@
 "use client";
-import Input from "@/base/libs/input/page";
+import Input from "@/base/libs/input";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -42,18 +42,18 @@ export default function RegisternPage() {
                     await updateProfile(user, {
                         displayName: data.username
                     });
-                    
+
                     // Ghi thông tin người dùng vài firestore
                     await handle_add_doc_firebase({
                         docInfo: {
-                            collectionName:"USERS",
+                            collectionName: "USERS",
                             docId: data.email
                         },
                         data: {
                             name: data.username,
                             email: data.email,
                             uid: user.uid,
-                            avatar:""
+                            avatar: ""
                         }
                     });
                 })

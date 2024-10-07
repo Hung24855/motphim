@@ -1,4 +1,4 @@
-import Input from "@/base/libs/input/page";
+import Input from "@/base/libs/input";
 import { MoviesDetailDTO } from "@/domain/phim/dto";
 import { FieldValues } from "@/views/admin/movie/edit/page";
 
