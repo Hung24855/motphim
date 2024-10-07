@@ -69,7 +69,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.avatar = user.avatar as string;
             }
             if (trigger === "update" && session) {
-                token = { ...token, ...session };
+                token = { ...session };
             }
             return token;
         },
@@ -79,6 +79,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             session.user.role = token.role;
             session.user.username = token.username;
             session.user.avatar = token.avatar;
+
             return session;
         }
     },

@@ -11,8 +11,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Button from "@/base/libs/button";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { authFirebase, dbFirebase } from "@/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { authFirebase } from "@/firebase";
 import { handle_add_doc_firebase } from "@/database/firebase.services";
 
 export default function RegisternPage() {
@@ -46,11 +45,15 @@ export default function RegisternPage() {
                     
                     // Ghi thông tin người dùng vài firestore
                     await handle_add_doc_firebase({
-                        collectionName: "USERS",
+                        docInfo: {
+                            collectionName:"USERS",
+                            docId: data.email
+                        },
                         data: {
                             name: data.username,
                             email: data.email,
-                            uid: user.uid
+                            uid: user.uid,
+                            avatar:""
                         }
                     });
                 })

@@ -108,7 +108,17 @@ function Search({ session }: { session: Session | null }) {
             {session?.user ? (
                 <Popover content={content} trigger="click" className="!px-0">
                     <button>
-                        <FaUser size={20} />
+                        {session?.user?.avatar ? (
+                            <Image
+                                src={session?.user.avatar}
+                                alt="Avatar preview"
+                                width={20}
+                                height={20}
+                                className="h-7 w-7 rounded-full object-cover "
+                            />
+                        ) : (
+                            <FaUser size={20} />
+                        )}
                     </button>
                 </Popover>
             ) : (

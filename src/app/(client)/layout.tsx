@@ -28,12 +28,12 @@ export default async function RootLayout({
     const session = await auth();
 
     return (
-        <NextAuthProvider session={session}>
-            <html lang="en">
-                <head>
-                    <link rel="icon" href="/logo/Logo-light.png" sizes="any" />
-                </head>
-                <body className={inter.className}>
+        <html lang="en">
+            <head>
+                <link rel="icon" href="/logo/Logo-light.png" sizes="any" />
+            </head>
+            <body className={inter.className}>
+                <NextAuthProvider session={session}>
                     <ReactQueryProvder>
                         <ProgessbarProviders>
                             <Fragment>
@@ -46,8 +46,8 @@ export default async function RootLayout({
                         </ProgessbarProviders>
                     </ReactQueryProvder>
                     <Toast />
-                </body>
-            </html>
-        </NextAuthProvider>
+                </NextAuthProvider>
+            </body>
+        </html>
     );
 }

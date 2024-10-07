@@ -1,10 +1,19 @@
 import { dbFirebase } from "@/firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 
-export const handle_add_doc_firebase = async ({ collectionName, data }: { collectionName: string; data: any }) => {
+export const handle_add_doc_firebase = async <T>({
+    docInfo,
+    data
+}: {
+    docInfo: {
+        collectionName: string;
+        docId: string;
+    };
+    data: T;
+}) => {
     try {
-        const DocumentReference = await addDoc(collection(dbFirebase, collectionName), {
+        const DocumentReference = await setDoc(doc(dbFirebase, docInfo.collectionName, docInfo.docId), {
             ...data,
             createdAt: serverTimestamp()
         });
@@ -15,4 +24,26 @@ export const handle_add_doc_firebase = async ({ collectionName, data }: { collec
     }
 };
 
+export const handle_update_doc_firebase = async ({
+    docInfo,
+    data
+}: {
+    docInfo: {
+        collectionName: string;
+        docId: string;
+    };
+    data: any;
+}) => {
+    try {
+        await updateDoc(doc(dbFirebase, docInfo.collectionName, docInfo.docId), data);
+    } catch (error) {
+        console.log("Có lỗi xảy ra khi thêm document to firebase! ", error);
+        toast.error("Có lỗi xảy ra khi update document to firebase!");
+    }
+};
 
+export const CONLLECTION = {
+    CHAT_APP: "CHAT_APP",
+    ROOM_MOVIES: "ROOM_MOVIES",
+    USERS: "USERS"
+};

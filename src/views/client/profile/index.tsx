@@ -2,12 +2,19 @@
 import { sessionContext } from "@/base/provider/next-auth";
 import MaxWidth from "@/components/layout/max-width";
 import { AccountsService } from "@/domain/tai-khoan/services";
-import { storageFirebase } from "@/firebase";
+import { dbFirebase, storageFirebase } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Image from "next/image";
-import { ChangeEvent, FormEvent, useContext, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useMemo, useState } from "react";
 import { TbEdit } from "react-icons/tb";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
+import clsx from "clsx";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import { doc, updateDoc } from "firebase/firestore";
+import { handle_update_doc_firebase } from "@/database/firebase.services";
+import { ConditionType, useFirestore } from "@/infrastructure/hooks/useFirestore";
 
 const initFormData = {
     username: "",
@@ -17,8 +24,8 @@ const initFormData = {
 
 export default function ProfileView() {
     const { session } = useContext(sessionContext);
+    const { update: updateSession } = useSession();
     const [fileAvatar, setFileAvatar] = useState<globalThis.File>();
-    const [avatarSession, setAvatarSession] = useState<string | null>(session?.user.avatar ?? null);
     const [process, setProcess] = useState<number>(0);
     const [formData, setFormData] = useState({
         ...initFormData,
@@ -38,6 +45,7 @@ export default function ProfileView() {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!formData.username) return;
 
         if (fileAvatar) {
             const imagesRef = ref(storageFirebase, "images" + fileAvatar.name);
@@ -68,6 +76,24 @@ export default function ProfileView() {
                                 onSuccess: () => {
                                     toast.success("Cập nhật thông tin thành công!");
                                     setProcess(0);
+                                    updateSession({
+                                        ...session?.user,
+                                        username: formData.username,
+                                        avatar: downloadURL
+                                    });
+                                    // Đồng bộ thông tin trên fire-base
+                                    handle_update_doc_firebase({
+                                        docInfo: {
+                                            collectionName: "USERS",
+                                            docId: session?.user.email ?? ""
+                                        },
+                                        data: {
+                                            name: formData.username,
+                                            avatar: downloadURL
+                                        }
+                                    });
+
+                                    setFileAvatar(undefined);
                                 }
                             }
                         );
@@ -76,10 +102,25 @@ export default function ProfileView() {
             );
         } else {
             UpdateUserMutation(
-                { username: formData.username },
+                { username: formData.username, avatar: session?.user.avatar ?? "" },
                 {
                     onSuccess: () => {
                         toast.success("Cập nhật thông tin thành công!");
+                        updateSession({
+                            ...session?.user,
+                            username: formData.username,
+                            avatar: session?.user.avatar ?? ""
+                        });
+                        handle_update_doc_firebase({
+                            docInfo: {
+                                collectionName: "USERS",
+                                docId: session?.user.email ?? ""
+                            },
+                            data: {
+                                name: formData.username,
+                                avatar: session?.user.avatar ?? ""
+                            }
+                        });
                     }
                 }
             );
@@ -109,9 +150,9 @@ export default function ProfileView() {
                                                     height={80}
                                                     className="h-20 w-20 rounded-full object-cover ring-4 ring-purple-300"
                                                 />
-                                            ) : avatarSession ? (
+                                            ) : session?.user.avatar ? (
                                                 <Image
-                                                    src={avatarSession}
+                                                    src={session?.user.avatar}
                                                     alt="Avatar preview"
                                                     width={80}
                                                     height={80}
@@ -150,7 +191,10 @@ export default function ProfileView() {
                                         value={formData.username}
                                         onChange={handleInputChange}
                                         required
-                                        className="block w-full rounded-md bg-gray-100 p-3 focus:outline-none"
+                                        className={clsx(
+                                            "block w-full rounded-md bg-gray-100 p-3 focus:outline-none",
+                                            !formData.username && "border border-red-500"
+                                        )}
                                         placeholder="Họ và tên"
                                     />
                                 </div>
@@ -182,13 +226,25 @@ export default function ProfileView() {
                                         placeholder="Giới thiệu bản thân"
                                     />
                                 </div>
-                                <button
-                                    type="submit"
-                                    disabled={isPending}
-                                    className="w-full rounded-lg bg-gradient-to-r from-purple-500 to-indigo-600 px-4 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:from-purple-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
+                                <Spin
+                                    indicator={<LoadingOutlined spin />}
+                                    size="large"
+                                    spinning={isPending || process !== 0}
                                 >
-                                    {process !== 0 ? `${process}%` : "Cập nhật"}
-                                </button>
+                                    <button
+                                        type="submit"
+                                        disabled={isPending || !formData.username || process !== 0} // process !==0 là đang upload ảnh lên firebase
+                                        className={clsx(
+                                            "w-full rounded-lg px-4 py-3 font-semibold shadow-md transition-all duration-300",
+                                            "hover:from-purple-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50",
+                                            !formData.username
+                                                ? "cursor-not-allowed bg-gray-200 text-gray-600"
+                                                : "bg-gradient-to-r from-purple-500 to-indigo-600 text-white"
+                                        )}
+                                    >
+                                        {process !== 0 ? `${process}%` : "Cập nhật"}
+                                    </button>
+                                </Spin>
                             </form>
                         </div>
                     </div>

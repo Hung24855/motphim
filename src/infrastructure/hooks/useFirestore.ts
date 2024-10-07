@@ -1,19 +1,30 @@
 import { dbFirebase } from "@/firebase";
-import { collection, FieldPath, onSnapshot, orderBy, query, where, WhereFilterOp } from "firebase/firestore";
+import { collection, FieldPath, limit, onSnapshot, orderBy, query, where, WhereFilterOp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export type ConditionType = { fieldName: string | FieldPath; operator: WhereFilterOp; compareValue: unknown };
 
-export const useFirestore = ({ collectionName, condition }: { collectionName: string; condition?: ConditionType }) => {
+export const useFirestore = ({
+    collectionName,
+    condition,
+    limit: limitNumber = 10
+}: {
+    collectionName: string;
+    condition?: ConditionType;
+    limit?: number;
+}) => {
     const [doccument, setDoccument] = useState<any>([]);
 
     useEffect(() => {
         let conllectionRef = collection(dbFirebase, collectionName);
-        let q = query(conllectionRef, orderBy("createdAt", "desc"));
-        
-        
+        let q = query(conllectionRef, orderBy("createdAt", "desc"), limit(limitNumber));
+
         if (condition && condition.fieldName && condition.operator && condition.compareValue) {
-            q = query(conllectionRef, where(condition.fieldName, condition.operator, condition.compareValue));
+            q = query(
+                conllectionRef,
+                where(condition.fieldName, condition.operator, condition.compareValue),
+                limit(limitNumber)
+            );
         }
 
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
