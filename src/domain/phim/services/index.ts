@@ -55,7 +55,6 @@ export class MoviesService {
 
     // CRUD phim
     static use_movies({ page, limit }: DataGetAllMovies) {
-        
         const {
             data,
             isFetching,
@@ -136,9 +135,12 @@ export class MoviesService {
     }
     // Tim kiem phim
     static get_search_movie(query: string) {
-        const { data, isFetching, isError } = useFetcher<TResGetSearchMovies>([QUERY_KEY.GET_SEARCH_MOVIE, query], () =>
-            MoviesApi.search_movie(query)
+        const { data, isFetching, isError } = useFetcher<TResGetSearchMovies>(
+            [QUERY_KEY.GET_SEARCH_MOVIE, query],
+            () => MoviesApi.search_movie(query),
+            { enabled: !!query }
         );
+
         return { data, isFetching, isError };
     }
     // Ẩn hiện phim

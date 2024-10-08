@@ -18,6 +18,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
 import { authFirebase } from "@/firebase";
 import { signOut } from "firebase/auth";
+import { convertSearchParams } from "@/utils/function";
 
 function Search({ session }: { session: Session | null }) {
     const [search, setSearch] = useState<string>("");
@@ -35,7 +36,7 @@ function Search({ session }: { session: Session | null }) {
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
-            const keyWord = search.replace(/\s+/g, "-");
+            const keyWord = convertSearchParams(search);
 
             //Thay các khoản trắng liên tiếp thành +
             router.push(`/tim-kiem?q=${keyWord}`);
@@ -114,7 +115,7 @@ function Search({ session }: { session: Session | null }) {
                                 alt="Avatar preview"
                                 width={20}
                                 height={20}
-                                className="h-7 w-7 rounded-full object-cover "
+                                className="h-7 w-7 rounded-full object-cover"
                             />
                         ) : (
                             <FaUser size={20} />

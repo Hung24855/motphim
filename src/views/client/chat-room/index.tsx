@@ -39,7 +39,7 @@ export default function ChatRoomView({ session }: { session: Session | null }) {
                     <ChatRoomContext.Provider value={{ selectedRoom, setSelectedRoom, RoomInfo }}>
                         <div className="flex h-screen overflow-hidden pt-20">
                             <div
-                                className={`flex h-full flex-col border-r ${selectedRoom ? "hidden" : "block"} w-full md:w-96`}
+                                className={`flex h-full flex-col md:border-r ${selectedRoom ? "hidden" : "block"} w-full md:w-96`}
                             >
                                 <SideBar />
                             </div>

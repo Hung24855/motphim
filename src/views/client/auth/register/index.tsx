@@ -66,96 +66,94 @@ export default function RegisternPage() {
     };
     return (
         <Fragment>
-            <section className="bg-[#030A1B]">
-                <div className="mx-auto flex flex-col items-center justify-center px-6 pt-28 md:min-h-screen lg:py-0">
-                    <div className="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
-                        <div className="space-y-3 p-2 sm:p-6 md:space-y-4">
-                            <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-[#295779] md:text-2xl">
-                                ĐĂNG KÝ
-                            </h1>
-                            <form className="space-y-2 md:space-y-4" onSubmit={handleSubmit(Submit)} method="POST">
-                                <div>
-                                    <Controller
-                                        name="email"
-                                        control={control}
-                                        defaultValue=""
-                                        render={({ field }) => (
-                                            <Input
-                                                field={field}
-                                                label="Email"
-                                                placeholder="name@gmail.com"
-                                                required
-                                                error={errors.email}
-                                            />
-                                        )}
-                                    />
-                                </div>
-                                <div>
-                                    <Controller
-                                        name="username"
-                                        control={control}
-                                        defaultValue=""
-                                        render={({ field }) => (
-                                            <Input
-                                                field={field}
-                                                label="Tên người dùng"
-                                                placeholder="Nghiêm Hồng"
-                                                required
-                                                error={errors.username}
-                                            />
-                                        )}
-                                    />
-                                </div>
-                                <div>
-                                    <Controller
-                                        name="password"
-                                        control={control}
-                                        defaultValue=""
-                                        render={({ field }) => (
-                                            <Input
-                                                field={field}
-                                                label="Mật khẩu"
-                                                placeholder="••••••••"
-                                                required
-                                                error={errors.password}
-                                                type="password"
-                                            />
-                                        )}
-                                    />
-                                </div>
-                                <div>
-                                    <Controller
-                                        name="confirm_password"
-                                        control={control}
-                                        defaultValue=""
-                                        render={({ field }) => (
-                                            <Input
-                                                field={field}
-                                                label="Nhập lại mật khẩu"
-                                                placeholder="••••••••"
-                                                required
-                                                error={errors.confirm_password}
-                                                type="password"
-                                            />
-                                        )}
-                                    />
-                                </div>
+            <div className="mx-auto flex flex-col items-center justify-center pt-28 md:min-h-screen lg:py-0">
+                <div className="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
+                    <div className="space-y-3 p-2 sm:p-6 md:space-y-4">
+                        <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-[#295779] md:text-2xl">
+                            ĐĂNG KÝ
+                        </h1>
+                        <form className="space-y-2 md:space-y-4" onSubmit={handleSubmit(Submit)} method="POST">
+                            <div>
+                                <Controller
+                                    name="email"
+                                    control={control}
+                                    defaultValue=""
+                                    render={({ field }) => (
+                                        <Input
+                                            field={field}
+                                            label="Email"
+                                            placeholder="name@gmail.com"
+                                            required
+                                            error={errors.email}
+                                        />
+                                    )}
+                                />
+                            </div>
+                            <div>
+                                <Controller
+                                    name="username"
+                                    control={control}
+                                    defaultValue=""
+                                    render={({ field }) => (
+                                        <Input
+                                            field={field}
+                                            label="Tên người dùng"
+                                            placeholder="Nghiêm Hồng"
+                                            required
+                                            error={errors.username}
+                                        />
+                                    )}
+                                />
+                            </div>
+                            <div>
+                                <Controller
+                                    name="password"
+                                    control={control}
+                                    defaultValue=""
+                                    render={({ field }) => (
+                                        <Input
+                                            field={field}
+                                            label="Mật khẩu"
+                                            placeholder="••••••••"
+                                            required
+                                            error={errors.password}
+                                            type="password"
+                                        />
+                                    )}
+                                />
+                            </div>
+                            <div>
+                                <Controller
+                                    name="confirm_password"
+                                    control={control}
+                                    defaultValue=""
+                                    render={({ field }) => (
+                                        <Input
+                                            field={field}
+                                            label="Nhập lại mật khẩu"
+                                            placeholder="••••••••"
+                                            required
+                                            error={errors.confirm_password}
+                                            type="password"
+                                        />
+                                    )}
+                                />
+                            </div>
 
-                                <div className="text-right">{globalMessage}</div>
-                                <Button type="submit" block loading={isSubmitting}>
-                                    Đăng ký
-                                </Button>
-                                <p className="text-sm font-light text-[#295779]">
-                                    Bạn đã có tải khoản?{" "}
-                                    <Link href="/dang-nhap" className="font-medium hover:underline">
-                                        Đăng nhập
-                                    </Link>
-                                </p>
-                            </form>
-                        </div>
+                            <div className="text-right">{globalMessage}</div>
+                            <Button type="submit" block loading={isSubmitting}>
+                                Đăng ký
+                            </Button>
+                            <p className="text-sm font-light text-[#295779]">
+                                Bạn đã có tải khoản?{" "}
+                                <Link href="/dang-nhap" className="font-medium hover:underline">
+                                    Đăng nhập
+                                </Link>
+                            </p>
+                        </form>
                     </div>
                 </div>
-            </section>
+            </div>
         </Fragment>
     );
 }

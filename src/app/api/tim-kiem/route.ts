@@ -3,7 +3,6 @@ import { pool } from "@/database/connect";
 import { NextResponse } from "next/server";
 import { type NextRequest } from "next/server";
 import { status } from "../utils/status";
-import { response_error } from "../utils/response";
 import { Exception } from "../utils/Exception";
 
 export async function GET(request: NextRequest) {

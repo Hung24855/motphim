@@ -1,10 +1,18 @@
 import Button from "@/base/libs/button";
 import Input from "@/base/libs/input";
 import { ModalMotion } from "@/base/libs/modal";
-import { Fragment, useState } from "react";
+import { MoviesService } from "@/domain/phim/services";
+import useDebounce from "@/infrastructure/hooks/useDebounce";
+import { convertSearchParams } from "@/utils/function";
+import { ChangeEvent, Fragment, useState } from "react";
 
 export const RoomBody = () => {
     const [isOpenModalSelectMovie, setIsOpenModalSelectMovie] = useState<boolean>(false);
+    const [searchText, setsearchText] = useState<string>("");
+    const debouncedValue = useDebounce(searchText, 500);
+    const { data: movies } = MoviesService.get_search_movie(convertSearchParams(debouncedValue));
+    console.log({ movies });
+
     return (
         <Fragment>
             <div className="flex flex-col pt-2">
@@ -24,13 +32,21 @@ export const RoomBody = () => {
             <ModalMotion
                 onClose={() => {
                     setIsOpenModalSelectMovie(false);
+                    setsearchText("");
                 }}
                 onOk={() => {}}
                 isOpen={isOpenModalSelectMovie}
                 textOk="Xác nhận"
                 modalContainerClassName="!top-40 !w-[500px]"
             >
-                <Input label="Tìm kiếm phim" placeholder="Nhập tên phim muốn xem" />
+                <Input
+                    label="Tìm kiếm phim"
+                    placeholder="Nhập tên phim muốn xem"
+                    value={searchText}
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                        setsearchText(e.target.value);
+                    }}
+                />
             </ModalMotion>
         </Fragment>
     );
