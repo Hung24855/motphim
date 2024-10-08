@@ -1,61 +1,73 @@
 "use client";
-import Button from "@/base/libs/button";
-import Modal, { ModalRef } from "@/base/libs/modal/modal-ref";
+
 import MaxWidth from "@/components/layout/max-width";
-import { usePathname, useRouter } from "next/navigation";
-import { Fragment, useRef } from "react";
+import { Fragment } from "react";
 
 export default function TestModal() {
-    const pathName = usePathname();
-    const ref = useRef<HTMLDivElement>(null);
-    const router = useRouter();
-    const modalRef = useRef<ModalRef>(null);
     return (
         <Fragment>
-            <MaxWidth className="flex min-h-screen items-center pt-40">
-                <Button
-                    onClick={() => {
-                        if (modalRef.current) {
-                            modalRef.current.open();
-                        }
-                    }}
-                >
-                    Open modal
-                </Button>
+            <MaxWidth className="flex min-h-screen flex-col pt-20 text-white">
+                <div className="h-[50px]">Header</div>
+                <div className="flex flex-1 overflow-hidden">
+                    {/* Left Side */}
+                    <div className="w-2/3 overflow-y-auto bg-gray-800">Trái</div>
 
-                <Modal
-                    ref={modalRef}
-                    onClose={() => {
-                        if (modalRef.current) {
-                            modalRef.current.close();
-                        }
-                    }}
-                    onOk={() => {}}
-                    modalContainerClassName="w-1/4 "
-                >
-                    Test modal ref
-                </Modal>
-            </MaxWidth>
-            <MaxWidth>
-                <Button
-                    onClick={(e) => {
-                        e.preventDefault();
-                        // window.scrollTo({ top: 1500, behavior: "smooth" });
-                        // ref.current?.scrollIntoView({ behavior: "smooth" });
-                        router.push("#testscroll");
+                    {/* Right Side */}
+                    <div className="flex w-1/3 flex-col">
+                        {/* Content Section */}
+                        <div className="h-[calc(100vh-180px)] overflow-hidden overflow-y-auto">
+                            <div className="p-4">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dolore incidunt quod
+                                sunt facilis rem? Fugiat voluptatibus ad, aut illo eius, veritatis deserunt distinctio
+                                porro dolores, pariatur aperiam error iste. Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Aperiam dolore incidunt quod sunt facilis rem? Fugiat voluptatibus ad,
+                                aut illo eius, veritatis deserunt distinctio porro dolores, pariatur aperiam error iste.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dolore incidunt quod
+                                sunt facilis rem? Fugiat voluptatibus ad, aut illo eius, veritatis deserunt distinctio
+                                porro dolores, pariatur aperiam error iste. Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Aperiam dolore incidunt quod sunt facilis rem? Fugiat voluptatibus ad,
+                                aut illo eius, veritatis deserunt distinctio porro dolores, pariatur aperiam error iste.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dolore incidunt quod
+                                sunt facilis rem? Fugiat voluptatibus ad, aut illo eius, veritatis deserunt distinctio
+                                porro dolores, pariatur aperiam error iste. Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Aperiam dolore incidunt quod sunt facilis rem? Fugiat voluptatibus ad,
+                                aut illo eius, veritatis deserunt distinctio porro dolores, pariatur aperiam error iste.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dolore incidunt quod
+                                sunt facilis rem? Fugiat voluptatibus ad, aut illo eius, veritatis deserunt distinctio
+                                porro dolores, pariatur aperiam error iste. Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Aperiam dolore incidunt quod sunt facilis rem? Fugiat voluptatibus ad,
+                                aut illo eius, veritatis deserunt distinctio porro dolores, pariatur aperiam error iste.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dolore incidunt quod
+                                sunt facilis rem? Fugiat voluptatibus ad, aut illo eius, veritatis deserunt distinctio
+                                porro dolores, pariatur aperiam error iste. Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Aperiam dolore incidunt quod sunt facilis rem? Fugiat voluptatibus ad,
+                                aut illo eius, veritatis deserunt distinctio porro dolores, pariatur aperiam error iste.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dolore incidunt quod
+                                sunt facilis rem? Fugiat voluptatibus ad, aut illo eius, veritatis deserunt distinctio
+                                porro dolores, pariatur aperiam error iste. Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Aperiam dolore incidunt quod sunt facilis rem? Fugiat voluptatibus ad,
+                                aut illo eius, veritatis deserunt distinctio porro dolores, pariatur aperiam error iste.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dolore incidunt quod
+                                sunt facilis rem? Fugiat voluptatibus ad, aut illo eius, veritatis deserunt distinctio
+                                porro dolores, pariatur aperiam error iste. Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Aperiam dolore incidunt quod sunt facilis rem? Fugiat voluptatibus ad,
+                                aut illo eius, veritatis deserunt distinctio porro dolores, pariatur aperiam error iste.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dolore incidunt quod
+                                sunt facilis rem? Fugiat voluptatibus ad, aut illo eius, veritatis deserunt distinctio
+                                porro dolores, pariatur aperiam error iste.
+                            </div>
+                        </div>
 
-                        // window.requestAnimationFrame(() => {
-                        //     window.scrollTo({
-                        //         top: 1500,
-                        //         behavior: "smooth"
-                        //     });
-                        // });
-                    }}
-                >
-                    Test scroll
-                </Button>
-                <div className="h-screen bg-red-400"></div>
-                <div className="h-screen bg-blue-200" ref={ref} id="testscroll"></div>
+                        {/* Input Section */}
+                        <div className="h-[50px] overflow-x-auto whitespace-nowrap bg-gray-700">
+                            <input
+                                type="text"
+                                className="h-full w-full bg-transparent px-4 outline-none"
+                                placeholder="Type your message here..."
+                            />
+                        </div>
+                    </div>
+                </div>
             </MaxWidth>
         </Fragment>
     );

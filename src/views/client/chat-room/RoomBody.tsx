@@ -1,65 +1,37 @@
-import { authFirebase } from "@/firebase";
-import { useContext, useEffect, useRef } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { RoomType } from "./type";
-import { ChatRoomContext } from ".";
-
-
+import Button from "@/base/libs/button";
+import Input from "@/base/libs/input";
+import { ModalMotion } from "@/base/libs/modal";
+import { Fragment, useState } from "react";
 
 export const RoomBody = () => {
-    const [user] = useAuthState(authFirebase);
-    const {selectedRoom,setSelectedRoom} = useContext(ChatRoomContext);
-
-    const chatContainerRef = useRef<HTMLDivElement>(null);
-
-    const scrollToBottom = () => {
-        if (chatContainerRef.current) {
-            chatContainerRef.current.scrollTo({
-                top: chatContainerRef.current.scrollHeight,
-                behavior: "smooth"
-            });
-        }
-    };
-
-    useEffect(scrollToBottom, [selectedRoom]);
+    const [isOpenModalSelectMovie, setIsOpenModalSelectMovie] = useState<boolean>(false);
     return (
-        <div ref={chatContainerRef} className="h-full p-2 text-white">
-            {/* {Chats[0]?.messages.map((mess: any, index: any) => ( */}
-            {/* <div key={index} className={`mb-4 flex items-start ${mess.send_id === user?.uid ? "justify-end" : ""}`}> */}
-            {/* Avatar */}
-            {/* {!(mess.send_id === user?.uid) && (
-                        <div className="mr-2 flex h-8 w-8 items-center justify-center rounded-full bg-gray-300">
-                            {selectedUser.avatar ? (
-                                <Image
-                                    src={selectedUser.avatar}
-                                    alt="Avatar preview"
-                                    width={20}
-                                    height={20}
-                                    className="h-8 w-8 rounded-full object-cover"
-                                />
-                            ) : (
-                                <span className="font-semibold text-gray-600">{selectedUser.name[0]}</span>
-                            )}
-                        </div>
-                    )}
+        <Fragment>
+            <div className="flex flex-col pt-2">
+                <iframe
+                    src="https://vip.opstream17.com/share/a9c154c4658d7fc48fd2be3ef34d9109"
+                    className="z-20 aspect-video w-full overflow-hidden rounded-md bg-stone-900"
+                    allowFullScreen
+                    referrerPolicy="no-referrer"
+                    loading="lazy"
+                />
+                <div className="mt-6 flex justify-center gap-x-2">
+                    <Button onClick={() => setIsOpenModalSelectMovie(true)}>Chọn phim</Button>
+                    <Button>Danh sách phát</Button>
+                </div>
+            </div>
 
-                    <div
-                        className={`max-w-[70%] rounded-lg p-3 ${mess.send_id === user?.uid ? "bg-blue-500 text-white" : "bg-gray-700 text-white"}`}
-                    >
-                        <p className="text-sm">{mess.msg}</p>
-                        <p className={`mt-1 text-xs ${mess.send_id === user?.uid ? "text-blue-100" : "text-gray-400"}`}>
-                            10:30
-                        </p>
-                    </div> */}
-            {/* </div> */}
-            {/* ))} */}
-            <iframe
-                src="https://vip.opstream17.com/share/a9c154c4658d7fc48fd2be3ef34d9109"
-                className="aspect-video w-full overflow-hidden rounded-md bg-stone-900"
-                allowFullScreen
-                referrerPolicy="no-referrer"
-                loading="lazy"
-            />
-        </div>
+            <ModalMotion
+                onClose={() => {
+                    setIsOpenModalSelectMovie(false);
+                }}
+                onOk={() => {}}
+                isOpen={isOpenModalSelectMovie}
+                textOk="Xác nhận"
+                modalContainerClassName="!top-40 !w-[500px]"
+            >
+                <Input label="Tìm kiếm phim" placeholder="Nhập tên phim muốn xem" />
+            </ModalMotion>
+        </Fragment>
     );
 };

@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore";
+import { Dispatch } from "react";
 
 export type RoomType = {
     createdAt: Timestamp;
@@ -6,9 +7,10 @@ export type RoomType = {
     isPlay: boolean;
     members: string[];
     messages: {
+        avatar?: string;
         send_id: string;
         msg: string;
-        name: string;
+        username: string;
         time: Timestamp;
     }[];
     movie_link: string;
@@ -19,3 +21,9 @@ export type RoomType = {
 export type RoomsType = RoomType[];
 
 export type AddRoomType = Omit<RoomType, "createdAt" | "doc_id">;
+
+export type ChatRoomContextType = {
+    selectedRoom: RoomType | null;
+    setSelectedRoom: Dispatch<RoomType | null>;
+    RoomInfo: Omit<RoomType, "doc_id"> | undefined;
+};

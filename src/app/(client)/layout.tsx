@@ -4,13 +4,13 @@ import DB_Connect from "@/database/connect";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import ProgessbarProviders from "@/base/libs/progesbar";
-import ReactQueryProvder from "@/base/libs/react-query";
 import { Fragment } from "react";
 import Toast from "@/base/libs/toast";
 import NextAuthProvider from "@/base/provider/next-auth";
 import { auth } from "@/auth";
 import "./globals.css";
 import "swiper/css";
+import ReactQueryProvder from "@/base/provider/react-query";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 
@@ -36,13 +36,9 @@ export default async function RootLayout({
                 <NextAuthProvider session={session}>
                     <ReactQueryProvder>
                         <ProgessbarProviders>
-                            <Fragment>
-                                <Fragment>
-                                    <Header session={session} />
-                                    <main className="min-h-screen bg-bg_primary md:px-0">{children}</main>
-                                    <Footer />
-                                </Fragment>
-                            </Fragment>
+                            <Header session={session} />
+                            <main className="min-h-screen bg-bg_primary md:px-0">{children}</main>
+                            <Footer />
                         </ProgessbarProviders>
                     </ReactQueryProvder>
                     <Toast />

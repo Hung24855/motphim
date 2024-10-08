@@ -1,15 +1,14 @@
 import React from "react";
 
-
 import Link from "next/link";
 import MaxWidth from "../max-width";
 import { FaFacebook, FaGithub } from "react-icons/fa";
 
 export default function Footer() {
     return (
-        <div className="text-white bg-bg_primary z-50">
+        <div className="z-50 bg-bg_primary">
             <MaxWidth>
-                <div className="flex h-20 w-full flex-wrap items-center justify-between border-t-[1px] border-gray-700  px-2 text-sm text-white">
+                <div className="flex h-20 w-full flex-wrap items-center justify-between border-t-[1px] border-gray-700 px-2 text-sm text-white">
                     <div className="flex flex-wrap gap-1 gap-x-6">
                         <span>
                             © {new Date().getFullYear()}. All Rights Reserved By :{" "}

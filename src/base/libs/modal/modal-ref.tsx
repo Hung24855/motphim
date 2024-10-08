@@ -115,7 +115,7 @@ export const Modal = forwardRef<ModalRef, ModalProps>(
                         <button
                             type="button"
                             className={clsx(
-                                "flex items-center gap-x-2 rounded bg-blue-500 px-2 py-1 text-white",
+                                "flex items-center gap-x-2 rounded bg-[#295779] px-2 py-1 text-white",
                                 okButtonClassName,
                                 loading && "opacity-80"
                             )}

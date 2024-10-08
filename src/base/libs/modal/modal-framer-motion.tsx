@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 
 type ModalProps = {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     isOpen: boolean;
     onOk: () => void;
     onClose: () => void;
@@ -109,7 +109,7 @@ export const ModalMotion = forwardRef<HTMLDivElement, ModalProps>(
                                         <button
                                             type="button"
                                             className={clsx(
-                                                "flex items-center gap-x-2 rounded bg-blue-500 px-2 py-1 text-white",
+                                                "flex items-center gap-x-2 rounded bg-[#295779] px-2 py-1 text-white",
                                                 okButtonClassName,
                                                 loading && "opacity-80"
                                             )}

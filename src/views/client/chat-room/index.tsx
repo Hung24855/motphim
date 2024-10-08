@@ -1,78 +1,58 @@
 "use client";
 import MaxWidth from "@/components/layout/max-width";
-import { authFirebase } from "@/firebase";
-import { ConditionType, useFirestore } from "@/infrastructure/hooks/useFirestore";
 import { Session } from "next-auth";
-import { Fragment, useState, useMemo, createContext, Dispatch, SetStateAction } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { Fragment, useState, createContext, useEffect } from "react";
 import Comment from "./Comment";
 import SideBar from "./SideBar";
 import RoomHeader from "./RoomHeader";
 import { RoomBody } from "./RoomBody";
-import { RoomType } from "./type";
-
-export type ChatRoomContextType = {
-    selectedRoom: RoomType | null;
-    setSelectedRoom: Dispatch<RoomType | null>;
-};
+import { ChatRoomContextType, RoomType } from "./type";
+import { CONLLECTION } from "@/database/firebase.services";
+import { useFirestoreWithDocId } from "@/infrastructure/hooks/useFirestore";
+import { toast } from "react-toastify";
 
 export const ChatRoomContext = createContext<ChatRoomContextType>({
     selectedRoom: null,
-    setSelectedRoom: () => null
+    setSelectedRoom: () => null,
+    RoomInfo: undefined
 });
 
 export default function ChatRoomView({ session }: { session: Session | null }) {
-    const [selectedUser, setSelectedUser] = useState<any>(null);
     const [selectedRoom, setSelectedRoom] = useState<RoomType | null>(null);
-    const [user] = useAuthState(authFirebase);
 
-    //Lắng nghe đoạn chat của người dùng đang select
-    const convention: ConditionType = useMemo(() => {
-        return {
-            fieldName: "member",
-            operator: "array-contains",
-            compareValue: `${user?.uid ?? ""}${selectedUser?.uid ?? ""}`
-        };
-    }, [user, selectedUser]);
-
-    const { doccument: Chats } = useFirestore({
-        collectionName: "CHAT_APP",
-        condition: convention
+    const { doccument: RoomInfo, isLoading } = useFirestoreWithDocId<Omit<RoomType, "doc_id">>({
+        collectionName: CONLLECTION.ROOM_MOVIES,
+        docId: selectedRoom?.doc_id ?? ""
     });
-    console.log("selectedRoom", selectedRoom);
 
+    useEffect(() => {
+        // Thực hiện đồng bộ xóa phòng
+        if (!RoomInfo?.owner && !isLoading) {
+            setSelectedRoom(null);
+            toast.warning("Chủ phòng đã xóa phòng này!");
+        }
+    }, [RoomInfo]);
     return (
         <Fragment>
-            <MaxWidth className="min-h-screen px-2">
+            <MaxWidth className="z-40 px-2">
                 {session ? (
-                    <ChatRoomContext.Provider value={{ selectedRoom, setSelectedRoom }}>
+                    <ChatRoomContext.Provider value={{ selectedRoom, setSelectedRoom, RoomInfo }}>
                         <div className="flex h-screen overflow-hidden pt-20">
-                            {/* Sidebar */}
-                            <SideBar />
-
-                            {/* Chat content */}
-                            {/* <div className={`flex flex-1 flex-col ${selectedUser ? "block" : "hidden md:flex"}`}>
-                            {selectedUser ? (
-                                <>
-                                    <ChatHeader setSelectedUser={setSelectedUser} selectedUser={selectedUser} />
-
-                                    <ChatMessage selectedUser={selectedUser} Chats={Chats} />
-
-                                    <SendMessage selectedUser={selectedUser} Chats={Chats} />
-                                </>
-                            ) : (
-                                <div className="flex flex-1 items-center justify-center">
-                                    <p className="text-lg text-gray-400">Chọn một cuộc trò chuyện để bắt đầu</p>
-                                </div>
-                            )}
-                        </div> */}
+                            <div
+                                className={`flex h-full flex-col border-r ${selectedRoom ? "hidden" : "block"} w-full md:w-96`}
+                            >
+                                <SideBar />
+                            </div>
 
                             {/* Room content */}
-                            <div className={`flex flex-1 flex-col ${selectedRoom ? "block" : "hidden md:flex"}`}>
+                            <div
+                                className={`flex h-full w-full flex-col ${selectedRoom ? "block" : "hidden md:block"}`}
+                            >
                                 {selectedRoom ? (
-                                    <>
-                                        <RoomHeader />
-
+                                    <Fragment>
+                                        <div className="flex h-[50px] items-center border-b p-2">
+                                            <RoomHeader />
+                                        </div>
                                         <div className="grid flex-1 grid-cols-3">
                                             <div className="col-span-3 h-full md:col-span-2">
                                                 <RoomBody />
@@ -81,9 +61,9 @@ export default function ChatRoomView({ session }: { session: Session | null }) {
                                                 <Comment />
                                             </div>
                                         </div>
-                                    </>
+                                    </Fragment>
                                 ) : (
-                                    <div className="flex flex-1 items-center justify-center">
+                                    <div className="flex h-full items-center justify-center">
                                         <p className="text-lg text-gray-400">
                                             Chọn một phòng để xem phim cùng mọi người!
                                         </p>
@@ -94,7 +74,7 @@ export default function ChatRoomView({ session }: { session: Session | null }) {
                     </ChatRoomContext.Provider>
                 ) : (
                     <div className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl text-white">
-                        Vui lòng đăng nhập để thực hiện chức năng này!
+                        Vui lòng đăng nhập để sử dụng chức năng này!
                     </div>
                 )}
             </MaxWidth>

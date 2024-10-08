@@ -1,5 +1,15 @@
 import { dbFirebase } from "@/firebase";
-import { collection, FieldPath, limit, onSnapshot, orderBy, query, where, WhereFilterOp } from "firebase/firestore";
+import {
+    collection,
+    doc,
+    FieldPath,
+    limit,
+    onSnapshot,
+    orderBy,
+    query,
+    where,
+    WhereFilterOp
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export type ConditionType = { fieldName: string | FieldPath; operator: WhereFilterOp; compareValue: unknown };
@@ -37,4 +47,37 @@ export const useFirestore = ({
         return () => unsubscribe();
     }, [collectionName, condition]);
     return { doccument };
+};
+
+export const useFirestoreWithDocId = <T>({ collectionName, docId }: { collectionName: string; docId: string }) => {
+    const [doccument, setDoccument] = useState<T>();
+    const [isLoading, setIsLoading] = useState<boolean>(true); // Thêm trạng thái loading
+
+    useEffect(() => {
+
+        if(!docId) return;
+        
+        let docRef = doc(dbFirebase, collectionName, docId);
+
+        // Bắt đầu quá trình tải
+        setIsLoading(true);
+
+        const unsubscribe = onSnapshot(docRef, (querySnapshot) => {
+            if (querySnapshot.exists()) {
+                const docs = {
+                    ...querySnapshot.data()
+                } as T;
+                setDoccument(docs);
+            } else {
+                setDoccument(undefined); // Nếu tài liệu không tồn tại
+            }
+
+            // Kết thúc quá trình tải
+            setIsLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, [collectionName, docId]);
+
+    return { doccument, isLoading };
 };

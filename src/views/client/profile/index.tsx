@@ -42,7 +42,7 @@ export default function ProfileView() {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!formData.username) return;
+        if (!formData.username) return toast.error("Vui lòng nhập tên người dùng!");
 
         if (fileAvatar) {
             const imagesRef = ref(storageFirebase, "images" + fileAvatar.name);
