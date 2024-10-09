@@ -18,14 +18,22 @@ import clsx from "clsx";
 
 export const RoomBody = () => {
     const { selectedRoom, RoomInfo } = useContext(ChatRoomContext);
+
     const playlistRef = useRef<HTMLDivElement>(null);
+
     const [searchText, setsearchText] = useState<string>("");
-    const [iframeSrc, setiframeSrc] = useState<string>("");
     const debouncedValue = useDebounce(searchText, 700);
-    const [isOpenModalSelectMovie, setIsOpenModalSelectMovie] = useState<boolean>(false);
-    const { data: movies, isFetching } = MoviesService.get_search_movie(convertSearchParams(debouncedValue));
-    const { value: moviesSelected, push, remove, findIndex, clear } = useArray<MovieFirebaseInfo>();
+    const { data: movies, isFetching } = MoviesService.get_search_movie({
+        query: convertSearchParams(debouncedValue),
+        movie_type_id: "type2"
+    });
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isOpenModalSelectMovie, setIsOpenModalSelectMovie] = useState<boolean>(false);
+    const { value: moviesSelected, push, remove, clear } = useArray<MovieFirebaseInfo>();
+
+    const [slug, setSlug] = useState<string>("");
+    const { data: movieDetail, isFetching: isFetchingMovieDetail } = MoviesService.get_movie(slug);
 
     const handleOK = async () => {
         if (moviesSelected.length === 0) {
@@ -57,9 +65,9 @@ export const RoomBody = () => {
             <div className="scrollbar-none h-[calc(100vh-148px)] overflow-y-auto text-white">
                 <div className="flex flex-col">
                     {/* video */}
-                    {iframeSrc ? (
+                    {movieDetail ? (
                         <iframe
-                            src={iframeSrc}
+                            src={movieDetail[0].episodes[0].link}
                             className="z-20 aspect-video w-full overflow-hidden rounded-md bg-stone-900"
                             allowFullScreen
                             referrerPolicy="no-referrer"
@@ -67,13 +75,15 @@ export const RoomBody = () => {
                         />
                     ) : (
                         <div className="flex aspect-video h-full items-center justify-center">
-                            <p className="text-lg text-gray-400">Vui lòng chọn 1 phim bên dưới để xem!</p>
+                            <p className="text-2xl text-gray-400">Vui lòng chọn 1 phim bên dưới để xem!</p>
                         </div>
                     )}
 
                     {/* title */}
-                    <div className={clsx("mb-4 flex", iframeSrc ? "justify-between" : "justify-center")}>
-                        <h1 className="mt-2 text-2xl font-bold text-white">{iframeSrc ? "Trận Chiến Tàn Khốc" : ""}</h1>
+                    <div className={clsx("mb-4 flex", movieDetail ? "justify-between" : "justify-center")}>
+                        <h1 className="mt-2 text-2xl font-bold text-white">
+                            {movieDetail ? movieDetail[0].movie_name : ""}
+                        </h1>
                         <div className="mt-4 flex gap-x-2">
                             <Button onClick={() => setIsOpenModalSelectMovie(true)}>Tìm phim</Button>
                             <Button
@@ -87,11 +97,7 @@ export const RoomBody = () => {
                     </div>
 
                     {/* content */}
-                    <div className="mb-6 min-h-20 text-sm">
-                        {iframeSrc
-                            ? "When a Delta Force special ops mission goes terribly wrong, Air Force drone pilot Reaper has 48 hours to remedy what has devolved into a wild rescue operation. With no weapons and no  communication other than the drone above, the ground mission suddenly becomes a full-scale battle when the team is discovered by the enemy."
-                            : ""}
-                    </div>
+                    <div className="mb-6 min-h-20 text-sm">{movieDetail ? movieDetail[0].content : ""}</div>
 
                     {/* Danh sách phát */}
                     <div ref={playlistRef}>
@@ -102,36 +108,34 @@ export const RoomBody = () => {
                                         <Image
                                             src={movie.image}
                                             alt="img"
-                                            width={200}
+                                            width={275}
                                             height={160}
                                             style={{ objectFit: "cover" }}
-                                            className="h-full w-full"
+                                            className="object-top"
                                         />
                                     </div>
                                     <div className="col-span-2 flex h-40 flex-col justify-between p-1">
                                         <div className="space-y-1">
                                             <h2 className="text-xl">{movie.movie_name}</h2>
-                                            <p className="text-xs text-gray-400">{`${movie.lang} - ${movie.year}`}</p>
+                                            <p className="text-xs text-gray-400">{`#${movie.lang} - ${movie.year}`}</p>
                                             <p className="text-xs text-gray-400">
                                                 Thời gian : {movie.time_per_episode}
                                             </p>
                                         </div>
-
                                         <Button
                                             buttonClssName="!w-20"
-                                            onClick={() =>
-                                                setiframeSrc(
-                                                    "https://vip.opstream17.com/share/a9c154c4658d7fc48fd2be3ef34d9109"
-                                                )
-                                            }
+                                            onClick={() => {
+                                                setSlug(movie.slug);
+                                            }}
+                                            loading={isFetchingMovieDetail && slug === movie.slug}
                                         >
-                                            Phát
+                                            Xem
                                         </Button>
                                     </div>
                                 </div>
                             ))
                         ) : (
-                            <p className="text-center text-gray-400">Vui lòng chọn phim để xem!</p>
+                            <p className="text-center text-xl text-gray-400">Vui lòng chọn phim để xem!</p>
                         )}
                     </div>
                 </div>
@@ -159,7 +163,7 @@ export const RoomBody = () => {
                         {movies &&
                             (movies.length > 0 ? (
                                 <div className="scrollbar-none max-h-52 space-y-2 overflow-y-auto">
-                                    {movies.map((movie) => (
+                                    {movies.map((movie, index) => (
                                         <div
                                             className="flex h-10 items-center justify-between overflow-hidden bg-gray-100"
                                             key={movie.slug}
@@ -175,7 +179,7 @@ export const RoomBody = () => {
                                                     className="cursor-pointer"
                                                     size={24}
                                                     onClick={() => {
-                                                        remove(findIndex((item) => item.slug === movie.slug));
+                                                        remove(index);
                                                     }}
                                                     color="red"
                                                 />

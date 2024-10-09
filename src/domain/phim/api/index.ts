@@ -145,11 +145,11 @@ export class MoviesApi {
     }
 
     // Search phim
-    static async search_movie(query: string) {
+    static async search_movie({ query, movie_type_id }: { query: string; movie_type_id?: "typ1" | "type2" }) {
         const res = await requester<TResGetSearchMovies>({
             requestFunc: () =>
                 http.get(ENDPOINT_URL.search_movie(), {
-                    params: { q: query }
+                    params: { q: query, movie_type_id }
                 }),
             handleData: (data: DataSearchMovieDTO) => data.data
         })();

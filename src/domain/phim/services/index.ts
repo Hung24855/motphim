@@ -28,7 +28,8 @@ export class MoviesService {
     static get_movie(slug: string) {
         const { data, isFetching, isError, refetch } = useFetcher<TResGetMovie>(
             [QUERY_KEY.GET_MOVIE_DETAIL, slug],
-            () => MoviesApi.get_movie(slug)
+            () => MoviesApi.get_movie(slug),
+            { enabled: !!slug }
         );
         return { data, isFetching, isError, refetch };
     }
@@ -134,10 +135,10 @@ export class MoviesService {
         };
     }
     // Tim kiem phim
-    static get_search_movie(query: string) {
+    static get_search_movie({ query, movie_type_id }: { query: string; movie_type_id?: "typ1" | "type2" }) {
         const { data, isFetching, isError } = useFetcher<TResGetSearchMovies>(
             [QUERY_KEY.GET_SEARCH_MOVIE, query],
-            () => MoviesApi.search_movie(query),
+            () => MoviesApi.search_movie({ query, movie_type_id }),
             { enabled: !!query }
         );
 

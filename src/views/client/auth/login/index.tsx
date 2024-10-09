@@ -3,7 +3,6 @@ import Input from "@/base/libs/input";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import "./style/index.css";
 import { signInSchema, SignInType } from "@/utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { login_action } from "@/actions/auth";

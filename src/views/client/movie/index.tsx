@@ -60,7 +60,6 @@ export default function MoviePage(props: Props) {
     const queryClient = useQueryClient();
     const videoRef = useRef<HTMLDivElement>(null);
     const [episode, setEpisode] = useState<string>("1");
-
     const { data: response } = MoviesService.get_movie(props.slug);
     const { mutateUnFavoriteMovie, mutateFavoriteMovie } = MoviesService.use_favorite_action();
     const { checkFavoriteMovie } = MoviesService.check_favorite_movie({

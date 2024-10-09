@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 
 export default function SearchMovieView() {
     const SearchParams = useSearchParams().get("q");
-    const { data: movies } = MoviesService.get_search_movie(SearchParams ?? "");
+    const { data: movies } = MoviesService.get_search_movie({ query: SearchParams ?? "" });
 
     if (!movies) return <ListMovieSkeleton />;
 
@@ -25,7 +25,7 @@ export default function SearchMovieView() {
                     }
                 </div>
             ) : (
-                <div className="flex h-screen items-center justify-center pb-10 pt-24 text-3xl px-2">
+                <div className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl">
                     Phim bạn tìm kiếm không tồn tại!
                 </div>
             )}
