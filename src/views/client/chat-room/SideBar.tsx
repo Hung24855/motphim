@@ -35,6 +35,7 @@ export default function SideBar() {
                 members: [user?.uid as string],
                 messages: [],
                 movie_link: "",
+                list_movies:[],
                 movie_name: RoomCreateForm.movie_name,
                 owner: user?.email as string
             }

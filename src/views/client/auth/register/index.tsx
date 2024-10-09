@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import Button from "@/base/libs/button";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { authFirebase } from "@/firebase";
-import { handle_add_doc_firebase } from "@/database/firebase.services";
+import { CONLLECTION, handle_add_doc_firebase } from "@/database/firebase.services";
 
 export default function RegisternPage() {
     const [globalMessage, setGlobalMessage] = useState<string>("");
@@ -46,7 +46,7 @@ export default function RegisternPage() {
                     // Ghi thông tin người dùng vài firestore
                     await handle_add_doc_firebase({
                         docInfo: {
-                            collectionName: "USERS",
+                            collectionName: CONLLECTION.USERS,
                             docId: data.email
                         },
                         data: {

@@ -3,40 +3,33 @@ import { ChatRoomContext } from ".";
 import Button from "@/base/libs/button";
 import Image from "next/image";
 import { sessionContext } from "@/base/provider/next-auth";
-import { toast } from "react-toastify";
 import { CONLLECTION, handle_update_doc_firebase } from "@/database/firebase.services";
 import { arrayUnion } from "firebase/firestore";
-import { useFirestoreWithDocId } from "@/infrastructure/hooks/useFirestore";
-import { RoomType } from "./type";
 
 export default function Comment() {
-    const { selectedRoom,RoomInfo } = useContext(ChatRoomContext);
+    const { selectedRoom, RoomInfo } = useContext(ChatRoomContext);
     const [message, setMessage] = useState<string>("");
     const { session } = useContext(sessionContext);
 
     const handleSend = async () => {
         if (!message) return;
-        try {
-            setMessage("");
-            handle_update_doc_firebase({
-                docInfo: {
-                    collectionName: CONLLECTION.ROOM_MOVIES,
-                    docId: selectedRoom?.doc_id as string
-                },
-                data: {
-                    messages: arrayUnion({
-                        avatar: session?.user.avatar ?? "",
-                        username: session?.user.username as string,
-                        msg: message,
-                        send_id: session?.user.id as string,
-                        time: Date.now()
-                    })
-                }
-            });
-        } catch (error) {
-            console.log("error", error);
-            toast.error("Gửi tin nhắn thất bại! Vui lòng thử lại");
-        }
+
+        setMessage("");
+        handle_update_doc_firebase({
+            docInfo: {
+                collectionName: CONLLECTION.ROOM_MOVIES,
+                docId: selectedRoom?.doc_id as string
+            },
+            data: {
+                messages: arrayUnion({
+                    avatar: session?.user.avatar ?? "",
+                    username: session?.user.username as string,
+                    msg: message,
+                    send_id: session?.user.id as string,
+                    time: Date.now()
+                })
+            }
+        });
     };
 
     const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -50,7 +43,7 @@ export default function Comment() {
         }
     };
 
-    useEffect(scrollToBottom, [RoomInfo]);
+    useEffect(scrollToBottom, [RoomInfo?.messages]);
 
     return (
         <div className="z-40 flex h-full flex-col p-2">

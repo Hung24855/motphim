@@ -23,8 +23,7 @@ export const handle_add_doc_firebase = async <T>({
         toast.error("Có lỗi xảy ra vui lòng thử lại sau!");
     }
 };
-
-export const handle_update_doc_firebase = async ({
+export const handle_update_doc_firebase = async <T extends { [x: string]: any }>({
     docInfo,
     data
 }: {
@@ -32,7 +31,7 @@ export const handle_update_doc_firebase = async ({
         collectionName: string;
         docId: string;
     };
-    data: any;
+    data: T;
 }) => {
     try {
         await updateDoc(doc(dbFirebase, docInfo.collectionName, docInfo.docId), data);
@@ -41,7 +40,6 @@ export const handle_update_doc_firebase = async ({
         toast.error("Có lỗi xảy ra vui lòng thử lại sau!");
     }
 };
-
 export const handle_delete_doc_firebase = async ({
     docInfo
 }: {

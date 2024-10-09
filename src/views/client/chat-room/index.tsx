@@ -32,6 +32,7 @@ export default function ChatRoomView({ session }: { session: Session | null }) {
             toast.warning("Chủ phòng đã xóa phòng này!");
         }
     }, [RoomInfo]);
+
     return (
         <Fragment>
             <MaxWidth className="z-40 px-2">
@@ -54,7 +55,7 @@ export default function ChatRoomView({ session }: { session: Session | null }) {
                                             <RoomHeader />
                                         </div>
                                         <div className="grid flex-1 grid-cols-3">
-                                            <div className="col-span-3 h-full md:col-span-2">
+                                            <div className="col-span-3 h-full md:col-span-2 py-2 overflow-hidden">
                                                 <RoomBody />
                                             </div>
                                             <div className="col-span-3 h-full md:col-span-1">

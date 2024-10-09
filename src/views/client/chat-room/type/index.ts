@@ -1,3 +1,4 @@
+import { MovieForCardDTO } from "@/domain/phim/dto";
 import { Timestamp } from "firebase/firestore";
 import { Dispatch } from "react";
 
@@ -13,10 +14,13 @@ export type RoomType = {
         username: string;
         time: Timestamp;
     }[];
+    list_movies: MovieFirebaseInfo[];
     movie_link: string;
     movie_name: string;
     owner: string;
 };
+
+export type MovieFirebaseInfo = MovieForCardDTO
 
 export type RoomsType = RoomType[];
 

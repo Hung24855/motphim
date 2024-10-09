@@ -8,6 +8,7 @@ type ButtonProps = {
     onClick?: (e:any) => void;
     type?: "button" | "submit" | "reset";
     block?: boolean;
+    [key: string]: any;
 };
 export default function Button({
     children,
@@ -16,7 +17,8 @@ export default function Button({
     onClick,
     sizeSpin = "default",
     type = "button",
-    block
+    block,
+    ...rest
 }: ButtonProps) {
     return (
         <button
@@ -29,6 +31,7 @@ export default function Button({
             )}
             onClick={onClick}
             disabled={loading}
+            {...rest}
         >
             {loading && (
                 <div

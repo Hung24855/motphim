@@ -42,7 +42,7 @@ export default function ChatHeader() {
                 <p className="font-semibold text-white">{selectedRoom?.movie_name}</p>
                 {/* <p className="text-sm text-gray-400">{selectedUser.isOnline ? "Online" : "Offline"}</p> */}
                 <div className="flex items-center gap-x-2">
-                    <Avatar.Group
+                    {/* <Avatar.Group
                         size="small"
                         max={{
                             count: 2,
@@ -55,7 +55,7 @@ export default function ChatHeader() {
                             <Avatar style={{ backgroundColor: "#87d068" }} icon={<UserOutlined />} />
                         </Tooltip>
                         <Avatar style={{ backgroundColor: "#1677ff" }} icon={<AntDesignOutlined />} />
-                    </Avatar.Group>
+                    </Avatar.Group> */}
 
                     {user?.email === selectedRoom?.owner && (
                         <button
@@ -80,7 +80,10 @@ export default function ChatHeader() {
                 okButtonClassName="!bg-red-500"
                 modalContainerClassName="!top-40"
             >
-                <div className="relative rounded border border-red-500 bg-red-100 px-4 py-3 text-red-700" role="alert">
+                <div
+                    className="relative rounded border border-yellow-500 bg-yellow-100 px-4 py-3 text-yellow-700"
+                    role="alert"
+                >
                     <span className="flex items-center gap-x-1">
                         <PiWarningCircleFill /> Việc làm này có thể ảnh hưởng đến mọi người trong phòng!
                     </span>

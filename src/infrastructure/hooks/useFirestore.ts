@@ -51,7 +51,7 @@ export const useFirestore = ({
 
 export const useFirestoreWithDocId = <T>({ collectionName, docId }: { collectionName: string; docId: string }) => {
     const [doccument, setDoccument] = useState<T>();
-    const [isLoading, setIsLoading] = useState<boolean>(true); // Thêm trạng thái loading
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
 

@@ -9,7 +9,7 @@ import { ChangeEvent, FormEvent, useContext, useMemo, useState } from "react";
 import { TbEdit } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
-import { handle_update_doc_firebase } from "@/database/firebase.services";
+import { CONLLECTION, handle_update_doc_firebase } from "@/database/firebase.services";
 import Button from "@/base/libs/button";
 import Input from "@/base/libs/input";
 
@@ -82,7 +82,7 @@ export default function ProfileView() {
                                     // Đồng bộ thông tin trên fire-base
                                     handle_update_doc_firebase({
                                         docInfo: {
-                                            collectionName: "USERS",
+                                            collectionName: CONLLECTION.USERS,
                                             docId: session?.user.email ?? ""
                                         },
                                         data: {
@@ -109,7 +109,7 @@ export default function ProfileView() {
                         });
                         handle_update_doc_firebase({
                             docInfo: {
-                                collectionName: "USERS",
+                                collectionName: CONLLECTION.USERS,
                                 docId: session?.user.email ?? ""
                             },
                             data: {

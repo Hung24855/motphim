@@ -1,10 +1,16 @@
 "use client";
-
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import MaxWidth from "@/components/layout/max-width";
 
+
 export default function TestModal() {
-    const iframeRef = useRef(null);
+    const iframeRef = useRef<HTMLIFrameElement>(null);
+
+    // useEffect(() => {
+    //     const contentWindow = iframeRef.current?.contentWindow;
+    //     const video = contentWindow?.document.querySelector("video");
+    //     video?.play();
+    // }, [iframeRef]);
 
     return (
         <MaxWidth className="flex min-h-screen flex-col pt-20 text-white">

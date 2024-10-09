@@ -5,7 +5,6 @@ import { IResponseData } from "@/infrastructure/config/types/apiResponse";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { status } from "@/app/api/utils/status";
 
 export const register_action = async ({
     email,
