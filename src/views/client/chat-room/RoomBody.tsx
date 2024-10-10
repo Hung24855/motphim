@@ -103,7 +103,7 @@ export const RoomBody = () => {
                     <div ref={playlistRef}>
                         {RoomInfo?.list_movies.length ? (
                             RoomInfo.list_movies.map((movie) => (
-                                <div className="mt-2 grid grid-cols-3 gap-x-2">
+                                <div className="mt-2 grid grid-cols-3 gap-x-2" key={movie.slug}>
                                     <div className="col-span-1 h-40 overflow-hidden rounded">
                                         <Image
                                             src={movie.image}

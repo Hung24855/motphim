@@ -1,7 +1,6 @@
 "use client";
 import MaxWidth from "@/components/layout/max-width";
-import { Session } from "next-auth";
-import { Fragment, useState, createContext, useEffect } from "react";
+import { Fragment, useState, createContext, useEffect, useContext } from "react";
 import Comment from "./Comment";
 import SideBar from "./SideBar";
 import RoomHeader from "./RoomHeader";
@@ -10,6 +9,7 @@ import { ChatRoomContextType, RoomType } from "./type";
 import { CONLLECTION } from "@/database/firebase.services";
 import { useFirestoreWithDocId } from "@/infrastructure/hooks/useFirestore";
 import { toast } from "react-toastify";
+import { sessionContext } from "@/base/provider/next-auth";
 
 export const ChatRoomContext = createContext<ChatRoomContextType>({
     selectedRoom: null,
@@ -17,7 +17,8 @@ export const ChatRoomContext = createContext<ChatRoomContextType>({
     RoomInfo: undefined
 });
 
-export default function ChatRoomView({ session }: { session: Session | null }) {
+export default function ChatRoomView() {
+    const { session } = useContext(sessionContext);
     const [selectedRoom, setSelectedRoom] = useState<RoomType | null>(null);
 
     const { doccument: RoomInfo, isLoading } = useFirestoreWithDocId<Omit<RoomType, "doc_id">>({
@@ -31,7 +32,7 @@ export default function ChatRoomView({ session }: { session: Session | null }) {
             setSelectedRoom(null);
             toast.warning("Chủ phòng đã xóa phòng này!");
         }
-    }, [RoomInfo]);
+    }, [RoomInfo,isLoading]);
 
     return (
         <Fragment>
@@ -55,7 +56,7 @@ export default function ChatRoomView({ session }: { session: Session | null }) {
                                             <RoomHeader />
                                         </div>
                                         <div className="grid flex-1 grid-cols-3">
-                                            <div className="col-span-3 h-full md:col-span-2 py-2 overflow-hidden">
+                                            <div className="col-span-3 h-full overflow-hidden py-2 md:col-span-2">
                                                 <RoomBody />
                                             </div>
                                             <div className="col-span-3 h-full md:col-span-1">

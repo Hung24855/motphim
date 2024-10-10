@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getStorage, ref } from "firebase/storage";
+import { getStorage } from "firebase/storage";
+import { getMessaging, getToken } from "firebase/messaging";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_API_KEY_FIRE_BASE,
@@ -19,3 +20,6 @@ export const authFirebase = getAuth(appFirebase);
 export const dbFirebase = getFirestore(appFirebase); //Lưu trữ tin nhắn real-time
 export const storageFirebase = getStorage(appFirebase); //Lưu trữ hình ảnh
 
+const messaging = getMessaging();
+// Add the public key generated from the console here.
+getToken(messaging, {vapidKey: process.env.NEXT_PUBLIC_FCM_KEY_FIRE_BASE});

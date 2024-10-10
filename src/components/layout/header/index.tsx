@@ -104,7 +104,7 @@ function Search({ session }: { session: Session | null }) {
             </button>
             <button className="relative">
                 <FaBell size={20} />
-                <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 text-xs">1</span>
             </button>
             {session?.user ? (
                 <Popover content={content} trigger="click" className="!px-0">

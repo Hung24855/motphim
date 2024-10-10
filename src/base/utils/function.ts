@@ -29,7 +29,12 @@ export function removeMark(str: string) {
 export function convertTime(inputTime: string): string {
     const now: Date = new Date();
     const pastTime: Date = new Date(inputTime);
-    const diffInSeconds: number = Math.floor((now.getTime() - pastTime.getTime()) / 1000); // Khoảng cách thời gian tính bằng giây
+
+    if (!(pastTime instanceof Date) || isNaN(pastTime.getTime())) {
+        return ""; 
+    }
+
+    const diffInSeconds: number = Math.abs(Math.floor((now.getTime() - pastTime.getTime()) / 1000));
 
     // Tính toán các khoảng thời gian
     const days: number = Math.floor(diffInSeconds / 86400);
@@ -42,35 +47,19 @@ export function convertTime(inputTime: string): string {
         return `${days} ngày trước`;
     }
 
-    // Tạo chuỗi kết quả cho giờ, phút, giây nếu < 1 ngày
-    let result: string = "";
-
+    // Nếu thời gian lớn hơn 1 giờ, chỉ trả về chuỗi giờ
     if (hours > 0) {
-        result += `${hours} giờ `;
+        return `${hours} giờ trước`;
     }
 
+    // Nếu thời gian lớn hơn 1 phút, chỉ trả về chuỗi phút
     if (minutes > 0) {
-        result += `${minutes} phút `;
+        return `${minutes} phút trước`;
     }
 
-    if (seconds > 0 && result === "") {
-        result = `${seconds} giây `;
-    }
-
-    return result.trim() + " trước";
+    // Nếu thời gian nhỏ hơn 1 phút, trả về chuỗi giây
+    return `${seconds} giây trước`;
 }
-
-export const delay = (m: number) => new Promise((r) => setTimeout(r, m));
-
-export function checkNullOrUndefinedInObject(obj: Record<string, any>): boolean {
-    for (let key in obj) {
-        if (obj[key] === null || obj[key] === undefined) {
-            return true;
-        }
-    }
-    return false;
-}
-
 // remove all undefined or null value in object, if allowNull = true, object is not remove null value.
 export function removeNullAndUndefinedFromObject({
     obj,
@@ -93,3 +82,4 @@ export function removeNullAndUndefinedFromObject({
 export function removeNullAndUndefinedFromArray({ arr, allowNull = false }: { arr: any[]; allowNull: boolean }): any[] {
     return arr.filter((item) => item !== undefined && (allowNull || item !== null));
 }
+export const delay = (m: number) => new Promise((r) => setTimeout(r, m));

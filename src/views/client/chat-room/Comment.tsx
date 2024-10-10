@@ -5,33 +5,11 @@ import Image from "next/image";
 import { sessionContext } from "@/base/provider/next-auth";
 import { CONLLECTION, handle_update_doc_firebase } from "@/database/firebase.services";
 import { arrayUnion } from "firebase/firestore";
+import { convertTime } from "@/base/utils/function";
 
 export default function Comment() {
-    const { selectedRoom, RoomInfo } = useContext(ChatRoomContext);
-    const [message, setMessage] = useState<string>("");
+    const { RoomInfo } = useContext(ChatRoomContext);
     const { session } = useContext(sessionContext);
-
-    const handleSend = async () => {
-        if (!message) return;
-
-        setMessage("");
-        handle_update_doc_firebase({
-            docInfo: {
-                collectionName: CONLLECTION.ROOM_MOVIES,
-                docId: selectedRoom?.doc_id as string
-            },
-            data: {
-                messages: arrayUnion({
-                    avatar: session?.user.avatar ?? "",
-                    username: session?.user.username as string,
-                    msg: message,
-                    send_id: session?.user.id as string,
-                    time: Date.now()
-                })
-            }
-        });
-    };
-
     const chatContainerRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
@@ -81,28 +59,59 @@ export default function Comment() {
                                 <p
                                     className={`mt-1 text-xs ${mess.send_id === session?.user?.id ? "text-blue-100" : "text-gray-400"}`}
                                 >
-                                    10:30
+                                    {convertTime(mess.time)}
                                 </p>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className="flex items-center">
-                <input
-                    type="text"
-                    placeholder="Nhập tin nhắn..."
-                    value={message}
-                    onKeyDown={(event) => {
-                        if (event.key === "Enter") {
-                            handleSend();
-                        }
-                    }}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="mr-2 flex-1 rounded-lg border border-gray-600 bg-gray-700 p-2 text-white placeholder-gray-400 focus:outline-none"
-                />
-                <Button onClick={handleSend}> Gửi</Button>
-            </div>
+            <InputSend />
         </div>
     );
 }
+
+export const InputSend = () => {
+    const { selectedRoom } = useContext(ChatRoomContext);
+    const [message, setMessage] = useState<string>("");
+    const { session } = useContext(sessionContext);
+
+    const handleSend = async () => {
+        if (!message) return;
+
+        setMessage("");
+        handle_update_doc_firebase({
+            docInfo: {
+                collectionName: CONLLECTION.ROOM_MOVIES,
+                docId: selectedRoom?.doc_id as string
+            },
+            data: {
+                messages: arrayUnion({
+                    avatar: session?.user.avatar ?? "",
+                    username: session?.user.username as string,
+                    msg: message,
+                    send_id: session?.user.id as string,
+                    time: Date.now()
+                })
+            }
+        });
+    };
+
+    return (
+        <div className="flex items-center">
+            <input
+                type="text"
+                placeholder="Nhập tin nhắn..."
+                value={message}
+                onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                        handleSend();
+                    }
+                }}
+                onChange={(e) => setMessage(e.target.value)}
+                className="mr-2 flex-1 rounded-lg border border-gray-600 bg-gray-700 p-2 text-white placeholder-gray-400 focus:outline-none"
+            />
+            <Button onClick={handleSend}> Gửi</Button>
+        </div>
+    );
+};

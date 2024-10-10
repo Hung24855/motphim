@@ -1,18 +1,20 @@
 "use client";
+import { sessionContext } from "@/base/provider/next-auth";
 import MaxWidth from "@/components/layout/max-width";
 import MovieCard from "@/components/shared/movie-card";
 import { ListMovieSkeleton } from "@/components/shared/movie-card-skeleton";
 import { MoviesService } from "@/domain/phim/services";
-import { Session } from "next-auth";
+import { useContext } from "react";
 
-export default function Favourite({ session }: { session: Session | null }) {
+export default function Favourite() {
+    const { session } = useContext(sessionContext);
     const { moviesFavoriteByUser } = MoviesService.use_favorite_movie({
         user_id: session?.user.id ?? ""
     });
     if (!session) {
         return (
             <MaxWidth className="min-h-screen text-white">
-                <div className="flex h-screen items-center justify-center pb-10 pt-24 text-3xl px-2">
+                <div className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl">
                     Bạn cần đăng nhập để xem phim yêu thích!
                 </div>
             </MaxWidth>
@@ -34,7 +36,7 @@ export default function Favourite({ session }: { session: Session | null }) {
                     }
                 </div>
             ) : (
-                <div className="flex h-screen items-center justify-center pb-10 pt-24 text-3xl px-2">
+                <div className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl">
                     Bạn chưa yêu thích phim nào!
                 </div>
             )}

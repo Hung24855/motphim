@@ -12,7 +12,7 @@ export type RoomType = {
         send_id: string;
         msg: string;
         username: string;
-        time: Timestamp;
+        time: string;
     }[];
     list_movies: MovieFirebaseInfo[];
     movie_link: string;
@@ -24,7 +24,7 @@ export type MovieFirebaseInfo = MovieForCardDTO
 
 export type RoomsType = RoomType[];
 
-export type AddRoomType = Omit<RoomType, "createdAt" | "doc_id">;
+export type AddRoomType = Omit<RoomType, "doc_id">;
 
 export type ChatRoomContextType = {
     selectedRoom: RoomType | null;

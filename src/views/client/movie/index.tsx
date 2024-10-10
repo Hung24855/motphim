@@ -8,7 +8,6 @@ import { Icon } from "@iconify/react";
 import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { Session } from "next-auth";
-
 import Script from "next/script";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";

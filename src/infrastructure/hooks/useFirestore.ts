@@ -45,7 +45,7 @@ export const useFirestore = ({
             setDoccument(docs);
         });
         return () => unsubscribe();
-    }, [collectionName, condition]);
+    }, [collectionName, condition,limitNumber]);
     return { doccument };
 };
 

@@ -7,6 +7,6 @@ export const metadata: Metadata = {
 };
 
 export default async function FavouritePage() {
-    const session = await auth();
-    return <Favourite session={session} />;
+    
+    return <Favourite />;
 }

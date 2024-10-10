@@ -8,6 +8,8 @@ import { AddRoomType, RoomsType } from "./type";
 import { CONLLECTION, handle_add_doc_firebase } from "@/database/firebase.services";
 import { toast } from "react-toastify";
 import { ChatRoomContext } from ".";
+import { convertTime } from "@/base/utils/function";
+import { serverTimestamp, Timestamp } from "firebase/firestore";
 
 const initCreateRoomForm = {
     movie_name: ""
@@ -31,11 +33,12 @@ export default function SideBar() {
         await handle_add_doc_firebase<AddRoomType>({
             docInfo: { collectionName: CONLLECTION.ROOM_MOVIES, docId: Date.now().toString() },
             data: {
+                createdAt: serverTimestamp() as Timestamp,
                 isPlay: false,
                 members: [user?.uid as string],
                 messages: [],
                 movie_link: "",
-                list_movies:[],
+                list_movies: [],
                 movie_name: RoomCreateForm.movie_name,
                 owner: user?.email as string
             }
@@ -72,7 +75,7 @@ export default function SideBar() {
 
             <div className="scrollbar-none flex h-[calc(100vh-200px)] flex-col overflow-y-auto pb-2">
                 {/* Danh sách các phòng */}
-                {Rooms?.length > 0 &&
+                {Rooms.length > 0 &&
                     Rooms.map((room) => (
                         <div
                             key={room.doc_id}
@@ -89,7 +92,9 @@ export default function SideBar() {
                             <div className="flex-1">
                                 <div className="flex items-baseline justify-between">
                                     <p className="text-sm font-medium text-white">{room.movie_name}</p>
-                                    <span className="text-xs text-gray-400">10:30</span>
+                                    <span className="text-xs text-gray-400">
+                                        {convertTime(room.createdAt?.toDate().toString())}
+                                    </span>
                                 </div>
                                 {/* <p className="truncate text-xs text-gray-400">Tin nhắn cuối cùng!</p> */}
                             </div>
@@ -100,9 +105,7 @@ export default function SideBar() {
             <ModalMotion
                 textHeader="Tạo phòng xem phim"
                 onClose={onCloseModal}
-                onOk={() => {
-                    handleCreateRoom();
-                }}
+                onOk={handleCreateRoom}
                 isOpen={ModalCreateRoom}
                 textOk="Tạo phòng"
                 loading={loading}
@@ -113,6 +116,11 @@ export default function SideBar() {
                     label="Tên phòng"
                     placeholder="Nhập tên phòng"
                     value={RoomCreateForm.movie_name}
+                    onKeyDown={(event: any) => {
+                        if (event.key === "Enter") {
+                            handleCreateRoom();
+                        }
+                    }}
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                         setRoomCreateForm({ ...RoomCreateForm, movie_name: e.target.value })
                     }
