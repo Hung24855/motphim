@@ -1,7 +1,7 @@
 importScripts("https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js");
 importScripts("https://www.gstatic.com/firebasejs/10.5.2/firebase-messaging-compat.js");
 
-//Cấu hình Firebase messaging service worker Nhưng nếu dùng getToken rồi thì thôi vì getToken đã định nghĩa sẵn 1 Firebase messaging service worker
+// //Cấu hình Firebase messaging service worker Nhưng nếu dùng getToken rồi thì thôi vì getToken đã định nghĩa sẵn 1 Firebase messaging service worker
 
 const firebaseConfig = {
     apiKey: "AIzaSyASW09O0FaTnRbjXjtPzvYaiXngZGJF8Js",
@@ -19,36 +19,38 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(async function (payload) {
+    console.log({payload});
+    
     //Lắng nghe thông báo khi đang không focus vào app
-    const data = JSON.parse(payload?.data?.data ?? "");
-    const notificationTitle = "Background Message Title";
-    const notificationOptions = {
-        body: "Background Message body.",
-        icon: "https://hoibai.net/_next/image?url=%2Fassets%2Fimages%2Flogo%2Flogo_header.png&w=640&q=75"
-    };
+    // const data = JSON.parse(payload?.data?.data ?? "");
+    // const notificationTitle = "Background Message Title";
+    // const notificationOptions = {
+    //     body: "Background Message body.",
+    //     icon: "https://hoibai.net/_next/image?url=%2Fassets%2Fimages%2Flogo%2Flogo_header.png&w=640&q=75"
+    // };
 
-    self?.registration?.showNotification(notificationTitle,
-        notificationOptions);
+    // self?.registration?.showNotification(notificationTitle,
+    //     notificationOptions);
 
-    if (payload.data.isShowBackground.toString() == "true") {
-        self?.registration?.showNotification(notificationTitle, notificationOptions);
+    // if (payload.data.isShowBackground.toString() == "true") {
+    //     self?.registration?.showNotification(notificationTitle, notificationOptions);
 
-        // self.onnotificationclick = (event) => {
+    //     // self.onnotificationclick = (event) => {
 
-        //     event.notification.close();
+    //     //     event.notification.close();
 
-        //     event.waitUntil(
-        //         clients
-        //             .matchAll({
-        //                 type: "window"
-        //             })
-        //             .then((clientList) => {
-        //                 for (const client of clientList) {
-        //                     if (client.url === "/" && "focus" in client) return client.focus();
-        //                 }
-        //                 if (clients.openWindow) return clients.openWindow(link);
-        //             })
-        //     );
-        // };
-    }
+    //     //     event.waitUntil(
+    //     //         clients
+    //     //             .matchAll({
+    //     //                 type: "window"
+    //     //             })
+    //     //             .then((clientList) => {
+    //     //                 for (const client of clientList) {
+    //     //                     if (client.url === "/" && "focus" in client) return client.focus();
+    //     //                 }
+    //     //                 if (clients.openWindow) return clients.openWindow(link);
+    //     //             })
+    //     //     );
+    //     // };
+    // }
 });

@@ -1,20 +1,21 @@
 "use client";
 import { appFirebase } from "@/firebase";
 import { getMessaging, onMessage } from "firebase/messaging";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
+import { toast } from "react-toastify";
 
 //Hứng thông báo khi đang forcus vào app
 export default function FireBaseProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const messaging = getMessaging(appFirebase);
         const ubnsub = onMessage(messaging, (payload) => {
-            // Lấy thông tin lưu trưc ở đâu đó (back-end hoặc firebase)
-            console.log("onMessage", payload);
-            
+            // Lấy thông tin lưu vào đâu đó (back-end hoặc firebase)
+
+            toast.info(payload.notification?.body);
         });
         return () => {
             ubnsub();
         };
     }, []);
-    return <div>{children}</div>;
+    return <Fragment>{children}</Fragment>;
 }

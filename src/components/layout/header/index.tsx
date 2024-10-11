@@ -102,9 +102,9 @@ function Search({ session }: { session: Session | null }) {
                     <CiSearch size={22} />
                 </div>
             </button>
-            <button className="relative">
+            <button className="relative duration-200 hover:scale-110">
                 <FaBell size={20} />
-                <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 text-xs">1</span>
+                <span className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-red-500 text-xs">1</span>
             </button>
             {session?.user ? (
                 <Popover content={content} trigger="click" className="!px-0">

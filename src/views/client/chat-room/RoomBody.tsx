@@ -135,7 +135,7 @@ export const RoomBody = () => {
                                 </div>
                             ))
                         ) : (
-                            <p className="text-center text-xl text-gray-400">Vui lòng chọn phim để xem!</p>
+                            <p className="text-center text-xl text-gray-400">Không có phim trong danh sách phát!</p>
                         )}
                     </div>
                 </div>

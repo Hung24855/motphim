@@ -30,10 +30,12 @@ export function convertTime(inputTime: string): string {
     const now: Date = new Date();
     const pastTime: Date = new Date(inputTime);
 
+    // Kiểm tra tính hợp lệ của inputTime
     if (!(pastTime instanceof Date) || isNaN(pastTime.getTime())) {
-        return ""; 
+        return "";
     }
 
+    // Tính khoảng cách thời gian giữa thời điểm hiện tại và thời điểm đầu vào
     const diffInSeconds: number = Math.abs(Math.floor((now.getTime() - pastTime.getTime()) / 1000));
 
     // Tính toán các khoảng thời gian
@@ -57,9 +59,15 @@ export function convertTime(inputTime: string): string {
         return `${minutes} phút trước`;
     }
 
-    // Nếu thời gian nhỏ hơn 1 phút, trả về chuỗi giây
+    // Nếu thời gian nhỏ hơn 30 giây, trả về "vài giây trước"
+    if (seconds < 30) {
+        return "vài giây trước";
+    }
+
+    // Nếu thời gian từ 30 giây trở lên, trả về số giây
     return `${seconds} giây trước`;
 }
+
 // remove all undefined or null value in object, if allowNull = true, object is not remove null value.
 export function removeNullAndUndefinedFromObject({
     obj,
