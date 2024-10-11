@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging, getToken, MessagePayload, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_API_KEY_FIRE_BASE,
@@ -15,11 +15,53 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID_FIRE_BASE
 };
 // Initialize Firebase
-const appFirebase = initializeApp(firebaseConfig);
+export const appFirebase = initializeApp(firebaseConfig);
 export const authFirebase = getAuth(appFirebase);
 export const dbFirebase = getFirestore(appFirebase); //Lưu trữ tin nhắn real-time
 export const storageFirebase = getStorage(appFirebase); //Lưu trữ hình ảnh
 
-const messaging = getMessaging();
-// Add the public key generated from the console here.
-getToken(messaging, {vapidKey: process.env.NEXT_PUBLIC_FCM_KEY_FIRE_BASE});
+// export const onMessageListener = (): Promise<MessagePayload> => {
+//     const messaging = getMessaging(appFirebase);
+//     //Lắng nghe dữ liệu trả về từ thông báo
+//     return new Promise((resolve) => {
+//         onMessage(messaging, (payload) => {
+//             resolve(payload);
+//         });
+//     });
+// };
+
+// const messaging = getMessaging(appFirebase); //Hàm này sẽ tự chạy để kiểm tra quyền thông báo của trình duyệt! Vậy chỉ nên gọi hàm này nếu quyền thông báo được bật
+
+export const requestPermission = ({
+    onGranted,
+    onDefault = () => {},
+    onDenied = () => {}
+}: {
+    onGranted: (currentToken: string) => void;
+    onDenied?: () => void;
+    onDefault?: () => void;
+}) => {
+    Notification.requestPermission().then((permistion) => {
+        switch (permistion) {
+            case "granted":
+                const messaging = getMessaging(appFirebase);
+                getToken(messaging, {
+                    vapidKey: process.env.NEXT_PUBLIC_FCM_KEY_FIRE_BASE
+                })
+                    .then((currentToken) => {
+                        if (currentToken) {
+                            onGranted(currentToken);
+                        } else {
+                        }
+                    })
+                    .catch((err) => {});
+                break;
+            case "denied":
+                onDenied();
+                break;
+            case "default":
+                onDefault();
+                break;
+        }
+    });
+};

@@ -60,6 +60,7 @@ export default function SideBar() {
             inputRef.current.focus();
         }
     }, [ModalCreateRoom]);
+
     return (
         <Fragment>
             <div className="mr-2">
