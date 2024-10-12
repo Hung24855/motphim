@@ -21,7 +21,7 @@ export const requester =
             const { data } = await requestFunc(url);
             if (Date.now() - beforeTime < 1000) await delay(boundedTime);
 
-            if (data?.status === "success") return await handleData(data as ISuccessResponse);
+            if (data?.status === "success") return await handleData(data as ISuccessResponse)
             else {
                 throw new Error(data.message);
             }
