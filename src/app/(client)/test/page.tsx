@@ -12,10 +12,10 @@ export default function TestModal() {
                 console.log("currentToken", currentToken);
             },
             onDenied: () => {
-                toast.warning("Yêu cầu quyền thông báo đã bị từ chối");
+                toast.info("Yêu cầu quyền thông báo đã bị từ chối");
             },
             onDefault: () => {
-                toast.warning("Yêu cầu quyền thông báo đã bị từ chối");
+                toast.info("Yêu cầu quyền thông báo đã bị từ chối");
             }
         });
     };

@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import Favourite from "@/views/client/favourite";
 import { Metadata } from "next";
 export const metadata: Metadata = {

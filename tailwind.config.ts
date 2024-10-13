@@ -8,7 +8,8 @@ const config: Config = {
                 primary: "#e4d804",
                 res: "#772727",
                 bg_primary: "#030A1B",
-                admin_primary: "#7c69ef"
+                admin_primary: "#7c69ef",
+                text_link: "#0067B6"
             },
             backgroundImage: {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -46,15 +47,15 @@ const config: Config = {
                 "fade-in-down": "fade-in-down 0.2s ease-out",
                 "zoom-in": "zoom-in 0.3s ease-out",
                 "typing-text": "typing 2.5s infinite"
-            },
+            }
             // screens: {
             //     mob: "320px", // mobile - default - main support at 384px
             //     mobx: "480px", // mobile
-    
+
             //     tab: "640px", // small table,
             //     tabx: "768px", // medium table - main support break point
             //     tabxx: "960px", // large table
-    
+
             //     lap: "1024px", // small laptop,
             //     lapx: "1280px" // medium laptop - main support break point
             // },

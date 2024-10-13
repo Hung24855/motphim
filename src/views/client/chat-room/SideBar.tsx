@@ -93,7 +93,7 @@ export default function SideBar() {
                             <div className="flex-1">
                                 <div className="flex items-baseline justify-between">
                                     <p className="text-sm font-medium text-white">{room.movie_name}</p>
-                                    <span className="text-xs text-gray-400">
+                                    <span className="text-xs text-gray-400 block min-w-[70px]">
                                         {convertTime(room.createdAt?.toDate().toString())}
                                     </span>
                                 </div>

@@ -1,46 +1,47 @@
-import { useOnClickOutside } from "@/base/hooks/useOnClickOutside";
-import clsx from "clsx";
 import CSS from "csstype";
-import { ReactNode, HTMLProps, useRef, useState, MouseEvent } from "react";
+import { useOnClickOutside } from "@/base/hooks/useOnClickOutside";
+import { HTMLProps, MouseEvent, ReactNode, useRef, useState } from "react";
+import clsx from "clsx";
 
-interface IDropDownProps {
+type DropDownProps = {
     toggleComponent: ReactNode;
     dropdownComponent: ReactNode;
-    toggleComponentClassName?: HTMLProps<HTMLDivElement>["className"];
-    dropdownClassName?: HTMLProps<HTMLDivElement>["className"];
-    dropdownComponentClassName?: HTMLProps<HTMLDivElement>["className"];
-    dropdownComponentStyle: Pick<CSS.Properties, "top" | "left" | "right">;
-    transitionProperty: Pick<CSS.Properties, "transformOrigin" | "transitionDuration" | "transitionTimingFunction">;
-    transitionType?: "zoomIn" | "scaleY" | "slideDown";
     toggleEvent?: "click" | "hover";
-    blurOnClick?: boolean;
     onClickToggleComponent?: (
         e: MouseEvent<HTMLDivElement>,
         isActive: boolean,
         setIsActive: React.Dispatch<React.SetStateAction<boolean>>
     ) => void;
-    dropdownPositionClassName?: string;
-}
 
-export function DropdownMenu({
+    dropdownComponentStyle?: Pick<CSS.Properties, "top" | "left" | "right">;
+    transitionProperty?: Pick<CSS.Properties, "transformOrigin" | "transitionDuration" | "transitionTimingFunction">;
+    transitionType: "zoomIn" | "scaleY" | "slideDown";
+    dropdownPositionClassName?: HTMLProps<HTMLDivElement>["className"];
+    dropdownComponentClassName?: HTMLProps<HTMLDivElement>["className"];
+    toggleComponentClassName?: HTMLProps<HTMLDivElement>["className"];
+};
+
+const DropdownMenu = ({
     toggleComponent,
     dropdownComponent,
-    toggleComponentClassName,
+    toggleEvent = "click",
+    onClickToggleComponent,
     dropdownComponentStyle = {
         top: "120%",
         right: "auto",
         left: "auto"
     },
-    transitionProperty,
-    dropdownClassName,
-    dropdownComponentClassName = "w-max",
-    transitionType = "zoomIn",
-    toggleEvent = "click",
-    blurOnClick = true,
-    onClickToggleComponent,
-    dropdownPositionClassName
-}: IDropDownProps) {
-    const [isActive, setIsActive] = useState(false);
+    transitionProperty = {
+        transformOrigin: "top",
+        transitionDuration: "100",
+        transitionTimingFunction: "ease-in-out"
+    },
+    transitionType,
+    dropdownPositionClassName,
+    dropdownComponentClassName,
+    toggleComponentClassName
+}: DropDownProps) => {
+    const [isActive, setIsActive] = useState<boolean>(false);
     const modalRef = useRef<HTMLDivElement>(null);
     useOnClickOutside(modalRef, () => setIsActive(false));
 
@@ -63,7 +64,7 @@ export function DropdownMenu({
     return (
         <div
             ref={modalRef}
-            className={clsx(dropdownClassName, "relative")}
+            className="relative"
             onMouseEnter={() => {
                 if (toggleEvent !== "hover") return;
                 setIsActive(true);
@@ -86,6 +87,7 @@ export function DropdownMenu({
             >
                 {toggleComponent}
             </div>
+
             <div
                 style={{
                     position: "absolute",
@@ -100,35 +102,21 @@ export function DropdownMenu({
                     opacity: isActive ? "1" : "0",
                     visibility: isActive ? "visible" : "hidden"
                 }}
-                onClick={() => {
-                    if (!blurOnClick) return;
-                    setIsActive(false);
-                }}
                 className={clsx(
-                    dropdownPositionClassName
-                        ? dropdownPositionClassName
-                        : "mob:right-0 mob:left-auto tabx:left-0 tabx:right-auto",
+                    dropdownPositionClassName ? dropdownPositionClassName : "left-auto right-0",
                     dropdownComponentClassName
                 )}
             >
                 {dropdownComponent}
             </div>
-            {/* <div
-                style={{
-                    position: "absolute",
-                    zIndex: 10,
-                    opacity: "0",
-                    width: "100%",
-                    top: "100%",
-                    height: `calc(${dropdownComponentStyle.top} - 100%)`,
-                    visibility: isActive ? "visible" : "hidden"
-                }}
-            ></div> */}
         </div>
     );
-}
+};
 
-{/* <DropdownMenu
+export default DropdownMenu;
+
+{
+    /* <DropdownMenu
     toggleComponent={
         <div className="flex cursor-pointer items-center">
             <Image
@@ -195,4 +183,5 @@ export function DropdownMenu({
     transitionType="scaleY"
     toggleEvent="click"
     dropdownPositionClassName="right-0"
-/>; */}
+/>; */
+}

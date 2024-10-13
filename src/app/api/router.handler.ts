@@ -15,9 +15,6 @@ type response = {
         totalPages: number;
     };
 };
-
-//Khi truyền isAmdin | isLogin | requiredFields Cần truyền thêm request
-
 export const RouterHandler = async ({
     mainFc,
     options
