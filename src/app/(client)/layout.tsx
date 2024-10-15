@@ -37,7 +37,7 @@ export default async function RootLayout({
                     <NextAuthProvider session={session}>
                         <ReactQueryProvder>
                             <ProgessbarProviders>
-                                <Header session={session} />
+                                <Header />
                                 <main className="min-h-screen bg-bg_primary md:px-0">{children}</main>
                                 <Footer />
                             </ProgessbarProviders>

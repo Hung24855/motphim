@@ -4,7 +4,7 @@ import MaxWidth from "../max-width";
 import { CiSearch } from "react-icons/ci";
 import { FaBell } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useContext, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from "next/link";
@@ -20,6 +20,7 @@ import { authFirebase } from "@/firebase";
 import { signOut } from "firebase/auth";
 import { convertSearchParams } from "@/utils/function";
 import DropdownMenu from "@/base/libs/DropdownMenu";
+import { sessionContext } from "@/base/provider/next-auth";
 
 function Search({ session }: { session: Session | null }) {
     const [search, setSearch] = useState<string>("");
@@ -116,7 +117,7 @@ function Search({ session }: { session: Session | null }) {
                         <div className="bg-white p-2">
                             <div className="flex justify-between pb-2 text-lg font-semibold">
                                 <h3 className="font-bold">Thông báo</h3>
-                                <h3 className="text-text_link cursor-pointer hover:underline">Xem tất cả</h3>
+                                <h3 className="cursor-pointer text-text_link hover:underline">Xem tất cả</h3>
                             </div>
                             {/* Không có thông báo */}
                             {/* <div className="mb-4">
@@ -260,7 +261,8 @@ function Search({ session }: { session: Session | null }) {
     );
 }
 
-export default function Header({ session }: { session: Session | null }) {
+export default function Header() {
+    const { session } = useContext(sessionContext);
     const { data: genres } = GenresService.useGenres();
     const { data: countries } = CountriesService.useCountries();
     const pathName = usePathname();

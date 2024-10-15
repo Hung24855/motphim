@@ -5,9 +5,8 @@ import bcrypt from "bcrypt";
 import { RouterHandler } from "../../router.handler";
 
 export async function POST(request: NextRequest) {
-    const body = await request.json();
     return RouterHandler({
-        async mainFc(pool) {
+        async mainFc(pool, _, body) {
             if (!isEmail(body.email)) {
                 throw new Error("Email không đúng định dạng!");
             }
@@ -36,10 +35,7 @@ export async function POST(request: NextRequest) {
         },
         options: {
             request: request,
-            checkRequired: {
-                body: body,
-                requiredFields: ["email", "password", "username"]
-            }
+            requiredFields: ["email", "password", "username"]
         }
     });
 }

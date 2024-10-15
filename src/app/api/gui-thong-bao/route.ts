@@ -4,9 +4,8 @@ import { adminApp } from "../firebase.admin";
 import { RouterHandler } from "../router.handler";
 
 export async function POST(request: NextRequest) {
-    const body = await request.json();
     return RouterHandler({
-        async mainFc(pool) {
+        async mainFc(pool, _, body) {
             //Lấy danh sách token yêu thích movie_id
             const [response, movie_info] = await Promise.all([
                 pool.query(
@@ -41,10 +40,7 @@ export async function POST(request: NextRequest) {
         options: {
             request: request,
             checkAuth: "isAdmin",
-            checkRequired: {
-                body: body,
-                requiredFields: ["movie_id"]
-            }
+            requiredFields: ["movie_id"]
         }
     });
 }

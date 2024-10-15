@@ -2,9 +2,8 @@ import { NextRequest } from "next/server";
 import { RouterHandler } from "../router.handler";
 
 export async function PUT(request: NextRequest) {
-    const body = await request.json();
     return RouterHandler({
-        async mainFc(pool, user_id) {
+        async mainFc(pool, user_id, body) {
             const res = await pool.query("UPDATE users SET username = $1, avatar = $2  WHERE id = $3 RETURNING *", [
                 body.username,
                 body.avatar,
@@ -20,11 +19,8 @@ export async function PUT(request: NextRequest) {
             };
         },
         options: {
-            checkAuth :"isUser",
-            checkRequired: {
-                body: body,
-                requiredFields: ["username"]
-            },
+            checkAuth: "isUser",
+            requiredFields: ["username"],
             request: request
         }
     });

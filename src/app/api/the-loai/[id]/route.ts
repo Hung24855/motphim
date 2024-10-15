@@ -3,9 +3,8 @@ import { Filter } from "../../utils/filter";
 import { RouterHandler } from "../../router.handler";
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
-    const body = await request.json();
     return RouterHandler({
-        async mainFc(pool) {
+        async mainFc(pool, _, body) {
             const res = await pool.query("UPDATE genres SET name = $1, slug = $2 WHERE id = $3 RETURNING *", [
                 body.name,
                 body.slug,
@@ -17,10 +16,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         options: {
             request: request,
             checkAuth: "isAdmin",
-            checkRequired: {
-                body: body,
-                requiredFields: ["name", "slug"]
-            }
+            requiredFields: ["name", "slug"]
         }
     });
 }
@@ -33,7 +29,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
         },
         options: {
             request: request,
-            checkAuth:"isAdmin"
+            checkAuth: "isAdmin"
         }
     });
 }

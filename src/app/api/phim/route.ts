@@ -71,24 +71,21 @@ export async function POST(request: NextRequest) {
         options: {
             request: request,
             checkAuth: "isAdmin",
-            checkRequired: {
-                body: body,
-                requiredFields: [
-                    "countriesId",
-                    "genresId",
-                    "episode_current",
-                    "time_per_episode",
-                    "episodes",
-                    "movie_name",
-                    "movie_type_id",
-                    "quality",
-                    "image",
-                    "episode_total",
-                    "year",
-                    "content",
-                    "slug"
-                ]
-            }
+            requiredFields: [
+                "countriesId",
+                "genresId",
+                "episode_current",
+                "time_per_episode",
+                "episodes",
+                "movie_name",
+                "movie_type_id",
+                "quality",
+                "image",
+                "episode_total",
+                "year",
+                "content",
+                "slug"
+            ]
         }
     });
 }

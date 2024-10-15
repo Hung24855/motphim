@@ -14,9 +14,8 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-    const body = await request.json();
     return RouterHandler({
-        async mainFc(pool) {
+        async mainFc(pool, _, body) {
             const res = await pool.query("INSERT INTO countries (name,slug) VALUES ($1,$2) RETURNING *", [
                 body.name,
                 body.slug
@@ -25,10 +24,7 @@ export async function POST(request: NextRequest) {
         },
         options: {
             checkAuth: "isAdmin",
-            checkRequired: {
-                body: body,
-                requiredFields: ["name", "slug"]
-            },
+            requiredFields: ["name", "slug"],
             request: request
         }
     });

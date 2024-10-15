@@ -60,9 +60,8 @@ export async function GET(_: NextRequest, { params }: { params: { slug: string }
 
 export async function PUT(request: NextRequest, { params }: { params: { slug: string } }) {
     //slug là id phim
-    const body = await request.json();
     return RouterHandler({
-        async mainFc(pool) {
+        async mainFc(pool, _, body) {
             // Cập nhật phim
 
             let sql_update_movie = `UPDATE movies SET
@@ -127,22 +126,19 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
         options: {
             request: request,
             checkAuth: "isAdmin",
-            checkRequired: {
-                body: body,
-                requiredFields: [
-                    "countriesId",
-                    "genresId",
-                    "episode_current",
-                    "time_per_episode",
-                    "movie_name",
-                    "quality",
-                    "image",
-                    "episode_total",
-                    "year",
-                    "content",
-                    "slug"
-                ]
-            }
+            requiredFields: [
+                "countriesId",
+                "genresId",
+                "episode_current",
+                "time_per_episode",
+                "movie_name",
+                "quality",
+                "image",
+                "episode_total",
+                "year",
+                "content",
+                "slug"
+            ]
         }
     });
 }

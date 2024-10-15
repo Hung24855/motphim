@@ -1,15 +1,10 @@
 import bcrypt from "bcrypt";
 import { NextRequest } from "next/server";
 import { RouterHandler } from "../../router.handler";
-type BodyRegisterField = {
-    email: string;
-    password: string;
-};
 
 export async function POST(request: NextRequest) {
-    const body: BodyRegisterField = await request.json();
     return RouterHandler({
-        async mainFc(pool) {
+        async mainFc(pool, _, body) {
             //Kiểm tra tài khoản đã tồn tại chưa
             const existUser = await pool.query("SELECT *  FROM users  WHERE users.email = $1", [body.email]);
             if (existUser.rows.length == 0) {
@@ -29,10 +24,7 @@ export async function POST(request: NextRequest) {
         },
         options: {
             request: request,
-            checkRequired: {
-                body: body,
-                requiredFields: ["email", "password"]
-            }
+            requiredFields: ["email", "password"]
         }
     });
 }

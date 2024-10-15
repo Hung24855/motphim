@@ -3,7 +3,10 @@ import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { createContext } from "react";
 
-export const sessionContext = createContext({ session: null } as { session: Session | null });
+export const sessionContext = createContext({ session: null, isLoggedIn: false } as {
+    session: Session | null;
+    isLoggedIn: boolean;
+});
 export default function NextAuthProvider({
     children,
     session
@@ -12,7 +15,7 @@ export default function NextAuthProvider({
     session: Session | null;
 }) {
     return (
-        <sessionContext.Provider value={{ session }}>
+        <sessionContext.Provider value={{ session, isLoggedIn: !!session }}>
             <SessionProvider session={session}> {children} </SessionProvider>
         </sessionContext.Provider>
     );
