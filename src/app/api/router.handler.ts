@@ -22,7 +22,7 @@ export const RouterHandler = async ({
     mainFc: (pool: Pool, user_id: string, body: any) => Promise<response>;
     options?: {
         checkAuth?: "isAdmin" | "isUser";
-        requiredFields?: string[];
+        required?: string[];
         request: NextRequest;
     };
 }) => {
@@ -31,10 +31,10 @@ export const RouterHandler = async ({
         let body: { [key: string]: any } = {};
 
         //Check các trường yêu cầu
-        if (options?.requiredFields) {
-            const { requiredFields } = options;
+        if (options?.required) {
+            const { required } = options;
             body = await options.request.json();
-            const isEmpty = requiredFields.filter((field) => !body[field]);
+            const isEmpty = required.filter((field) => !body[field]);
             if (isEmpty.length > 0) {
                 throw new Error(`Vui lòng điền thông tin: ${isEmpty.toString()}`);
             }

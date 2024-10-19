@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
         options: {
             request: request,
             checkAuth: "isAdmin",
-            requiredFields: [
+            required: [
                 "countriesId",
                 "genresId",
                 "episode_current",

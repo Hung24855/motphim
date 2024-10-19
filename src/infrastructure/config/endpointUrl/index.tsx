@@ -47,6 +47,9 @@ class EndpointUrl {
     // Tài khoản
     get_accounts = () => `/danh-sach/tai-khoan`;
     update_user_info = () => `/thong-tin-ca-nhan`;
+    //Thông báo
+    save_token = () => `/thong-bao/luu-token`;
+    send_notification = () => `/thong-bao/gui-thong-bao`;
 }
 
 export const ENDPOINT_URL = new EndpointUrl();

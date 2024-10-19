@@ -126,7 +126,7 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
         options: {
             request: request,
             checkAuth: "isAdmin",
-            requiredFields: [
+            required: [
                 "countriesId",
                 "genresId",
                 "episode_current",

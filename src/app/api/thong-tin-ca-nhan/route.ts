@@ -20,7 +20,7 @@ export async function PUT(request: NextRequest) {
         },
         options: {
             checkAuth: "isUser",
-            requiredFields: ["username"],
+            required: ["username"],
             request: request
         }
     });

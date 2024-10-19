@@ -3,7 +3,7 @@ import { GenresApi } from "../api";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DataCreateGenres, DataUpdateGenres, TResCreateGenre, TResGetAllGenre } from "../model";
-import { GenresDTO } from "../dto";
+
 
 interface ICreateGenreMutation {
     data: DataCreateGenres;

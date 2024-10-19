@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
         },
         options: {
             checkAuth: "isAdmin",
-            requiredFields: ["name", "slug"],
+            required: ["name", "slug"],
             request: request
         }
     });

@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
         },
         options: {
             request: request,
-            requiredFields: ["email", "password"]
+            required: ["email", "password"]
         }
     });
 }

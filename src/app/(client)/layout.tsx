@@ -33,18 +33,18 @@ export default async function RootLayout({
                 <link rel="icon" href="/logo/Logo-light.png" sizes="any" />
             </head>
             <body className={inter.className}>
-                <FireBaseProvider>
-                    <NextAuthProvider session={session}>
-                        <ReactQueryProvder>
+                <NextAuthProvider session={session}>
+                    <ReactQueryProvder>
+                        <FireBaseProvider>
                             <ProgessbarProviders>
                                 <Header />
                                 <main className="min-h-screen bg-bg_primary md:px-0">{children}</main>
                                 <Footer />
                             </ProgessbarProviders>
-                        </ReactQueryProvder>
-                        <Toast />
-                    </NextAuthProvider>
-                </FireBaseProvider>
+                        </FireBaseProvider>
+                    </ReactQueryProvder>
+                    <Toast />
+                </NextAuthProvider>
             </body>
         </html>
     );

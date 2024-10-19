@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { getMessaging, MulticastMessage } from "firebase-admin/messaging";
-import { adminApp } from "../firebase.admin";
-import { RouterHandler } from "../router.handler";
+import { adminApp } from "../../firebase.admin";
+import { RouterHandler } from "../../router.handler";
 
 export async function POST(request: NextRequest) {
     return RouterHandler({
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
         options: {
             request: request,
             checkAuth: "isAdmin",
-            requiredFields: ["movie_id"]
+            required: ["movie_id"]
         }
     });
 }

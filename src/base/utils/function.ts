@@ -92,3 +92,31 @@ export function removeNullAndUndefinedFromArray({ arr, allowNull = false }: { ar
 }
 export const delay = (m: number) => new Promise((r) => setTimeout(r, m));
 
+export function isWindow() {
+    return typeof window !== "undefined";
+}
+export function saveToLocalStorage({ key, value }: { key: string; value: any }) {
+    try {
+        if (!isWindow()) return;
+        const jsonValue = JSON.stringify(value);
+        localStorage.setItem(key, jsonValue);
+    } catch (error) {
+        console.error("Lỗi khi lưu vào localStorage:", error);
+    }
+}
+
+export function getDataLocalStorage(key: string) {
+    try {
+        if (!isWindow()) return;
+        const jsonValue = localStorage.getItem(key);
+        return jsonValue ? JSON.parse(jsonValue) : null; // Chuyển đổi chuỗi JSON trở lại thành giá trị
+    } catch (error) {
+        console.error("Lỗi khi lấy từ localStorage:", error);
+        return null; // Trả về null trong trường hợp có lỗi
+    }
+}
+
+export function removeDataLocalStorage(key: string) {
+    if (!isWindow()) return;
+    localStorage.removeItem(key);
+}

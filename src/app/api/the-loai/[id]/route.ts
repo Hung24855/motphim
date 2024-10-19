@@ -16,7 +16,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         options: {
             request: request,
             checkAuth: "isAdmin",
-            requiredFields: ["name", "slug"]
+            required: ["name", "slug"]
         }
     });
 }

@@ -65,3 +65,11 @@ export const requestPermission = ({
         }
     });
 };
+
+export const getTokenDevices = async () => {
+    const messaging = getMessaging(appFirebase);
+    const token = await getToken(messaging, {
+        vapidKey: process.env.NEXT_PUBLIC_FCM_KEY_FIRE_BASE
+    });
+    return token;
+};
