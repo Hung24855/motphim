@@ -50,6 +50,7 @@ class EndpointUrl {
     //Thông báo
     save_token = () => `/thong-bao/luu-token`;
     send_notification = () => `/thong-bao/gui-thong-bao`;
+    get_all_notifications = () => `/thong-bao/danh-sach-thong-bao`;
 }
 
 export const ENDPOINT_URL = new EndpointUrl();

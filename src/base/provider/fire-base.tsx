@@ -6,24 +6,50 @@ import { toast } from "react-toastify";
 import { sessionContext } from "./next-auth";
 import { NotificationService } from "@/domain/thong-bao/services";
 import { getDataLocalStorage, removeDataLocalStorage, saveToLocalStorage } from "../utils/function";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEY } from "@/infrastructure/constant/query-key";
+import { TResGetAllNotification } from "@/domain/thong-bao/model";
+import { NotificationDTO } from "@/domain/thong-bao/dto";
 
 //Hứng thông báo khi đang forcus vào app
 export default function FireBaseProvider({ children }: { children: React.ReactNode }) {
     const { session } = useContext(sessionContext);
+    const queryClient = useQueryClient();
 
     const { SaveTokenMutation } = NotificationService.useNotification();
+
+    //Hứng thông báo và thêm vào danh sách
+
+    // Tại sao chạy 2 lần ???
     useEffect(() => {
         const messaging = getMessaging(appFirebase);
         const ubnsub = onMessage(messaging, (payload) => {
-            // Lấy thông tin lưu vào đâu đó (back-end hoặc firebase)
+            const queryKey = [QUERY_KEY.GET_ALL_NOTIFICATIONS];
+            const newNotification: NotificationDTO = {
+                created_at: Date.now(),
+                id: Math.random() * 1000,
+                image: payload?.data?.image ?? "",
+                slug: payload?.data?.slug ?? "",
+                title: payload.notification?.body ?? ""
+            };
 
-            toast.info(payload.notification?.body);
+            const previousData = queryClient.getQueryData<TResGetAllNotification>(queryKey);
+            if (previousData) {
+                queryClient.setQueryData<TResGetAllNotification>(queryKey, [newNotification, ...previousData]);
+            }
+
+            toast.info(payload.notification?.body, {
+                position: "bottom-right",
+                hideProgressBar: true
+            });
         });
         return () => {
             ubnsub();
         };
     }, []);
 
+
+    //Xin cấp quyền thông báo
     useEffect(() => {
         const key = "token_notification";
         const token_notification = getDataLocalStorage(key);
@@ -35,7 +61,7 @@ export default function FireBaseProvider({ children }: { children: React.ReactNo
 
         requestPermission({
             onGranted: (currentToken) => {
-                if (token_notification) return;
+                if (token_notification && currentToken === token_notification) return;
 
                 //Lưu token vào CSDL
                 SaveTokenMutation(currentToken, {
