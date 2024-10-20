@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { ChatRoomContext } from ".";
 import Button from "@/base/libs/button";
 import Image from "next/image";
-import { sessionContext } from "@/base/provider/next-auth";
+import { sessionContext } from "@/provider/next-auth";
 import { CONLLECTION, handle_update_doc_firebase } from "@/database/firebase.services";
 import { arrayUnion } from "firebase/firestore";
 import { convertTime } from "@/base/utils/function";

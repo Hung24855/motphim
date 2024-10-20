@@ -9,8 +9,7 @@ import { ChatRoomContextType, RoomType } from "./type";
 import { CONLLECTION } from "@/database/firebase.services";
 import { useFirestoreWithDocId } from "@/infrastructure/hooks/useFirestore";
 import { toast } from "react-toastify";
-import { sessionContext } from "@/base/provider/next-auth";
-
+import { sessionContext } from "@/provider/next-auth";
 
 export const ChatRoomContext = createContext<ChatRoomContextType>({
     selectedRoom: null,
@@ -34,8 +33,6 @@ export default function ChatRoomView() {
             toast.warning("Chủ phòng đã xóa phòng này!");
         }
     }, [RoomInfo, isLoading]);
-
-  
 
     return (
         <Fragment>

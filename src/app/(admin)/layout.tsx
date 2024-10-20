@@ -4,10 +4,10 @@ import { Fragment } from "react";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import "swiper/css";
-import ReactQueryProvder from "@/base/provider/react-query";
+import ReactQueryProvder from "@/provider/react-query";
 import ProgessbarProviders from "@/base/libs/progesbar";
 import Toast from "@/base/libs/toast";
-import AntDesignConfig from "@/base/provider/ant-config";
+import AntDesignConfig from "@/provider/ant-config";
 import Image from "next/image";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });

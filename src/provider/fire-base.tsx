@@ -5,7 +5,7 @@ import { Fragment, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import { sessionContext } from "./next-auth";
 import { NotificationService } from "@/domain/thong-bao/services";
-import { getDataLocalStorage, removeDataLocalStorage, saveToLocalStorage } from "../utils/function";
+import { getDataLocalStorage, removeDataLocalStorage, saveToLocalStorage } from "../base/utils/function";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { TResGetAllNotification } from "@/domain/thong-bao/model";
@@ -19,12 +19,11 @@ export default function FireBaseProvider({ children }: { children: React.ReactNo
     const { SaveTokenMutation } = NotificationService.useNotification();
 
     //Hứng thông báo và thêm vào danh sách
-
-    // Tại sao chạy 2 lần ???
     useEffect(() => {
+        if (!session) return;
         const messaging = getMessaging(appFirebase);
         const ubnsub = onMessage(messaging, (payload) => {
-            const queryKey = [QUERY_KEY.GET_ALL_NOTIFICATIONS];
+            const queryKey = [QUERY_KEY.GET_ALL_NOTIFICATIONS, session.user.id];
             const newNotification: NotificationDTO = {
                 created_at: Date.now(),
                 id: Math.random() * 1000,
@@ -46,8 +45,7 @@ export default function FireBaseProvider({ children }: { children: React.ReactNo
         return () => {
             ubnsub();
         };
-    }, []);
-
+    }, [session]);
 
     //Xin cấp quyền thông báo
     useEffect(() => {

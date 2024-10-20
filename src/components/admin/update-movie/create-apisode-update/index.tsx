@@ -6,6 +6,7 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import { IoTrashBinSharp } from "react-icons/io5";
+import { NotificationService } from "@/domain/thong-bao/services";
 
 export default function CreateEpisodeUpdate({
     movie_id,
@@ -17,6 +18,7 @@ export default function CreateEpisodeUpdate({
     const [Episodes, setEpisodes] = useState<Episode[]>([{ name: "1", link: "link-1", slug: "tap-1" }]);
 
     const { createEpisodeMutation, isPeddingCreateEpisode } = MoviesService.use_episodes();
+    const { SendNotificationMutation } = NotificationService.useNotification();
 
     const CreateEpisodes = () => {
         if (Episodes.length === 0) {
@@ -41,6 +43,8 @@ export default function CreateEpisodeUpdate({
                 }
             }
         );
+
+        SendNotificationMutation({ movie_id: movie_id });
     };
     return (
         <div className="min-w-max">

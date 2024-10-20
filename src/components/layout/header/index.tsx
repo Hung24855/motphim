@@ -20,7 +20,7 @@ import { authFirebase } from "@/firebase";
 import { signOut } from "firebase/auth";
 import { convertSearchParams } from "@/utils/function";
 import DropdownMenu from "@/base/libs/DropdownMenu";
-import { sessionContext } from "@/base/provider/next-auth";
+import { sessionContext } from "@/provider/next-auth";
 import { NotificationService } from "@/domain/thong-bao/services";
 import { convertTime } from "@/base/utils/function";
 
@@ -29,7 +29,10 @@ function Search({ session }: { session: Session | null }) {
     const [showSearch, setShowSearch] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const [logoutLoading, setLogoutLoading] = useState<boolean>(false);
-    const { notifications } = NotificationService.getAllNotification({ enabled: !!session });
+    const { notifications } = NotificationService.getAllNotification({
+        enabled: !!session,
+        user_id: session?.user?.id ?? ""
+    });
 
     useEffect(() => {
         if (inputRef.current && showSearch) {
@@ -116,12 +119,18 @@ function Search({ session }: { session: Session | null }) {
                         <span className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-red-500 text-xs">1</span>
                     </button>
                 }
+                onClickDropdownComponent={(_, __, setIsActive) => setIsActive(false)}
                 dropdownComponent={
-                    <div className="scrollbar-custom max-h-96 w-[80vw] overflow-x-auto rounded text-black md:w-96">
+                    <div className="scrollbar-custom max-h-96 w-[80vw] overflow-y-auto rounded text-black md:w-96">
                         <div className="bg-white p-2">
                             <div className="flex justify-between pb-2 text-lg font-semibold">
                                 <h3 className="font-bold">Thông báo</h3>
-                                <h3 className="cursor-pointer text-text_link hover:underline">Xem tất cả</h3>
+                                <h3
+                                    className="cursor-pointer text-text_link hover:underline"
+                                    onClick={() => router.push("/thong-bao")}
+                                >
+                                    Xem tất cả
+                                </h3>
                             </div>
 
                             {!session || !notifications || notifications.length === 0 ? (

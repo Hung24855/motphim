@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from "uuid";
 import { RouterHandler } from "../router.handler";
 
 export async function POST(request: NextRequest) {
-    const body = await request.json();
+
     return RouterHandler({
-        async mainFc(pool) {
+        async mainFc(pool,_,body) {
             const movie_id = uuidv4();
 
             let sql_insert_movie = `INSERT INTO movies 

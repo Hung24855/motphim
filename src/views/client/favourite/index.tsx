@@ -1,5 +1,5 @@
 "use client";
-import { sessionContext } from "@/base/provider/next-auth";
+import { sessionContext } from "@/provider/next-auth";
 import MaxWidth from "@/components/layout/max-width";
 import MovieCard from "@/components/shared/movie-card";
 import { ListMovieSkeleton } from "@/components/shared/movie-card-skeleton";

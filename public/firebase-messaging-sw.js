@@ -19,9 +19,15 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(async function (payload) {
-    console.log({payload});
+
+    const notificationTitle = payload?.notification?.title;
+    const notificationOptions = {
+        body: payload?.notification?.body,
+        icon: "https://firebasestorage.googleapis.com/v0/b/themovie-af1e4.appspot.com/o/Logo-light.png?alt=media&token=a18772c3-b1dc-422d-9dd8-92c8f0523889",
+    };
+    self?.registration?.showNotification(notificationTitle, notificationOptions);
     
-    //Lắng nghe thông báo khi đang không focus vào app
+ 
     // const data = JSON.parse(payload?.data?.data ?? "");
     // const notificationTitle = "Background Message Title";
     // const notificationOptions = {

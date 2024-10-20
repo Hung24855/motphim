@@ -1,5 +1,5 @@
 "use client";
-import { sessionContext } from "@/base/provider/next-auth";
+import { sessionContext } from "@/provider/next-auth";
 import MaxWidth from "@/components/layout/max-width";
 import { AccountsService } from "@/domain/tai-khoan/services";
 import { storageFirebase } from "@/firebase";
@@ -127,7 +127,7 @@ export default function ProfileView() {
         <MaxWidth className="min-h-screen">
             <div className="pb-10 pt-20">
                 <div className="px-4 sm:px-6 lg:px-8">
-                    <div className="mx-auto max-w-2xl overflow-hidden rounded-xl bg-white shadow-md">
+                    <div className="mx-auto max-w-2xl overflow-hidden rounded bg-white shadow-md">
                         <div className="px-8 py-6">
                             <h1 className="mb-4 text-center text-3xl font-bold text-gray-800">Thông tin cá nhân</h1>
                             <form onSubmit={handleSubmit} className="space-y-2">

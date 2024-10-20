@@ -1,10 +1,11 @@
 "use server";
-import { signOut, signIn } from "@/auth";
+import { signOut, signIn, auth } from "@/auth";
 import { AuthError } from "next-auth";
 import { IResponseData } from "@/infrastructure/config/types/apiResponse";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { pool } from "@/database/connect";
 
 export const register_action = async ({
     email,
@@ -59,6 +60,10 @@ export const login_action = async ({ email, password }: { email: string; passwor
 };
 
 export async function logout_action() {
+    const session = await auth();
+    const user_id = session?.user.id;
+    //Xóa token thông báo khi đăng xuất tránh trình trạng đăng nhập tài khoản khác nhưng vẫn nhận thông báo
+    pool.query("UPDATE users SET token_notification = NULL WHERE id = $1", [user_id]);
     await signOut();
     revalidatePath("/");
 }

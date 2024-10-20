@@ -8,5 +8,4 @@ export interface DataSendNotification {
     movie_id: string;
 }
 
-
 export type TResGetAllNotification = NotificationDTO[];

@@ -12,7 +12,11 @@ type DropDownProps = {
         isActive: boolean,
         setIsActive: React.Dispatch<React.SetStateAction<boolean>>
     ) => void;
-
+    onClickDropdownComponent?: (
+        e: MouseEvent<HTMLDivElement>,
+        isActive: boolean,
+        setIsActive: React.Dispatch<React.SetStateAction<boolean>>
+    ) => void;
     dropdownComponentStyle?: Pick<CSS.Properties, "top" | "left" | "right">;
     transitionProperty?: Pick<CSS.Properties, "transformOrigin" | "transitionDuration" | "transitionTimingFunction">;
     transitionType: "zoomIn" | "scaleY" | "slideDown";
@@ -26,6 +30,7 @@ const DropdownMenu = ({
     dropdownComponent,
     toggleEvent = "click",
     onClickToggleComponent,
+    onClickDropdownComponent,
     dropdownComponentStyle = {
         top: "120%",
         right: "auto",
@@ -101,6 +106,14 @@ const DropdownMenu = ({
                     transform: transformConverter(),
                     opacity: isActive ? "1" : "0",
                     visibility: isActive ? "visible" : "hidden"
+                }}
+                onClick={(e) => {
+                    if (toggleEvent !== "click") return;
+                    if (onClickDropdownComponent) {
+                        onClickDropdownComponent(e, isActive, setIsActive);
+                    } else {
+                        setIsActive(!isActive);
+                    }
                 }}
                 className={clsx(
                     dropdownPositionClassName ? dropdownPositionClassName : "left-auto right-0",

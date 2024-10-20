@@ -120,3 +120,8 @@ export function removeDataLocalStorage(key: string) {
     if (!isWindow()) return;
     localStorage.removeItem(key);
 }
+
+
+export function removeDuplicatesOfArray(array: any[]) {
+    return [...new Set(array)];
+}   

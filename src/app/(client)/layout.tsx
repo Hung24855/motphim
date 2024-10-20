@@ -5,12 +5,12 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import ProgessbarProviders from "@/base/libs/progesbar";
 import Toast from "@/base/libs/toast";
-import NextAuthProvider from "@/base/provider/next-auth";
+import NextAuthProvider from "@/provider/next-auth";
 import { auth } from "@/auth";
 import "./globals.css";
 import "swiper/css";
-import ReactQueryProvder from "@/base/provider/react-query";
-import FireBaseProvider from "@/base/provider/fire-base";
+import ReactQueryProvder from "@/provider/react-query";
+import FireBaseProvider from "@/provider/fire-base";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 
