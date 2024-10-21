@@ -16,7 +16,7 @@ export default function FireBaseProvider({ children }: { children: React.ReactNo
     const { session } = useContext(sessionContext);
     const queryClient = useQueryClient();
 
-    const { SaveTokenMutation } = NotificationService.useNotification();
+    const { SaveTokenMutation } = NotificationService.useNotification({});
 
     //Hứng thông báo và thêm vào danh sách
     useEffect(() => {
@@ -29,7 +29,8 @@ export default function FireBaseProvider({ children }: { children: React.ReactNo
                 id: Math.random() * 1000,
                 image: payload?.data?.image ?? "",
                 slug: payload?.data?.slug ?? "",
-                title: payload.notification?.body ?? ""
+                title: payload.notification?.body ?? "",
+                is_read: false
             };
 
             const previousData = queryClient.getQueryData<TResGetAllNotification>(queryKey);

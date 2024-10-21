@@ -18,7 +18,7 @@ export default function CreateEpisodeUpdate({
     const [Episodes, setEpisodes] = useState<Episode[]>([{ name: "1", link: "link-1", slug: "tap-1" }]);
 
     const { createEpisodeMutation, isPeddingCreateEpisode } = MoviesService.use_episodes();
-    const { SendNotificationMutation } = NotificationService.useNotification();
+    const { SendNotificationMutation } = NotificationService.useNotification({});
 
     const CreateEpisodes = () => {
         if (Episodes.length === 0) {

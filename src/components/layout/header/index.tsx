@@ -28,19 +28,28 @@ function Search({ session }: { session: Session | null }) {
     const [search, setSearch] = useState<string>("");
     const [showSearch, setShowSearch] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
+    const router = useRouter();
     const [logoutLoading, setLogoutLoading] = useState<boolean>(false);
     const { notifications } = NotificationService.getAllNotification({
         enabled: !!session,
         user_id: session?.user?.id ?? ""
     });
 
+    const { ReadNotificationMutation } = NotificationService.useNotification({ user_id: session?.user?.id ?? "" });
+    const [notificationCount, setNotificationCount] = useState<number>(0);
+
+    useEffect(() => {
+        if (notifications) {
+            const count = notifications.filter((notification) => !notification.is_read).length;
+            setNotificationCount(count);
+        }
+    }, [notifications]);
+
     useEffect(() => {
         if (inputRef.current && showSearch) {
             inputRef.current.focus();
         }
     }, [showSearch]);
-
-    const router = useRouter();
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
@@ -84,6 +93,10 @@ function Search({ session }: { session: Session | null }) {
         </Fragment>
     );
 
+    const handleReadNotification = () => {
+        ReadNotificationMutation();
+    };
+
     return (
         <div className="flex items-center gap-x-4">
             <button
@@ -114,9 +127,13 @@ function Search({ session }: { session: Session | null }) {
 
             <DropdownMenu
                 toggleComponent={
-                    <button className="relative py-2 duration-200 hover:scale-110">
+                    <button className="relative py-2 duration-200 hover:scale-110" onClick={handleReadNotification}>
                         <FaBell size={20} />
-                        <span className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-red-500 text-xs">1</span>
+                        {notificationCount > 0 && (
+                            <span className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-red-500 text-xs">
+                                {notificationCount}
+                            </span>
+                        )}
                     </button>
                 }
                 onClickDropdownComponent={(_, __, setIsActive) => setIsActive(false)}

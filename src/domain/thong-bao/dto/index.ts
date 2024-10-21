@@ -6,6 +6,7 @@ export interface NotificationDTO {
     created_at: string | number;
     slug: string;
     image: string;
+    is_read: boolean;
 }
 
 export type GetAllNotificationDTO = ISuccessResponse<NotificationDTO[]>;

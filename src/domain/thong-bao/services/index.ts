@@ -1,11 +1,12 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { NotificationApi } from "../api";
 import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { DataSendNotification, TResGetAllNotification } from "../model";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 
 export class NotificationService {
-    static useNotification = () => {
+    static useNotification = ({ user_id = "" }: { user_id?: string }) => {
+        const queryClient = useQueryClient();
         const { isPending, mutate: SaveTokenMutation } = useMutation({
             mutationFn: (token: string) => NotificationApi.save_token({ token })
         });
@@ -13,18 +14,39 @@ export class NotificationService {
         const { mutate: SendNotificationMutation } = useMutation({
             mutationFn: (data: DataSendNotification) => NotificationApi.send_notification(data)
         });
+        const { mutate: ReadNotificationMutation } = useMutation({
+            mutationFn: () => NotificationApi.read_notification(),
+            onMutate() {
+                const queryKey = [QUERY_KEY.GET_ALL_NOTIFICATIONS, user_id];
+                queryClient.setQueryData<TResGetAllNotification>(queryKey, (notifications) =>
+                    notifications?.map((notification) => ({
+                        ...notification,
+                        is_read: true
+                    }))
+                );
+            }
+        });
 
         return {
             SaveTokenMutation,
             SendNotificationMutation,
+            ReadNotificationMutation,
             isPending
         };
     };
-    static getAllNotification = ({ enabled, user_id }: { enabled: boolean; user_id: string }) => {
+    static getAllNotification = ({
+        enabled,
+        user_id,
+        limit = 20
+    }: {
+        enabled: boolean;
+        user_id: string;
+        limit?: number;
+    }) => {
         const { data: notifications, isFetching } = useFetcher<TResGetAllNotification>(
             [QUERY_KEY.GET_ALL_NOTIFICATIONS, user_id],
-            () => NotificationApi.get_all_notification(),
-            { enabled: enabled, refetchOnWindowFocus: true,staleTime: 1000 *5 }
+            () => NotificationApi.get_all_notification({ limit }),
+            { enabled: enabled, refetchOnWindowFocus: true, staleTime: 1000 * 5 }
         );
         return { notifications, isFetching };
     };
