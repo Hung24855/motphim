@@ -1,14 +1,15 @@
 import { initializeApp, getApps, getApp } from "firebase-admin/app";
-import serviceAccountKey from "./serviceAccountKey.json";
 import admin from "firebase-admin";
+import { AccountKey } from "./serviceAccountKey";
+
 
 export const adminApp = !getApps().length
     ? initializeApp(
           {
               credential: admin.credential.cert({
-                  clientEmail: serviceAccountKey.client_email,
-                  privateKey: serviceAccountKey.private_key,
-                  projectId: serviceAccountKey.project_id
+                  clientEmail: AccountKey.client_email,
+                  privateKey: AccountKey.private_key,
+                  projectId: AccountKey.project_id
               }),
               databaseURL: "https://themovie-af1e4-default-rtdb.asia-southeast1.firebasedatabase.app"
           },

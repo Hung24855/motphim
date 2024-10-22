@@ -20,9 +20,9 @@ export default function NotificationView() {
         <MaxWidth className="min-h-screen">
             <div className="pb-10 pt-20">
                 <div className="px-4 sm:px-6 lg:px-8">
-                    <div className="mx-auto max-w-4xl overflow-hidden rounded bg-white shadow-md py-2">
+                    <div className="mx-auto max-w-4xl overflow-hidden rounded bg-white py-2 shadow-md">
                         <div className="scrollbar-custom h-[80vh] w-full overflow-y-auto rounded text-black">
-                            <div className="h-full  px-2">
+                            <div className="h-full px-2">
                                 <h1 className="mb-4 text-xl font-semibold text-gray-800">Danh sách thông báo</h1>
                                 {!session || !notifications || notifications.length === 0 ? (
                                     <div className="mb-4 flex h-[calc(100%-140px)] flex-col items-center justify-center">
