@@ -94,6 +94,7 @@ function Search({ session }: { session: Session | null }) {
     );
 
     const handleReadNotification = () => {
+        if (!session) return;
         ReadNotificationMutation();
     };
 
@@ -290,9 +291,7 @@ export default function Header() {
                         <Link href="/" className="flex cursor-pointer items-center">
                             <Image src="/logo/Logo-light.png" alt="logo" width={65} height={65} /> MOTPHIM
                         </Link>
-                        <Link href="/" className="flex cursor-pointer items-center">
-                            <div className={clsx(pathName === "/" && "text-blue-500")}>Trang chủ</div>
-                        </Link>
+
                         <Link href={"/danh-sach/phim-le"}>
                             <div className={clsx(isActive("/danh-sach/phim-le") && "text-blue-500")}>Phim lẻ</div>
                         </Link>

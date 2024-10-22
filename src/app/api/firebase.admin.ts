@@ -2,6 +2,7 @@ import { initializeApp, getApps, getApp } from "firebase-admin/app";
 import serviceAccountKey from "./serviceAccountKey.json";
 import admin from "firebase-admin";
 
+
 export const adminApp = !getApps().length
     ? initializeApp(
           {
