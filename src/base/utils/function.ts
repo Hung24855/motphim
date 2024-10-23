@@ -16,7 +16,6 @@ export function handleSortSlide(arr: any[], index: number) {
 
     if (index === middle) return;
 }
-
 export function isEmail(email: string) {
     return REGEX.email.test(email);
 }
@@ -24,7 +23,6 @@ export function isEmail(email: string) {
 export function removeMark(str: string) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
-
 // Convert thời gian
 export function convertTime(inputTime: string): string {
     const now: Date = new Date();
@@ -67,7 +65,6 @@ export function convertTime(inputTime: string): string {
     // Nếu thời gian từ 30 giây trở lên, trả về số giây
     return `${seconds} giây trước`;
 }
-
 // remove all undefined or null value in object, if allowNull = true, object is not remove null value.
 export function removeNullAndUndefinedFromObject({
     obj,
@@ -91,7 +88,6 @@ export function removeNullAndUndefinedFromArray({ arr, allowNull = false }: { ar
     return arr.filter((item) => item !== undefined && (allowNull || item !== null));
 }
 export const delay = (m: number) => new Promise((r) => setTimeout(r, m));
-
 export function isWindow() {
     return typeof window !== "undefined";
 }
@@ -104,7 +100,6 @@ export function saveToLocalStorage({ key, value }: { key: string; value: any }) 
         console.error("Lỗi khi lưu vào localStorage:", error);
     }
 }
-
 export function getDataLocalStorage(key: string) {
     try {
         if (!isWindow()) return;
@@ -115,13 +110,10 @@ export function getDataLocalStorage(key: string) {
         return null; // Trả về null trong trường hợp có lỗi
     }
 }
-
 export function removeDataLocalStorage(key: string) {
     if (!isWindow()) return;
     localStorage.removeItem(key);
 }
-
-
 export function removeDuplicatesOfArray(array: any[]) {
     return [...new Set(array)];
 }   

@@ -7,9 +7,8 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
         async mainFc(pool) {
             const { limitSql, offset, orderBy, where, page, limit } = Filter(request);
 
-            let sql = `SELECT 
-            movies.movie_name, movies.slug, movies.year , 
-            movies.image, movies.time_per_episode, movies.episode_current,movies.episode_total, movies.lang FROM movies `;
+            let sql = `SELECT movies.movie_name, movies.slug, movies.year, movies.image, movies.time_per_episode, movies.episode_current,movies.episode_total, movies.lang 
+                        FROM movies `;
             //Join bảng
             let join = "INNER JOIN movie_type ON movie_type.id = movies.movie_type_id";
             const [movies, totalRows] = await Promise.all([

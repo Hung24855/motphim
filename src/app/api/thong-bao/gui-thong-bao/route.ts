@@ -10,7 +10,9 @@ export async function POST(request: NextRequest) {
             //Lấy danh sách token yêu thích movie_id
             const [response, movie_info] = await Promise.all([
                 pool.query(
-                    "SELECT token_notification as token, user_id FROM users INNER JOIN favorites ON users.id = favorites.user_id  WHERE movie_id=$1",
+                    `SELECT token_notification as token, user_id FROM users 
+                     INNER JOIN favorites ON users.id = favorites.user_id  
+                     WHERE movie_id=$1`,
                     [body.movie_id]
                 ),
                 pool.query("SELECT slug, movie_name, image FROM movies WHERE id = $1", [body.movie_id])

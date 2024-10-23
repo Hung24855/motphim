@@ -6,12 +6,12 @@ export async function GET(_: NextRequest, { params }: { params: { slug: string }
     return RouterHandler({
         async mainFc(pool) {
             let join = `INNER JOIN movie_genre ON movies.id = movie_genre.movie_id 
-             INNER JOIN genres ON movie_genre.genres_id = genres.id`;
+                        INNER JOIN genres ON movie_genre.genres_id = genres.id`;
 
             const res = await pool.query(
-                "SELECT movies.*, genres.name AS genre,genres.slug AS genre_slug  FROM movies " +
-                    join +
-                    " WHERE movies.slug = $1",
+                `SELECT movies.*, genres.name AS genre,genres.slug AS genre_slug  
+                 FROM movies ${join}
+                 WHERE movies.slug = $1`,
                 [params.slug]
             );
             if (res.rows.length === 0) {
@@ -23,15 +23,16 @@ export async function GET(_: NextRequest, { params }: { params: { slug: string }
 
             const [genres, countries, episodes] = await Promise.all([
                 pool.query(
-                    "SELECT movie_genre.*,genres.name ,genres.slug FROM movie_genre" +
-                        " INNER JOIN genres ON movie_genre.genres_id = genres.id" +
-                        " WHERE movie_id = $1",
+                    `SELECT movie_genre.*,genres.name ,genres.slug 
+                     FROM movie_genre INNER 
+                     JOIN genres ON movie_genre.genres_id = genres.id 
+                     WHERE movie_id = $1`,
                     [res.rows[0]?.id]
                 ),
                 pool.query(
-                    "SELECT movie_country.*,countries.name,countries.slug FROM movie_country" +
-                        " INNER JOIN countries ON movie_country.country_id = countries.id " +
-                        " WHERE movie_id = $1",
+                    `SELECT movie_country.*,countries.name,countries.slug FROM movie_country 
+                     INNER JOIN countries ON movie_country.country_id = countries.id 
+                     WHERE movie_id = $1`,
                     [res.rows[0]?.id]
                 ),
                 // //Chuyển tập phim sang number vì ban đầu name của nó là chuỗi nên không order_by được
@@ -64,10 +65,10 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
         async mainFc(pool, _, body) {
             // Cập nhật phim
 
-            let sql_update_movie = `UPDATE movies SET
-         movie_name = $1, slug = $2,content = $3,title_head = $4,image = $5,
-         time_per_episode = $6, episode_current = $7,episode_total = $8,movie_type_id = $9,trailer_youtube_url = $10
-         WHERE id=$11`;
+            let sql_update_movie = `UPDATE movies 
+                                    SET movie_name = $1, slug = $2,content = $3,title_head = $4,image = $5,
+                                    time_per_episode = $6, episode_current = $7,episode_total = $8,movie_type_id = $9,trailer_youtube_url = $10
+                                    WHERE id=$11`;
 
             pool.query(
                 sql_update_movie,

@@ -12,10 +12,10 @@ export async function GET(request: NextRequest) {
             //ILIKE là bỏ qua chữ hoa chữ thường
             // Yêu cầu phải giống ít nhất 2 từ trong mảng query
             let sql =
-                "SELECT movies.movie_name, movies.slug, movies.year, movies.movie_type_id, movies.image, " +
-                "movies.time_per_episode, movies.episode_current, movies.episode_total, movies.lang " +
-                "FROM movies " +
-                "WHERE is_visible = true AND (" +
+                `SELECT movies.movie_name, movies.slug, movies.year, movies.movie_type_id, movies.image,
+                movies.time_per_episode, movies.episode_current, movies.episode_total, movies.lang 
+                FROM movies 
+                WHERE is_visible = true AND (` +
                 [...query]
                     .map(
                         (str, index) =>

@@ -7,8 +7,11 @@ export async function GET(request: NextRequest) {
         async mainFc(pool, user_id) {
             const { limitSql } = Filter(request);
             const res = await pool.query(
-                "SELECT notification.id, notification.title, notification.created_at, movies.slug, movies.image,notification.is_read FROM notification JOIN users ON notification.user_id = users.id JOIN movies ON notification.movie_id = movies.id WHERE user_id = $1 ORDER BY created_at DESC " +
-                    limitSql,
+                `SELECT notification.id, notification.title, notification.created_at, movies.slug, movies.image,notification.is_read 
+                 FROM notification 
+                 JOIN users ON notification.user_id = users.id 
+                 JOIN movies ON notification.movie_id = movies.id 
+                 WHERE user_id = $1 ORDER BY created_at DESC ${limitSql}`,
                 [user_id]
             );
             return {
