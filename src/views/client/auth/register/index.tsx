@@ -64,7 +64,7 @@ export default function RegisternPage() {
         }
     };
     return (
-        <Fragment>
+        <div className="px-2">
             <div className="mx-auto flex flex-col items-center justify-center pt-28 md:min-h-screen lg:py-0">
                 <div className="w-full rounded bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
                     <div className="space-y-3 p-2 sm:p-6 md:space-y-4">
@@ -81,7 +81,7 @@ export default function RegisternPage() {
                                         <Input
                                             field={field}
                                             label="Email"
-                                            placeholder="name@gmail.com"
+                                            placeholder="Email"
                                             required
                                             error={errors.email}
                                         />
@@ -97,7 +97,7 @@ export default function RegisternPage() {
                                         <Input
                                             field={field}
                                             label="Tên người dùng"
-                                            placeholder="Nghiêm Hồng"
+                                            placeholder="Nguyễn Văn A"
                                             required
                                             error={errors.username}
                                         />
@@ -153,6 +153,6 @@ export default function RegisternPage() {
                     </div>
                 </div>
             </div>
-        </Fragment>
+        </div>
     );
 }

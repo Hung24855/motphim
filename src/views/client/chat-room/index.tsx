@@ -65,7 +65,7 @@ export default function ChatRoomView() {
                                         </div>
                                     </Fragment>
                                 ) : (
-                                    <div className="flex h-full items-center justify-center">
+                                    <div className="flex h-screen items-center justify-center">
                                         <p className="text-lg text-gray-400">
                                             Chọn một phòng để xem phim cùng mọi người!
                                         </p>

@@ -17,14 +17,13 @@ export class NotificationApi {
     }
 
     static async get_all_notification({ limit }: { limit: number }) {
-        const res = await requester<TResGetAllNotification>({
+        return await requester<TResGetAllNotification>({
             requestFunc: () =>
                 http.get(ENDPOINT_URL.get_all_notifications(), {
                     params: { limit }
                 }),
             handleData: (data: GetAllNotificationDTO) => data.data
         })();
-        return res;
     }
     static async read_notification() {
         requester({

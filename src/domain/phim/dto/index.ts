@@ -1,5 +1,4 @@
 // Thông tin API trả về
-
 import { ISuccessResponse } from "@/infrastructure/config/types/apiResponse";
 
 // Thông tin cho 1 card phim

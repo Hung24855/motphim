@@ -19,7 +19,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { authFirebase } from "@/firebase";
 import { signOut } from "firebase/auth";
 import { convertSearchParams } from "@/utils/function";
-import DropdownMenu from "@/base/libs/DropdownMenu";
+import DropdownMenu from "@/base/libs/dropdown";
 import { sessionContext } from "@/provider/next-auth";
 import { NotificationService } from "@/domain/thong-bao/services";
 import { convertTime } from "@/base/utils/function";
@@ -79,8 +79,7 @@ function Search({ session }: { session: Session | null }) {
                                 className="px-2 py-1 text-red-500 hover:bg-gray-200"
                                 onClick={async () => {
                                     setLogoutLoading(true);
-                                    await signOut(authFirebase);
-                                    await logout_action();
+                                    await Promise.all([signOut(authFirebase), logout_action()]);
                                     setLogoutLoading(false);
                                 }}
                             >
@@ -341,12 +340,19 @@ export default function Header() {
                                 </div>
                             )}
                         </div>
-                        <Link href={"/yeu-thich"}>
-                            <div className={clsx(isActive("/yeu-thich") && "text-blue-500")}>Yêu thích</div>
-                        </Link>
-                        <Link href={"/phong-xem-phim"}>
-                            <div className={clsx(isActive("/phong-xem-phim") && "text-blue-500")}>Phòng xem phim</div>
-                        </Link>
+
+                        {session && (
+                            <Fragment>
+                                <Link href={"/yeu-thich"}>
+                                    <div className={clsx(isActive("/yeu-thich") && "text-blue-500")}>Yêu thích</div>
+                                </Link>
+                                <Link href={"/phong-xem-phim"}>
+                                    <div className={clsx(isActive("/phong-xem-phim") && "text-blue-500")}>
+                                        Phòng xem phim
+                                    </div>
+                                </Link>
+                            </Fragment>
+                        )}
                     </div>
                     {/* side bar */}
                     <SideBarMenu genres={genres} countries={countries} />

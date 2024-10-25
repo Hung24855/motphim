@@ -3,14 +3,14 @@ import { Nunito } from "next/font/google";
 import DB_Connect from "@/database/connect";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import ProgessbarProviders from "@/base/libs/progesbar";
-import Toast from "@/base/libs/toast";
 import NextAuthProvider from "@/provider/next-auth";
 import { auth } from "@/auth";
 import "./globals.css";
 import "swiper/css";
 import ReactQueryProvder from "@/provider/react-query";
 import FireBaseProvider from "@/provider/fire-base";
+import ProgessbarProviders from "@/provider/progess-bar";
+import Toast from "@/provider/react-toastify";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 

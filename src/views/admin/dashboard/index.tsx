@@ -1,7 +1,7 @@
 "use client";
 import Loading from "@/base/libs/loading";
 import { convertTime } from "@/base/utils/function";
-import Counter from "@/components/shared/counter";
+import Counter from "@/components/admin/counter";
 import { StatisticalService } from "@/domain/thong-ke/services";
 import { Fragment } from "react";
 

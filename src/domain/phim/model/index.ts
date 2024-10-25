@@ -1,3 +1,4 @@
+//cấu trúc  data cần để truyền đến back-end và cấu trúc  data lưu trữ trong react-query
 import {
     DataGetMoviesByCountryDTO,
     DataGetMoviesByGenreDTO,

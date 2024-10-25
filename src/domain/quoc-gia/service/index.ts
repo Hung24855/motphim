@@ -1,6 +1,5 @@
 import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
-import { GetAllCountriesDTO } from "../dto";
 import { CountriesApi } from "../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DataCreateCountry, DataUpdateCountry, TResGetAllCountries } from "../model";

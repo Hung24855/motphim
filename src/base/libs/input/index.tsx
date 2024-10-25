@@ -42,7 +42,7 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProp
                 ) : (
                     <input
                         ref={ref}
-                        className="h-10 w-full rounded-md bg-[#F0F3F6] px-3 py-2 text-[#295779]  placeholder-[#BAC9D4] outline-none"
+                        className="h-10 w-full rounded-md bg-[#F0F3F6] px-3 py-2 text-[#295779] placeholder-[#BAC9D4] outline-none"
                         placeholder={placeholder}
                         {...field}
                         type={type}

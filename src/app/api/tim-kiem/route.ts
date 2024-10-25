@@ -1,6 +1,7 @@
 import { removeMark } from "@/base/utils/function";
-import { type NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 import { RouterHandler } from "../router.handler";
+import CheckAdmin, { getUserIdByTokenNextAuth } from "../middleware";
 
 export async function GET(request: NextRequest) {
     return RouterHandler({
@@ -11,11 +12,12 @@ export async function GET(request: NextRequest) {
 
             //ILIKE là bỏ qua chữ hoa chữ thường
             // Yêu cầu phải giống ít nhất 2 từ trong mảng query
+            const is_admin = await CheckAdmin(request); //Nếu admin tìm kiếm thì tìm cả nhưng phim đang ẩn
             let sql =
-                `SELECT movies.movie_name, movies.slug, movies.year, movies.movie_type_id, movies.image,
-                movies.time_per_episode, movies.episode_current, movies.episode_total, movies.lang 
+                `SELECT movies.id, movies.movie_name, movies.slug, movies.year, movies.movie_type_id, movies.image,
+                movies.time_per_episode, movies.episode_current, movies.episode_total, movies.lang,movies.is_visible
                 FROM movies 
-                WHERE is_visible = true AND (` +
+                WHERE ${is_admin ? "" : "is_visible = true AND "}  (` +
                 [...query]
                     .map(
                         (str, index) =>
@@ -24,12 +26,11 @@ export async function GET(request: NextRequest) {
                     .join(" + ") +
                 ") >= 2 " +
                 `${movie_type_id ? "AND movie_type_id = " + `'${movie_type_id}'` : ""}`;
-
-            const res = await pool.query(sql);
+            const movies = await pool.query(sql);
             return {
                 message: "Tìm kiếm phim thành công!",
-                data: res.rows
+                data: movies.rows
             };
-        },
+        }
     });
 }

@@ -136,6 +136,16 @@ export default function SideBarMenu({ countries, genres }: SideBarProps) {
                                 Yêu thích
                             </li>
                         </Link>
+                        <Link href={"/phong-xem-phim"}>
+                            <li
+                                className="flex cursor-pointer items-center rounded py-3 pl-1 hover:bg-slate-100/60"
+                                onClick={() => {
+                                    setOpen(!open);
+                                }}
+                            >
+                                Phòng xem phim
+                            </li>
+                        </Link>
                     </ul>
                 </div>
                 <motion.span

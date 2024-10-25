@@ -5,9 +5,9 @@ import { IoPlay } from "react-icons/io5";
 import { motion } from "framer-motion";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import MaxWidth from "@/components/layout/max-width";
-import { handleSortSlide } from "@/base/utils/function";
 import { MoviesService } from "@/domain/phim/services";
 import Link from "next/link";
+import { handleSortSlide } from "@/utils/function";
 
 type slide = {
     image: string;

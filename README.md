@@ -3,7 +3,7 @@
 
 ## Công nghệ sử dụng 
 - NextJS 14
-- Tailwind
+- TailwindCss
 - Typescript
 - Postgresql
 - Next-auth
@@ -19,13 +19,13 @@
 - Xem phim mới cập nhật từng ngày
 - Tìm kiếm phim
 - Xem phim theo từng thể loại và quốc gia
-- Responsive
 - Yêu thích phim
 - Tạo phòng xem phim : Trò truyện real-time và xem phim
 - CRUD phim, thể loại, quốc gia
 - Phân quyền
 - Gửi và nhận thông báo real-time với FCM (Firebase cloud message)
 - Bình luận
+- Responsive
 
 ## Screenshots
 ### Trang chủ

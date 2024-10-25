@@ -1,5 +1,5 @@
 "use client";
-import MovieCategory from "@/components/home/movies/movie-category";
+import MovieCategory from "@/components/client/movies/movie-category";
 import MaxWidth from "@/components/layout/max-width";
 import { MovieForCardDTO } from "@/domain/phim/dto";
 import { MoviesService } from "@/domain/phim/services";

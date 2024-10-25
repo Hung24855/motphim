@@ -1,10 +1,4 @@
 class EndpointUrl {
-    baseAdmin: string;
-
-    constructor() {
-        this.baseAdmin = "/admin";
-    }
-
     //the-loai
     get_genres = () => `/the-loai`;
     create_genre = () => `/the-loai`;

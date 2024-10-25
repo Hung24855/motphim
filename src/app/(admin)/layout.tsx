@@ -5,10 +5,10 @@ import { Nunito } from "next/font/google";
 import "./globals.css";
 import "swiper/css";
 import ReactQueryProvder from "@/provider/react-query";
-import ProgessbarProviders from "@/base/libs/progesbar";
-import Toast from "@/base/libs/toast";
 import AntDesignConfig from "@/provider/ant-config";
 import Image from "next/image";
+import ProgessbarProviders from "@/provider/progess-bar";
+import Toast from "@/provider/react-toastify";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 

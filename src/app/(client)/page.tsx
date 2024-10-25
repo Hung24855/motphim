@@ -1,5 +1,5 @@
-import MovieCategory from "@/components/home/movies/movie-category";
-import Slide from "@/components/home/slide";
+import MovieCategory from "@/components/client/movies/movie-category";
+import Slide from "@/components/client/slide";
 import MaxWidth from "@/components/layout/max-width";
 
 export default async function Home() {

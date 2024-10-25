@@ -4,9 +4,9 @@ import SwiperCore from "swiper";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
-import MovieCard from "@/components/shared/movie-card";
+import MovieCard from "@/components/client/movie-card";
 import { MoviesService } from "@/domain/phim/services";
-import { ListMovieSkeleton } from "@/components/shared/movie-card-skeleton";
+import { ListMovieSkeleton } from "@/components/client/movie-card-skeleton";
 import Link from "next/link";
 
 type props = {

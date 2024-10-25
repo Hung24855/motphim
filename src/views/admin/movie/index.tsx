@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { TResGetMovies } from "@/domain/phim/model";
+import useDebounce from "@/base/hooks/useDebounce";
+import { convertSearchParams } from "@/utils/function";
 
 export default function MoviesAdminView() {
     const queryClient = useQueryClient();
@@ -27,8 +29,15 @@ export default function MoviesAdminView() {
         isPeddingDeleteMovie,
         deleteMovieMutation
     } = MoviesService.use_movies({ page: page, limit: 10 });
-
     const { isPendingChangeVisibleMovie, mutateChangeVisibleMovie } = MoviesService.change_visible_movie();
+
+    //Tìm kiếm phim  -- 25/10/2024 : 10h48
+    const [searchText, setsearchText] = useState<string>("");
+    const debouncedValue = useDebounce(searchText, 1000);
+    const { data: moviesSearch, isFetching: isFetchingSearch } = MoviesService.get_search_movie({
+        query: convertSearchParams(debouncedValue)
+    });
+    //End kiếm phim
 
     const columns = [
         {
@@ -168,23 +177,37 @@ export default function MoviesAdminView() {
             });
         }
     };
+    
     return (
         <div>
             <h1 className="text-center text-3xl font-semibold">Quản lý phim</h1>
-            <Link href={"/admin/phim/them-phim"}>
-                <button className="mb-1 mt-3 rounded bg-admin_primary px-3 py-2 text-white">Thêm phim</button>
-            </Link>
+            <div className="flex gap-4">
+                <Link href={"/admin/phim/them-phim"}>
+                    <button className="rounded bg-admin_primary px-3 py-2 text-white">Thêm phim</button>
+                </Link>
+                <div className="flex h-10 w-52 items-center">
+                    <input
+                        placeholder="Nhập tên phim ..."
+                        className="rounded-sm border p-2 outline-none"
+                        value={searchText}
+                        onChange={(e: any) => {
+                            setsearchText(e.target.value);
+                        }}
+                    />
+                </div>
+            </div>
+
             <div className="mt-3 min-h-screen w-full">
                 <Table
-                    dataSource={movies?.data}
+                    dataSource={moviesSearch ? moviesSearch : movies?.data}
                     columns={columns}
                     loading={{
-                        spinning: isFetching,
-                        indicator: <Loading loading={isFetching} containerClassName="pt-20 " />
+                        spinning: isFetching || isFetchingSearch,
+                        indicator: <Loading loading={isFetching || isFetchingSearch} containerClassName="pt-20 " />
                     }}
                     pagination={{
                         pageSize: 10,
-                        total: movies?.pagination ? movies.pagination.totalRows : 1,
+                        total: moviesSearch ? 1 : movies?.pagination ? movies.pagination.totalRows : 1,
                         onChange: (page) => setPage(page),
                         position: ["bottomCenter"]
                     }}
