@@ -1,8 +1,7 @@
 import { NextRequest } from "next/server";
-import { getMessaging, Message, MulticastMessage } from "firebase-admin/messaging";
+import { getMessaging, MulticastMessage } from "firebase-admin/messaging";
 import { adminApp } from "../../firebase.admin";
 import { RouterHandler } from "../../router.handler";
-// import { removeDuplicatesOfArray } from "@/base/utils/function";
 
 export async function POST(request: NextRequest) {
     return RouterHandler({
@@ -45,13 +44,14 @@ export async function POST(request: NextRequest) {
                 }
             };
 
+            //Gửi thông báo đến người dùng
             getMessaging(adminApp)
                 .sendEachForMulticast(message)
                 .then((response) => {
-                    console.log("Successfully sent message");
+                    console.log("Gửi thông báo thành công!");
                 })
                 .catch((error) => {
-                    console.log("Error sending message ====>", error);
+                    console.log("Gửi thông báo lỗi ====>", error);
                 });
 
             // Lưu thông tin thông báo vào CSDL

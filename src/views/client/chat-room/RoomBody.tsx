@@ -18,9 +18,7 @@ import clsx from "clsx";
 
 export const RoomBody = () => {
     const { selectedRoom, RoomInfo } = useContext(ChatRoomContext);
-
     const playlistRef = useRef<HTMLDivElement>(null);
-
     const [searchText, setsearchText] = useState<string>("");
     const debouncedValue = useDebounce(searchText, 700);
     const { data: movies, isFetching } = MoviesService.get_search_movie({

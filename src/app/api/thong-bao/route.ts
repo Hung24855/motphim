@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { RouterHandler } from "../router.handler";
 
+//Đọc thông báo
 export async function POST(request: NextRequest) {
     return RouterHandler({
         async mainFc(pool, user_id) {

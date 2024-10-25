@@ -20,16 +20,6 @@ export const authFirebase = getAuth(appFirebase);
 export const dbFirebase = getFirestore(appFirebase); //Lưu trữ tin nhắn real-time
 export const storageFirebase = getStorage(appFirebase); //Lưu trữ hình ảnh
 
-// export const onMessageListener = (): Promise<MessagePayload> => {
-//     const messaging = getMessaging(appFirebase);
-//     //Lắng nghe dữ liệu trả về từ thông báo
-//     return new Promise((resolve) => {
-//         onMessage(messaging, (payload) => {
-//             resolve(payload);
-//         });
-//     });
-// };
-
 // const messaging = getMessaging(appFirebase); //Hàm này sẽ tự chạy để kiểm tra quyền thông báo của trình duyệt! Vậy chỉ nên gọi hàm này nếu quyền thông báo được bật
 
 export const requestPermission = ({
@@ -56,7 +46,7 @@ export const requestPermission = ({
                     })
                     .catch((err) => {});
                 break;
-            case "denied":
+            case "denied"://Khi người dùng cố tình tắt tính năng thông báo
                 onDenied();
                 break;
             case "default":

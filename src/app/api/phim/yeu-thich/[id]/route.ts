@@ -44,14 +44,14 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 }
 
 // Get danh sách phim yêu thích theo user_id
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest) {
     return RouterHandler({
         async mainFc(pool, user_id) {
-            let select =
-                "SELECT movies.id,movies.movie_name, movies.slug, movies.year, movies.image, movies.time_per_episode, movies.episode_current, movies.episode_total,movies.lang ";
-
             const res = await pool.query(
-                select + ` FROM favorites INNER JOIN movies ON favorites.movie_id = movies.id WHERE user_id = $1`,
+                `SELECT movies.id,movies.movie_name, movies.slug, movies.year, movies.image, movies.time_per_episode, movies.episode_current, movies.episode_total,movies.lang
+                 FROM favorites 
+                 INNER JOIN movies ON favorites.movie_id = movies.id 
+                 WHERE user_id = $1`,
                 [user_id]
             );
             return {

@@ -4,7 +4,9 @@ export async function GET(request: NextRequest) {
     return RouterHandler({
         async mainFc(pool) {
             const res = await pool.query(
-                "SELECT users.id, users.email,users.username,users.role,users.created_at,users.updated_at FROM users WHERE email != 'admin@gmail.com'"
+                `SELECT users.id, users.email,users.username,users.role,users.created_at,users.updated_at 
+                 FROM users 
+                 WHERE email != 'admin@gmail.com'`
             );
             return {
                 message: "Lấy danh sách tài khoản thành công!",

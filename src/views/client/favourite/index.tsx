@@ -27,13 +27,11 @@ export default function Favourite() {
             {moviesFavoriteByUser.length > 0 ? (
                 <div className="pb-10 pt-24">
                     <div className="px-2 text-2xl">Phim yêu thích</div>
-                    {
-                        <div className="mt-2 grid grid-cols-2 gap-2 px-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                            {moviesFavoriteByUser.map((movie, index) => (
-                                <MovieCard key={index} movie={movie} />
-                            ))}
-                        </div>
-                    }
+                    <div className="mt-2 grid grid-cols-2 gap-2 px-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                        {moviesFavoriteByUser.map((movie, index) => (
+                            <MovieCard key={index} movie={movie} />
+                        ))}
+                    </div>
                 </div>
             ) : (
                 <div className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl">

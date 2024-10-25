@@ -33,8 +33,8 @@ export default async function RootLayout({
                             <ProgessbarProviders>
                                 <main className="flex min-h-screen">
                                     <AdminSideBar />
-                                    <div className="flex flex-1 flex-col bg-gray-50 px-6 pb-4">
-                                        <div className="flex items-center justify-end gap-x-4 py-1">
+                                    <div className="flex flex-1 flex-col bg-gray-50 px-6 py-4">
+                                        {/* <div className="flex items-center justify-end gap-x-4 py-1">
                                             <div className="size-10 overflow-hidden rounded-full bg-gray-200">
                                                 <Image
                                                     src={"/avatar/avatar.jpg"}
@@ -43,7 +43,7 @@ export default async function RootLayout({
                                                     alt="avatar"
                                                 ></Image>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className="h-full rounded-lg pb-4">{children}</div>
                                     </div>
                                 </main>

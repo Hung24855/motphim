@@ -6,33 +6,28 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
     return RouterHandler({
         async mainFc(pool) {
             const { limitSql, offset, orderBy, where, page, limit } = Filter(request);
-
-            let sql = `SELECT movies.movie_name, movies.slug, movies.year, movies.image, movies.time_per_episode, movies.episode_current,movies.episode_total, movies.lang 
-                        FROM movies `;
-            //Join bảng
-            let join = "INNER JOIN movie_type ON movie_type.id = movies.movie_type_id";
             const [movies, totalRows] = await Promise.all([
-                pool.query(`${sql} ${join} WHERE movie_type.slug = $1  ${orderBy} ${limitSql} ${offset}`, [
-                    params.slug
-                ]),
-                pool.query(`SELECT COUNT(*) FROM movies ${join} WHERE ${where} movie_type.slug = $1 `, [params.slug])
+                pool.query(
+                    `SELECT movies.movie_name, movies.slug, movies.year, movies.image, movies.time_per_episode, movies.episode_current,movies.episode_total, movies.lang 
+                     FROM movies 
+                     INNER JOIN movie_type ON movie_type.id = movies.movie_type_id 
+                     WHERE movie_type.slug = $1  ${orderBy} ${limitSql} ${offset}`,
+                    [params.slug]
+                ),
+                pool.query(
+                    `SELECT COUNT(*) 
+                     FROM movies 
+                     INNER JOIN movie_type ON movie_type.id = movies.movie_type_id 
+                     WHERE ${where} movie_type.slug = $1 `,
+                    [params.slug]
+                )
             ]);
 
-            if (movies.rows.length === 0) {
-                return {
-                    message: "Phim không tồn tại!",
-                    data: [],
-                    pagination: {
-                        totalRows: Number(totalRows.rows[0].count),
-                        currentPage: page,
-                        pageSize: limit,
-                        totalPages: Math.ceil(totalRows.rows[0].count / limit)
-                    }
-                };
-            }
-
             return {
-                message: "Lấy thông tin danh sách phim thành công!",
+                message:
+                    movies.rows.length === 0
+                        ? "Không có phim thuộc thể loại này!"
+                        : "Lấy thông tin danh sách phim thành công!",
                 data: movies.rows,
                 pagination: {
                     totalRows: Number(totalRows.rows[0].count),

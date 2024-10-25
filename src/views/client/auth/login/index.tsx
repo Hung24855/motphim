@@ -38,9 +38,6 @@ export default function LoginPage() {
                         console.log("Đăng nhập Firebase thất bại!", error.message);
                     });
             }
-
-            // Đăng nhập firebase
-
             if (result?.message) {
                 setGlobalMessage(result.message);
             }

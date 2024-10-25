@@ -87,7 +87,6 @@ export default function Slide() {
 
     const handleMouseUp = (event: MouseEvent<HTMLDivElement>) => {
         const clientX = event.clientX;
-
         const rect = slideRef.current?.getBoundingClientRect(); //Lấy thông tin kích thước và vị trí của phần tử Ref - sizeAndLocationInfo
 
         //getBoundingClientRect  return về
@@ -203,7 +202,6 @@ export default function Slide() {
                                 onClick={(event) => {
                                     //Thay đỏi background thành background cũ
                                     setOldSlides(slides[2]);
-
                                     handleSortSlide(slides, index);
                                     if (index !== 2) {
                                         setslides((slides) => [...slides]);

@@ -5,7 +5,7 @@ import { AccountsService } from "@/domain/tai-khoan/services";
 import { storageFirebase } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Image from "next/image";
-import { ChangeEvent, FormEvent, useContext, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { TbEdit } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
@@ -55,10 +55,10 @@ export default function ProfileView() {
                     setProcess(Math.floor(progress));
                     switch (snapshot.state) {
                         case "paused":
-                            console.log("Upload is paused");
+                            console.log("Tải lên bị dừng!");
                             break;
                         case "running":
-                            console.log("Upload is running");
+                            console.log("Đang tải lên...");
                             break;
                     }
                 },

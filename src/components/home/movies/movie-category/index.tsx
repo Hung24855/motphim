@@ -17,7 +17,7 @@ type props = {
 };
 
 export default function MovieCategory(props: props) {
-    const { title, pathAll, slidesPerView = 5, slug } = props;
+    const { title, slug } = props;
     const swiperRef = useRef<SwiperCore>();
 
     const { data: movies } = MoviesService.get_movies_by_genre({

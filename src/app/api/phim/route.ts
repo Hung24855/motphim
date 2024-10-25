@@ -50,7 +50,6 @@ export async function POST(request: NextRequest) {
                             };
                         })
                     ];
-                    // Run all queries
                     const promises = queries.map(({ query, values }) => pool.query(query, values));
                     Promise.all(promises)
                         .then(() => {

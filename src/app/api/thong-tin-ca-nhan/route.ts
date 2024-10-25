@@ -9,8 +9,6 @@ export async function PUT(request: NextRequest) {
                 body.avatar,
                 user_id
             ]);
-
-            //Bỏ mật khẩu khỏi response
             const { password, ...user } = res.rows[0];
 
             return {
@@ -20,7 +18,7 @@ export async function PUT(request: NextRequest) {
         },
         options: {
             checkAuth: "isUser",
-            required: ["username"],
+            required: ["username","avatar"],
             request: request
         }
     });

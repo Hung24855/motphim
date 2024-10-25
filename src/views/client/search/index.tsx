@@ -6,9 +6,8 @@ import { MoviesService } from "@/domain/phim/services";
 import { useSearchParams } from "next/navigation";
 
 export default function SearchMovieView() {
-    const SearchParams = useSearchParams().get("q");
-    const { data: movies } = MoviesService.get_search_movie({ query: SearchParams ?? "" });
-
+    const slug = useSearchParams().get("q");
+    const { data: movies } = MoviesService.get_search_movie({ query: slug ?? "" });
     if (!movies) return <ListMovieSkeleton />;
 
     return (

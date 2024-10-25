@@ -5,12 +5,11 @@ export const revalidate = 3600;
 export async function GET(_: NextRequest, { params }: { params: { slug: string } }) {
     return RouterHandler({
         async mainFc(pool) {
-            let join = `INNER JOIN movie_genre ON movies.id = movie_genre.movie_id 
-                        INNER JOIN genres ON movie_genre.genres_id = genres.id`;
-
             const res = await pool.query(
                 `SELECT movies.*, genres.name AS genre,genres.slug AS genre_slug  
-                 FROM movies ${join}
+                 FROM movies
+                 INNER JOIN movie_genre ON movies.id = movie_genre.movie_id 
+                 INNER JOIN genres ON movie_genre.genres_id = genres.id
                  WHERE movies.slug = $1`,
                 [params.slug]
             );
@@ -37,7 +36,10 @@ export async function GET(_: NextRequest, { params }: { params: { slug: string }
                 ),
                 // //Chuyển tập phim sang number vì ban đầu name của nó là chuỗi nên không order_by được
                 pool.query(
-                    "SELECT * FROM episodes WHERE movie_id = $1 ORDER BY CAST(REGEXP_REPLACE(name, '\\D', '', 'g') AS INTEGER)",
+                    `SELECT * 
+                     FROM episodes 
+                     WHERE movie_id = $1 
+                     ORDER BY CAST(REGEXP_REPLACE(name, '\\D', '', 'g') AS INTEGER)`,
                     [res.rows[0]?.id]
                 ),
                 // Tăng lượt xem
@@ -65,13 +67,12 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
         async mainFc(pool, _, body) {
             // Cập nhật phim
 
-            let sql_update_movie = `UPDATE movies 
-                                    SET movie_name = $1, slug = $2,content = $3,title_head = $4,image = $5,
-                                    time_per_episode = $6, episode_current = $7,episode_total = $8,movie_type_id = $9,trailer_youtube_url = $10
-                                    WHERE id=$11`;
 
             pool.query(
-                sql_update_movie,
+                `UPDATE movies 
+                 SET movie_name = $1, slug = $2,content = $3,title_head = $4,image = $5,
+                 time_per_episode = $6, episode_current = $7,episode_total = $8,movie_type_id = $9,trailer_youtube_url = $10
+                 WHERE id=$11`,
                 [
                     body.movie_name,
                     body.slug,
@@ -89,9 +90,6 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
                     if (error) {
                         throw new Error(error.message);
                     }
-
-                    //C1: Xóa danh mục cũ và thêm danh mục mới
-                    //C2: Xóa những danh mục cũ không có trong lựa chọn mới và thêm những lựa chọn mới
 
                     await Promise.all([
                         pool.query("DELETE FROM movie_country WHERE movie_id = $1", [params.slug]),

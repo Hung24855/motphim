@@ -21,6 +21,7 @@ export default function SideBar() {
     const [RoomCreateForm, setRoomCreateForm] = useState(initCreateRoomForm);
     const [loading, setloading] = useState<boolean>(false);
     const [user] = useAuthState(authFirebase);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     //Lắng nghe danh sách các phòng
     const { doccument: Rooms }: { doccument: RoomsType } = useFirestore({
@@ -53,7 +54,7 @@ export default function SideBar() {
         setRoomCreateForm(initCreateRoomForm);
     };
 
-    const inputRef = useRef<HTMLInputElement>(null);
+    
 
     useEffect(() => {
         if (inputRef.current) {
@@ -97,7 +98,7 @@ export default function SideBar() {
                                         {convertTime(room.createdAt?.toDate().toString())}
                                     </span>
                                 </div>
-                                {/* <p className="truncate text-xs text-gray-400">Tin nhắn cuối cùng!</p> */}
+                            
                             </div>
                         </div>
                     ))}
