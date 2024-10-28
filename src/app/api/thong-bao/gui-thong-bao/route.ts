@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { getMessaging, MulticastMessage } from "firebase-admin/messaging";
 import { adminApp } from "../../firebase.admin";
 import { RouterHandler } from "../../router.handler";
+const BASE_URL_FRONT = process.env.NEXT_PUBLIC_BASE_URL_FRONT;
 
 export async function POST(request: NextRequest) {
     return RouterHandler({
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
                 //Cấu hình thông báo cho nền tảng web
                 webpush: {
                     fcmOptions: {
-                        link: `http://localhost:3000/phim/${movie_info.rows[0].slug}`,
+                        link: `${BASE_URL_FRONT}/phim/${movie_info.rows[0].slug}`,
                     },
                     notification: {
                         icon: "https://firebasestorage.googleapis.com/v0/b/themovie-af1e4.appspot.com/o/Logo-light.png?alt=media&token=a18772c3-b1dc-422d-9dd8-92c8f0523889",
