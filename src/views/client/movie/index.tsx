@@ -197,7 +197,7 @@ export default function MoviePage(props: Props) {
                                         </a>
                                         <button
                                             className={clsx(
-                                                "flex items-center gap-2 rounded-full border-2 border-primary bg-black/70 px-5 py-2.5 duration-300",
+                                                "flex items-center gap-2 rounded-full w-[132px] border-2 border-primary bg-black/70 px-5 py-2.5 duration-300",
                                                 checkFavoriteMovie?.is_favorites
                                                     ? "bg-red-500 text-white"
                                                     : "hover:bg-primary hover:text-black"

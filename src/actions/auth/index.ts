@@ -3,8 +3,6 @@ import { signOut, signIn, auth } from "@/auth";
 import { AuthError } from "next-auth";
 import { IResponseData } from "@/infrastructure/config/types/apiResponse";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import { pool } from "@/database/connect";
 
 export const register_action = async ({
@@ -68,24 +66,3 @@ export async function logout_action() {
     revalidatePath("/");
 }
 
-export const Permissions = async ({ user_id, role }: { user_id: string; role: "admin" | "user" }) => {
-    try {
-        const cookie = cookies();
-        const session = cookie.get("authjs.session-token")?.value;
-        if (!session) {
-            redirect("/");
-        }
-
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL_API + `/phan-quyen/${user_id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                cookie: "authjs.session-token=" + session
-            },
-            body: JSON.stringify({ role })
-        }).then((res) => res.json());
-        return response;
-    } catch (error) {
-        throw new Error("Có lỗi xảy ra thử lại sau!");
-    }
-};

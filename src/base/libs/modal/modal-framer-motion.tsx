@@ -26,7 +26,6 @@ const modal_variants = {
     closed: { opacity: 0, y: -50 }
 };
 
-// Chuyển Modal thành một component có thể nhận ref
 export const ModalMotion = forwardRef<HTMLDivElement, ModalProps>(
     (
         {
@@ -76,7 +75,7 @@ export const ModalMotion = forwardRef<HTMLDivElement, ModalProps>(
                                         "fixed top-60 z-50 max-w-[80vw] flex flex-col gap-y-2 rounded-lg bg-white p-3 shadow",
                                         modalContainerClassName
                                     )}
-                                    onClick={handleModalClick} // Ngăn chặn sự kiện click lan ra ngoài
+                                    onClick={handleModalClick} 
                                     initial="closed"
                                     animate="open"
                                     exit="closed"

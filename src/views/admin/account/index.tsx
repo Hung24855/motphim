@@ -1,5 +1,5 @@
 "use client";
-import { Permissions } from "@/actions/auth";
+import { Permissions } from "@/actions/permissions";
 import Loading from "@/base/libs/loading";
 import { convertTime } from "@/base/utils/function";
 import { TResGetAllAccounts } from "@/domain/tai-khoan/model";

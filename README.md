@@ -3,11 +3,13 @@
 
 ## Công nghệ sử dụng 
 - NextJS 14
-- TailwindCss
+- Tailwindcss
 - Typescript
 - Postgresql
 - Next-auth
 - Firebase
+- Axios
+- React-hook-form
 - React-query
 - Ant-Design
 - Framer-motion

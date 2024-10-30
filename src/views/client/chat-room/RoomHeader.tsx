@@ -1,6 +1,4 @@
 import { Fragment, useContext, useState } from "react";
-import { Avatar, Tooltip } from "antd";
-import { AntDesignOutlined, UserOutlined } from "@ant-design/icons";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { authFirebase } from "@/firebase";
 import { PiWarningCircleFill } from "react-icons/pi";
