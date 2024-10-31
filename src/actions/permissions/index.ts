@@ -6,7 +6,8 @@ export const Permissions = async ({ user_id, role }: { user_id: string; role: "a
     try {
         const cookie = cookies();
         const session = cookie.get("authjs.session-token")?.value;
-        if (!session) {
+        const session_product = cookie.get("__Secure-authjs.session-token")?.value;
+        if (!session || session_product) {
             redirect("/");
         }
 
@@ -14,7 +15,7 @@ export const Permissions = async ({ user_id, role }: { user_id: string; role: "a
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                cookie: "authjs.session-token=" + session
+                cookie: session ? "authjs.session-token=" + session : "__Secure-authjs.session-token=" + session_product
             },
             body: JSON.stringify({ role })
         }).then((res) => res.json());
