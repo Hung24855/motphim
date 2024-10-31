@@ -7,8 +7,10 @@ const CheckAdmin = async (request: NextRequest) => {
 
         //Token local
         const token = await getToken({ req: request, secret: secret, salt: "authjs.session-token" });
+        console.log("🚀 ~ CheckAdmin ~ token:", token)
         //Token product
         const token_product = await getToken({ req: request, secret: secret, salt: "__Secure-authjs.session-token" });
+        console.log("🚀 ~ CheckAdmin ~ token_product:", token_product)
 
         const check_admin_in_DB = await pool.query("SELECT role FROM users WHERE id = $1", [
             token?.id ?? token_product?.id
@@ -30,8 +32,10 @@ export const getUserIdByTokenNextAuth = async (request: NextRequest) => {
 
         //Token local
         const token = await getToken({ req: request, secret: secret, salt: "authjs.session-token" });
+        console.log("🚀 ~ getUserIdByTokenNextAuth ~ token:", token)
         //Token product
         const token_product = await getToken({ req: request, secret: secret, salt: "__Secure-authjs.session-token" });
+        console.log("🚀 ~ getUserIdByTokenNextAuth ~ token_product:", token_product)
         if (!token || !token_product) {
             return null;
         }
