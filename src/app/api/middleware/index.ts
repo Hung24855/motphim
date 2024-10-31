@@ -1,7 +1,7 @@
 import { pool } from "@/database/connect";
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
-const secret = process.env.NEXT_PUBLIC_NEXTAUTH_SECRET ?? "";
+const secret = process.env.NEXTAUTH_SECRET ?? "AUTH_SECRET";
 const CheckAdmin = async (request: NextRequest) => {
     try {
         console.log("🚀 ~ CheckAdmin ~ secret:", secret);
