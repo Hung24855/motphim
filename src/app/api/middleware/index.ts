@@ -1,12 +1,13 @@
 import { pool } from "@/database/connect";
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
-const secret = process.env.NEXTAUTH_SECRET ?? "";
+const secret = process.env.NEXT_PUBLIC_NEXTAUTH_SECRET ?? "";
 const CheckAdmin = async (request: NextRequest) => {
     try {
 
         //Token local
         const token = await getToken({ req: request, secret: secret, salt: "authjs.session-token" });
+        console.log("🚀 ~ CheckAdmin ~ secret:", secret)
         console.log("🚀 ~ CheckAdmin ~ token:", token)
         //Token product
         const token_product = await getToken({ req: request, secret: secret, salt: "__Secure-authjs.session-token" });
