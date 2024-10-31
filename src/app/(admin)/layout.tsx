@@ -13,7 +13,7 @@ import Toast from "@/provider/react-toastify";
 const inter = Nunito({ subsets: ["latin"], preload: true });
 
 export const metadata: Metadata = {
-    title: "Quản trị"
+    title: "Trang quản trị"
 };
 
 export default async function RootLayout({

@@ -5,7 +5,7 @@ import { RouterHandler } from "../../router.handler";
 export async function POST(request: NextRequest) {
     return RouterHandler({
         async mainFc(pool, _, body) {
-            //Kiểm tra tài khoản đã tồn tại chưa
+            //Kiểm tra tài khoản đã tồn tại chưa?
             const existUser = await pool.query("SELECT *  FROM users  WHERE users.email = $1", [body.email]);
             if (existUser.rows.length == 0) {
                 throw new Error("Tài khoản đã tồn tại!");

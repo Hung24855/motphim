@@ -6,7 +6,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     return RouterHandler({
         async mainFc(pool, user_id) {
             await pool.query("INSERT INTO favorites (user_id, movie_id) VALUES ($1, $2)", [user_id, params.id]);
-
             return {
                 message: "Yêu thích phim thành công!",
                 data: {
@@ -24,7 +23,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
     // id = movie_id
-
     return RouterHandler({
         async mainFc(pool, user_id) {
             await pool.query("DELETE FROM favorites WHERE user_id = $1 AND movie_id = $2", [user_id, params.id]);

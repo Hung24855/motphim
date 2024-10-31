@@ -5,7 +5,7 @@ export const revalidate = 3600;
 export async function GET(_: NextRequest, { params }: { params: { slug: string } }) {
     return RouterHandler({
         async mainFc(pool) {
-            const res = await pool.query(
+            const movies = await pool.query(
                 `SELECT movies.*, genres.name AS genre,genres.slug AS genre_slug  
                  FROM movies
                  INNER JOIN movie_genre ON movies.id = movie_genre.movie_id 
@@ -13,7 +13,7 @@ export async function GET(_: NextRequest, { params }: { params: { slug: string }
                  WHERE movies.slug = $1`,
                 [params.slug]
             );
-            if (res.rows.length === 0) {
+            if (movies.rows.length === 0) {
                 return {
                     message: "Phim không tồn tại!",
                     data: []
@@ -26,31 +26,31 @@ export async function GET(_: NextRequest, { params }: { params: { slug: string }
                      FROM movie_genre INNER 
                      JOIN genres ON movie_genre.genres_id = genres.id 
                      WHERE movie_id = $1`,
-                    [res.rows[0]?.id]
+                    [movies.rows[0]?.id]
                 ),
                 pool.query(
                     `SELECT movie_country.*,countries.name,countries.slug FROM movie_country 
                      INNER JOIN countries ON movie_country.country_id = countries.id 
                      WHERE movie_id = $1`,
-                    [res.rows[0]?.id]
+                    [movies.rows[0]?.id]
                 ),
-                // //Chuyển tập phim sang number vì ban đầu name của nó là chuỗi nên không order_by được
+                // Chuyển tập phim sang number vì ban đầu name của nó là chuỗi nên không order_by được
                 pool.query(
                     `SELECT * 
                      FROM episodes 
                      WHERE movie_id = $1 
                      ORDER BY CAST(REGEXP_REPLACE(name, '\\D', '', 'g') AS INTEGER)`,
-                    [res.rows[0]?.id]
+                    [movies.rows[0]?.id]
                 ),
                 // Tăng lượt xem
-                pool.query("UPDATE movies SET views = views + 1 WHERE id = $1", [res.rows[0]?.id])
+                pool.query("UPDATE movies SET views = views + 1 WHERE id = $1", [movies.rows[0]?.id])
             ]);
 
             return {
                 message: "Lấy thông tin chi tiết phim thành công!",
                 data: [
                     {
-                        ...res.rows[0],
+                        ...movies.rows[0],
                         episodes: episodes.rows,
                         genres: genres.rows,
                         countries: countries.rows
@@ -66,8 +66,6 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
     return RouterHandler({
         async mainFc(pool, _, body) {
             // Cập nhật phim
-
-
             pool.query(
                 `UPDATE movies 
                  SET movie_name = $1, slug = $2,content = $3,title_head = $4,image = $5,

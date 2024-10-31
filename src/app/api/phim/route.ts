@@ -4,17 +4,14 @@ import { v4 as uuidv4 } from "uuid";
 import { RouterHandler } from "../router.handler";
 
 export async function POST(request: NextRequest) {
-
     return RouterHandler({
-        async mainFc(pool,_,body) {
+        async mainFc(pool, _, body) {
             const movie_id = uuidv4();
 
-            let sql_insert_movie = `INSERT INTO movies 
-            (id, movie_name, slug,content,title_head,image,time_per_episode, episode_current,episode_total,movie_type_id,trailer_youtube_url) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`;
-
             pool.query(
-                sql_insert_movie,
+                `INSERT INTO movies 
+                 (id, movie_name, slug,content,title_head,image,time_per_episode, episode_current,episode_total,movie_type_id,trailer_youtube_url) 
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
                 [
                     movie_id,
                     body.movie_name,

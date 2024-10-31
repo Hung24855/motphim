@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
             if (!isEmail(body.email)) {
                 throw new Error("Email không đúng định dạng!");
             }
-            //Kiểm tra tài khoản đã tồn tại chưa
+            //Kiểm tra tài khoản đã tồn tại chưa?
             const existUser = await pool.query("SELECT users.email  FROM users  WHERE users.email = $1", [body.email]);
             if (existUser.rows.length > 0) {
                 throw new Error("Tài khoản đã tồn tại!");

@@ -18,15 +18,11 @@ export const register_action = async ({
     try {
         const response = await fetch(baseUrl + "/auth/dang-ky", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
             body: JSON.stringify({ email, password, username })
         }).then((res) => res.json());
 
         return response;
     } catch (error) {
-        console.log("Error: register_action", error);
         return {
             data: [],
             message: "Có lỗi xảy ra",

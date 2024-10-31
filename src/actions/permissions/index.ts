@@ -1,5 +1,6 @@
-import { redirect } from "next/navigation";
+"use server";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const Permissions = async ({ user_id, role }: { user_id: string; role: "admin" | "user" }) => {
     try {

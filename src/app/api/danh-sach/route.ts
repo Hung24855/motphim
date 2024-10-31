@@ -6,13 +6,10 @@ export async function GET(request: NextRequest) {
     return RouterHandler({
         async mainFc(pool) {
             const { limitSql, offset, orderBy, where, page, limit } = Filter(request);
-            const sql = `SELECT 
-                         movies.id, movies.movie_name, movies.slug, movies.year , movies.movie_type_id,
-                         movies.image, movies.time_per_episode, movies.episode_current,movies.episode_total,
-                         movies.lang, movies.is_visible FROM movies ${where ? `WHERE ${where}` : ""} ${orderBy} ${limitSql} ${offset}`;
-
             const [movies, totalRows] = await Promise.all([
-                pool.query(sql),
+                pool.query(
+                    `SELECT movies.id, movies.movie_name, movies.slug, movies.year , movies.movie_type_id, movies.image, movies.time_per_episode, movies.episode_current,movies.episode_total, movies.lang, movies.is_visible 
+                     FROM movies ${where ? `WHERE ${where}` : ""} ${orderBy} ${limitSql} ${offset}`),
                 pool.query(`SELECT COUNT(*) FROM movies ${where}`)
             ]);
 

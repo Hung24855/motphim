@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { RouterHandler } from "../../router.handler";
-export const revalidate = 3600;
+export const revalidate = 60;
 export async function GET(_: NextRequest) {
     return RouterHandler({
         async mainFc(pool) {

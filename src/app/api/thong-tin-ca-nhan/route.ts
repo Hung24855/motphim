@@ -17,9 +17,9 @@ export async function PUT(request: NextRequest) {
             };
         },
         options: {
+            request: request,
             checkAuth: "isUser",
-            required: ["username","avatar"],
-            request: request
+            required: ["username","avatar"]
         }
     });
 }

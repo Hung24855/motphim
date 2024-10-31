@@ -129,7 +129,7 @@ function Search({ session }: { session: Session | null }) {
                 toggleComponent={
                     <button className="relative py-2 duration-200 hover:scale-110" onClick={handleReadNotification}>
                         <FaBell size={20} />
-                        {notificationCount > 0 && (
+                        {session && notificationCount > 0 && (
                             <span className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-red-500 text-xs">
                                 {notificationCount}
                             </span>
@@ -264,10 +264,6 @@ function Search({ session }: { session: Session | null }) {
                     </Link>
                 </Fragment>
             )}
-
-            {/* <button>
-                <MdSunny size={22} />
-            </button> */}
         </div>
     );
 }
