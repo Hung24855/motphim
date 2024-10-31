@@ -4,6 +4,7 @@ import { NextRequest } from "next/server";
 const secret = process.env.NEXT_PUBLIC_NEXTAUTH_SECRET ?? "";
 const CheckAdmin = async (request: NextRequest) => {
     try {
+        console.log("🚀 ~ CheckAdmin ~ secret:", secret);
         const token_product = await getToken({ req: request, secret: secret, salt: "__Secure-authjs.session-token" });
         console.log("🚀 ~ CheckAdmin ~ token_product:", token_product);
 
