@@ -9,13 +9,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // maxAge: 60 * 60 * 14 // 1 Ngày hết hạn sesstion
         // updateAge: 60 * 60 * 2 // Làm mới lại sesstion sau 2 giờ
     },
-    cookies: {
-        sessionToken: {
-            options: {
-                secure: false
-            }
-        }
-    },
     trustHost: true,
     providers: [
         Credentials({

@@ -5,15 +5,15 @@ import { NextRequest } from "next/server";
 const secret = process.env.NEXTAUTH_SECRET ?? "AUTH_SECRET";
 const CheckAdmin = async (request: NextRequest) => {
     try {
-        const token_product = await getToken({ req: request, secret: secret, salt: "authjs.session-token" });
-        const abc = await getToken({
+        console.log("🚀 ~ secret:", secret);
+        const token_product = await getToken({
             req: request,
             secret: secret,
-            salt: "authjs.session-token",
-            secureCookie: true
+            salt: "__Secure-authjs.session-token",
+            secureCookie: true,
+            cookieName: "__Secure-authjs.session-token"
         });
-
-        console.log("🚀 ~ CheckAdmin ~ abc:", abc);
+        console.log("🚀 ~ CheckAdmin ~ token_product:", token_product);
         const check_admin_in_DB = await pool.query("SELECT role FROM users WHERE id = $1", [token_product?.id]);
 
         if (!token_product || token_product.role !== "admin") {
