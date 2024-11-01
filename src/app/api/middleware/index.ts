@@ -1,11 +1,9 @@
 import { pool } from "@/database/connect";
 import { getToken } from "next-auth/jwt";
-import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 const secret = process.env.NEXTAUTH_SECRET ?? "AUTH_SECRET";
 const CheckAdmin = async (request: NextRequest) => {
     try {
-        console.log("🚀 ~ secret:", secret);
         const token_product = await getToken({
             req: request,
             secret: secret,
@@ -13,7 +11,6 @@ const CheckAdmin = async (request: NextRequest) => {
             secureCookie: true,
             cookieName: "__Secure-authjs.session-token"
         });
-        console.log("🚀 ~ CheckAdmin ~ token_product:", token_product);
         const check_admin_in_DB = await pool.query("SELECT role FROM users WHERE id = $1", [token_product?.id]);
 
         if (!token_product || token_product.role !== "admin") {
@@ -29,7 +26,13 @@ const CheckAdmin = async (request: NextRequest) => {
 };
 export const getUserIdByTokenNextAuth = async (request: NextRequest) => {
     try {
-        const token_product = await getToken({ req: request, secret: secret, salt: "__Secure-authjs.session-token" });
+        const token_product = await getToken({
+            req: request,
+            secret: secret,
+            salt: "__Secure-authjs.session-token",
+            secureCookie: true,
+            cookieName: "__Secure-authjs.session-token"
+        });
         if (!token_product) {
             return null;
         }
