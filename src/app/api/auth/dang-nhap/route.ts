@@ -10,10 +10,8 @@ export async function POST(request: NextRequest) {
             if (existUser.rows.length == 0) {
                 throw new Error("Tài khoản đã tồn tại!");
             }
-
             //Check mật khẩu
             const isMatch = bcrypt.compareSync(body.password, existUser.rows[0].password);
-
             if (!isMatch) {
                 throw new Error("Thông tin tài khoản hoặc mật khẩu không chính xác!");
             }

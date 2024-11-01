@@ -1,4 +1,5 @@
 "use client";
+import Button from "@/base/libs/button";
 import MaxWidth from "@/components/layout/max-width";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -31,7 +32,7 @@ export default function TestModal() {
 
     return (
         <MaxWidth className="flex min-h-screen flex-col items-center justify-center pt-20 text-white">
-            <div className="relative h-52 w-[624px]">
+            {/* <div className="relative h-52 w-[624px]">
                 {images.map((image: any, index: number) => {
                     const isCenter = index === 2;
                     return (
@@ -58,7 +59,10 @@ export default function TestModal() {
                         />
                     );
                 })}
-            </div>
+            </div> */}
+            <Button popovertarget="test">Click me</Button>
+            <div className="size-20 bg-red-500 animate-zoom-in" popover="auto" id="test"></div>
+            
         </MaxWidth>
     );
 }
