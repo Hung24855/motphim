@@ -75,7 +75,6 @@ export async function POST(request: NextRequest) {
                 "episodes",
                 "movie_name",
                 "movie_type_id",
-                "quality",
                 "image",
                 "episode_total",
                 "year",
@@ -85,3 +84,5 @@ export async function POST(request: NextRequest) {
         }
     });
 }
+
+

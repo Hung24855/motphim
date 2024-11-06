@@ -100,4 +100,8 @@ export function removeDataLocalStorage(key: string) {
 }
 export function removeDuplicatesOfArray(array: any[]) {
     return [...new Set(array)];
-}   
+}
+
+export function removeLettersAndSpaces(str: string) {
+    return str.replace(/[^\d]/g, ""); // Loại bỏ tất cả các ký tự không phải số
+}

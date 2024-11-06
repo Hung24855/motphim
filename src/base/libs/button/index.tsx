@@ -4,7 +4,7 @@ type ButtonProps = {
     children: React.ReactNode;
     loading?: boolean;
     sizeSpin?: "small" | "default" | "large";
-    buttonClssName?: string;
+    buttonClassName?: string;
     onClick?: (e:any) => void;
     type?: "button" | "submit" | "reset";
     block?: boolean;
@@ -13,7 +13,7 @@ type ButtonProps = {
 export default function Button({
     children,
     loading,
-    buttonClssName,
+    buttonClassName,
     onClick,
     sizeSpin = "default",
     type = "button",
@@ -25,7 +25,7 @@ export default function Button({
             type={type}
             className={clsx(
                 "flex items-center justify-center gap-x-2 rounded bg-[#295779] p-2 text-white cursor-pointer",
-                buttonClssName,
+                buttonClassName,
                 loading && "opacity-80",
                 block && "w-full"
             )}
