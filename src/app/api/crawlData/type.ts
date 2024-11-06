@@ -58,3 +58,11 @@ export type Episode = {
     slug: string;
     link: string;
 };
+
+export type MoviesSearch = {
+    data: {
+        items: {
+            slug: string;
+        }[];
+    };
+};

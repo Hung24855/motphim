@@ -102,11 +102,10 @@ export async function GET(request: NextRequest) {
                             slug: row.querySelector("td a")?.getAttribute("href")?.replace("/phim/", "")
                         }))
                     );
-
                     // Lấy chi tiết tất cả phim
                     const promises = slugs
                         .filter((item) => item.slug !== undefined)
-                        .map((item) => fetchMovieDetails(item.slug as string));
+                        .map((item) => fetchMovieDetail(item.slug as string));
                     const data = await Promise.all(promises);
                     movies.push(...data.filter((item) => item !== null));
 
@@ -120,13 +119,12 @@ export async function GET(request: NextRequest) {
                 return movies;
             };
 
-            const fetchMovieDetails = async (slug: string) => {
+            const fetchMovieDetail = async (slug: string) => {
                 try {
                     const { data: movieDetail } = await axios.get<{ data: MovieDetail }>(
                         `https://ophim1.com/v1/api/phim/${slug}`
                     );
                     const item = movieDetail?.data.item;
-
                     if (!item) return null;
 
                     const episode_current = extractEpisodeNumber(item.episode_current);
@@ -141,7 +139,7 @@ export async function GET(request: NextRequest) {
                         slug,
                         image: movieDetail?.data.seoOnPage.seoSchema.image,
                         content: item.content,
-                        time_per_episode,
+                        time_per_episode: time_per_episode || "? Phút/tập",
                         episode_current,
                         episode_total,
                         year: item.year,

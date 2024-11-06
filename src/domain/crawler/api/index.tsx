@@ -1,8 +1,8 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
 import { requester } from "@/infrastructure/config/request/requester";
-import { DataUpdateMovieCrawl, TResGetMovieCrawl } from "../model";
-import { DataGetMovieCrawlDTO } from "../dto";
+import { DataUpdateMovieCrawl, TResGetMovieCrawl, TResGetSearchMovieCrawl } from "../model";
+import { DataGetMovieCrawlDTO, DataGetSearchMovieCrawlDTO } from "../dto";
 
 export class CrawlerApi {
     static async crawler_data(params: { start: number | string; end: number | string }) {
@@ -14,7 +14,13 @@ export class CrawlerApi {
 
     static async crawler_update_data(data: DataUpdateMovieCrawl) {
         return await requester({
-            requestFunc: () => http.put(ENDPOINT_URL.crawler(), data)
+            requestFunc: () => http.put(ENDPOINT_URL.crawlerUpdateData(), data)
+        })();
+    }
+    static async crawler_search_data(query: string) {
+        return await requester<TResGetSearchMovieCrawl>({
+            requestFunc: () => http.get(ENDPOINT_URL.crawlerSearchData(), { params: { q: query } }),
+            handleData: (data: DataGetSearchMovieCrawlDTO) => data.data
         })();
     }
 }

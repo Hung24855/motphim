@@ -19,23 +19,26 @@ export class CrawlerService {
                 enabled
             }
         );
-        const {
-            mutate: mutateUpdateDataCrawl,
-            mutateAsync: mutateAsyncUpdateDataCrawl,
-            isPending: isPeddingUpdateDataCrawl,
-            isSuccess: isSuccessUpdateDataCrawl
-        } = useMutation({
+        const { mutateAsync: mutateAsyncUpdateDataCrawl, isSuccess: isSuccessUpdateDataCrawl } = useMutation({
             mutationFn: (data: DataUpdateMovieCrawl) => CrawlerApi.crawler_update_data(data)
+        });
+
+        const {
+            mutate: mutateSearchDataCrawl,
+            mutateAsync: mutateAsyncSearchDataCrawl,
+            isPending: isPendingSearch
+        } = useMutation({
+            mutationFn: (query: string) => CrawlerApi.crawler_search_data(query)
         });
 
         return {
             data,
             isFetching,
+            isPendingSearch,
             isError,
-            refetch,
-            mutateUpdateDataCrawl,
             isSuccessUpdateDataCrawl,
-            mutateAsyncUpdateDataCrawl
+            mutateAsyncUpdateDataCrawl,
+            mutateSearchDataCrawl
         };
     }
 }

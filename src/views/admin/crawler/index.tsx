@@ -1,35 +1,29 @@
 "use client";
 import Button from "@/base/libs/button";
-import { TResGetMovieCrawl } from "@/domain/crawler/model";
+import { TResGetMovieCrawl, TResGetSearchMovieCrawl } from "@/domain/crawler/model";
 import { CrawlerService } from "@/domain/crawler/services";
 import { Fragment, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Loading from "@/base/libs/loading";
 
 export default function CrawlerView() {
     const [enabled, setEnabled] = useState(false);
     const [pageRange, setPageRange] = useState<{ start: number | string; end: number | string }>({ start: 1, end: 1 });
     const [movies, setMovies] = useState<TResGetMovieCrawl>([]);
     const [checkedMovies, setCheckedMovies] = useState<{ [key: string]: boolean }>({});
-    const [loadingUpdateMovies, setLoadingUpdateMovies] = useState(false);
+    const [loadingUpdateMovies, setLoadingUpdateMovies] = useState(false); //Loading tổng
     const [updatingMovie, setUpdatingMovie] = useState<{ [key: string]: boolean }>({}); // Thêm trạng thái loading cho từng phim
+    const [searchText, setSearchText] = useState<string>("");
 
-    const { data, isFetching, mutateAsyncUpdateDataCrawl } = CrawlerService.useCrawlData({
-        enabled,
-        params: pageRange
-    });
+    const { data, isFetching, mutateAsyncUpdateDataCrawl, mutateSearchDataCrawl, isPendingSearch } =
+        CrawlerService.useCrawlData({
+            enabled,
+            params: pageRange
+        });
 
     useEffect(() => {
         if (data) {
-            setMovies(data);
-            setEnabled(false);
-            const initialCheckedState = data.reduce(
-                (acc, movie) => {
-                    acc[movie.slug] = true;
-                    return acc;
-                },
-                {} as { [key: string]: boolean }
-            );
-            setCheckedMovies(initialCheckedState);
+            handlCheckAndUncheckAll(data);
         }
     }, [data]);
 
@@ -62,6 +56,31 @@ export default function CrawlerView() {
             toast.success("Cập nhật phim thành công!");
             setLoadingUpdateMovies(false);
         }
+    };
+
+    const handleGetMovieSearch = async () => {
+        if (!searchText) return;
+        const query = searchText.trim().replaceAll(" ", "+");
+        mutateSearchDataCrawl(query, {
+            onSuccess: (data) => {
+                if (data) {
+                    handlCheckAndUncheckAll(data);
+                }
+            }
+        });
+    };
+
+    const handlCheckAndUncheckAll = (data: TResGetSearchMovieCrawl) => {
+        setMovies(data);
+        setEnabled(false);
+        const initialCheckedState = data.reduce(
+            (acc, movie) => {
+                acc[movie.slug] = true;
+                return acc;
+            },
+            {} as { [key: string]: boolean }
+        );
+        setCheckedMovies(initialCheckedState);
     };
 
     return (
@@ -97,61 +116,72 @@ export default function CrawlerView() {
                         });
                     }}
                 />
-                {/* <span>Tìm kiếm:</span>
+                <span>Tìm kiếm:</span>
                 <div className="h-10 w-52">
                     <input
                         placeholder="Nhập tên phim ..."
                         className="rounded-sm border p-2 outline-none"
-                        // value={searchText}
-                        // onChange={(e: any) => {
-                        //     setsearchText(e.target.value);
-                        // }}
+                        value={searchText}
+                        onChange={(e: any) => {
+                            setSearchText(e.target.value);
+                        }}
+                        onKeyDown={(e: any) => {
+                            console.log("dfskhfjsdkf");
+
+                            if (e.key === "Enter") {
+                                console.log("fsdkfhlsdfs");
+
+                                handleGetMovieSearch();
+                            }
+                        }}
                     />
-                </div> */}
+                </div>
             </div>
             {/* Danh sách phim */}
-            <div className="my-2 h-[70vh] w-full border bg-white p-2">
-                {movies.length > 0 && (
-                    <Fragment>
-                        <div className="mr-5 flex-1 text-2xl font-semibold">
-                            Đã chọn : {Object.values(checkedMovies).filter(Boolean).length}/{movies.length} phim
-                        </div>
-                        <div className="mt-2 h-[calc(100%-35px)] w-full overflow-hidden overflow-y-scroll">
-                            <div className="grid w-full grid-cols-2 gap-2 p-1">
-                                {movies.map((movie) => {
-                                    return (
-                                        <div className="flex gap-x-40" key={movie.slug}>
-                                            <div className="flex gap-x-2">
-                                                <input
-                                                    type="checkbox"
-                                                    id={movie.slug}
-                                                    checked={checkedMovies[movie.slug] || false}
-                                                    onChange={() => handleCheckboxChange(movie.slug)}
-                                                />
-                                                <label
-                                                    htmlFor={movie.slug}
-                                                    className="line-clamp-1 max-w-[350px] cursor-pointer"
-                                                >
-                                                    {movie.movie_name}
-                                                </label>
-                                            </div>
-
-                                            {checkedMovies[movie.slug] &&
-                                                (updatingMovie[movie.slug] ? (
-                                                    <span className="mr-10 flex-1 text-end text-blue-500">
-                                                        Đang cập nhật...
-                                                    </span>
-                                                ) : (
-                                                    <span className="mr-10 flex-1 text-end text-green-500">OK</span>
-                                                ))}
-                                        </div>
-                                    );
-                                })}
+            <Loading loading={isFetching || isPendingSearch} containerClassName="!bg-black/10">
+                <div className="my-2 h-[70vh] w-full border bg-white p-2">
+                    {movies.length > 0 && (
+                        <Fragment>
+                            <div className="mr-5 flex-1 text-2xl font-semibold">
+                                Đã chọn : {Object.values(checkedMovies).filter(Boolean).length}/{movies.length} phim
                             </div>
-                        </div>
-                    </Fragment>
-                )}
-            </div>
+                            <div className="mt-2 h-[calc(100%-35px)] w-full overflow-hidden overflow-y-scroll">
+                                <div className="grid w-full grid-cols-2 gap-2 p-1">
+                                    {movies.map((movie) => {
+                                        return (
+                                            <div className="flex gap-x-40" key={movie.slug}>
+                                                <div className="flex gap-x-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={movie.slug}
+                                                        checked={checkedMovies[movie.slug] || false}
+                                                        onChange={() => handleCheckboxChange(movie.slug)}
+                                                    />
+                                                    <label
+                                                        htmlFor={movie.slug}
+                                                        className="line-clamp-1 max-w-[350px] cursor-pointer"
+                                                    >
+                                                        {movie.movie_name}
+                                                    </label>
+                                                </div>
+
+                                                {checkedMovies[movie.slug] &&
+                                                    (updatingMovie[movie.slug] ? (
+                                                        <span className="mr-10 flex-1 text-end text-blue-500">
+                                                            Đang cập nhật...
+                                                        </span>
+                                                    ) : (
+                                                        <span className="mr-10 flex-1 text-end text-green-500">OK</span>
+                                                    ))}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </Fragment>
+                    )}
+                </div>
+            </Loading>
             <Button buttonClassName="!bg-admin_primary" onClick={handleUpdateMovies} loading={loadingUpdateMovies}>
                 Cập nhật
             </Button>

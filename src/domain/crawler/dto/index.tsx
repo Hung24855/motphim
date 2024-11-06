@@ -19,3 +19,4 @@ export type CrawlerDataDTO = {
 };
 
 export type DataGetMovieCrawlDTO = ISuccessResponse<{ listMovies: CrawlerDataDTO[] }>;
+export type DataGetSearchMovieCrawlDTO = ISuccessResponse<CrawlerDataDTO[]>;
