@@ -1,6 +1,5 @@
 import { RouterHandler } from "../router.handler";
 import puppeteer from "puppeteer";
-import puppeteerCore from "puppeteer-core";
 import { Browser } from "puppeteer";
 import fs from "fs";
 import axios from "axios";
@@ -9,7 +8,6 @@ import http from "@/infrastructure/config/request";
 import { cookies } from "next/headers";
 import { v4 as uuidv4 } from "uuid";
 import { Episode, MovieDetail, Movies } from "./type";
-import chromium from "@sparticuz/chromium";
 
 export const revalidate = 0;
 const IS_DEVELOPMENT = process.env.DEVELOPMENT === "development";
@@ -21,21 +19,15 @@ export async function GET(request: NextRequest) {
                 let browser: Browser | null = null;
 
                 console.log(">>>Đang mở trình duyệt...");
-                //Product browser
-                browser = await puppeteer.launch({
-                    args: chromium.args,
-                    defaultViewport: chromium.defaultViewport,
-                    executablePath: await chromium.executablePath(), //Lỗi
-                    headless: true
-                });
 
                 //Local browser
-                // browser = await puppeteer.launch({
-                //     headless: true,
-                //     //Tin tưởng nội dung trang web hiện tại,nên đisible sandbox chặn lại trang web đó
-                //     args: ["--no-sandbox", "--disable-setuid-sandbox"],
-                //     defaultViewport: null
-                // });
+                browser = await puppeteer.launch({
+                    headless: true,
+                    //Tin tưởng nội dung trang web hiện tại,nên đisible sandbox chặn lại trang web đó
+                    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+                    executablePath: puppeteer.executablePath(),
+                    defaultViewport: null
+                });
 
                 return browser;
             };
