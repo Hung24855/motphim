@@ -3,6 +3,7 @@ import { NextRequest } from "next/server";
 
 // Kiểm tra phim đã được yêu thích chưa
 //id = movie_id
+export const revalidate = 0;
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     return RouterHandler({
         async mainFc(pool, user_id) {

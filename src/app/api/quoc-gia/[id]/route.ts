@@ -33,7 +33,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
         }
     });
 }
-
+export const revalidate = 0;
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     return RouterHandler({
         async mainFc(pool) {

@@ -12,7 +12,7 @@ export default function CrawlerView() {
     const [movies, setMovies] = useState<TResGetMovieCrawl>([]);
     const [checkedMovies, setCheckedMovies] = useState<{ [key: string]: boolean }>({});
     const [loadingUpdateMovies, setLoadingUpdateMovies] = useState(false); //Loading tổng
-    const [updatingMovie, setUpdatingMovie] = useState<{ [key: string]: boolean }>({}); // Thêm trạng thái loading cho từng phim
+    const [moviesUpdateSuccess, setMoviesUpdateSuccess] = useState<string[]>([]);
     const [searchText, setSearchText] = useState<string>("");
 
     const { data, isFetching, mutateAsyncUpdateDataCrawl, mutateSearchDataCrawl, isPendingSearch } =
@@ -44,11 +44,9 @@ export default function CrawlerView() {
         setLoadingUpdateMovies(true);
         try {
             const promises = checkedMoviesList.map(async (movie) => {
-                setUpdatingMovie((prev) => ({ ...prev, [movie.slug]: true }));
                 await mutateAsyncUpdateDataCrawl(movie);
-                setUpdatingMovie((prev) => ({ ...prev, [movie.slug]: false }));
+                setMoviesUpdateSuccess((prev) => [...prev, movie.slug]);
             });
-
             await Promise.all(promises);
         } catch (error) {
             console.error("Có lỗi xảy ra trong quá trình cập nhật:", error);
@@ -126,11 +124,7 @@ export default function CrawlerView() {
                             setSearchText(e.target.value);
                         }}
                         onKeyDown={(e: any) => {
-                            console.log("dfskhfjsdkf");
-
                             if (e.key === "Enter") {
-                                console.log("fsdkfhlsdfs");
-
                                 handleGetMovieSearch();
                             }
                         }}
@@ -166,13 +160,13 @@ export default function CrawlerView() {
                                                 </div>
 
                                                 {checkedMovies[movie.slug] &&
-                                                    (updatingMovie[movie.slug] ? (
+                                                    (loadingUpdateMovies ? (
                                                         <span className="mr-10 flex-1 text-end text-blue-500">
-                                                            Đang cập nhật...
+                                                            Process...
                                                         </span>
-                                                    ) : (
+                                                    ) : moviesUpdateSuccess.find((item) => item === movie.slug) ? (
                                                         <span className="mr-10 flex-1 text-end text-green-500">OK</span>
-                                                    ))}
+                                                    ) : null)}
                                             </div>
                                         );
                                     })}

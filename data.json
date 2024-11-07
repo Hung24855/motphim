@@ -1,0 +1,1947 @@
+{
+    "listMovies": [
+        {
+            "movie_name": "Góc Khuất Gangnam",
+            "slug": "goc-khuat-gangnam",
+            "image": "https://img.ophim.live/uploads/movies/goc-khuat-gangnam-thumb.jpg",
+            "content": "<p>Một thám tử bị ruồng bỏ bị kéo trở lại trò chơi sau khi bạn của con gái anh ta mất tích. Là người mới nhất trong một loạt phụ nữ mất tích ở khu vực Gangnam của Seoul, thám tử sẽ quay trở lại thế giới tệ nạn, ma túy và tham nhũng để khám phá ra điều gì đó đe dọa lật đổ một số tầng lớp tinh hoa giàu có nhất của thành phố.</p>",
+            "time_per_episode": "? Phút/tập",
+            "episode_current": "2",
+            "episode_total": "8",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["hanh-dong", "tam-ly"],
+            "countries": ["han-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream10.com/share/58ae64f00ba804691ee209eb36654b3c",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream10.com/share/ecbc7b96b9ec7951187d0da02230773d",
+                    "slug": "tap-2",
+                    "name": "2"
+                }
+            ]
+        },
+        {
+            "movie_name": "Mối Nguy Hiểm Trong Trái Tim Tôi (Phần 2)",
+            "slug": "moi-nguy-hiem-trong-trai-tim-toi-phan-2",
+            "image": "https://img.ophim.live/uploads/movies/moi-nguy-hiem-trong-trai-tim-toi-phan-2-thumb.jpg",
+            "content": "Ichikawa Kyotaro, một cậu học sinh luôn chật vật ở đáy xã hội của trường, thầm tin rằng mình là nhân vật chính đầy đau khổ trong một bộ phim tâm lý kinh dị nào đó. Cậu dành cả ngày để nghĩ ra những cách phá vỡ cuộc sống yên bình của các bạn cùng lớp và thầm thương trộm nhớ Yamada Anna, thần tượng của lớp. Nhưng Kyotaro không phải là một thiếu niên rắc rối như cậu giả vờ... và hóa ra Anna cũng có chút kỳ quặc!",
+            "time_per_episode": "23  Phút/tập",
+            "episode_current": "1",
+            "episode_total": "12",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["hai-huoc"],
+            "countries": ["nhat-ban"],
+            "episodes": [{ "link": "", "slug": "tap-", "name": "" }]
+        },
+        {
+            "movie_name": "Vĩnh Dạ Tinh Hà",
+            "slug": "vinh-da-tinh-ha",
+            "image": "https://img.ophim.live/uploads/movies/vinh-da-tinh-ha-thumb.jpg",
+            "content": "Là câu chuyện cứu rỗi, chữa lành lẫn nhau giữa hai nhân vật chính. Đêm vĩnh hằng là lúc chạng vạng, khúc biệt ly từ cây sáo sênh. Bản thân hắn - Mộ Thanh (Đinh Vũ Hề) là \"quái vật\", không được người đời dung thứ, cũng không dám để lộ mặt thật của mình. Nhưng hiện tại đúng là có một người, ngoại trừ tỷ tỷ hắn, ở gần hắn hơn bất cứ ai, cô gái mang tên Lăng Diệu Diệu",
+            "time_per_episode": "45  Phút/tập",
+            "episode_current": "12",
+            "episode_total": "32",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["co-trang"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream12.com/share/87be96790ea277c50f980ce4df0b4412",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream12.com/share/e62f08e80dc2abefd52476b25ca29cee",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream12.com/share/13ac6fa08d39e7879e9962ffdabe7502",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream12.com/share/19873725ed76e249281f495eb7d547ac",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/2a2a919ea2a12b8255429f33eb51a1a8",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/33192c6a9f0e304aa8ff60ace81a4d6e",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d92491cabdc652b5bdf31d39baf3a79e",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/a3444aabc35417cbb401fc4fbb7148ba",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d8f86c085789fbe0db0d25ca861a1149",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/44de5d0977910f7b079bfb098be929ae",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/152992da7045bc04505e1683d718bdc7",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/6fa77d8a28f18e84d21d2ca54366996e",
+                    "slug": "tap-12",
+                    "name": "12"
+                }
+            ]
+        },
+        {
+            "movie_name": "Đại Mộng Quy Ly",
+            "slug": "dai-mong-quy-ly",
+            "image": "https://img.ophim.live/uploads/movies/dai-mong-quy-ly-thumb.jpg",
+            "content": "\"Đại Mộng Quy Li\" là một bộ phim cổ trang do Hầu Minh Hạo (\"Thợ Săn Tâm Trạch\", \"Hộ Tâm\"), Trần Đô Linh (\"Liên Hoa Lâu\"), Điền Gia Thụy (\"Vân Chi Vũ\"), Trình Tiêu (\"Khanh Khanh Ngã Tâm\") đóng vai chính. Bộ phim này được lấy cảm hứng từ \"Sơn Hải Kinh\", kể về một câu chuyện truyền kỳ quỷ lệ về \"yêu muốn bắt yêu\". Trong thời kỳ Trinh Nguyên, do nữ thần Bạch Tắc, người kiểm soát hai giới người và yêu bất ngờ mất mạng, Bạch Tắc mất tích không dấu vết, yêu thú hoành hành trên đất người, gây ra nhiều vụ án đẫm máu. Trong thời điểm này, \"Chu Yếm\", thủ lĩnh đạo của bách yêu đã biến hình thành người có tên là Triệu Viễn Châu (Hầu Minh Hạo đóng), tự nguyện \"sát cánh\" với triều đình, đề xuất hỗ trợ triều đình thành lập Tập Yêu Ti, bắt yêu dẹp loạn.",
+            "time_per_episode": "? Phút/tập",
+            "episode_current": "19",
+            "episode_total": "26",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/f272f8e92b515dc1a9773206f0460a54",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5de765f341bd3b759c0633a9bde9bc26",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/22ce23196c2ec6eadd651bf0ba7d4d75",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/0f0fa26ee01897e0fb289f2a428aedfb",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/f8b02c508d51b1043a8b604fdc2fec77",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/a99db42aa06a19e4c0e1bc61545b2c58",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/c35c615e45e05fabded65aae9bbae132",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d98824fda0d7246157812b57c88a47c1",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/164f98ba2892701d67ee2aa3ace7a1f6",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/9da4ec9417da97aac9ab7ae5aad3b0a6",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/78207e669db14f32f24c088afc68bc2a",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/aaf8ef68072f5f21e1f7db3ecd6af9f6",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/66b61bfc534373b8442dc37629365134",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e551b284ad7a366e42f48f93095d29df",
+                    "slug": "tap-14",
+                    "name": "14"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/45a1112d38db5f24ad29f8d5e9ab3dd2",
+                    "slug": "tap-15",
+                    "name": "15"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d0336e3b94fd76fc2ef669058d11917a",
+                    "slug": "tap-16",
+                    "name": "16"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5538951d719b75068606e534928d15d7",
+                    "slug": "tap-17",
+                    "name": "17"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/74b42b16a788a99a94de156da06ab3ff",
+                    "slug": "tap-18",
+                    "name": "18"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/eccbc7cdf4dfd00792d431e1a1d896fa",
+                    "slug": "tap-19",
+                    "name": "19"
+                }
+            ]
+        },
+        {
+            "movie_name": "Đoàn Viên",
+            "slug": "doan-vien",
+            "image": "https://img.ophim.live/uploads/movies/doan-vien-thumb.jpg",
+            "content": "<p>Ba cô con gái của Hướng Chất Quân lần lượt sinh sống ở Thượng Hải, Côn Sơn và Tô Châu. Hướng Tiền 35 tuổi, sự nghiệp có tiến triển tốt, Hướng Trung 31 tuổi, đang tích cực phấn đấu; Hướng Nam 26 tuổi, tính cách hồn nhiên ngây thơ. Hôn nhân của ba cô con gái nhà họ Hướng liên tiếp thất bại, họ giúp đỡ và động viên lẫn nhau. Dưới sự hướng dẫn và khuyên giải của cha mẹ, Hướng Trung thoát khỏi gia đình chồng hay gây sự vô lý và lấy lại niềm tin để vun vén cuộc hôn nhân; Hướng Tiền nhận ra sự đạo đức giả của người chồng Cao Bình và tìm lại được hướng đi cho sự nghiệp và cuộc đời; Hướng Nam không còn cảm thấy bối rối nữa, hiểu rõ và trưởng thành hơn về cuộc hôn nhân và bản thân.</p><p>&nbsp;</p>",
+            "time_per_episode": "45  Phút/tập",
+            "episode_current": "24",
+            "episode_total": "36",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["gia-dinh"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/0eecb5e2466e944355174087b06f419e",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/fbd6ec2b46dcc858e2fa83d68e4e2b08",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/ec2f62e241edfe09f6f625ead7943772",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/0fdde93f1b53a9fe57efd57dab30079d",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e841d794865539fa072886c21c954de2",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d97eb74707d1f97526a360674e5933a8",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e6ce24b04e4a46633d409debb0720914",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/c5f310321fc01f6e2f153dfb7443e435",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/144608b81686bada821a0c509d76e424",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/29de29f2593b65f060a8bcc3b06f9b64",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5555c49538ee43e98dc3de2bfcf26b47",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/6d49b7b59dca8543a2d23172f2b78bcc",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/bf1955ec12d3304a9213c14530a796ad",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/6b247abc8be9f278b078413009da554b",
+                    "slug": "tap-14",
+                    "name": "14"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/3d653baacb9b846339b5f57903f341e0",
+                    "slug": "tap-15",
+                    "name": "15"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/84adf54ec14d8997c0db467135ad7c1c",
+                    "slug": "tap-16",
+                    "name": "16"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/ac9eed1695292d513db8567115f83dbc",
+                    "slug": "tap-17",
+                    "name": "17"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/51b355a3b14ea894bad041df42f57acf",
+                    "slug": "tap-18",
+                    "name": "18"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/db0bf3f62afd5db8507a45341c7f48fa",
+                    "slug": "tap-19",
+                    "name": "19"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/1eaaa2de177688ac332a563fed6ded80",
+                    "slug": "tap-20",
+                    "name": "20"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5026d409a3cbb10bfa009526630f381b",
+                    "slug": "tap-21",
+                    "name": "21"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/42723e31a197e3f95bff0efe66221430",
+                    "slug": "tap-22",
+                    "name": "22"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/56f0af78b4d40e4e38dcac5276abb441",
+                    "slug": "tap-23",
+                    "name": "23"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5369ab7b6644ca89e1a131475082e2bf",
+                    "slug": "tap-24",
+                    "name": "24"
+                }
+            ]
+        },
+        {
+            "movie_name": "Truyền Thuyết Nàng Nak",
+            "slug": "truyen-thuyet-nang-nak",
+            "image": "https://img.ophim.live/uploads/movies/truyen-thuyet-nang-nak-thumb.jpg",
+            "content": "The story of the beautiful young woman named Nak, who lived on the banks of the Phra Khanong Canal, and her undying love for her husband, Mak.\n\nWith Nak being pregnant, Mak is conscripted and sent to war, where he is seriously wounded. While he is being nursed back to health, Nak and their child both die during a difficult childbirth. When Mak returns home, however, he finds his loving wife and child waiting for him, but he doesn't know they're ghosts.",
+            "time_per_episode": "46  Phút/tập",
+            "episode_current": "17",
+            "episode_total": "30",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich"],
+            "countries": ["thai-lan"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/355c1d794962ee0bc6c9758aef31b714",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/9ff673c83cc6230e08904ed4ed21ba24",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/fe4c9808e6ca320b251036326208644d",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/8678915eec5bccbba43c3ef53ff19b46",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/74f4a8b3a417f9509ce5f285f5666a99",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e4723703607d48014b7e29c38637bb99",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/2d6893a594a808da63c6be19296bfb44",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e7aa6927bb9d72f90abf7e3005471efb",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/8a329799db33800ebcb18807d936ee46",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e8b4e08f1da059fda45958e885874e07",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/97446d6a22275578c9c75d58c19634f9",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/26e8ea4e83dc7f405160bf304a7e357d",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d0d486f06c0b0cc28c3cf51bb0df648a",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5206920a9e23ad2413f349c1390b748e",
+                    "slug": "tap-14",
+                    "name": "14"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/a0e7be097b3b5eb71d106dd32f2312ac",
+                    "slug": "tap-15",
+                    "name": "15"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/a41036457055f99565f7cccfa9e91a64",
+                    "slug": "tap-16",
+                    "name": "16"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/82fe25a27e8ed79a081a927d0bead98b",
+                    "slug": "tap-17",
+                    "name": "17"
+                }
+            ]
+        },
+        {
+            "movie_name": "Tuổi Thơ Bá Đạo của Sheldon (Phần 7)",
+            "slug": "tuoi-tho-ba-dao-cua-sheldon-phan-7",
+            "image": "https://img.ophim.live/uploads/movies/tuoi-tho-ba-dao-cua-sheldon-phan-7-thumb.jpg",
+            "content": "<p>Trong ngoại truyện này của \"Vụ nổ lớn\", cậu bé 9 tuổi thông minh nhưng vụng về Sheldon Cooper nhập học tại trường cấp 3 nơi trí thông minh của cậu khiến mọi người bối rối.</p>",
+            "time_per_episode": "22  Phút/tập",
+            "episode_current": "14",
+            "episode_total": "14",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["gia-dinh", "hai-huoc"],
+            "countries": ["au-my"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream17.com/share/6602294be910b1e3c4571bd98c4d5484",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream17.com/share/09b15d48a1514d8209b192a8b8f34e48",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream17.com/share/0004d0b59e19461ff126e3a08a814c33",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream17.com/share/339a18def9898dd60a634b2ad8fbbd58",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream17.com/share/c8cd63e1bf13c5016881652983fb615a",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream17.com/share/bdb3c278f45e6734c35733d24299d3f4",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream17.com/share/1c63926ebcabda26b5cdb31b5cc91efb",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream17.com/share/4a3fd911279cd8bc597fa13222ef83be",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/16d2bbe08ed98e2a6362d19b49019304",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/33b5590b4affbb66fc6311100e50a0c4",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/901ca5aeaa56886ada9362e906c400ba",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/66b94281f8c6f8ba217609604ee6332f",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/7b9543028298685920afeacd01e4242f",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/620982009915db2a0b4a49e224bad30c",
+                    "slug": "tap-14",
+                    "name": "14"
+                }
+            ]
+        },
+        {
+            "movie_name": "Mật Mã Đỏ",
+            "slug": "mat-ma-do",
+            "image": "https://img.ophim.live/uploads/movies/mat-ma-do-thumb.jpg",
+            "content": "Sau khi Ông già Noel bị bắt cóc, Trưởng An ninh Bắc Cực (Dwayne Johnson) phải hợp tác với thợ săn tiền thưởng khét tiếng nhất thế giới (Chris Evans) trong một nhiệm vụ kịch tính xuyên lục địa để giải cứu Giáng Sinh.",
+            "time_per_episode": "124 Phút",
+            "episode_current": "1",
+            "episode_total": "1",
+            "year": 2024,
+            "movie_type_id": "type2",
+            "genres": ["hanh-dong", "hai-huoc"],
+            "countries": ["au-my"],
+            "episodes": [{ "link": "", "slug": "tap-", "name": "" }]
+        },
+        {
+            "movie_name": "Tận Thế Z: Khởi Nguồn Đại Dịch",
+            "slug": "tan-the-z-khoi-nguon-dai-dich",
+            "image": "https://img.ophim.live/uploads/movies/tan-the-z-khoi-nguon-dai-dich-thumb.jpg",
+            "content": "<p>Apocalypse Z: The Beginning of the End 2024 lấy bối cảnh thế giới hậu tận thế, nơi một loại virus giống như bệnh dại đã biến con người thành những sinh vật hung hãn khát máu. Manel, một luật sư trẻ tuổi, phải tìm cách sinh tồn trong thế giới hỗn loạn này. Anh ta trốn trong căn hộ của mình cùng với con mèo, sử dụng trí thông minh và sự khéo léo để chống lại những thây ma khát máu.<br><br>Manel không chỉ phải đối mặt với mối đe dọa từ zombie, mà còn phải đối phó với những người sống sót khác, những kẻ sẵn sàng làm bất cứ điều gì để sinh tồn, kể cả việc hãm hại lẫn nhau. Cuối cùng, Manel nhận ra rằng anh ta không thể trốn tránh mãi mãi và phải tìm cách thích nghi với thế giới mới này.</p>",
+            "time_per_episode": "119 Phút",
+            "episode_current": "1",
+            "episode_total": "1",
+            "year": 2024,
+            "movie_type_id": "type2",
+            "genres": ["hanh-dong", "kinh-di", "chinh-kich"],
+            "countries": ["tay-ban-nha"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/5f2cec9d7c7078209559b2838b427b2f",
+                    "slug": "tap-full",
+                    "name": "1"
+                }
+            ]
+        },
+        {
+            "movie_name": "Chi: Về Sự Chuyển Động Của Địa Cầu",
+            "slug": "chi-ve-su-chuyen-dong-cua-dia-cau",
+            "image": "https://img.ophim.live/uploads/movies/chi-ve-su-chuyen-dong-cua-dia-cau-thumb.jpg",
+            "content": "<p>Sau khi nghe thuyết giảng dị giáo về Trái Đất và Mặt Trời, một thần đồng tìm kiếm công trình nghiên cứu bí mật của thầy mình trong khi trốn tránh Tòa thẩm tra.</p><p>&nbsp;</p>",
+            "time_per_episode": "25  Phút/tập",
+            "episode_current": "6",
+            "episode_total": "25",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich"],
+            "countries": ["nhat-ban"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/d84366ed5df8aa89cab069ffff861910",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e5d478a81e52b3ac4e6af7ad1abd39b6",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/cc882a3a954d8338606f55db837e5d4a",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/a03484a5e99e80013895e53349d4f338",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/cd7678abe76fe8fa262d101dfcba3196",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/214ed0736b88de781e63e6ead9f284e0",
+                    "slug": "tap-6",
+                    "name": "6"
+                }
+            ]
+        },
+        {
+            "movie_name": "Hầm Ngục Tối (Phần 5)",
+            "slug": "ham-nguc-toi-phan-5",
+            "image": "https://img.ophim.live/uploads/movies/ham-nguc-toi-phan-5-thumb.jpg",
+            "content": "As the labyrinth city of Orario prepares for the Goddess Festival, Bell Cranel looks forward to the festivities after his and Ryu's harrowing escape from the Dungeon's darkened depths. However, in a small tavern tucked away on a street corner, the single decision of a young woman causes a chain of events that throws Bell's life and the entire city into chaos.",
+            "time_per_episode": "23  Phút/tập",
+            "episode_current": "5",
+            "episode_total": "15",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["hanh-dong", "hai-huoc", "vien-tuong", "phieu-luu", "khoa-hoc"],
+            "countries": ["nhat-ban"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/79f9295a63aa81a4ba0865ea39530248",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/8deddf03f08b1252c7983c2c650c0410",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/dfa6aa8d9cd2216d26a142cd6736fdea",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/59eb5a2d8545be496f20c01018f49a1d",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/99d0b2e528cffdad48e3e68e0de00806",
+                    "slug": "tap-5",
+                    "name": "5"
+                }
+            ]
+        },
+        {
+            "movie_name": "Yêu Em 3000 Lần",
+            "slug": "yeu-em-3000-lan",
+            "image": "https://img.ophim.live/uploads/movies/yeu-em-3000-lan-thumb.jpg",
+            "content": "After a car accident, Shen Xingchen awakens to find his soul transported three years into the future, inhabiting the body of his twin brother, He Yuchuan. Now living under a false identity, he faces constant tests from his former lover, Jiang Muyi. As they work together to uncover the truth behind the accident and reveal a deeper conspiracy, their love story finds a new beginning.",
+            "time_per_episode": "11  Phút/tập",
+            "episode_current": "16",
+            "episode_total": "24",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/bf46c8209214d867e9dc38976290f965",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/0520f27468633663d33eb7e0933de477",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d9134e2a6f8525e080a9c984f9b26ccf",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/464272b1e3b0587b021173121d26ccf0",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/702010521c85cf7460eedc602c8b1cea",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/3276f901c702bc38cc36312a82ac5156",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/aceac9958a7d4a4f34feb7f994f91d03",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/a0f56bb43799522951d7a3d3a5b4e597",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/97db59e30c8008f13ce9219a1a84e33a",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d7e6b9022e0d3f4f4500afc799a4eae7",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/92498f5dcd505d5fdddb82d0534de40e",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/c1d1f3dc04fe71d56a88f4cdb56291b3",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/956c5963bbe915d03b855c0bd0d1a822",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/75d63760f3899a0265ed4cfed9a9ad67",
+                    "slug": "tap-14",
+                    "name": "14"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/df515135e9486ce557118e00bc99d7a3",
+                    "slug": "tap-15",
+                    "name": "15"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d86864571193079b42727c29db883c40",
+                    "slug": "tap-16",
+                    "name": "16"
+                }
+            ]
+        },
+        {
+            "movie_name": "Cô Gái Sống Trong Cơ Thể Tôi",
+            "slug": "co-gai-song-trong-co-the-toi",
+            "image": "https://img.ophim.live/uploads/movies/co-gai-song-trong-co-the-toi-thumb.jpg",
+            "content": "Linh hồn của Tiêu Tiêu bị giục cưới vô tình xuyên vào cơ thể của một người đàn ông cổ đại và bắt đầu hành trình vui vẻ chia sẻ cơ thể của mình với Sở Tiêu Nhiên, một thợ tắm cổ đại. Tiêu Tiêu sử dụng một túi bách bảo có thể lấy ra bất kỳ vật phẩm hiện đại nào để giúp Sở Tiêu Nhiên theo đuổi thành công công chúa lạnh lùng. Đồng thời trong quá trình đó, cô cũng sử dụng cơ thể của Sở Tiêu Nhiên để chọc ghẹo anh chàng đẹp trai.",
+            "time_per_episode": "19  Phút/tập",
+            "episode_current": "11",
+            "episode_total": "24",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/aae8700f9a23f9f332bcf97e560328d2",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/c23c178dab9869abf076e9d5b94f7e94",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/191eb5aada767fe0ea3042ee38da74b9",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/46d0221ab5f633ee6efbbd975d5b5f16",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/edb518e0388521905d2302d973250478",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/c37b189fd99f85ab3cf8885e2d131ce6",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/07d0a70ed51e3368e090d92f1d74f31f",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/968d65fbb8f364d69363aa2c4057b9c5",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/4ecbcd40187fe5abe6ab91aeb1a53205",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/6746d2e27adfd5224746c047dfc7b9fe",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/960d4d76b5ff783580e983ae6a57c2ea",
+                    "slug": "tap-11",
+                    "name": "11"
+                }
+            ]
+        },
+        {
+            "movie_name": "Sự Phản Công Của Phụ Nữ",
+            "slug": "su-phan-cong-cua-phu-nu",
+            "image": "https://img.ophim.live/uploads/movies/su-phan-cong-cua-phu-nu-thumb.jpg",
+            "content": "<p>Ôn Nhược Quân là người thừa kế của một tập đoàn trang sức. Sau một vụ bắt cóc, cô đã phát hiện ra chồng cô, Cố Diễm Thành, ngoại tình với bạn thân của mình. Không chỉ vậy, cuộc hôn nhân của hai người cũng là một kế hoạch lừa đảo tài sản được anh ta trù mưu từ trước. Sau khi phát hiện ra sự thật, Ôn Nhược Quân gặp được Lâm Gia Nghi, một nạn nhân khác của Cố Diễm Thành. Hai người phụ nữ quyết định hợp sức cùng những nạn nhân khác để trả thù gã đàn ông cặn bã này.</p><p>&nbsp;</p>",
+            "time_per_episode": "12  Phút/tập",
+            "episode_current": "14",
+            "episode_total": "24",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/4c6f2a67916df843c2a3d1a8bea66a71",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/bf285bbb49cedc6837bf910e40c19c4f",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/a9ef76a10fed49e9a67089ca65c62e4f",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e2b2ad10a0cce81f7b1757538471f089",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/9d2b7bbf2a4f54945c9012496d8a12b0",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/6c3ee6dcff80d34567671bce66bc911e",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/2b93fa3f420cef9fa662271b6124e80c",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5400976477ef0f1f283278e4611c12bb",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/1c8fd2c0b82f5efc73125961e6ad3ccb",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/f7e7c086e6e8e8f319179d602e0cc670",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/542a6a7d6f35cd50aba936394ed26ff5",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/4a64a65da2d1fa66049a8810de357949",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/505a3a2a32575c1ae4f592fce92e7ba3",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/756a6c572bd25735a354a87c25b351cd",
+                    "slug": "tap-14",
+                    "name": "14"
+                }
+            ]
+        },
+        {
+            "movie_name": "Nữ Quan Đại Nhân Xin Chỉ Giáo Nhiều Hơn",
+            "slug": "nu-quan-dai-nhan-xin-chi-giao-nhieu-hon",
+            "image": "https://img.ophim.live/uploads/movies/nu-quan-dai-nhan-xin-chi-giao-nhieu-hon-thumb.jpg",
+            "content": "Newcomer Xu Xinglan unexpectedly travels back to ancient times and becomes intertwined with her assassination target, Yuwen Yan, the second young master of Anjin City. Their relationship ignites a thrilling cat-and-mouse game of love and rivalry. Harnessing her modern sensibilities, Xu Xinglan embarks on an extraordinary journey, evolving from the \"first female assassin\" to the \"first female official\" in Anjin City.",
+            "time_per_episode": "18  Phút/tập",
+            "episode_current": "28",
+            "episode_total": "30",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich", "co-trang"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/da517d83d858f6be1760d625ab2c6b35",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/11a0252e81868dcf0894b8a9a0031a44",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/19a18e10f093102f17a0f25ff9e0512e",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/23255c93c2886788d8d80c3fa43d6a47",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5f310493d17ffdea442a5550a3536d9b",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/58463b550a7e65aac67dcbc9e2f2ed24",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e89405bb27c8abe03e9f97657f3ba6b5",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/de2a10afc71bd5456aa0a9b6338b17c7",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/a4f6122f4ff9b04cec9053f0dc83c777",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/bc24d2f78cc508b3bf9156f59a4ff060",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/1cb5e7535b5e4aa0bbb501f43c5bd910",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/125a98d63ecb2fab88dfe452f8646874",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5039c877840015a6f06d36be4b81dd3b",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/fea09b9bafc9c8cc8e70078a2597137a",
+                    "slug": "tap-14",
+                    "name": "14"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/2cd16a1c4acae58f5e6dab146488b38d",
+                    "slug": "tap-15",
+                    "name": "15"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/bf6847ee396a1111decf0677338730b8",
+                    "slug": "tap-16",
+                    "name": "16"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/73880287595cd991b800d5c69e16f33e",
+                    "slug": "tap-17",
+                    "name": "17"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/f21aa9a67ef524410f718cff368a6ff2",
+                    "slug": "tap-18",
+                    "name": "18"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/3733c89d4ce03f831551c85f47ed3782",
+                    "slug": "tap-19",
+                    "name": "19"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/4da642a43c5b00d6f65eafa9784d7fd2",
+                    "slug": "tap-20",
+                    "name": "20"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/8e424c6ee14c9d065194eee64fcabf37",
+                    "slug": "tap-21",
+                    "name": "21"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/81dae96e79ec97a41a71b87f6abd8968",
+                    "slug": "tap-22",
+                    "name": "22"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/bf4716ddf9600c4060736ee914d4616f",
+                    "slug": "tap-23",
+                    "name": "23"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/b193a092f2d6f4063f7f230cc1de3317",
+                    "slug": "tap-24",
+                    "name": "24"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/758ca2308bb7d472dfe992622ac04b43",
+                    "slug": "tap-25",
+                    "name": "25"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/03cbeedb23de8305d29fc96d1c5ee9db",
+                    "slug": "tap-26",
+                    "name": "26"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/7e5fe71488374ce5b7282f34c3677679",
+                    "slug": "tap-27",
+                    "name": "27"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/db9d33bc8f2223addd780868928b4c20",
+                    "slug": "tap-28",
+                    "name": "28"
+                }
+            ]
+        },
+        {
+            "movie_name": "Sơ Nhan",
+            "slug": "so-nhan",
+            "image": "https://img.ophim.live/uploads/movies/so-nhan-thumb.jpg",
+            "content": "<p>Câu chuyện kể về Lăng Sơ Hạ, một thiếu nữ lâm vào cảnh khốn cùng đã quyết định vùng lên đấu tranh chống lại xiềng xích của gia đình và can đảm đối mặt với những lời chỉ trích. Nàng gặp gỡ và đem lòng yêu nam chính Lương Quân Dạ - một con người có cùng cảnh ngộ. Cả hai giúp đỡ lẫn nhau vượt qua khó khăn, cùng vạch trần âm mưu của kẻ địch và bảo vệ nước nhà.</p><p>&nbsp;</p>",
+            "time_per_episode": "9  Phút/tập",
+            "episode_current": "29",
+            "episode_total": "30",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/a17379f02b1d82946a49cd865931e8ad",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/1e8221e3299df511eadbe2900e7ef7ff",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/b2c6a69cb348f63b04e272ad9679e5fa",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/97d34c42010dcbf436a0aaca60751d73",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/b0d0806219e491e017bc08fa80ae90e9",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e73afc854fe4c135d37e6438b46c1423",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/3d37445d31b65d4ec0e2539a769273da",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/2b016d00b45181171d66f4b15611d578",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/3b937e9d6a53869a74c25148ccec1622",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5681e18accb7e39e5c4be2bb31717e32",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/1b64eb6bff48bea0902de10850c33383",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/709a76e418675b743018a0e6824b5c03",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/f30631754e45359e7069944a3c3395d7",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d742f6d82d31615ed9aa4d351d1c0d6d",
+                    "slug": "tap-14",
+                    "name": "14"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d7ccb841e1c86abdc1d1d6e6bacb6f17",
+                    "slug": "tap-15",
+                    "name": "15"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/790e50a4297cf3a654ffe48b8c8f93f2",
+                    "slug": "tap-16",
+                    "name": "16"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/cef98f91b1d0588d27793c9e8a5558be",
+                    "slug": "tap-17",
+                    "name": "17"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/bbab90e4e6b919780dd338dd0c6f1f58",
+                    "slug": "tap-18",
+                    "name": "18"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/dda208749f101159d5b6f121a1e75b98",
+                    "slug": "tap-19",
+                    "name": "19"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/9be79c01d32762a5162b8d3f7042a96c",
+                    "slug": "tap-20",
+                    "name": "20"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/f9cf421320995e6cf0b1551edaec7817",
+                    "slug": "tap-21",
+                    "name": "21"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/ce9cbb0461cc1f85efa1b4cfbc0aa2c3",
+                    "slug": "tap-22",
+                    "name": "22"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/97e907221af01aec5f7adcdc49d72b39",
+                    "slug": "tap-23",
+                    "name": "23"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/4d73130e7f39287a0b8332d9a79c2ce3",
+                    "slug": "tap-24",
+                    "name": "24"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/c5b28f2c1c7cafcc62255f2b7f768a34",
+                    "slug": "tap-25",
+                    "name": "25"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/6cb9830222278e52091a82b7929c532a",
+                    "slug": "tap-26",
+                    "name": "26"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/0328e3e3377eeeb62aa0337bb33f425e",
+                    "slug": "tap-27",
+                    "name": "27"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/cc798a4a0a9338500d98742ecefe3ce0",
+                    "slug": "tap-28",
+                    "name": "28"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/9bd290791415c81d9aa6cd5997724774",
+                    "slug": "tap-29",
+                    "name": "29"
+                }
+            ]
+        },
+        {
+            "movie_name": "Thám Tình An",
+            "slug": "tham-tinh-an",
+            "image": "https://img.ophim.live/uploads/movies/tham-tinh-an-thumb.jpg",
+            "content": "<p>Lan Triệt, một thiếu nữ đường phố hết lòng bảo vệ láng giềng của mình, vô tình bị cuốn vào một vụ án mạng và gặp Đại Lý Tự chính khanh Lâu Minh Dạ. Hai con người hoàn toàn khác biệt mới đầu đã liên tục xảy ra hiểu lầm, nhưng sau khi hiểu nhau hơn, họ đã giải quyết những hiểu lầm, chung sức hợp tác, liên tiếp phá các vụ kỳ án. Đồng thời trong quá trình phá án, hai người dần nảy sinh tình cảm, xác định thân phận của đối phương, sau cùng có được một tình yêu chân thành. Với sự đồng hành và giúp đỡ của Lâu Minh Dạ, Lan Triệt trải qua rèn luyện, từ một thiếu nữ đường phố trở thành nữ thiếu khanh đầu tiên của Đại Lý Tự, và thực hiện được lý tưởng của cuộc đời mình.</p><p>&nbsp;</p><p>&nbsp;</p>",
+            "time_per_episode": "29  Phút/tập",
+            "episode_current": "19",
+            "episode_total": "22",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/13dc99fef8bc0f15ba4a034d491330c7",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/ada1cbb7a1b3d89d7d3dcaa59609b3d6",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/7eeb15d6027a367ea82bc7c5e9f25abd",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/4b4488c37e50aa0def88955d197203c6",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/ce2b8aedd1777f1977b0cc55b4dc8866",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/b9fe446b37be4b61f11d8419b5859a33",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/0f27c12b5d79ce8419764f71ac4ba499",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/8fd43ef7e386022fec7411bded9e18e4",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/adeaee4e38983bd90e256603b22d2581",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/f61f3f92d0dbcebe26d47dea3af1492a",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/931490b987c4266d88bb99b81f9d6f38",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/39dbae210359f74547a7d37205719b03",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/1d47a22cf09ca6de619b7623f90b40b5",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/fe8ceec5d07f8726b63402e7d8d6cd1c",
+                    "slug": "tap-14",
+                    "name": "14"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/7d437e2ee2b6a52dd7c31ba13ae621bb",
+                    "slug": "tap-15",
+                    "name": "15"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/4e51229aab15bd6ccdbabc3807cc2cc1",
+                    "slug": "tap-16",
+                    "name": "16"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/3a8451691f904cb224f0867d7f111bb6",
+                    "slug": "tap-17",
+                    "name": "17"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/33bd42214cb99de720c559b0e1120930",
+                    "slug": "tap-18",
+                    "name": "18"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/f67b893872a69aa31206c2daa3b27e13",
+                    "slug": "tap-19",
+                    "name": "19"
+                }
+            ]
+        },
+        {
+            "movie_name": "Vẫn Rất Yêu Cô Ấy",
+            "slug": "van-rat-yeu-co-ay",
+            "image": "https://img.ophim.live/uploads/movies/van-rat-yeu-co-ay-thumb.jpg",
+            "content": "Si Qingye, the president of the Si Group, and Ning Wuhui part ways due to a misunderstanding. Pregnant and alone, Ning loses all her memories after giving birth and becomes a single mother. Seven years later, they reunite and gradually rediscover their feelings, resolving past misunderstandings and embarking on a journey toward a joyful life as a family of four.",
+            "time_per_episode": "11  Phút/tập",
+            "episode_current": "20",
+            "episode_total": "23",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/ede2488d42df4f2b1756e08533e7f077",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d189830a75b59dc21a8dd3f811647039",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/9827d2f97f0fa69a8515121d9ed791d3",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/3fd4f2a86b42ebe6b3b976affb0cc116",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/4ed1e9b7e26dea49e6bfd5ec04b638b9",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/4b69dd118df52dfcab92bc0e9a7a2607",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5dcb3acfb237e7af45f60b083a2b4305",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/0d124848a0ea943f34d3a85bf3599943",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/9167d9ab4a2c643f0c8970c23b25ce28",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/050519787f51f4aebc507adcfcb4dca2",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/8da8a6f6d3fff80c43f2b614109fd88e",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/b86f29c888784d2245f887b509b5dd32",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/8f0db00fa933f4f074690c26fa80d51f",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/1d8ebb2deca53a21c4a47422ecf2ae1a",
+                    "slug": "tap-14",
+                    "name": "14"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/c815caa6693f1190d8d9226afd79b36e",
+                    "slug": "tap-15",
+                    "name": "15"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/781ca2f25a6943221d58b2d748aa684f",
+                    "slug": "tap-16",
+                    "name": "16"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/d5dd6578fedb045d1f93daf8f393cd32",
+                    "slug": "tap-17",
+                    "name": "17"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/3ca9c467df2542b0657483bb28cbe281",
+                    "slug": "tap-18",
+                    "name": "18"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/cd6aa55b460d9557c1d3f742a7b98261",
+                    "slug": "tap-19",
+                    "name": "19"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/a99fe9649b8fd60bde0893fd908dbecd",
+                    "slug": "tap-20",
+                    "name": "20"
+                }
+            ]
+        },
+        {
+            "movie_name": "Rèm Ngọc Châu Sa",
+            "slug": "rem-ngoc-chau-sa",
+            "image": "https://img.ophim.live/uploads/movies/rem-ngoc-chau-sa-thumb.jpg",
+            "content": "Rèm Ngọc Châu Sa lấy bối cảnh đầu thời nhà Đường. Nội dung phim kể về cô gái làm nghề bắt ngọc trai ở Hợp phố tên Đoan Ngọ vì muốn làm sáng tỏ thân thế của mình đã đồng ý gia nhập đội buôn của Yến Tử Kinh. Đoan Ngọ có một đầu óc vô cùng nhanh nhạy và tài năng kinh doanh không phải dạng vừa. Nhờ đó, nàng đã giúp việc làm ăn của đoàn buôn trở nên phát đạt.",
+            "time_per_episode": "? Phút/tập",
+            "episode_current": "14",
+            "episode_total": "38",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["co-trang"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream12.com/share/e2d95a06ee4545b3dcc9c66d92a1efb7",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream12.com/share/2f93b699c738691d0b53d82ed1e25817",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream12.com/share/dd8a3f5d0f62b085adecae10a3cde2e8",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream12.com/share/f14b58e9a94401142accfdb75947a361",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/af54f6cb039363d207638bdc36609c6d",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/7d1c3ceb392c6ed47307807bda07d05f",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/3637e141859eaa6eed2c9d86b9c33594",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e1c4c7ca3a3cc2a8c8816b53b1c8c92e",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/93f216850c462244444a49015b3ed706",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/10679b97a8f2db36e7b53d45efe2620b",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e57f718840a576abbb40a7d046c4e3b0",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/f86125099fdc7ba724a4f1b94d31ce81",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/58e25a238f48a1611ff9fcb270ddab41",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/08f90489877080b2a7103b109d56dff3",
+                    "slug": "tap-14",
+                    "name": "14"
+                }
+            ]
+        },
+        {
+            "movie_name": "Nhìn Thấy Tình Yêu",
+            "slug": "nhin-thay-tinh-yeu",
+            "image": "https://img.ophim.live/uploads/movies/nhin-thay-tinh-yeu-thumb.jpg",
+            "content": "<p>Bộ phim kể về câu chuyện về đời thứ ba của gia đình giàu có, trốn tránh thừa kế công việc kinh doanh của gia đình, vô tình phải lòng một người chăm sóc người khiếm thính.</p><p>&nbsp;</p>",
+            "time_per_episode": "? Phút/tập",
+            "episode_current": "3",
+            "episode_total": "13",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich"],
+            "countries": ["nhat-ban"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/f48e34aa13c1a7541137b938020b8a65",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/07ebd676d9d8a26dcf496cc2fde423fd",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/1d85c2bd02088464fc116fa8ffbe06d3",
+                    "slug": "tap-3",
+                    "name": "3"
+                }
+            ]
+        },
+        {
+            "movie_name": "Tình Yêu Cuồng Nhiệt Sau Khi Kết Hôn",
+            "slug": "tinh-yeu-cuong-nhiet-sau-khi-kethon",
+            "image": "https://img.ophim.live/uploads/movies/tinh-yeu-cuong-nhiet-sau-khi-kethon-thumb.jpg",
+            "content": "Cố An An, con gái của tập đoàn Cố thị, bất ngờ gặp biến cố trong gia đình. Mẹ cô rơi xuống vực một cách kỳ lạ bị hôn mê. Cha cô, Dạ Đình Phong, người nghiện cờ bạc, cũng tìm cách chiếm đoạt toàn bộ tài sản của gia đình nhà họ Cố. Lúc này, Cố An An quyết định kết hôn với cậu chủ cả nhà họ Hoắc Hoắc Tư Văn, con trai cả của nhà họ Hoắc, để cứu tài sản của gia đình. Nhưng lại quen được Hoắc Tư Đình, cậu chủ thứ hai không được xem trọng của nhà họ Hoắc. Hai người quyết định thành lập liên minh. Trong quá trình đó, một tình yêu bị cấm đoán đã lặng lẽ xảy ra trong ngôi biệt thự giàu có...",
+            "time_per_episode": "? Phút/tập",
+            "episode_current": "10",
+            "episode_total": "28",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["tinh-cam"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/6c98d8dcc54fbe460976496b08d838f6",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/afed529d846076b85732176dc5644335",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/59a794f1fef9006ee60c1b9c2806b782",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/04fa231dbab860eecd74f34b3c721140",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/8a3a8a2042c94c88f0e455bab99fc75e",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/a2d179a4a201406d4ce6138b0b1c86d7",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e2684ea2157a2423b7463536886837b2",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/2cb99534169784dc09cdf588012eb6a0",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/854de648cbfe8c7e2a3e0597acb07ad6",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/a605a210266fcf2eca4819969a7d54e8",
+                    "slug": "tap-10",
+                    "name": "10"
+                }
+            ]
+        },
+        {
+            "movie_name": "Canh Bạc Ái Tình",
+            "slug": "canh-bac-ai-tinh",
+            "image": "https://img.ophim.live/uploads/movies/canh-bac-ai-tinh-thumb.jpg",
+            "content": "Canh Bạc Ái Tình là chuyện tình oái oăm giữa một nữ dược sĩ trẻ Mild và linh hồn đang trú ngụ trong thân xác kẻ thù của cô. Sau khi từ Mỹ trở về Thái Lan, bi kịch liên tục ập đến với Mild: mẹ cô qua đời trong một sự cố đáng ngờ, người yêu cũ là Phas cũng mất vì tai nạn giao thông. Nghi ngờ cái chết của họ có liên quan đến cha con tỷ phú Thana và Theethat, Mild tìm cách quyến rũ Theethat để điều tra chân tướng. Điều cô không thể ngờ là từ sau tai nạn kia, linh hồn Phas đã được chuyển vào thân xác của Theethat.",
+            "time_per_episode": "? Phút/tập",
+            "episode_current": "14",
+            "episode_total": "16",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich"],
+            "countries": ["thai-lan"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/712a51468125cc467fd3087579f166a3",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/0fd492d42db7a0b0539fc682a563d3fe",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/643dc432cd40e2304d2817138474a1e2",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/df80c4863374ca0ccd3f3e8552d8f24e",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/713a33732fcb0db1f284a4c1beda7f60",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/ee0fe8739468fb6e0214b071feb09590",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/f1105c2f23b2c673114e6c8a16b135b2",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/9aa9725e0bbca8966afaa2c556eed96f",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/f303dc9c7efda3e8fc5463088620af20",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/0dc4ae14988c1f79433e901c4d454e79",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/88811a68209102d750ed6a150bc732e0",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e334ac377a60327fe8e5ec0b66c7432b",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/58a1fe83b0459181b21f66b33a29c61f",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/ef4c5d9fa35b878498729ed94db294ca",
+                    "slug": "tap-14",
+                    "name": "14"
+                }
+            ]
+        },
+        {
+            "movie_name": "Lời Nói Dối Của Em Cũng Dễ Nghe",
+            "slug": "loi-noi-doi-cua-em-cung-de-nghe",
+            "image": "https://img.ophim.live/uploads/movies/loi-noi-doi-cua-em-cung-de-nghe-thumb.jpg",
+            "content": "A rescue medical team and volunteers, including actress Qin Fei, head to a disaster area in southwest China. Initially doubted for her motives, Qin Fei proves herself by risking her life to save others. As they work together, team captain Xing Zhizhi recognizes her resilience, and they grow closer. Qin Fei later realizes that Xing Zhizhi was the doctor who saved her in a past accident, linking their fates. Together, they support each other as they pursue their careers.",
+            "time_per_episode": "45  Phút/tập",
+            "episode_current": "36",
+            "episode_total": "36",
+            "year": 2024,
+            "movie_type_id": "type1",
+            "genres": ["chinh-kich"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream11.com/share/0bad63222750a428ce009d165afbe925",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/3a6f811dc98c07a4f5e7b5122fc6d743",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/027b0c86949087cac342845e16c2625a",
+                    "slug": "tap-3",
+                    "name": "3"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/ea9dc69aa87d34bba96112dcd72b211e",
+                    "slug": "tap-4",
+                    "name": "4"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/3cbc30ac3e2581b2bf74d28edefb5cc1",
+                    "slug": "tap-5",
+                    "name": "5"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/a4d0649394c84ceb8b42b5f3987a333b",
+                    "slug": "tap-6",
+                    "name": "6"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/04e37611fefa45c2c3fa2c9d6668a6ff",
+                    "slug": "tap-7",
+                    "name": "7"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5381db162abba1860f5c18369d8b1549",
+                    "slug": "tap-8",
+                    "name": "8"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5919cc509bc0234c73ddec244c930964",
+                    "slug": "tap-9",
+                    "name": "9"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/1d779e8a06ac2a215d2effe4bc0b9eb5",
+                    "slug": "tap-10",
+                    "name": "10"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/41eb08efab98ba98e7f12c1f42f065c7",
+                    "slug": "tap-11",
+                    "name": "11"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/174b0313d3601872c6fd2c65150eef1c",
+                    "slug": "tap-12",
+                    "name": "12"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/efb1a00af0eb90f71cb142729b47dcb5",
+                    "slug": "tap-13",
+                    "name": "13"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/5f8e33133f4873736c7f496ce18b4c34",
+                    "slug": "tap-14",
+                    "name": "14"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/fdf92d7bd06b64a1dce06dc3bccca26a",
+                    "slug": "tap-15",
+                    "name": "15"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/cad4f62342b44466451dc77d1d02e783",
+                    "slug": "tap-16",
+                    "name": "16"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/549a9402312d16fcbfec398c2ecae187",
+                    "slug": "tap-17",
+                    "name": "17"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/63c4a8caf1a16be4b189176227ae3781",
+                    "slug": "tap-18",
+                    "name": "18"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/80e895da1440faf372463f07b42feea3",
+                    "slug": "tap-19",
+                    "name": "19"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/755658c37b624a7e17877652cf99eec8",
+                    "slug": "tap-20",
+                    "name": "20"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/45e3e10e634fe325178b335b656c0374",
+                    "slug": "tap-21",
+                    "name": "21"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/9215b69bf3fc8955f31f72c4bd4e577a",
+                    "slug": "tap-22",
+                    "name": "22"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/12752034fe394485473d174000294d75",
+                    "slug": "tap-23",
+                    "name": "23"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/ed522c05fd81623453ef42551467ce68",
+                    "slug": "tap-24",
+                    "name": "24"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/edd5e703eb6c782cf5aee04cb6acf234",
+                    "slug": "tap-25",
+                    "name": "25"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/73d9e0f146358771de8293a13e611b09",
+                    "slug": "tap-26",
+                    "name": "26"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/1c555091db0a110c5f994d8f1866571e",
+                    "slug": "tap-27",
+                    "name": "27"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/e85596643aa36787cb0c057698c5f334",
+                    "slug": "tap-28",
+                    "name": "28"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/aba25a9fda63263672f8e84b6d7a4c6e",
+                    "slug": "tap-29",
+                    "name": "29"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/396da40bbd1e91154336c1df7487935c",
+                    "slug": "tap-30",
+                    "name": "30"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/285eb263edf5cb049f3f4cc7fa0d2182",
+                    "slug": "tap-31",
+                    "name": "31"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/3e0de21930c6e2fe78ffbc484752cbe3",
+                    "slug": "tap-32",
+                    "name": "32"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/ae99a1c86b9795a3f0c171469418ed8b",
+                    "slug": "tap-33",
+                    "name": "33"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/c584b5f16d72571498ee67eaba1ae361",
+                    "slug": "tap-34",
+                    "name": "34"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/8818556ce6ba4bc9302dca9ec1979591",
+                    "slug": "tap-35",
+                    "name": "35"
+                },
+                {
+                    "link": "https://vip.opstream11.com/share/cfe0ccd2fe850715fbb0202c4769d159",
+                    "slug": "tap-36",
+                    "name": "36"
+                }
+            ]
+        },
+        {
+            "movie_name": "Mục Thần Ký",
+            "slug": "muc-than-ky",
+            "image": "https://img.ophim.live/uploads/movies/muc-than-ky-thumb.jpg",
+            "content": "<p><strong>Tần Mục trời sinh phàm thể, trải qua khảo nghiệm trở thành Thiên Ma giáo giáo chủ, bị diên Khang quốc phong làm đời thứ nhất thái học tiến sĩ. Diên Khang quốc phản loạn chi chiến bên trong Tần Mục dẫn tới Ma Thần, nhấc lên hạo đãng phong vân, sau theo võ Khả Hãn nhập Lâu Lan hoàng kim cung, một người đánh khắp Thánh cung vô địch thủ. Hắn trở về diên Khang, trợ quốc sư bình định, tạo Xạ Nhật thần pháo, sau đến người hoàng truyền thừa trở thành một đời mới Nhân Hoàng. Dưới cơ duyên xảo hợp Tần Mục biết được thân thế của mình, mượn nhờ đạo môn nhỏ Ngọc Kinh bọn người trợ giúp, mở ra đạo pháp thần thông cải cách đại thế.</strong></p>",
+            "time_per_episode": "? Phút/tập",
+            "episode_current": "3",
+            "episode_total": "1",
+            "year": 2024,
+            "movie_type_id": "type2",
+            "genres": ["hanh-dong", "vien-tuong", "phieu-luu", "khoa-hoc"],
+            "countries": ["trung-quoc"],
+            "episodes": [
+                {
+                    "link": "https://vip.opstream15.com/share/8387418ed9ce2d0e0188fced31bb45d4",
+                    "slug": "tap-1",
+                    "name": "1"
+                },
+                {
+                    "link": "https://vip.opstream15.com/share/ba87a8ac2878dbe80b40b23114a7d042",
+                    "slug": "tap-2",
+                    "name": "2"
+                },
+                {
+                    "link": "https://vip.opstream15.com/share/fdb3bab581e62940c7c21d8cc3a6c238",
+                    "slug": "tap-3",
+                    "name": "3"
+                }
+            ]
+        }
+    ]
+}

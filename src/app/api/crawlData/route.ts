@@ -130,7 +130,10 @@ export async function GET(request: NextRequest) {
                     const episode_current = extractEpisodeNumber(item.episode_current);
                     const episode_total = extractEpisodeNumber(item.episode_total);
                     const time_per_episode =
-                        item.time.includes("0") || item.time.includes("undefined") || item.time.includes("null")
+                        item.time.includes("0") ||
+                        item.time.includes("undefined") ||
+                        item.time.includes("null") ||
+                        item.time.toLowerCase().includes("đang cập nhật")
                             ? "? Phút/tập"
                             : item.time.replace("p", " P");
 
@@ -149,7 +152,7 @@ export async function GET(request: NextRequest) {
                         episodes: item.episodes[0].server_data.map((episode) => ({
                             link: episode.link_embed,
                             slug: `tap-${episode.slug}`,
-                            name: episode.slug.toLowerCase() === "full" ? "1" : episode.slug
+                            name: extractEpisodeNumber(episode.slug)
                         }))
                     };
                 } catch (error) {
