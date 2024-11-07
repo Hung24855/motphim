@@ -48,7 +48,7 @@ class EndpointUrl {
     read_notification = () => `/thong-bao`;
 
     //crawler
-    crawler = () => `/crawlData`;
+    crawler = () => `/crawlData2`;
     crawlerUpdateData = () => `/crawlData`;
     crawlerSearchData = () => `/crawlData/tim-kiem`;
 }

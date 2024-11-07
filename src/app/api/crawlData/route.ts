@@ -17,7 +17,6 @@ export async function GET(request: NextRequest) {
         async mainFc(pool) {
             const createBrowser = async () => {
                 let browser: Browser | null = null;
-
                 console.log(">>>Đang mở trình duyệt...");
 
                 //Local browser
@@ -25,7 +24,6 @@ export async function GET(request: NextRequest) {
                     headless: true,
                     //Tin tưởng nội dung trang web hiện tại,nên đisible sandbox chặn lại trang web đó
                     args: ["--no-sandbox", "--disable-setuid-sandbox"],
-                    executablePath: puppeteer.executablePath(),
                     defaultViewport: null
                 });
 
@@ -126,7 +124,6 @@ export async function GET(request: NextRequest) {
 
                 return movies;
             };
-
             const fetchMovieDetail = async (slug: string) => {
                 try {
                     const { data: movieDetail } = await axios.get<{ data: MovieDetail }>(
@@ -170,7 +167,6 @@ export async function GET(request: NextRequest) {
                     return null;
                 }
             };
-
             const extractEpisodeNumber = (episodeString: string) => {
                 const match = episodeString.match(/(\d+)/);
                 return match ? match[0] : "1"; // Trả về số đầu tiên tìm thấy
@@ -206,7 +202,6 @@ export async function GET(request: NextRequest) {
                 console.log(">>>Đóng trình duyệt");
                 return data;
             };
-
             const data = await crawlData();
             return {
                 message: "Crawl data successfully!",
