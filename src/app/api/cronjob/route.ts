@@ -8,6 +8,7 @@ export async function GET() {
 
             return {
                 message: "Cron job executed!" + new Date(),
+
                 data: []
             };
         }

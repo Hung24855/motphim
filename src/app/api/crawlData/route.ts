@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 import { v4 as uuidv4 } from "uuid";
 import { Episode, MovieDetail, Movies } from "./type";
 export const revalidate = 0;
-
+const IS_DEVELOPMENT = process.env.DEVELOPMENT === "development";
 export async function GET(request: NextRequest) {
     return RouterHandler({
         async mainFc(pool) {
@@ -224,7 +224,9 @@ export async function PUT(request: NextRequest) {
 
                 // Lấy cookie next-auth
                 const cookieStore = cookies();
-                const token = cookieStore.get("authjs.session-token");
+                const token = cookieStore.get(
+                    IS_DEVELOPMENT ? "authjs.session-token" : "__Secure-authjs.session-token"
+                );
 
                 // Thêm phim mới
                 await http.post(
@@ -245,7 +247,9 @@ export async function PUT(request: NextRequest) {
                     },
                     {
                         headers: {
-                            cookie: `authjs.session-token=${token?.value}`
+                            cookie:
+                                (IS_DEVELOPMENT ? "authjs.session-token=" : "__Secure-authjs.session-token=") +
+                                (token?.value ?? "")
                         }
                     }
                 );
