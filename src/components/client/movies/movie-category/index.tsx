@@ -24,7 +24,8 @@ export default function MovieCategory(props: props) {
         slug
     });
 
-    if (!movies) return <ListMovieSkeleton number={5} containerClassName="!pt-0" showTitle />;
+    if (!movies || movies.data.length === 0)
+        return <ListMovieSkeleton number={5} containerClassName="!pt-0" showTitle />;
 
     return (
         <div className="mb-5">
