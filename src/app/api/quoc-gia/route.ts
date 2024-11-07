@@ -1,6 +1,5 @@
 import { NextRequest } from "next/server";
 import { RouterHandler } from "../router.handler";
-
 export async function GET() {
     return RouterHandler({
         async mainFc(pool) {

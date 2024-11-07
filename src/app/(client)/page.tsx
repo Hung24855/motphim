@@ -10,6 +10,8 @@ export default async function Home() {
                 <MovieCategory title="Phim cổ trang" slug="co-trang" />
                 <MovieCategory title="Phim hành động" slug="hanh-dong" />
                 <MovieCategory title="Phim tình cảm" slug="tinh-cam" />
+                <MovieCategory title="Phim kinh dị" slug="kinh-di" />
+                <MovieCategory title="Phim hài hước" slug="hai-huoc" />
             </MaxWidth>
         </main>
     );

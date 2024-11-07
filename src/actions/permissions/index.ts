@@ -5,8 +5,9 @@ import { redirect } from "next/navigation";
 export const Permissions = async ({ user_id, role }: { user_id: string; role: "admin" | "user" }) => {
     try {
         const cookie = cookies();
+
         const session_product = cookie.get("__Secure-authjs.session-token")?.value;
-        if ( session_product) {
+        if (session_product) {
             redirect("/");
         }
 
@@ -14,7 +15,7 @@ export const Permissions = async ({ user_id, role }: { user_id: string; role: "a
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                cookie:  "__Secure-authjs.session-token=" + session_product
+                cookie: "__Secure-authjs.session-token=" + session_product
             },
             body: JSON.stringify({ role })
         }).then((res) => res.json());

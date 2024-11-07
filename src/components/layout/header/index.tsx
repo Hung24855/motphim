@@ -121,14 +121,14 @@ function Search({ session }: { session: Session | null }) {
                 />
 
                 <div className="px-1" onClick={() => setShowSearch(!showSearch)}>
-                    <CiSearch size={22} />
+                    <CiSearch size={24} />
                 </div>
             </button>
 
             <DropdownMenu
                 toggleComponent={
                     <button className="relative py-2 duration-200 hover:scale-110" onClick={handleReadNotification}>
-                        <FaBell size={20} />
+                        <FaBell size={24} />
                         {session && notificationCount > 0 && (
                             <span className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-red-500 text-xs">
                                 {notificationCount}
@@ -247,12 +247,12 @@ function Search({ session }: { session: Session | null }) {
                             <Image
                                 src={session?.user.avatar}
                                 alt="Avatar preview"
-                                width={20}
-                                height={20}
-                                className="h-7 w-7 rounded-full object-cover"
+                                width={24}
+                                height={24}
+                                className="size-7 rounded-full object-cover"
                             />
                         ) : (
-                            <FaUser size={20} />
+                            <FaUser size={24} />
                         )}
                     </button>
                 </Popover>

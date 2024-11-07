@@ -62,7 +62,7 @@ export default function MoviePage(props: Props) {
     const { data: response } = MoviesService.get_movie(props.slug);
     const { mutateUnFavoriteMovie, mutateFavoriteMovie } = MoviesService.use_favorite_action();
     const { checkFavoriteMovie } = MoviesService.check_favorite_movie({
-        movie_id: response ? response[0].id : "",
+        movie_id: response ? response[0]?.id : "",
         user_id: props.session?.user.id ?? ""
     });
 
@@ -139,7 +139,7 @@ export default function MoviePage(props: Props) {
                             <img src={movie.image} alt="img" className="aspect-[2/3] w-full max-w-[300px] rounded" />
                             <div className="w-full">
                                 <h2 className="text-4xl font-extrabold lg:text-5xl">{movie.movie_name}</h2>
-                                <span className="font-bold text-primary">The Legend of Shaolin Kung Fu 4</span>
+                                <span className="font-bold text-primary">Phim vietsub độc quyền</span>
                                 <div className="my-4 flex flex-col gap-5 font-medium lg:flex-row lg:items-center">
                                     <div className="flex items-center gap-2 text-xs font-bold">
                                         {/* <span className="bg-white px-2.5 py-1 text-black">{`${movie?.episode_current} / ${movie?.episode_total} Tập`}</span> */}
@@ -179,7 +179,13 @@ export default function MoviePage(props: Props) {
                                         </ul>
                                     </div>
                                 </div>
-                                <div className="movie-content max-h-80 overflow-auto text-sm">{movie.content}</div>
+                                <div className="movie-content max-h-80 overflow-auto text-sm">
+                                    <span
+                                        dangerouslySetInnerHTML={{
+                                            __html: movie.content ?? ""
+                                        }}
+                                    />
+                                </div>
                                 <div className="mt-8 flex w-max items-center gap-1.5 rounded-lg border border-white/5 bg-white/5 px-4 py-4 md:gap-5 md:px-7">
                                     <button
                                         className="flex flex-col items-center justify-center gap-1 text-sm hover:text-primary"
@@ -197,7 +203,7 @@ export default function MoviePage(props: Props) {
                                         </a>
                                         <button
                                             className={clsx(
-                                                "flex items-center gap-2 rounded-full w-[132px] border-2 border-primary bg-black/70 px-5 py-2.5 duration-300",
+                                                "flex w-[132px] items-center gap-2 rounded-full border-2 border-primary bg-black/70 px-5 py-2.5 duration-300",
                                                 checkFavoriteMovie?.is_favorites
                                                     ? "bg-red-500 text-white"
                                                     : "hover:bg-primary hover:text-black"

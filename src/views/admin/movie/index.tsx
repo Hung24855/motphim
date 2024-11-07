@@ -177,7 +177,7 @@ export default function MoviesAdminView() {
             });
         }
     };
-    
+
     return (
         <div>
             <h1 className="text-center text-3xl font-semibold">Quản lý phim</h1>
@@ -185,7 +185,7 @@ export default function MoviesAdminView() {
                 <Link href={"/admin/phim/them-phim"}>
                     <button className="rounded bg-admin_primary px-3 py-2 text-white">Thêm phim</button>
                 </Link>
-                <div className="flex h-10 w-52 items-center">
+                <div className="h-10 w-52">
                     <input
                         placeholder="Nhập tên phim ..."
                         className="rounded-sm border p-2 outline-none"

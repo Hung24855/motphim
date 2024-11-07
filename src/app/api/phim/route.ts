@@ -10,8 +10,8 @@ export async function POST(request: NextRequest) {
 
             pool.query(
                 `INSERT INTO movies 
-                 (id, movie_name, slug,content,title_head,image,time_per_episode, episode_current,episode_total,movie_type_id,trailer_youtube_url) 
-                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+                 (id, movie_name, slug,content,title_head,image,time_per_episode, episode_current,episode_total,movie_type_id,trailer_youtube_url,year) 
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
                 [
                     movie_id,
                     body.movie_name,
@@ -23,7 +23,8 @@ export async function POST(request: NextRequest) {
                     body.episode_current,
                     body.episode_total,
                     body.movie_type_id,
-                    body.trailer_youtube_url
+                    body.trailer_youtube_url,
+                    body?.year ?? 2024
                 ],
                 (error) => {
                     if (error) {
@@ -75,7 +76,6 @@ export async function POST(request: NextRequest) {
                 "episodes",
                 "movie_name",
                 "movie_type_id",
-                "quality",
                 "image",
                 "episode_total",
                 "year",

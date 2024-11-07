@@ -16,6 +16,7 @@ import { logout_action } from "@/actions/auth";
 import { SideBarList } from "./type";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import { FaDatabase } from "react-icons/fa";
 
 const sidebar_variants = {
     open: { opacity: 1, x: 0, width: "16rem" },
@@ -73,6 +74,11 @@ export default function AdminSideBar() {
                     icon: <GiEarthAsiaOceania size={24} />
                 }
             ]
+        },
+        {
+            name: "Crawler",
+            icon: <FaDatabase size={24} />,
+            path: "/admin/crawler"
         },
         {
             name: "Tài khoản",

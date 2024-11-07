@@ -46,6 +46,11 @@ class EndpointUrl {
     send_notification = () => `/thong-bao/gui-thong-bao`;
     get_all_notifications = () => `/thong-bao/danh-sach-thong-bao`;
     read_notification = () => `/thong-bao`;
+
+    //crawler
+    crawler = () => `/crawlData`;
+    crawlerUpdateData = () => `/crawlData`;
+    crawlerSearchData = () => `/crawlData/tim-kiem`;
 }
 
 export const ENDPOINT_URL = new EndpointUrl();

@@ -1,15 +1,14 @@
 import { removeMark } from "@/base/utils/function";
 import { NextRequest } from "next/server";
 import { RouterHandler } from "../router.handler";
-import CheckAdmin, { getUserIdByTokenNextAuth } from "../middleware";
-
+import CheckAdmin from "../middleware";
+export const revalidate = 60;
 export async function GET(request: NextRequest) {
     return RouterHandler({
         async mainFc(pool) {
             const searchParams = request.nextUrl.searchParams;
             const movie_type_id = searchParams.get("movie_type_id");
             let query = removeMark(searchParams.get("q") ?? "").split("-");
-
             //ILIKE là bỏ qua chữ hoa chữ thường
             // Yêu cầu phải giống ít nhất 2 từ trong mảng query
             const is_admin = await CheckAdmin(request); //Nếu admin tìm kiếm thì tìm cả nhưng phim đang ẩn

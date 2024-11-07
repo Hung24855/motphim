@@ -18,7 +18,6 @@ export async function POST(request: NextRequest) {
             //Mã hóa mật khẩu
             const saltRounds = 10;
             const hashPassword = bcrypt.hashSync(body.password, saltRounds);
-
             //Tạo tài khoản
             let user_id = uuidv4();
             await pool.query("INSERT INTO users (id,email,password,username) VALUES ($1,$2,$3,$4) RETURNING *", [
@@ -27,7 +26,7 @@ export async function POST(request: NextRequest) {
                 hashPassword,
                 body.username
             ]);
-
+            
             return {
                 message: "Đăng ký tài khoản thành công!",
                 data: []
