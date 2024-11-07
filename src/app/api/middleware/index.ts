@@ -5,6 +5,8 @@ const secret = process.env.NEXTAUTH_SECRET ?? "";
 const IS_DEVELOPMENT = process.env.DEVELOPMENT === "development";
 const CheckAdmin = async (request: NextRequest) => {
     try {
+        console.log("CheckAdmin", IS_DEVELOPMENT ? "authjs.session-token" : "__Secure-authjs.session-token");
+
         const token = await getToken({
             req: request,
             secret: secret,
