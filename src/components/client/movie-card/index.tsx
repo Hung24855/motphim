@@ -24,7 +24,7 @@ export default function MovieCard({ movie }: { movie: Movie }) {
                     <div>{movie.time_per_episode}</div>
                 </div>
                 <div className="absolute left-3 top-3 rounded bg-black/40 px-2 py-1 text-sm">
-                    {Number(movie.episode_current)}/{Number(movie.episode_total)} Tập
+                    {movie.episode_current}/{movie.episode_total} Tập
                 </div>
                 <div className="absolute right-3 top-3 rounded bg-black/40 px-2 py-1 text-sm text-primary">HD</div>
             </motion.div>

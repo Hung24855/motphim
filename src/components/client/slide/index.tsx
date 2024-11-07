@@ -24,7 +24,7 @@ const SlideSkeleton = () => {
                     <div className="mt-4 h-6 w-[14rem] rounded bg-gray-700"></div>
                     <div className="mt-4 h-6 w-32 rounded bg-gray-700"></div>
                 </div>
-                <div className="absolute hidden md:block bottom-20 right-0 h-52 w-[528px]">
+                <div className="absolute bottom-20 right-0 hidden h-52 w-[528px] md:block">
                     {[1, 2, 3, 4, 5].map((item, index) => {
                         const isCenter = index === 2;
                         return (
@@ -148,7 +148,13 @@ export default function Slide() {
                             </h1>
                         </div>
 
-                        <div className="mt-10 line-clamp-3">{slides[2]?.content}</div>
+                        <div className="mt-10 line-clamp-3">
+                            <span
+                                dangerouslySetInnerHTML={{
+                                    __html: slides[2]?.content ?? ""
+                                }}
+                            />
+                        </div>
                         <div className="mt-2 flex gap-x-2 text-primary">
                             <FaStar />
                             <FaStar />
@@ -169,7 +175,7 @@ export default function Slide() {
                         </div>
                     </motion.div>
                     <motion.div
-                        className="absolute bottom-20 right-0 h-52 w-[528px] hidden md:block"
+                        className="absolute bottom-20 right-0 hidden h-52 w-[528px] md:block"
                         initial={{ opacity: 0, y: 75 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
