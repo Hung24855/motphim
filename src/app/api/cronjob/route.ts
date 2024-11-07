@@ -7,7 +7,7 @@ export async function GET() {
             console.log("Cron job executed!", new Date());
 
             return {
-                message: "Test cron job!",
+                message: "Cron job executed!" + new Date(),
                 data: []
             };
         }
