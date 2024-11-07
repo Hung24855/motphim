@@ -14,7 +14,6 @@ const CheckAdmin = async (request: NextRequest) => {
         });
         const check_admin_in_DB = await pool.query("SELECT role FROM users WHERE id = $1", [token_product?.id]);
         if (!token_product || token_product.role !== "admin") {
-
             return false;
         }
         if (token_product.role === "admin" && check_admin_in_DB.rows[0].role === "admin") {
