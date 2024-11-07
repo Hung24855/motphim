@@ -12,7 +12,6 @@ const CheckAdmin = async (request: NextRequest) => {
             cookieName: "__Secure-authjs.session-token"
         });
         const check_admin_in_DB = await pool.query("SELECT role FROM users WHERE id = $1", [token_product?.id]);
-
         if (!token_product || token_product.role !== "admin") {
             return false;
         }
