@@ -19,7 +19,10 @@ const nextConfig = {
             //   destination: 'https://github.com',
             // },
         ];
-    }
+    },
+    // experimental: {
+    //     serverComponentsExternalPackages: ['puppeteer-core'],
+    // }
 };
 
 export default nextConfig;
