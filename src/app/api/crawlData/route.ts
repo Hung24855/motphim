@@ -127,7 +127,9 @@ export async function GET(request: NextRequest) {
                     const item = movieDetail?.data.item;
                     if (!item) return null;
 
-                    const episode_current = extractEpisodeNumber(item.episode_current);
+                    const episode_current = item.episode_current.toLowerCase().includes("trọn bộ")
+                        ? "Full"
+                        : extractEpisodeNumber(item.episode_current);
                     const episode_total = extractEpisodeNumber(item.episode_total);
                     const time_per_episode =
                         item.time.includes("0") ||
