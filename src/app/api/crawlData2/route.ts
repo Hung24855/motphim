@@ -55,12 +55,7 @@ export async function GET(request: NextRequest) {
                             case "Thể Loại":
                                 info["genres"] = value
                                     .split(", ")
-                                    .map((text) =>
-                                        removeMark(text.toLowerCase())
-                                            .replace(" ", "-")
-                                            .replace("đ", "d")
-                                            .replace("đ", "D")
-                                    );
+                                    .map((text) => removeMark(text.toLowerCase()).replace(" ", "-").replace("đ", "d"));
                                 break;
                             case "Quốc Gia":
                                 info["countries"] = value
@@ -114,6 +109,10 @@ export async function GET(request: NextRequest) {
                     listMovies
                 }
             };
+        },
+        options: {
+            request: request,
+            checkAuth: "isAdmin"
         }
     });
 }

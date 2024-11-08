@@ -8,6 +8,7 @@ import { Icon } from "@iconify/react";
 import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { Session } from "next-auth";
+import { useRouter } from "next-nprogress-bar";
 import Script from "next/script";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
@@ -15,6 +16,7 @@ import { toast } from "react-toastify";
 type Props = {
     slug: string;
     session: Session | null;
+    searchParams: { tap: string };
 };
 
 const MovieDetailSkeleton = () => {
@@ -58,13 +60,14 @@ const MovieDetailSkeleton = () => {
 export default function MoviePage(props: Props) {
     const queryClient = useQueryClient();
     const videoRef = useRef<HTMLDivElement>(null);
-    const [episode, setEpisode] = useState<string>("1");
+    const [episode, setEpisode] = useState<string>(() => props.searchParams?.tap ?? "1");
     const { data: response } = MoviesService.get_movie(props.slug);
     const { mutateUnFavoriteMovie, mutateFavoriteMovie } = MoviesService.use_favorite_action();
     const { checkFavoriteMovie } = MoviesService.check_favorite_movie({
         movie_id: response ? response[0]?.id : "",
         user_id: props.session?.user.id ?? ""
     });
+    const router = useRouter();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -249,7 +252,10 @@ export default function MoviePage(props: Props) {
                                             }
                                         )}
                                         key={item.episode_id}
-                                        onClick={() => setEpisode(item.name)}
+                                        onClick={() => {
+                                            setEpisode(item.name);
+                                            router.push(`?tap=${item.name}`, { scroll: false });
+                                        }}
                                     >
                                         {item.name}
                                     </button>

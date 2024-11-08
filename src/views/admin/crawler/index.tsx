@@ -160,7 +160,8 @@ export default function CrawlerView() {
                                                 </div>
 
                                                 {checkedMovies[movie.slug] &&
-                                                    (loadingUpdateMovies ? (
+                                                    (loadingUpdateMovies &&
+                                                    !moviesUpdateSuccess.find((item) => item === movie.slug) ? (
                                                         <span className="mr-10 flex-1 text-end text-blue-500">
                                                             Process...
                                                         </span>
