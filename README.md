@@ -23,7 +23,7 @@
 - Xem phim theo từng thể loại và quốc gia
 - Yêu thích phim
 - Tạo phòng xem phim : Trò truyện real-time và xem phim
-- CRUD phim, thể loại, quốc gia
+- CRUD phim, thể loại, quốc gia, crawl data
 - Phân quyền
 - Gửi và nhận thông báo real-time với FCM (Firebase cloud message)
 - Bình luận
@@ -51,4 +51,5 @@
 ![Admin](/public/demo/TRANG_QUAN_TRI_1.jpg)
 ![Admin](/public/demo/TRANG_QUAN_TRI_2.jpg)
 ![Admin](/public/demo/TRANG_QUAN_TRI_3.jpg)
+![Admin](/public/demo/TRANG_QUAN_TRI_4.jpg)
 ![Admin](/public/demo/PHAN_QUYEN.jpg)

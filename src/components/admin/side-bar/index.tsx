@@ -50,7 +50,7 @@ export default function AdminSideBar() {
 
     const ListItem: SideBarList[] = [
         {
-            name: "Trang chủ",
+            name: "Thống kê",
             icon: <TbLayoutDashboardFilled size={24} />,
             path: "/admin"
         },
