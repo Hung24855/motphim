@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
             const getSlugsMoviesPerPage = async (page: number = 1) => {
                 try {
-                    const { data: html } = await axios.get(`https://ophim17.cc/danh-sach/phim-moi?page=${page}`);
+                    const { data: html } = await axios.get(`https://ophim17.cc/danh-sach/phim-moi?&sort_field=modified.time&page=${page}`);
                     const $ = cheerio.load(html);
                     $("tbody tr").each((_, element) => {
                         const slug = $(element).find("td").eq(0).find("a").attr("href")?.replace("/phim/", "");
