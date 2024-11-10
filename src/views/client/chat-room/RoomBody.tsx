@@ -121,7 +121,7 @@ export const RoomBody = () => {
                                             </p>
                                         </div>
                                         <Button
-                                            buttonClssName="!w-20"
+                                            buttonClassName="!w-20"
                                             onClick={() => {
                                                 setSlug(movie.slug);
                                             }}
