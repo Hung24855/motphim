@@ -11,6 +11,7 @@ import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
+import { IoTrashBinSharp } from "react-icons/io5";
 
 const initCountry: DataCreateCountry | DataUpdateCountry = { name: "", slug: "" };
 
@@ -20,14 +21,17 @@ export default function CountriesAdminView() {
         data: countries,
         createCountryMutation,
         updateCountryMutation,
+        deleteCountryMutation,
         isPeddingCreateCountry,
         isPeddingUpdateCountry,
-        refetch: refetchCountries
+        isPeddingDeleteCountry
     } = CountriesService.useCountries();
 
     const [ModalCreateOrUpdateCountry, setModalCreateOrUpdateCountry] = useState<boolean>(false);
+    const [ModalDeleteCountry, setModalDeleteCountry] = useState<boolean>(false);
     const [country, setCountry] = useState<DataCreateCountry | DataUpdateCountry>(initCountry);
     const [message, setMessage] = useState<string>("");
+    const [idDelete, setIdDelete] = useState<number | undefined>();
 
     const isTypeUpdateCountry = useMemo(() => "id" in country && country.id !== undefined, [country]);
 
@@ -76,6 +80,17 @@ export default function CountriesAdminView() {
         }
     };
 
+    const handleDeleteCountry = () => {
+        if (idDelete) {
+            deleteCountryMutation(idDelete, {
+                onSuccess: () => {
+                    toast.success("Xóa quốc gia thành công!");
+                    setModalDeleteCountry(false);
+                }
+            });
+        }
+    };
+
     const columns = [
         {
             title: "Tên quốc gia",
@@ -105,7 +120,7 @@ export default function CountriesAdminView() {
             title: "Hành động",
             key: "action",
             render: (_: any, record: DataUpdateCountry) => (
-                <div className="flex items-center gap-x-1">
+                <div className="flex items-center justify-center gap-x-1">
                     <button
                         className="flex items-center gap-x-1 rounded p-1 text-admin_primary"
                         onClick={() => {
@@ -114,6 +129,15 @@ export default function CountriesAdminView() {
                         }}
                     >
                         <FaRegEdit size={15} /> Sửa
+                    </button>
+                    <button
+                        className="flex items-center gap-x-1 rounded p-1 text-red-500"
+                        onClick={() => {
+                            setIdDelete(record.id);
+                            setModalDeleteCountry(true);
+                        }}
+                    >
+                        <IoTrashBinSharp size={15} /> Xóa
                     </button>
                 </div>
             )
@@ -176,6 +200,22 @@ export default function CountriesAdminView() {
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCountry({ ...country, slug: e.target.value })}
                 />
                 <div className="text-red-500">{message}</div>
+            </ModalMotion>
+
+            {/* Modal xóa quốc gia */}
+            <ModalMotion
+                textHeader="Xác nhận xóa quốc gia"
+                onClose={() => {
+                    setModalDeleteCountry(false);
+                }}
+                onOk={handleDeleteCountry}
+                isOpen={ModalDeleteCountry}
+                textOk="Xóa"
+                loading={isPeddingDeleteCountry}
+                modalContainerClassName="!gap-y-4"
+                okButtonClassName="!bg-red-500 !text-white"
+            >
+                {`Bạn có chắc chắn muốn xóa quốc gia này không?`}
             </ModalMotion>
         </Fragment>
     );

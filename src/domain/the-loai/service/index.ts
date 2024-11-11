@@ -4,7 +4,6 @@ import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DataCreateGenres, DataUpdateGenres, TResCreateGenre, TResGetAllGenre } from "../model";
 
-
 interface ICreateGenreMutation {
     data: DataCreateGenres;
     onSuccess: (data: TResCreateGenre) => void;
@@ -46,6 +45,36 @@ export class GenresService {
                 queryClient.setQueryData<TResGetAllGenre>([QUERY_KEY.GET_ALL_GENRES], context?.previousData);
             }
         });
-        return { data, refetch, createEGenreMutation, updateGenreMutation, isPeddingUpdateGenre, isPeddingCreateGenre };
+
+        const { mutate: deleteGenreMutation, isPending: isPeddingDeleteGenre } = useMutation({
+            mutationFn: (id: number) => GenresApi.delete_genre(id),
+            onMutate: (id) => {
+                queryClient.cancelQueries({ queryKey: this.queryKey });
+                const previousData = queryClient.getQueryData<TResGetAllGenre>(this.queryKey);
+
+                if (previousData) {
+                    queryClient.setQueryData<TResGetAllGenre>(this.queryKey, [
+                        ...previousData.filter((genre) => genre.id !== id)
+                    ]);
+                }
+
+                return {
+                    previousData
+                };
+            },
+            onError(_, __, context) {
+                queryClient.setQueryData<TResGetAllGenre>([QUERY_KEY.GET_ALL_GENRES], context?.previousData);
+            }
+        });
+        return {
+            data,
+            refetch,
+            createEGenreMutation,
+            updateGenreMutation,
+            deleteGenreMutation,
+            isPeddingUpdateGenre,
+            isPeddingCreateGenre,
+            isPeddingDeleteGenre
+        };
     }
 }

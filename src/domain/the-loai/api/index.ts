@@ -1,8 +1,8 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
-import { DataCreateGenres, DataUpdateGenres, TResCreateGenre, TResGetAllGenre, TResUpdateGenre } from "../model";
+import { DataCreateGenres, DataUpdateGenres, TResCreateGenre, TResDeleteGenre, TResGetAllGenre, TResUpdateGenre } from "../model";
 import { requester } from "@/infrastructure/config/request/requester";
-import { CreateGenreDTO, GetAllGenresDTO, UpdateGenreDTO } from "../dto";
+import { CreateGenreDTO, DeleteGenreDTO, GetAllGenresDTO, UpdateGenreDTO } from "../dto";
 
 export class GenresApi {
     static async get_all_genres() {
@@ -21,6 +21,12 @@ export class GenresApi {
         return await requester<TResUpdateGenre>({
             requestFunc: () => http.put(ENDPOINT_URL.update_genre(id), data),
             handleData: (data: UpdateGenreDTO) => data.data
+        })();
+    }
+    static async delete_genre( id:number ) {
+        return await requester<TResDeleteGenre>({
+            requestFunc: () => http.delete(ENDPOINT_URL.delete_genre(id)),
+            handleData: (data: DeleteGenreDTO) => data.data
         })();
     }
 }

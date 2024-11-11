@@ -11,6 +11,7 @@ import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
+import { IoTrashBinSharp } from "react-icons/io5";
 
 const initGenre: DataCreateGenres | DataUpdateGenres = { name: "", slug: "" };
 
@@ -20,13 +21,17 @@ export default function GenresAdminView() {
         data: genres,
         createEGenreMutation,
         updateGenreMutation,
+        deleteGenreMutation,
         isPeddingCreateGenre,
-        isPeddingUpdateGenre
+        isPeddingUpdateGenre,
+        isPeddingDeleteGenre
     } = GenresService.useGenres();
 
     const [ModalCreateOrUpdateGenre, setModalCreateOrUpdateGenre] = useState<boolean>(false);
+    const [ModalDeleteGenre, setModalDeleteGenre] = useState<boolean>(false);
     const [genre, setGenre] = useState<DataCreateGenres | DataUpdateGenres>(initGenre);
     const [message, setMessage] = useState<string>("");
+    const [idDelete, setIdDelete] = useState<number | undefined>();
 
     const isTypeUpdateGenre = useMemo(() => "id" in genre && genre.id !== undefined, [genre]);
 
@@ -73,6 +78,16 @@ export default function GenresAdminView() {
         }
     };
 
+    const handleDeleteGenre = () => {
+        if (idDelete)
+            deleteGenreMutation(idDelete, {
+                onSuccess: () => {
+                    toast.success("Xóa thể loại thành công!");
+                    setModalDeleteGenre(false);
+                }
+            });
+    };
+
     const columns = [
         {
             title: "Tên thể loại",
@@ -102,7 +117,7 @@ export default function GenresAdminView() {
             title: "Hành động",
             key: "action",
             render: (_: any, record: DataUpdateGenres) => (
-                <div className="flex items-center gap-x-1">
+                <div className="flex items-center justify-center gap-x-1">
                     <button
                         className="flex items-center gap-x-1 rounded p-1 text-admin_primary"
                         onClick={() => {
@@ -111,6 +126,15 @@ export default function GenresAdminView() {
                         }}
                     >
                         <FaRegEdit size={15} /> Sửa
+                    </button>
+                    <button
+                        className="flex items-center gap-x-1 rounded p-1 text-red-500"
+                        onClick={() => {
+                            setIdDelete(record.id);
+                            setModalDeleteGenre(true);
+                        }}
+                    >
+                        <IoTrashBinSharp size={15} /> Xóa
                     </button>
                 </div>
             )
@@ -171,6 +195,22 @@ export default function GenresAdminView() {
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setGenre({ ...genre, slug: e.target.value })}
                 />
                 <div className="text-red-500">{message}</div>
+            </ModalMotion>
+
+            {/* Modal xóa thể loại */}
+            <ModalMotion
+                textHeader="Xác nhận xóa thể loại"
+                onClose={() => {
+                    setModalDeleteGenre(false);
+                }}
+                onOk={handleDeleteGenre}
+                isOpen={ModalDeleteGenre}
+                textOk="Xóa"
+                loading={isPeddingDeleteGenre}
+                modalContainerClassName="!gap-y-4"
+                okButtonClassName="!bg-red-500 !text-white"
+            >
+                {`Bạn có chắc chắn muốn xóa thể loại này không?`}
             </ModalMotion>
         </Fragment>
     );
