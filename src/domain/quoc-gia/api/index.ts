@@ -4,11 +4,12 @@ import {
     DataCreateCountry,
     DataUpdateCountry,
     TResCreateCountry,
+    TResDeleteCountry,
     TResGetAllCountries,
     TResUpdateCountry
 } from "../model";
 import { requester } from "@/infrastructure/config/request/requester";
-import { CreateCountryDTO, GetAllCountriesDTO, UpdateCountryDTO } from "../dto";
+import { CreateCountryDTO, DeleteCountryDTO, GetAllCountriesDTO, UpdateCountryDTO } from "../dto";
 
 export class CountriesApi {
     static async get_all_countries() {
@@ -29,6 +30,13 @@ export class CountriesApi {
         return await requester<TResUpdateCountry>({
             requestFunc: () => http.put(ENDPOINT_URL.update_genre(id), data),
             handleData: (data: UpdateCountryDTO) => data.data
+        })();
+    }
+
+    static async delete_country(id:number) {
+        return await requester<TResDeleteCountry>({
+            requestFunc: () => http.delete(ENDPOINT_URL.delete_country(id)),
+            handleData: (data: DeleteCountryDTO) => data.data
         })();
     }
 }

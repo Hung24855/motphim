@@ -11,3 +11,4 @@ export interface GenresDTO {
 export type GetAllGenresDTO = ISuccessResponse<GenresDTO[]>;
 export type CreateGenreDTO = ISuccessResponse<GenresDTO[]>;
 export type UpdateGenreDTO = ISuccessResponse<GenresDTO[]>;
+export type DeleteGenreDTO = ISuccessResponse<GenresDTO[]>;

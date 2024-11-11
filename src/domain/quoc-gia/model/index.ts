@@ -12,3 +12,4 @@ export interface DataUpdateCountry extends DataCreateCountry {
 export type TResGetAllCountries = CountriesDTO[];
 export type TResCreateCountry = CountriesDTO[];
 export type TResUpdateCountry = CountriesDTO[];
+export type TResDeleteCountry = CountriesDTO[];
