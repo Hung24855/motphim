@@ -5,11 +5,15 @@ export const revalidate = 0;
 export async function GET(request: NextRequest) {
     return RouterHandler({
         async mainFc(pool) {
-            const { limitSql, offset, orderBy, where, page, limit } = Filter(request);
+            const { limitSql, offset, where, page, limit } = Filter(request);
             const [movies, totalRows] = await Promise.all([
                 pool.query(
                     `SELECT movies.id, movies.movie_name, movies.slug, movies.year , movies.movie_type_id, movies.image, movies.time_per_episode, movies.episode_current,movies.episode_total, movies.lang, movies.is_visible 
-                     FROM movies ${where ? `WHERE ${where}` : ""} ${orderBy} ${limitSql} ${offset}`),
+                     FROM movies 
+                     ${where ? `WHERE ${where}` : ""} 
+                     ORDER BY created_at DESC 
+                     ${limitSql} ${offset}`
+                ),
                 pool.query(`SELECT COUNT(*) FROM movies ${where}`)
             ]);
 
@@ -23,6 +27,10 @@ export async function GET(request: NextRequest) {
                     totalPages: Math.ceil(totalRows.rows[0].count / limit)
                 }
             };
+        },
+        options:{
+            request:request,
+            checkAuth:"isAdmin"
         }
     });
 }

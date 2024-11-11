@@ -1,7 +1,6 @@
 "use server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-const IS_DEVELOPMENT = process.env.DEVELOPMENT === "development";
 
 export const Permissions = async ({ user_id, role }: { user_id: string; role: "admin" | "user" }) => {
     try {

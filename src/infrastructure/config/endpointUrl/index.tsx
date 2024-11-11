@@ -50,7 +50,7 @@ class EndpointUrl {
     //crawler
     crawler = () => `/crawlData2`;
     crawlerUpdateData = () => `/crawlData`;
-    crawlerSearchData = () => `/crawlData/tim-kiem`;
+    crawlerSearchData = () => `/crawlData2/tim-kiem`;
 }
 
 export const ENDPOINT_URL = new EndpointUrl();

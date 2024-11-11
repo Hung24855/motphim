@@ -95,6 +95,7 @@ export default function LoginPage() {
                                                 id="remember"
                                                 aria-describedby="remember"
                                                 type="checkbox"
+                                                defaultChecked
                                                 className="focus:ring-3 focus:ring-primary-300 h-4 w-4 rounded border border-gray-300 bg-gray-50"
                                             />
                                         </div>

@@ -1,20 +1,23 @@
 import axios from "axios";
-import { RouterHandler } from "../router.handler";
+
 import * as cheerio from "cheerio";
 import { NextRequest } from "next/server";
 import { removeMark } from "@/base/utils/function";
-import { Episode, Info, Movies } from "./type";
+import { RouterHandler } from "../../router.handler";
+import { Episode, Info, Movies } from "../type";
+
 export const revalidate = 60 * 5;
 export async function GET(request: NextRequest) {
     return RouterHandler({
         async mainFc() {
             const listMovies: Movies = [];
             const slugs: string[] = [];
+            const keyword = request.nextUrl.searchParams.get("q") ?? "";
 
             const getSlugsMoviesPerPage = async (page: number = 1) => {
                 try {
                     const { data: html } = await axios.get(
-                        `https://ophim17.cc/danh-sach/phim-moi?&sort_field=modified.time&page=${page}`
+                        `https://ophim17.cc/tim-kiem?keyword=${keyword}&sort_field=modified.time&page=${page}`
                     );
                     const $ = cheerio.load(html);
                     $("tbody tr").each((_, element) => {
@@ -107,9 +110,7 @@ export async function GET(request: NextRequest) {
 
             return {
                 message: "Crawl data thành công!",
-                data: {
-                    listMovies
-                }
+                data: [...listMovies]
             };
         },
         options: {

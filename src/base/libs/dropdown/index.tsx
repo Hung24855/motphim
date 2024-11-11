@@ -98,8 +98,6 @@ const DropdownMenu = ({
                     position: "absolute",
                     zIndex: 50,
                     top: dropdownComponentStyle.top ?? "120%",
-                    // right: dropdownComponentStyle.right ?? "auto",
-                    // left: dropdownComponentStyle.left ?? "auto",
                     transitionDuration: `${transitionProperty.transitionDuration ?? 100}ms`,
                     transitionTimingFunction: transitionProperty.transitionTimingFunction ?? "ease-in-out",
                     transformOrigin: transitionProperty.transformOrigin ?? "top",

@@ -8,7 +8,7 @@ import { Fragment, useContext, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from "next/link";
-import SideBarMenu from "../side-bar";
+import SideBarMenu from "../../client/side-bar";
 import { GenresService } from "@/domain/the-loai/service";
 import { CountriesService } from "@/domain/quoc-gia/service";
 import { logout_action } from "@/actions/auth";
