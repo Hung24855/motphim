@@ -49,28 +49,7 @@ export function convertTime(inputTime: string): string {
     // Nếu thời gian từ 30 giây trở lên, trả về số giây
     return `${seconds} giây trước`;
 }
-// remove all undefined or null value in object, if allowNull = true, object is not remove null value.
-export function removeNullAndUndefinedFromObject({
-    obj,
-    allowNull = false
-}: {
-    obj: Record<string, any>;
-    allowNull: boolean;
-}): Record<string, any> {
-    const result: Record<string, any> = {};
 
-    for (let key in obj) {
-        if (obj[key] !== undefined && (allowNull || obj[key] !== null)) {
-            result[key] = obj[key];
-        }
-    }
-
-    return result;
-}
-// remove all undefined or null value in array, if allowNull = true, array is not remove null value.
-export function removeNullAndUndefinedFromArray({ arr, allowNull = false }: { arr: any[]; allowNull: boolean }): any[] {
-    return arr.filter((item) => item !== undefined && (allowNull || item !== null));
-}
 export const delay = (m: number) => new Promise((r) => setTimeout(r, m));
 export function isWindow() {
     return typeof window !== "undefined";
@@ -104,4 +83,25 @@ export function removeDuplicatesOfArray(array: any[]) {
 
 export function removeLettersAndSpaces(str: string) {
     return str.replace(/[^\d]/g, ""); // Loại bỏ tất cả các ký tự không phải số
+}
+export function removeNullAndUndefinedFromObject({
+    obj,
+    allowNull = false
+}: {
+    obj: Record<string, any>;
+    allowNull: boolean;
+}): Record<string, any> {
+    const result: Record<string, any> = {};
+
+    for (let key in obj) {
+        if (obj[key] !== undefined && (allowNull || obj[key] !== null)) {
+            result[key] = obj[key];
+        }
+    }
+
+    return result;
+}
+
+export function removeNullAndUndefinedFromArray({ arr, allowNull = false }: { arr: any[]; allowNull: boolean }): any[] {
+    return arr.filter((item) => item !== undefined && (allowNull || item !== null));
 }

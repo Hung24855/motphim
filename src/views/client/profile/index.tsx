@@ -69,7 +69,6 @@ export default function ProfileView() {
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         UpdateUserMutation(
                             { username: formData.username, avatar: downloadURL },
-
                             {
                                 onSuccess: () => {
                                     toast.success("Cập nhật thông tin thành công!");

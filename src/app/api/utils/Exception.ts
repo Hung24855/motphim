@@ -1,6 +1,5 @@
 import { status } from "./status";
 
-// errorHandler.ts
 export function Exception(error: unknown) {
     if (error instanceof Error) {
         console.log("Exception:", error.message);

@@ -14,7 +14,6 @@ export const Permissions = async ({ user_id, role }: { user_id: string; role: "a
         const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL_API + `/phan-quyen/${user_id}`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json",
                 cookie: (IS_DEVELOPMENT ? "authjs.session-token=" : "__Secure-authjs.session-token=") + session
             },
             body: JSON.stringify({ role })
