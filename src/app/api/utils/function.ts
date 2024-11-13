@@ -49,7 +49,7 @@ export const sendEmail = async (email: string) => {
             pass: process.env.EMAIL_PASSWORD
         }
     });
-    transporter
+    await transporter
         .sendMail({
             from: process.env.EMAIL_ACCOUNT,
             to: email,
