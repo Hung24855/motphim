@@ -10,6 +10,9 @@ export type User = {
     updated_at: string;
 };
 
+
+
 export type GetAllAccountDTO = ISuccessResponse<User[]>;
 export type GetInfoUserDTO = ISuccessResponse<User[]>;
+export type VerifyCodeDTO = ISuccessResponse<{token:string}>;
 

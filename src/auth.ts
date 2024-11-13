@@ -58,7 +58,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return !!auth;
         },
         jwt({ token, user, trigger, session }) {
-            //người dùng vừa đăng nhập, hàm này thêm id và role của người dùng vào token.
+            //Thêm thông tin người dùng vào token.
             if (user) {
                 token.id = user.id as string;
                 token.role = user.role as string;

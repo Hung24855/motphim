@@ -6,6 +6,8 @@ export interface DataSaveToken {
 
 export interface DataSendNotification {
     movie_id: string;
+    list_episodes:string[]
+
 }
 
 export type TResGetAllNotification = NotificationDTO[];

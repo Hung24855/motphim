@@ -1,13 +1,12 @@
 import { Fragment, useContext, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { authFirebase } from "@/firebase";
 import { PiWarningCircleFill } from "react-icons/pi";
 import { ChatRoomContext } from ".";
 import { ModalMotion } from "@/base/libs/modal";
 import { CONLLECTION, handle_delete_doc_firebase } from "@/database/firebase.services";
+import { sessionContext } from "@/provider/next-auth";
 
 export default function ChatHeader() {
-    const [user] = useAuthState(authFirebase);
+    const { session } = useContext(sessionContext);
     const { selectedRoom, setSelectedRoom } = useContext(ChatRoomContext);
     const [isOpenModelConfirm, setisOpenModelConfirm] = useState<boolean>(false);
     const [isLoadingDeleteRoom, setisLoadingDeleteRoom] = useState<boolean>(false);
@@ -55,7 +54,7 @@ export default function ChatHeader() {
                         <Avatar style={{ backgroundColor: "#1677ff" }} icon={<AntDesignOutlined />} />
                     </Avatar.Group> */}
 
-                    {user?.email === selectedRoom?.owner && (
+                    {session?.user?.email === selectedRoom?.owner && (
                         <button
                             className="rounded bg-red-500 px-2 py-1 text-white"
                             onClick={() => setisOpenModelConfirm(true)}

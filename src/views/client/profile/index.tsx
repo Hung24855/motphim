@@ -73,22 +73,23 @@ export default function ProfileView() {
                                 onSuccess: () => {
                                     toast.success("Cập nhật thông tin thành công!");
                                     setProcess(0);
+                                    
                                     updateSession({
                                         ...session?.user,
                                         username: formData.username,
                                         avatar: downloadURL
                                     });
                                     // Đồng bộ thông tin trên fire-base
-                                    handle_update_doc_firebase({
-                                        docInfo: {
-                                            collectionName: CONLLECTION.USERS,
-                                            docId: session?.user.email ?? ""
-                                        },
-                                        data: {
-                                            name: formData.username,
-                                            avatar: downloadURL
-                                        }
-                                    });
+                                    // handle_update_doc_firebase({
+                                    //     docInfo: {
+                                    //         collectionName: CONLLECTION.USERS,
+                                    //         docId: session?.user.email ?? ""
+                                    //     },
+                                    //     data: {
+                                    //         name: formData.username,
+                                    //         avatar: downloadURL
+                                    //     }
+                                    // });
                                 }
                             }
                         );
@@ -101,21 +102,23 @@ export default function ProfileView() {
                 {
                     onSuccess: () => {
                         toast.success("Cập nhật thông tin thành công!");
+                    
+
                         updateSession({
                             ...session?.user,
                             username: formData.username,
                             avatar: session?.user.avatar ?? ""
                         });
-                        handle_update_doc_firebase({
-                            docInfo: {
-                                collectionName: CONLLECTION.USERS,
-                                docId: session?.user.email ?? ""
-                            },
-                            data: {
-                                name: formData.username,
-                                avatar: session?.user.avatar ?? ""
-                            }
-                        });
+                        // handle_update_doc_firebase({
+                        //     docInfo: {
+                        //         collectionName: CONLLECTION.USERS,
+                        //         docId: session?.user.email ?? ""
+                        //     },
+                        //     data: {
+                        //         name: formData.username,
+                        //         avatar: session?.user.avatar ?? ""
+                        //     }
+                        // });
                     }
                 }
             );

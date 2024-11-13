@@ -17,7 +17,7 @@
 
 
 ## Chức năng
-- Đăng nhập và đăng ký
+- Đăng nhập, đăng ký và đổi mẩt khẩu
 - Xem phim mới cập nhật từng ngày
 - Tìm kiếm phim
 - Xem phim theo từng thể loại và quốc gia
