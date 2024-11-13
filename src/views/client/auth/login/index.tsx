@@ -28,15 +28,15 @@ export default function LoginPage() {
             const result = await login_action(data);
 
             if (!result?.message) {
-                signInWithEmailAndPassword(authFirebase, data.email, data.password)
-                    .then((userCredential) => {
-                        // Signed in
-                        const user = userCredential.user;
-                    })
-                    .catch((error) => {
-                        toast.error("Đăng nhập Firebase thất bại!");
-                        console.log("Đăng nhập Firebase thất bại!", error.message);
-                    });
+                // signInWithEmailAndPassword(authFirebase, data.email, data.password)
+                //     .then((userCredential) => {
+                //         // Signed in
+                //         const user = userCredential.user;
+                //     })
+                //     .catch((error) => {
+                //         toast.error("Đăng nhập Firebase thất bại!");
+                //         console.log("Đăng nhập Firebase thất bại!", error.message);
+                //     });
             }
             if (result?.message) {
                 setGlobalMessage(result.message);
@@ -108,7 +108,7 @@ export default function LoginPage() {
                                             </label>
                                         </div>
                                     </div>
-                                    <a href="#" className="text-sm font-medium text-[#295779] hover:underline">
+                                    <a href="quen-mat-khau" className="text-sm font-medium text-[#295779] hover:underline">
                                         Quên mật khẩu?
                                     </a>
                                 </div>

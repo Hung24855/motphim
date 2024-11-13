@@ -1,7 +1,7 @@
 "use client";
 import Input from "@/base/libs/input";
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import {  useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { signUpSchema, SignUpType } from "@/utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,9 +9,6 @@ import { register_action } from "@/actions/auth";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Button from "@/base/libs/button";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { authFirebase } from "@/firebase";
-import { CONLLECTION, handle_add_doc_firebase } from "@/database/firebase.services";
 
 export default function RegisternPage() {
     const [globalMessage, setGlobalMessage] = useState<string>("");
@@ -33,32 +30,32 @@ export default function RegisternPage() {
             router.push("/dang-nhap");
 
             // Đăng ký tài khoản Firebase
-            createUserWithEmailAndPassword(authFirebase, data.email, data.password)
-                .then(async (userCredential) => {
-                    const user = userCredential.user;
+            // createUserWithEmailAndPassword(authFirebase, data.email, data.password)
+            //     .then(async (userCredential) => {
+            //         const user = userCredential.user;
 
-                    // Cập nhật displayName
-                    await updateProfile(user, {
-                        displayName: data.username
-                    });
+            //         // Cập nhật displayName
+            //         await updateProfile(user, {
+            //             displayName: data.username
+            //         });
 
-                    // Ghi thông tin người dùng vài firestore
-                    await handle_add_doc_firebase({
-                        docInfo: {
-                            collectionName: CONLLECTION.USERS,
-                            docId: data.email
-                        },
-                        data: {
-                            name: data.username,
-                            email: data.email,
-                            uid: user.uid,
-                            avatar: ""
-                        }
-                    });
-                })
-                .catch((error) => {
-                    toast.error("Tài khoản đã tồn tại!");
-                });
+            //         // Ghi thông tin người dùng vài firestore
+            //         await handle_add_doc_firebase({
+            //             docInfo: {
+            //                 collectionName: CONLLECTION.USERS,
+            //                 docId: data.email
+            //             },
+            //             data: {
+            //                 name: data.username,
+            //                 email: data.email,
+            //                 uid: user.uid,
+            //                 avatar: ""
+            //             }
+            //         });
+            //     })
+            //     .catch((error) => {
+            //         toast.error("Tài khoản đã tồn tại!");
+            //     });
         } else {
             setGlobalMessage(res.message);
         }

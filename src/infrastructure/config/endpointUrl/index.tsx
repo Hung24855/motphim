@@ -41,6 +41,9 @@ class EndpointUrl {
     // Tài khoản
     get_accounts = () => `/danh-sach/tai-khoan`;
     update_user_info = () => `/thong-tin-ca-nhan`;
+    send_email = () => `quen-mat-khau`;
+    verify_code = ()=>"quen-mat-khau/verify"
+    change_password = ()=>"quen-mat-khau/dat-lai-mat-khau"
     //Thông báo
     save_token = () => `/thong-bao/luu-token`;
     send_notification = () => `/thong-bao/gui-thong-bao`;

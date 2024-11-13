@@ -105,3 +105,11 @@ export function removeNullAndUndefinedFromObject({
 export function removeNullAndUndefinedFromArray({ arr, allowNull = false }: { arr: any[]; allowNull: boolean }): any[] {
     return arr.filter((item) => item !== undefined && (allowNull || item !== null));
 }
+
+export function generateRandomCode() {
+    let code = '';
+    for (let i = 0; i < 6; i++) {
+        code += Math.floor(Math.random() * 10); // Tạo số ngẫu nhiên từ 0 đến 9
+    }
+    return code;
+}

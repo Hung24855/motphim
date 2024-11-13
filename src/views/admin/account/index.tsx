@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 
 export default function AccountAdminView() {
     const queryClient = useQueryClient();
-    const { data: users } = AccountsService.useAccounts();
+    const { data: users } = AccountsService.get_list_account();
     const [role, setRole] = useState<"admin" | "user">();
     const [user_id, setuser_id] = useState<string>();
     const [loading, setloading] = useState<boolean>(false);

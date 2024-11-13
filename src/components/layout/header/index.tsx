@@ -79,7 +79,8 @@ function Search({ session }: { session: Session | null }) {
                                 className="px-2 py-1 text-red-500 hover:bg-gray-200"
                                 onClick={async () => {
                                     setLogoutLoading(true);
-                                    await Promise.all([signOut(authFirebase), logout_action()]);
+                                    // await Promise.all([signOut(authFirebase), logout_action()]);
+                                    await logout_action();
                                     setLogoutLoading(false);
                                 }}
                             >
