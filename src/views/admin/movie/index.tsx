@@ -34,7 +34,11 @@ export default function MoviesAdminView() {
     //Tìm kiếm phim  -- 25/10/2024 : 10h48
     const [searchText, setsearchText] = useState<string>("");
     const debouncedValue = useDebounce(searchText, 1000);
-    const { data: moviesSearch, isFetching: isFetchingSearch } = MoviesService.get_search_movie({
+    const {
+        data: moviesSearch,
+        isFetching: isFetchingSearch,
+        refetch
+    } = MoviesService.get_search_movie({
         query: convertSearchParams(debouncedValue)
     });
     //End kiếm phim
@@ -147,13 +151,18 @@ export default function MoviesAdminView() {
                         toast.success("Cập nhật hiện thị thành công.");
                         setIsShowModal(false);
                         setMovieSelect(null);
-                        queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page], (prevData: TResGetMovies) => ({
-                            ...prevData,
-                            data: prevData.data.map((movie) => ({
-                                ...movie,
-                                is_visible: movie.id === data.id ? data.is_visible : movie.is_visible
-                            }))
-                        }));
+
+                        if (moviesSearch) {
+                            refetch();
+                        } else {
+                            queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page], (prevData: TResGetMovies) => ({
+                                ...prevData,
+                                data: prevData.data.map((movie) => ({
+                                    ...movie,
+                                    is_visible: movie.id === data.id ? data.is_visible : movie.is_visible
+                                }))
+                            }));
+                        }
                     },
                     onError(e) {}
                 }
@@ -168,10 +177,14 @@ export default function MoviesAdminView() {
                     toast.success("Xóa phim thành công.!");
                     setIsShowModalDeleteMovie(false);
                     setMovieSelect(null);
-                    queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page], (prevData: TResGetMovies) => ({
-                        ...prevData,
-                        data: prevData.data.filter((movie) => movie.id !== data.id)
-                    }));
+                    if (moviesSearch) {
+                        refetch();
+                    } else {
+                        queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page], (prevData: TResGetMovies) => ({
+                            ...prevData,
+                            data: prevData.data.filter((movie) => movie.id !== data.id)
+                        }));
+                    }
                 },
                 onError(e) {}
             });

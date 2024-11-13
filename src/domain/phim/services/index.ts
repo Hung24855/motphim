@@ -136,13 +136,13 @@ export class MoviesService {
     }
     // Tim kiem phim
     static get_search_movie({ query, movie_type_id }: { query: string; movie_type_id?: "typ1" | "type2" }) {
-        const { data, isFetching, isError } = useFetcher<TResGetSearchMovies>(
+        const { data, isFetching, isError,refetch } = useFetcher<TResGetSearchMovies>(
             [QUERY_KEY.GET_SEARCH_MOVIE, query],
             () => MoviesApi.search_movie({ query, movie_type_id }),
             { enabled: !!query }
         );
 
-        return { data, isFetching, isError };
+        return { data, isFetching, isError,refetch };
     }
     // Ẩn hiện phim
     static change_visible_movie() {
