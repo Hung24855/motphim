@@ -44,7 +44,7 @@ export default function CreateEpisodeUpdate({
             }
         );
 
-        SendNotificationMutation({ movie_id: movie_id });
+        SendNotificationMutation({ movie_id: movie_id, list_episodes: Episodes.map((episode) => episode.name) });
     };
     return (
         <div className="min-w-max">

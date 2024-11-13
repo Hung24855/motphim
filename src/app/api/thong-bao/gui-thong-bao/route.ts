@@ -20,17 +20,17 @@ export async function POST(request: NextRequest) {
 
             const tokens: string[] = response.rows.map((item) => item.token);
             const user_ids: string[] = response.rows.map((item) => item.user_id);
+            const list_episodes: string = body.list_episodes.join(", ");
 
-            const title = `${movie_info.rows[0].movie_name} đã ra tập mới! ❤️`;
-          
-            
+            const title = `${movie_info.rows[0].movie_name} đã ra tập mới : ${list_episodes} ! ❤️`;
+
             const message: MulticastMessage = {
                 tokens: tokens.length > 0 ? tokens : ["fake_token"], // Vì token phải là mảng không rỗng
                 // tokens: removeDuplicatesOfArray(tokens), //Vì có nhiều user_id có cùng token điều này gây gửi nhiều thông báo đến 1 token
                 //Cấu hình thông báo cho nền tảng web
                 webpush: {
                     fcmOptions: {
-                        link: `${BASE_URL_FRONT}/phim/${movie_info.rows[0].slug}`,
+                        link: `${BASE_URL_FRONT}/phim/${movie_info.rows[0].slug}`
                     },
                     notification: {
                         icon: "https://firebasestorage.googleapis.com/v0/b/themovie-af1e4.appspot.com/o/Logo-light.png?alt=media&token=a18772c3-b1dc-422d-9dd8-92c8f0523889",
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
             //Gửi thông báo đến người dùng
             getMessaging(adminApp)
                 .sendEachForMulticast(message)
-                .then((response) => {
+                .then(() => {
                     console.log("Gửi thông báo thành công!");
                 })
                 .catch((error) => {
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
         options: {
             request: request,
             checkAuth: "isAdmin",
-            required: ["movie_id"]
+            required: ["movie_id", "list_episodes"]
         }
     });
 }
