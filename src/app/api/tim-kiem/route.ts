@@ -28,14 +28,12 @@ export async function GET(request: NextRequest) {
             //     ") >= 2" +
             //     `${movie_type_id ? "AND movie_type_id = " + `'${movie_type_id}'` : ""}`;
 
-
             //Full text search - 14/12/2024 - 14h44
-            let sql = 
-                `SELECT movies.id, movies.movie_name, movies.slug, movies.year, movies.movie_type_id, movies.image,
+            let sql = `SELECT movies.id, movies.movie_name, movies.slug, movies.year, movies.movie_type_id, movies.image,
                  movies.time_per_episode, movies.episode_current, movies.episode_total, movies.lang,movies.is_visible
                  FROM movies 
-                 WHERE ${is_admin ? "" : "is_visible = true AND "} 
-                 ${movie_type_id ? `AND movie_type_id = ${movie_type_id} AND ` : ""}
+                 WHERE ${is_admin ? "" : "is_visible = true AND"} 
+                 ${movie_type_id ? `movie_type_id = '${movie_type_id}' AND` : ""}
                  to_tsvector(movie_name) @@ plainto_tsquery('${query}') `;
 
             const movies = await pool.query(sql);
