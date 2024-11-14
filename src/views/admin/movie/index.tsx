@@ -1,14 +1,14 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { IoTrashBinSharp } from "react-icons/io5";
+import { FaRegEdit, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Table, Tag } from "antd";
 import { MoviesService } from "@/domain/phim/services";
-import { useState } from "react";
-import { FaRegEdit, FaEye, FaEyeSlash } from "react-icons/fa";
-import { IoTrashBinSharp } from "react-icons/io5";
 import "@/infrastructure/styles/table.ant.css";
 import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
-import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { TResGetMovies } from "@/domain/phim/model";
@@ -20,14 +20,17 @@ export default function MoviesAdminView() {
     const [page, setPage] = useState(1);
     const [isShowModal, setIsShowModal] = useState<boolean>(false);
     const [isShowModalDeleteMovie, setIsShowModalDeleteMovie] = useState<boolean>(false);
+    const [isShowModalDeleteMultibleMovie, setIsShowModalDeleteMultibleMovie] = useState<boolean>(false);
     const [movieSelect, setMovieSelect] = useState<{ movie_id: string; name: string; is_visible: boolean } | null>(
         null
     );
+    const [mutibleChoisedRow, setMutibleChoseRow] = useState<string[]>([]);
     const {
         data: movies,
         isFetching,
         isPeddingDeleteMovie,
-        deleteMovieMutation
+        deleteMovieMutation,
+        mutateAsyncDeleteMovie
     } = MoviesService.use_movies({ page: page, limit: 10 });
     const { isPendingChangeVisibleMovie, mutateChangeVisibleMovie } = MoviesService.change_visible_movie();
 
@@ -190,6 +193,27 @@ export default function MoviesAdminView() {
             });
         }
     };
+    //Xóa nhiều phim  -- 14/11/2024 : 11h40
+    const handleDeleteMutibleMovie = async () => {
+        if (mutibleChoisedRow.length > 0) {
+            await Promise.all(
+                mutibleChoisedRow.map(async (movie_id) => {
+                    await mutateAsyncDeleteMovie(movie_id);
+                    if (moviesSearch) {
+                        refetch();
+                    } else {
+                        queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page], (prevData: TResGetMovies) => ({
+                            ...prevData,
+                            data: prevData.data.filter((movie) => movie.id !== movie_id)
+                        }));
+                    }
+                })
+            );
+            toast.success("Xóa phim thành công.!");
+            setIsShowModalDeleteMultibleMovie(false);
+            setMutibleChoseRow([]);
+        }
+    };
 
     return (
         <div>
@@ -208,12 +232,27 @@ export default function MoviesAdminView() {
                         }}
                     />
                 </div>
+                {mutibleChoisedRow.length > 0 && (
+                    <button
+                        className="ml-auto rounded bg-red-500 px-3 py-2 text-white"
+                        onClick={() => setIsShowModalDeleteMultibleMovie(true)}
+                    >
+                        Xóa
+                    </button>
+                )}
             </div>
 
             <div className="mt-3 min-h-screen w-full">
                 <Table
                     dataSource={moviesSearch ? moviesSearch : movies?.data}
                     columns={columns}
+                    rowSelection={{
+                        type: "checkbox",
+                        onChange: (selectedRowKeys) => {
+                            setMutibleChoseRow(selectedRowKeys as string[]);
+                        }
+                    }}
+                    rowKey={(record) => record.id}
                     loading={{
                         spinning: isFetching || isFetchingSearch,
                         indicator: <Loading loading={isFetching || isFetchingSearch} containerClassName="pt-20 " />
@@ -262,6 +301,22 @@ export default function MoviesAdminView() {
                 okButtonClassName="!bg-red-500 !text-white"
             >
                 {`Bạn có chắc chắn muốn xóa phim "${movieSelect?.name}" không ?`}
+            </ModalMotion>
+
+            {/* Modal xóa phim */}
+            <ModalMotion
+                textHeader="Xác nhận xóa danh sách phim phim"
+                onClose={() => {
+                    setIsShowModalDeleteMultibleMovie(false);
+                }}
+                onOk={handleDeleteMutibleMovie}
+                isOpen={isShowModalDeleteMultibleMovie}
+                textOk="Xóa"
+                loading={isPeddingDeleteMovie}
+                modalContainerClassName="!gap-y-4"
+                okButtonClassName="!bg-red-500 !text-white"
+            >
+                Bạn có chắc chắn muốn xóa những phim đã chọn không?
             </ModalMotion>
         </div>
     );

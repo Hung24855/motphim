@@ -43,11 +43,12 @@ export default function CrawlerView() {
         if (checkedMoviesList.length === 0) return;
         setLoadingUpdateMovies(true);
         try {
-            const promises = checkedMoviesList.map(async (movie) => {
-                await mutateAsyncUpdateDataCrawl(movie);
-                setMoviesUpdateSuccess((prev) => [...prev, movie.slug]);
-            });
-            await Promise.all(promises);
+            await Promise.all(
+                checkedMoviesList.map(async (movie) => {
+                    await mutateAsyncUpdateDataCrawl(movie);
+                    setMoviesUpdateSuccess((prev) => [...prev, movie.slug]);
+                })
+            );
         } catch (error) {
             console.error("Có lỗi xảy ra trong quá trình cập nhật:", error);
         } finally {
