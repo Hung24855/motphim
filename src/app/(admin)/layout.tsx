@@ -6,7 +6,7 @@ import "./globals.css";
 import "swiper/css";
 import ReactQueryProvder from "@/provider/react-query";
 import AntDesignConfig from "@/provider/ant-config";
-import Image from "next/image";
+import { auth } from "@/auth";
 import ProgessbarProviders from "@/provider/progess-bar";
 import Toast from "@/provider/react-toastify";
 
@@ -21,6 +21,8 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const session = await auth();
+
     return (
         <Fragment>
             <head>
@@ -32,7 +34,7 @@ export default async function RootLayout({
                         <ReactQueryProvder>
                             <ProgessbarProviders>
                                 <main className="flex min-h-screen">
-                                    <AdminSideBar />
+                                    <AdminSideBar session={session} />
                                     <div className="flex flex-1 flex-col bg-gray-50 px-6 py-4">
                                         {/* <div className="flex items-center justify-end gap-x-4 py-1">
                                             <div className="size-10 overflow-hidden rounded-full bg-gray-200">

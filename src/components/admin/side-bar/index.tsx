@@ -17,6 +17,7 @@ import { SideBarList } from "./type";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { FaDatabase } from "react-icons/fa";
+import { Session } from "next-auth";
 
 const sidebar_variants = {
     open: { opacity: 1, x: 0, width: "16rem" },
@@ -31,7 +32,7 @@ const span_variants = {
     open: { width: "100%" },
     closed: { width: 0 }
 };
-export default function AdminSideBar() {
+export default function AdminSideBar({ session }: { session: Session | null }) {
     const pathName = usePathname();
     const router = useRouter();
     const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -87,6 +88,9 @@ export default function AdminSideBar() {
         }
     ];
 
+    const sideBarItem: SideBarList[] =
+        session?.user?.email === "admin@gmail.com" ? ListItem : ListItem.filter((item) => item.name !== "Tài khoản");
+
     const isActive = (path: string) => {
         if (path === "") {
             return false;
@@ -121,7 +125,7 @@ export default function AdminSideBar() {
                     </div>
 
                     <ul className="space-y-1 pt-4 font-semibold">
-                        {ListItem.map((item, index) => {
+                        {sideBarItem.map((item, index) => {
                             return (
                                 <li className={clsx("min-h-12 rounded")} key={index}>
                                     <span

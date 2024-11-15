@@ -55,12 +55,14 @@ export class MoviesService {
     }
 
     // CRUD phim
-    static use_movies({ page, limit }: DataGetAllMovies) {
+    static use_movies({ page, limit, movie_type_id }: DataGetAllMovies) {
         const {
             data,
             isFetching,
             refetch: refetchMovies
-        } = useFetcher<TResGetMovies>([QUERY_KEY.GET_LIST_MOVIES, page], () => MoviesApi.get_movies({ page, limit }));
+        } = useFetcher<TResGetMovies>([QUERY_KEY.GET_LIST_MOVIES, page,movie_type_id], () =>
+            MoviesApi.get_movies({ page, limit, movie_type_id })
+        );
         const { mutate: createMovieMutation, isPending: isPeddingCreateMovie } = useMutation({
             mutationFn: (data: DataCreateMovie) => MoviesApi.create_movie(data)
         });

@@ -6,6 +6,7 @@ export async function GET(request: NextRequest) {
     return RouterHandler({
         async mainFc(pool) {
             const { limitSql, offset, where, page, limit } = Filter(request);
+
             const [movies, totalRows] = await Promise.all([
                 pool.query(
                     `SELECT movies.id, movies.movie_name, movies.slug, movies.year , movies.movie_type_id, movies.image, movies.time_per_episode, movies.episode_current,movies.episode_total, movies.lang, movies.is_visible 
@@ -14,7 +15,7 @@ export async function GET(request: NextRequest) {
                      ORDER BY created_at DESC 
                      ${limitSql} ${offset}`
                 ),
-                pool.query(`SELECT COUNT(*) FROM movies ${where}`)
+                pool.query(`SELECT COUNT(*) FROM movies ${where ? `WHERE ${where}` : ""}`)
             ]);
 
             return {
@@ -28,9 +29,9 @@ export async function GET(request: NextRequest) {
                 }
             };
         },
-        options:{
-            request:request,
-            checkAuth:"isAdmin"
+        options: {
+            request: request,
+            checkAuth: "isAdmin"
         }
     });
 }

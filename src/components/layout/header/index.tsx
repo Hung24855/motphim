@@ -16,8 +16,6 @@ import { Session } from "next-auth";
 import { Popover, Spin } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
-import { authFirebase } from "@/firebase";
-import { signOut } from "firebase/auth";
 import { convertSearchParams } from "@/utils/function";
 import DropdownMenu from "@/base/libs/dropdown";
 import { sessionContext } from "@/provider/next-auth";
