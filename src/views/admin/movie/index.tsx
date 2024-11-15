@@ -14,6 +14,8 @@ import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { TResGetMovies } from "@/domain/phim/model";
 import useDebounce from "@/base/hooks/useDebounce";
 import { convertSearchParams } from "@/utils/function";
+import Select, { Option } from "@/base/libs/select";
+import { useRouter } from "next-nprogress-bar";
 
 export default function MoviesAdminView() {
     const queryClient = useQueryClient();
@@ -21,6 +23,7 @@ export default function MoviesAdminView() {
     const [isShowModal, setIsShowModal] = useState<boolean>(false);
     const [isShowModalDeleteMovie, setIsShowModalDeleteMovie] = useState<boolean>(false);
     const [isShowModalDeleteMultibleMovie, setIsShowModalDeleteMultibleMovie] = useState<boolean>(false);
+    const [filterType, setFilterType] = useState<"type1" | "type2" | undefined>();
     const [movieSelect, setMovieSelect] = useState<{ movie_id: string; name: string; is_visible: boolean } | null>(
         null
     );
@@ -31,7 +34,7 @@ export default function MoviesAdminView() {
         isPeddingDeleteMovie,
         deleteMovieMutation,
         mutateAsyncDeleteMovie
-    } = MoviesService.use_movies({ page: page, limit: 10 });
+    } = MoviesService.use_movies({ page: page, limit: 10, movie_type_id: filterType });
     const { isPendingChangeVisibleMovie, mutateChangeVisibleMovie } = MoviesService.change_visible_movie();
 
     //Tìm kiếm phim  -- 25/10/2024 : 10h48
@@ -74,7 +77,7 @@ export default function MoviesAdminView() {
             key: "lang"
         },
         {
-            title: "Thể loại",
+            title: "Loại phim",
             key: "tags",
             dataIndex: "movie_type_id",
             render: (movie_type: "type1" | "type2") => {
@@ -158,7 +161,7 @@ export default function MoviesAdminView() {
                         if (moviesSearch) {
                             refetch();
                         } else {
-                            queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page], (prevData: TResGetMovies) => ({
+                            queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page, filterType], (prevData: TResGetMovies) => ({
                                 ...prevData,
                                 data: prevData.data.map((movie) => ({
                                     ...movie,
@@ -183,7 +186,7 @@ export default function MoviesAdminView() {
                     if (moviesSearch) {
                         refetch();
                     } else {
-                        queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page], (prevData: TResGetMovies) => ({
+                        queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page,filterType], (prevData: TResGetMovies) => ({
                             ...prevData,
                             data: prevData.data.filter((movie) => movie.id !== data.id)
                         }));
@@ -202,7 +205,7 @@ export default function MoviesAdminView() {
                     if (moviesSearch) {
                         refetch();
                     } else {
-                        queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page], (prevData: TResGetMovies) => ({
+                        queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page,filterType], (prevData: TResGetMovies) => ({
                             ...prevData,
                             data: prevData.data.filter((movie) => movie.id !== movie_id)
                         }));
@@ -215,6 +218,8 @@ export default function MoviesAdminView() {
         }
     };
 
+    const router = useRouter();
+
     return (
         <div>
             <h1 className="text-center text-3xl font-semibold">Quản lý phim</h1>
@@ -225,19 +230,26 @@ export default function MoviesAdminView() {
                 <div className="h-10 w-52">
                     <input
                         placeholder="Nhập tên phim ..."
-                        className="rounded-sm border p-2 outline-none"
+                        className="h-full rounded-sm border px-2 outline-none"
                         value={searchText}
                         onChange={(e: any) => {
                             setsearchText(e.target.value);
                         }}
                     />
                 </div>
+                <Select
+                    placeholder="Chọn loại phim"
+                    onChange={(value) => setFilterType(value === "Phim bộ" ? "type1" : "type2")}
+                >
+                    <Option>Phim bộ</Option>
+                    <Option>Phim lẻ</Option>
+                </Select>
                 {mutibleChoisedRow.length > 0 && (
                     <button
                         className="ml-auto rounded bg-red-500 px-3 py-2 text-white"
                         onClick={() => setIsShowModalDeleteMultibleMovie(true)}
                     >
-                        Xóa
+                        Xóa danh sách
                     </button>
                 )}
             </div>

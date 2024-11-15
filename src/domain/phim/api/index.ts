@@ -52,7 +52,8 @@ export class MoviesApi {
                 http.get(ENDPOINT_URL.get_movies(), {
                     params: {
                         page: params.page ?? 1,
-                        limit: params.limit ?? 10
+                        limit: params.limit ?? 10,
+                        movie_type_id: params.movie_type_id ?? ""
                     }
                 }),
             handleData: (data: DataGetMoviesDTO) => ({
