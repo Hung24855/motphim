@@ -9,6 +9,7 @@ export async function GET(request: NextRequest) {
             const searchParams = request.nextUrl.searchParams;
             const movie_type_id = searchParams.get("movie_type_id");
             let query = searchParams.get("q")?.replaceAll("-", " ");
+
             // let query = removeMark(searchParams.get("q") ?? "").split("-");
             //ILIKE là bỏ qua chữ hoa chữ thường
             // Yêu cầu phải giống ít nhất 2 từ trong mảng query
@@ -35,6 +36,7 @@ export async function GET(request: NextRequest) {
                  WHERE ${is_admin ? "" : "is_visible = true AND"} 
                  ${movie_type_id ? `movie_type_id = '${movie_type_id}' AND` : ""}
                  to_tsvector(movie_name) @@ plainto_tsquery('${query}') `;
+
 
             const movies = await pool.query(sql);
             return {

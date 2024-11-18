@@ -53,7 +53,9 @@ export class MoviesApi {
                     params: {
                         page: params.page ?? 1,
                         limit: params.limit ?? 10,
-                        movie_type_id: params.movie_type_id ?? ""
+                        movie_type_id: params.movie_type_id ?? "",
+                        country: params.country ?? "",
+                        genre: params.genre ?? ""
                     }
                 }),
             handleData: (data: DataGetMoviesDTO) => ({
