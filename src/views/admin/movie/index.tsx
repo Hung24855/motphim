@@ -195,7 +195,7 @@ export default function MoviesAdminView() {
                     rowKey={(record) => record.id}
                     loading={{
                         spinning: isFetching || isFetchingSearch,
-                        indicator: <Loading loading={isFetching || isFetchingSearch} containerClassName="pt-20 " />
+                        indicator: <Loading loading={isFetching || isFetchingSearch} />
                     }}
                     pagination={{
                         pageSize: 10,
