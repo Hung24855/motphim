@@ -53,15 +53,13 @@ export class MoviesService {
         );
         return { data };
     }
-
-    // CRUD phim
-    static use_movies({ page, limit, movie_type_id }: DataGetAllMovies) {
+    static use_movies({ page, limit, movie_type_id, country, genre }: DataGetAllMovies) {
         const {
             data,
             isFetching,
             refetch: refetchMovies
-        } = useFetcher<TResGetMovies>([QUERY_KEY.GET_LIST_MOVIES, page,movie_type_id], () =>
-            MoviesApi.get_movies({ page, limit, movie_type_id })
+        } = useFetcher<TResGetMovies>([QUERY_KEY.GET_LIST_MOVIES, page, movie_type_id, country, genre], () =>
+            MoviesApi.get_movies({ page, limit, movie_type_id, country, genre })
         );
         const { mutate: createMovieMutation, isPending: isPeddingCreateMovie } = useMutation({
             mutationFn: (data: DataCreateMovie) => MoviesApi.create_movie(data)

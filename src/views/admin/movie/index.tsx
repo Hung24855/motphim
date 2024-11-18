@@ -1,29 +1,28 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { toast } from "react-toastify";
 import { IoTrashBinSharp } from "react-icons/io5";
 import { FaRegEdit, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Table, Tag } from "antd";
 import { MoviesService } from "@/domain/phim/services";
 import "@/infrastructure/styles/table.ant.css";
 import Loading from "@/base/libs/loading";
-import { ModalMotion } from "@/base/libs/modal";
-import { useQueryClient } from "@tanstack/react-query";
-import { QUERY_KEY } from "@/infrastructure/constant/query-key";
-import { TResGetMovies } from "@/domain/phim/model";
 import useDebounce from "@/base/hooks/useDebounce";
 import { convertSearchParams } from "@/utils/function";
-import Select, { Option } from "@/base/libs/select";
-import { useRouter } from "next-nprogress-bar";
+import FilterMovies from "./components/FilterMovies";
+import ModalHideOrVisibleMovie from "./components/ModalHideOrVisibleMovie";
+import ModalDeleteMovie from "./components/ModalDeleteMovie";
+import ModalDeleteMutibleMovie from "./components/ModalDeleteMutibleMovie";
 
 export default function MoviesAdminView() {
-    const queryClient = useQueryClient();
     const [page, setPage] = useState(1);
     const [isShowModal, setIsShowModal] = useState<boolean>(false);
     const [isShowModalDeleteMovie, setIsShowModalDeleteMovie] = useState<boolean>(false);
     const [isShowModalDeleteMultibleMovie, setIsShowModalDeleteMultibleMovie] = useState<boolean>(false);
-    const [filterType, setFilterType] = useState<"type1" | "type2" | undefined>();
+    const [filterType, setFilterType] = useState<{ type?: "type1" | "type2"; genre: string; country: string }>({
+        genre: "",
+        country: ""
+    });
     const [movieSelect, setMovieSelect] = useState<{ movie_id: string; name: string; is_visible: boolean } | null>(
         null
     );
@@ -34,8 +33,13 @@ export default function MoviesAdminView() {
         isPeddingDeleteMovie,
         deleteMovieMutation,
         mutateAsyncDeleteMovie
-    } = MoviesService.use_movies({ page: page, limit: 10, movie_type_id: filterType });
-    const { isPendingChangeVisibleMovie, mutateChangeVisibleMovie } = MoviesService.change_visible_movie();
+    } = MoviesService.use_movies({
+        page: page,
+        limit: 10,
+        movie_type_id: filterType?.type,
+        country: filterType?.country,
+        genre: filterType?.genre
+    });
 
     //Tìm kiếm phim  -- 25/10/2024 : 10h48
     const [searchText, setsearchText] = useState<string>("");
@@ -48,7 +52,6 @@ export default function MoviesAdminView() {
         query: convertSearchParams(debouncedValue)
     });
     //End kiếm phim
-
     const columns = [
         {
             title: "Tên phim",
@@ -148,77 +151,7 @@ export default function MoviesAdminView() {
         }
     ];
 
-    const handleChangeIsVisibleMovie = () => {
-        if (movieSelect) {
-            mutateChangeVisibleMovie(
-                { movie_id: movieSelect.movie_id, is_visible: !movieSelect.is_visible },
-                {
-                    onSuccess(data) {
-                        toast.success("Cập nhật hiện thị thành công.");
-                        setIsShowModal(false);
-                        setMovieSelect(null);
 
-                        if (moviesSearch) {
-                            refetch();
-                        } else {
-                            queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page, filterType], (prevData: TResGetMovies) => ({
-                                ...prevData,
-                                data: prevData.data.map((movie) => ({
-                                    ...movie,
-                                    is_visible: movie.id === data.id ? data.is_visible : movie.is_visible
-                                }))
-                            }));
-                        }
-                    },
-                    onError(e) {}
-                }
-            );
-        }
-    };
-
-    const handleDeleteMovie = () => {
-        if (movieSelect) {
-            deleteMovieMutation(movieSelect.movie_id, {
-                onSuccess(data) {
-                    toast.success("Xóa phim thành công.!");
-                    setIsShowModalDeleteMovie(false);
-                    setMovieSelect(null);
-                    if (moviesSearch) {
-                        refetch();
-                    } else {
-                        queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page,filterType], (prevData: TResGetMovies) => ({
-                            ...prevData,
-                            data: prevData.data.filter((movie) => movie.id !== data.id)
-                        }));
-                    }
-                },
-                onError(e) {}
-            });
-        }
-    };
-    //Xóa nhiều phim  -- 14/11/2024 : 11h40
-    const handleDeleteMutibleMovie = async () => {
-        if (mutibleChoisedRow.length > 0) {
-            await Promise.all(
-                mutibleChoisedRow.map(async (movie_id) => {
-                    await mutateAsyncDeleteMovie(movie_id);
-                    if (moviesSearch) {
-                        refetch();
-                    } else {
-                        queryClient.setQueryData([QUERY_KEY.GET_LIST_MOVIES, page,filterType], (prevData: TResGetMovies) => ({
-                            ...prevData,
-                            data: prevData.data.filter((movie) => movie.id !== movie_id)
-                        }));
-                    }
-                })
-            );
-            toast.success("Xóa phim thành công.!");
-            setIsShowModalDeleteMultibleMovie(false);
-            setMutibleChoseRow([]);
-        }
-    };
-
-    const router = useRouter();
 
     return (
         <div>
@@ -237,13 +170,8 @@ export default function MoviesAdminView() {
                         }}
                     />
                 </div>
-                <Select
-                    placeholder="Chọn loại phim"
-                    onChange={(value) => setFilterType(value === "Phim bộ" ? "type1" : "type2")}
-                >
-                    <Option>Phim bộ</Option>
-                    <Option>Phim lẻ</Option>
-                </Select>
+                <FilterMovies filterType={filterType} setFilterType={setFilterType} />
+
                 {mutibleChoisedRow.length > 0 && (
                     <button
                         className="ml-auto rounded bg-red-500 px-3 py-2 text-white"
@@ -275,61 +203,48 @@ export default function MoviesAdminView() {
                         onChange: (page) => setPage(page),
                         position: ["bottomCenter"]
                     }}
-                    // bordered
                 />
             </div>
 
             {/* Modal ẩn phim */}
-            <ModalMotion
-                textHeader="Xác nhận ẩn phim"
-                onClose={() => {
-                    setIsShowModal(false);
-                    setMovieSelect(null);
-                }}
-                onOk={handleChangeIsVisibleMovie}
-                isOpen={isShowModal}
-                textOk={movieSelect?.is_visible ? "Ẩn" : "Hiện"}
-                loading={isPendingChangeVisibleMovie}
-                modalContainerClassName="!gap-y-4"
-                okButtonClassName="!bg-admin_primary !text-white"
-            >
-                {movieSelect?.is_visible
-                    ? `Bạn có chắc chắn muốn ẩn phim "${movieSelect?.name}" không ?`
-                    : `Bạn có chắc chắn muốn hiện thị phim "${movieSelect?.name}" không ?`}
-            </ModalMotion>
+            <ModalHideOrVisibleMovie
+                filterType={filterType}
+                isShowModal={isShowModal}
+                movieSelect={movieSelect}
+                moviesSearch={moviesSearch}
+                page={page}
+                refetch={refetch}
+                setIsShowModal={setIsShowModal}
+                setMovieSelect={setMovieSelect}
+            />
 
             {/* Modal xóa phim */}
-            <ModalMotion
-                textHeader="Xác nhận xóa phim"
-                onClose={() => {
-                    setIsShowModalDeleteMovie(false);
-                    setMovieSelect(null);
-                }}
-                onOk={handleDeleteMovie}
-                isOpen={isShowModalDeleteMovie}
-                textOk="Xóa"
-                loading={isPeddingDeleteMovie}
-                modalContainerClassName="!gap-y-4"
-                okButtonClassName="!bg-red-500 !text-white"
-            >
-                {`Bạn có chắc chắn muốn xóa phim "${movieSelect?.name}" không ?`}
-            </ModalMotion>
+            <ModalDeleteMovie
+                deleteMovieMutation={deleteMovieMutation}
+                movieSelect={movieSelect}
+                moviesSearch={moviesSearch}
+                refetch={refetch}
+                filterType={filterType}
+                page={page}
+                setIsShowModalDeleteMovie={setIsShowModalDeleteMovie}
+                setMovieSelect={setMovieSelect}
+                isPeddingDeleteMovie={isPeddingDeleteMovie}
+                isShowModalDeleteMovie={isShowModalDeleteMovie}
+            />
 
             {/* Modal xóa phim */}
-            <ModalMotion
-                textHeader="Xác nhận xóa danh sách phim phim"
-                onClose={() => {
-                    setIsShowModalDeleteMultibleMovie(false);
-                }}
-                onOk={handleDeleteMutibleMovie}
-                isOpen={isShowModalDeleteMultibleMovie}
-                textOk="Xóa"
-                loading={isPeddingDeleteMovie}
-                modalContainerClassName="!gap-y-4"
-                okButtonClassName="!bg-red-500 !text-white"
-            >
-                Bạn có chắc chắn muốn xóa những phim đã chọn không?
-            </ModalMotion>
+            <ModalDeleteMutibleMovie
+                filterType={filterType}
+                page={page}
+                setIsShowModalDeleteMultibleMovie={setIsShowModalDeleteMultibleMovie}
+                isShowModalDeleteMultibleMovie={isShowModalDeleteMultibleMovie}
+                isPeddingDeleteMovie={isPeddingDeleteMovie}
+                moviesSearch={moviesSearch}
+                mutateAsyncDeleteMovie={mutateAsyncDeleteMovie}
+                refetch={refetch}
+                setMutibleChoseRow={setMutibleChoseRow}
+                mutibleChoisedRow={mutibleChoisedRow}
+            />
         </div>
     );
 }

@@ -12,6 +12,7 @@ type ISelectProps = {
     transitionProperty?: Pick<CSS.Properties, "transformOrigin" | "transitionDuration" | "transitionTimingFunction">;
     optionContainerStyle?: Pick<CSS.Properties, "top" | "left" | "right" | "backgroundColor">;
     onChange?: (value: string) => void;
+    scrollbar?: boolean;
 };
 
 export default function Select({
@@ -26,7 +27,8 @@ export default function Select({
         right: "auto",
         backgroundColor: "#fff"
     },
-    onChange
+    onChange,
+    scrollbar = true
 }: ISelectProps) {
     const [isVisible, setIsVisible] = React.useState<boolean>(false);
     const [selectedValue, setSelectedValue] = React.useState<string | null>(null);
@@ -57,7 +59,10 @@ export default function Select({
 
     return (
         <div
-            className={clsx("relative h-10 min-w-40 cursor-pointer rounded border bg-white px-2 select-none", selectClassName)}
+            className={clsx(
+                "relative h-10 min-w-40 cursor-pointer select-none rounded border bg-white px-2",
+                selectClassName
+            )}
             onClick={() => setIsVisible(!isVisible)}
             ref={selectRef}
         >
@@ -72,7 +77,10 @@ export default function Select({
                 />
             </div>
             <div
-                className="scrollbar-none absolute left-0 z-50 max-h-32 w-full overflow-hidden overflow-y-auto rounded-b border shadow"
+                className={clsx(
+                    "absolute left-0 z-50 max-h-32 w-full overflow-hidden overflow-y-auto rounded-b border shadow",
+                    scrollbar ? "scrollbar-custom" : "scrollbar-none"
+                )}
                 style={{
                     opacity: isVisible ? "1" : "0",
                     transitionDuration: transitionProperty?.transitionDuration || "300ms",
@@ -80,8 +88,8 @@ export default function Select({
                     transformOrigin: transitionProperty?.transformOrigin || "top",
                     visibility: isVisible ? "visible" : "hidden",
                     transform: transformConverter(),
-                    top: optionContainerStyle.top,
-                    backgroundColor: optionContainerStyle.backgroundColor
+                    top: optionContainerStyle?.top || "110%",
+                    backgroundColor: optionContainerStyle?.backgroundColor || "#fff"
                 }}
                 onClick={(e) => e.stopPropagation()}
             >

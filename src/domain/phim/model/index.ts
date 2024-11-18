@@ -57,6 +57,8 @@ export type DataGetAllMovies = {
     page?: number | string;
     limit?: number | string;
     movie_type_id?: "type1" | "type2";
+    country?: string;
+    genre?: string;
 };
 
 export type DataGetAllMoviesByGenre = {

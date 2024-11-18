@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
             const user_ids: string[] = response.rows.map((item) => item.user_id);
             const list_episodes: string = body.list_episodes.join(", ");
 
-            const title = `${movie_info.rows[0].movie_name} đã ra tập mới : ${list_episodes} ! ❤️`;
+            const title = `${movie_info.rows[0].movie_name} đã ra tập: ${list_episodes} ! ❤️`;
 
             const message: MulticastMessage = {
                 tokens: tokens.length > 0 ? tokens : ["fake_token"], // Vì token phải là mảng không rỗng
