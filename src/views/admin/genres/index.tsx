@@ -156,7 +156,7 @@ export default function GenresAdminView() {
                 columns={columns}
                 loading={{
                     spinning: !genres,
-                    indicator: <Loading loading={!genres} containerClassName="pt-20" />
+                    indicator: <Loading loading={!genres} />
                 }}
                 pagination={{
                     position: ["bottomCenter"]

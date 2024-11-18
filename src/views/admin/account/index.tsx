@@ -132,7 +132,7 @@ export default function AccountAdminView() {
                 columns={columns}
                 loading={{
                     spinning: !users,
-                    indicator: <Loading loading={true} containerClassName="pt-20" />
+                    indicator: <Loading loading={true} />
                 }}
                 pagination={{
                     position: ["bottomCenter"]

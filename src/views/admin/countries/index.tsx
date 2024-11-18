@@ -157,7 +157,7 @@ export default function CountriesAdminView() {
                 columns={columns}
                 loading={{
                     spinning: !countries,
-                    indicator: <Loading loading={!countries} containerClassName="pt-20" />
+                    indicator: <Loading loading={!countries} />
                 }}
                 pagination={{
                     position: ["bottomCenter"]
