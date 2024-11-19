@@ -21,7 +21,6 @@ import DropdownMenu from "@/base/libs/dropdown";
 import { sessionContext } from "@/provider/next-auth";
 import { NotificationService } from "@/domain/thong-bao/services";
 import { convertTime } from "@/base/utils/function";
-import useWindowSize from "@/base/hooks/useWindowSize";
 
 function Search({ session }: { session: Session | null }) {
     const [search, setSearch] = useState<string>("");
@@ -33,7 +32,6 @@ function Search({ session }: { session: Session | null }) {
         enabled: !!session,
         user_id: session?.user?.id ?? ""
     });
-    const { screenSize } = useWindowSize();
 
     const { ReadNotificationMutation } = NotificationService.useNotification({ user_id: session?.user?.id ?? "" });
     const [notificationCount, setNotificationCount] = useState<number>(0);
@@ -79,7 +77,8 @@ function Search({ session }: { session: Session | null }) {
                         "rounded-bl-md rounded-tl-md px-2 py-1 placeholder-white/65 outline-none transition-all duration-300",
                         {
                             "max-w-[130px] bg-white/20 md:max-w-[200px]": showSearch,
-                            "max-w-0 bg-transparent": !showSearch
+                            "max-w-0 bg-transparent": !showSearch,
+                            "!max-w-[200px]": session?.user && showSearch
                         }
                     )}
                     placeholder="Tên phim..."
@@ -206,7 +205,7 @@ function Search({ session }: { session: Session | null }) {
                 }}
                 transitionType="scaleY"
                 toggleEvent="click"
-                dropdownPositionClassName={["small"].includes(screenSize) ? "right-[-104px]":""}
+                dropdownPositionClassName={session?.user ? "right-0" : "right-[-104px]"}
             />
 
             {session?.user ? (
@@ -262,7 +261,7 @@ function Search({ session }: { session: Session | null }) {
                 />
             ) : (
                 <Fragment>
-                    <Link href={"/dang-ky"} className="md:inline hidden">
+                    <Link href={"/dang-ky"} className="hidden md:inline">
                         Đăng ký
                     </Link>
                     <Link href={"/dang-nhap"}>
