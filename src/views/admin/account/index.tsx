@@ -7,6 +7,7 @@ import { AccountsService } from "@/domain/tai-khoan/services";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button, Select, Table, Tag } from "antd";
+import { ColumnProps } from "antd/es/table";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -45,9 +46,9 @@ export default function AccountAdminView() {
         }
         setloading(false);
     };
-    const columns = [
+    const columns:ColumnProps[] = [
         {
-            title: "Username",
+            title: "Họ tên",
             dataIndex: "username",
             key: "username"
         },
@@ -57,23 +58,24 @@ export default function AccountAdminView() {
             key: "email"
         },
         {
-            title: "Address",
+            title: "Địa chỉ",
             key: "address",
-
+            align: "center",
             render: () => {
                 return <Tag color="geekblue">Chưa cập nhật</Tag>;
             }
         },
         {
-            title: "Role",
+            title: "Quyền",
             dataIndex: "role",
             key: "role",
+            align: "center",
             render: (role: string) => {
                 return role === "admin" ? <Tag color="gold">Quản trị</Tag> : <Tag color="default">Người dùng</Tag>;
             }
         },
         {
-            title: "Created At",
+            title: "Thời gian tạo",
             dataIndex: "created_at",
             key: "created_at",
             render: (time: string) => {
@@ -81,7 +83,7 @@ export default function AccountAdminView() {
             }
         },
         {
-            title: "Updated At",
+            title: "Thời gian cập nhật",
             dataIndex: "updated_at",
             key: "updated_at",
             render: (time: string) => {
@@ -89,10 +91,11 @@ export default function AccountAdminView() {
             }
         },
         {
-            title: "Acrtion",
+            title: "Hành động",
             key: "action",
+            align: "center",
             render: (_: any, record: any) => (
-                <div className="flex items-center gap-x-1">
+                <div className="flex items-center justify-center gap-x-1">
                     <button
                         className="flex items-center gap-x-1 rounded p-1 hover:text-admin_primary"
                         onClick={() => {

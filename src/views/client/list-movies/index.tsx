@@ -32,6 +32,7 @@ export default function ListMovieView({ slug }: { slug: string }) {
 
     if (!movies) return <ListMovieSkeleton showTitle />;
 
+
     return (
         <MaxWidth className="min-h-screen text-white">
             <div className="pb-10 pt-24">

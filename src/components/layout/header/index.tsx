@@ -13,7 +13,7 @@ import { GenresService } from "@/domain/the-loai/service";
 import { CountriesService } from "@/domain/quoc-gia/service";
 import { logout_action } from "@/actions/auth";
 import { Session } from "next-auth";
-import { Popover, Spin } from "antd";
+import { Spin } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
 import { convertSearchParams } from "@/utils/function";
@@ -21,6 +21,7 @@ import DropdownMenu from "@/base/libs/dropdown";
 import { sessionContext } from "@/provider/next-auth";
 import { NotificationService } from "@/domain/thong-bao/services";
 import { convertTime } from "@/base/utils/function";
+import useWindowSize from "@/base/hooks/useWindowSize";
 
 function Search({ session }: { session: Session | null }) {
     const [search, setSearch] = useState<string>("");
@@ -32,6 +33,7 @@ function Search({ session }: { session: Session | null }) {
         enabled: !!session,
         user_id: session?.user?.id ?? ""
     });
+    const { screenSize } = useWindowSize();
 
     const { ReadNotificationMutation } = NotificationService.useNotification({ user_id: session?.user?.id ?? "" });
     const [notificationCount, setNotificationCount] = useState<number>(0);
@@ -59,45 +61,13 @@ function Search({ session }: { session: Session | null }) {
         }
     };
 
-    const content = (
-        <Fragment>
-            <div className="w-28 cursor-pointer gap-y-2 py-1">
-                {session?.user && (
-                    <div>
-                        <Link href={"/admin"} className="w-full hover:text-black">
-                            {session?.user?.role === "admin" && (
-                                <div className="px-2 py-1 hover:bg-gray-200">Trang quản trị</div>
-                            )}
-                        </Link>
-                        <Link href={"/trang-ca-nhan"} className="w-full hover:text-black">
-                            <div className="px-2 py-1 hover:bg-gray-200">Trang cá nhân</div>
-                        </Link>
-                        <Spin spinning={logoutLoading} indicator={<LoadingOutlined spin />}>
-                            <div
-                                className="px-2 py-1 text-red-500 hover:bg-gray-200"
-                                onClick={async () => {
-                                    setLogoutLoading(true);
-                                    // await Promise.all([signOut(authFirebase), logout_action()]);
-                                    await logout_action();
-                                    setLogoutLoading(false);
-                                }}
-                            >
-                                Đăng xuất
-                            </div>
-                        </Spin>
-                    </div>
-                )}
-            </div>
-        </Fragment>
-    );
-
     const handleReadNotification = () => {
         if (!session) return;
         ReadNotificationMutation();
     };
 
     return (
-        <div className="flex items-center gap-x-4">
+        <div className="flex items-center gap-x-1 md:gap-x-4">
             <button
                 className={clsx("duration-400 flex items-center rounded-md transition-all", {
                     "bg-white/20": showSearch
@@ -108,7 +78,7 @@ function Search({ session }: { session: Session | null }) {
                     className={clsx(
                         "rounded-bl-md rounded-tl-md px-2 py-1 placeholder-white/65 outline-none transition-all duration-300",
                         {
-                            "max-w-[200px] bg-white/20": showSearch,
+                            "max-w-[130px] bg-white/20 md:max-w-[200px]": showSearch,
                             "max-w-0 bg-transparent": !showSearch
                         }
                     )}
@@ -236,28 +206,65 @@ function Search({ session }: { session: Session | null }) {
                 }}
                 transitionType="scaleY"
                 toggleEvent="click"
-                dropdownPositionClassName="right-0"
+                dropdownPositionClassName={["small"].includes(screenSize) ? "right-[-104px]":""}
             />
 
             {session?.user ? (
-                <Popover content={content} trigger="click" className="!px-0">
-                    <button>
-                        {session?.user?.avatar ? (
-                            <Image
-                                src={session?.user.avatar}
-                                alt="Avatar preview"
-                                width={24}
-                                height={24}
-                                className="size-7 rounded-full object-cover"
-                            />
-                        ) : (
-                            <FaUser size={24} />
-                        )}
-                    </button>
-                </Popover>
+                <DropdownMenu
+                    toggleComponent={
+                        <button className="py-2">
+                            {session?.user?.avatar ? (
+                                <Image
+                                    src={session?.user.avatar}
+                                    alt="Avatar preview"
+                                    width={24}
+                                    height={24}
+                                    className="size-7 rounded-full object-cover"
+                                />
+                            ) : (
+                                <FaUser size={24} />
+                            )}
+                        </button>
+                    }
+                    dropdownComponent={
+                        <Fragment>
+                            <div className="w-36 cursor-pointer gap-y-2 rounded bg-white py-1 text-black">
+                                {session?.user && (
+                                    <div>
+                                        <Link href={"/admin"} className="w-full hover:text-black">
+                                            {session?.user?.role === "admin" && (
+                                                <div className="px-2 py-1 hover:bg-gray-200">Trang quản trị</div>
+                                            )}
+                                        </Link>
+                                        <Link href={"/trang-ca-nhan"} className="w-full hover:text-black">
+                                            <div className="px-2 py-1 hover:bg-gray-200">Trang cá nhân</div>
+                                        </Link>
+                                        <Spin spinning={logoutLoading} indicator={<LoadingOutlined spin />}>
+                                            <div
+                                                className="px-2 py-1 text-red-500 hover:bg-gray-200"
+                                                onClick={async () => {
+                                                    setLogoutLoading(true);
+                                                    // await Promise.all([signOut(authFirebase), logout_action()]);
+                                                    await logout_action();
+                                                    setLogoutLoading(false);
+                                                }}
+                                            >
+                                                Đăng xuất
+                                            </div>
+                                        </Spin>
+                                    </div>
+                                )}
+                            </div>
+                        </Fragment>
+                    }
+                    transitionType="scaleY"
+                    onClickDropdownComponent={(_, __, setIsActive) => setIsActive(false)}
+                />
             ) : (
                 <Fragment>
-                    <Link href={"/dang-ky"}>Đăng ký</Link>
+                    <Link href={"/dang-ky"} className="md:inline hidden">
+                        Đăng ký
+                    </Link>
                     <Link href={"/dang-nhap"}>
                         <button className="ml-1 rounded bg-white/20 p-2 hover:bg-black/15">Đăng nhập</button>
                     </Link>

@@ -1,9 +1,7 @@
 "use client";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import Link from "next/link";
-import { IoTrashBinSharp } from "react-icons/io5";
-import { FaRegEdit, FaEye, FaEyeSlash } from "react-icons/fa";
-import { Table, Tag } from "antd";
+import { Table, Tag, Tooltip } from "antd";
 import { MoviesService } from "@/domain/phim/services";
 import "@/infrastructure/styles/table.ant.css";
 import Loading from "@/base/libs/loading";
@@ -13,6 +11,8 @@ import FilterMovies from "./components/FilterMovies";
 import ModalHideOrVisibleMovie from "./components/ModalHideOrVisibleMovie";
 import ModalDeleteMovie from "./components/ModalDeleteMovie";
 import ModalDeleteMutibleMovie from "./components/ModalDeleteMutibleMovie";
+import { ColumnProps } from "antd/es/table";
+import { BrushSquare, Eye, EyeSlash, CloseSquare } from "iconsax-react";
 
 export default function MoviesAdminView() {
     const [page, setPage] = useState(1);
@@ -52,11 +52,14 @@ export default function MoviesAdminView() {
         query: convertSearchParams(debouncedValue)
     });
     //End kiếm phim
-    const columns = [
+    const columns: ColumnProps[] = [
         {
             title: "Tên phim",
             dataIndex: "movie_name",
-            key: "movie_name"
+            key: "movie_name",
+            fixed: "left",
+            width: 350,
+            render: (movie_name: string) => <div className="line-clamp-1">{movie_name}</div>
         },
         {
             title: "Ảnh",
@@ -65,19 +68,22 @@ export default function MoviesAdminView() {
             render: (src: string) => <img src={src} alt="" className="h-24 w-20" />
         },
         {
-            title: "Năm xuất bản",
+            title: "Năm",
             dataIndex: "year",
-            key: "year"
+            key: "year",
+            align: "center"
         },
         {
-            title: "Thời gian mỗi tập",
+            title: "Thời gian",
             dataIndex: "time_per_episode",
-            key: "time_per_episode"
+            key: "time_per_episode",
+            align: "center"
         },
         {
             title: "Ngôn ngữ",
             dataIndex: "lang",
-            key: "lang"
+            key: "lang",
+            align: "center"
         },
         {
             title: "Loại phim",
@@ -89,17 +95,20 @@ export default function MoviesAdminView() {
                 } else {
                     return <Tag color="green">Phim lẻ</Tag>;
                 }
-            }
+            },
+            align: "center"
         },
         {
             title: "Tập hiện tại",
             dataIndex: "episode_current",
-            key: "episode_current"
+            key: "episode_current",
+            align: "center"
         },
         {
             title: "Tổng số tập",
             dataIndex: "episode_total",
-            key: "episode_total"
+            key: "episode_total",
+            align: "center"
         },
 
         {
@@ -120,17 +129,23 @@ export default function MoviesAdminView() {
                     >
                         {record.is_visible ? (
                             <span className="flex items-center gap-x-1 text-green-500">
-                                <FaEye size={15} /> Ẩn
+                                <Tooltip title="Ẩn">
+                                    <Eye size={18} />
+                                </Tooltip>
                             </span>
                         ) : (
                             <span className="flex items-center gap-x-1 text-red-500">
-                                <FaEyeSlash size={15} /> Hiện
+                                <Tooltip title="Hiện">
+                                    <EyeSlash size={18} />
+                                </Tooltip>
                             </span>
                         )}
                     </button>
                     <Link href={`/admin/phim/sua/${record.slug}`} className="text-admin_primary">
                         <button className="flex items-center gap-x-1 rounded p-1">
-                            <FaRegEdit size={15} /> Sửa
+                            <Tooltip title="Sửa">
+                                <BrushSquare size={18} className="text-info" />
+                            </Tooltip>
                         </button>
                     </Link>
                     <button
@@ -144,19 +159,21 @@ export default function MoviesAdminView() {
                             });
                         }}
                     >
-                        <IoTrashBinSharp size={15} /> Xóa
+                        <Tooltip title="Xóa">
+                            <CloseSquare size={18} />
+                        </Tooltip>
                     </button>
                 </div>
-            )
+            ),
+            fixed: "right",
+            align: "center"
         }
     ];
 
-
-
     return (
-        <div>
+        <div className="h-screen">
             <h1 className="text-center text-3xl font-semibold">Quản lý phim</h1>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-4">
                 <Link href={"/admin/phim/them-phim"}>
                     <button className="rounded bg-admin_primary px-3 py-2 text-white">Thêm phim</button>
                 </Link>
@@ -182,7 +199,7 @@ export default function MoviesAdminView() {
                 )}
             </div>
 
-            <div className="mt-3 min-h-screen w-full">
+            <div className="mt-3 w-full">
                 <Table
                     dataSource={moviesSearch ? moviesSearch : movies?.data}
                     columns={columns}
@@ -203,6 +220,7 @@ export default function MoviesAdminView() {
                         onChange: (page) => setPage(page),
                         position: ["bottomCenter"]
                     }}
+                    scroll={{ y: 480 }}
                 />
             </div>
 

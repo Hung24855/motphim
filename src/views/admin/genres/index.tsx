@@ -1,8 +1,7 @@
 "use client";
 import { GenresService } from "@/domain/the-loai/service";
-import { Table, Tag } from "antd";
+import { Table, Tag, Tooltip } from "antd";
 import { ChangeEvent, Fragment, useMemo, useState } from "react";
-import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
 import { DataCreateGenres, DataUpdateGenres, TResGetAllGenre } from "@/domain/the-loai/model";
 import { toast } from "react-toastify";
@@ -11,7 +10,8 @@ import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
-import { IoTrashBinSharp } from "react-icons/io5";
+import { BrushSquare, CloseSquare } from "iconsax-react";
+import { ColumnProps } from "antd/es/table";
 
 const initGenre: DataCreateGenres | DataUpdateGenres = { name: "", slug: "" };
 
@@ -88,7 +88,7 @@ export default function GenresAdminView() {
             });
     };
 
-    const columns = [
+    const columns: ColumnProps<any>[] = [
         {
             title: "Tên thể loại",
             dataIndex: "name",
@@ -102,6 +102,7 @@ export default function GenresAdminView() {
         {
             title: "Số phim thuộc thể loại",
             key: "movie_count",
+            align: "center",
             render: () => {
                 return <Tag color="geekblue">Chưa cập nhật</Tag>;
             }
@@ -109,6 +110,7 @@ export default function GenresAdminView() {
         {
             title: "SEO Title",
             key: "movie_count",
+            align: "center",
             render: () => {
                 return <Tag color="green">Chưa cập nhật</Tag>;
             }
@@ -116,6 +118,7 @@ export default function GenresAdminView() {
         {
             title: "Hành động",
             key: "action",
+            align: "center",
             render: (_: any, record: DataUpdateGenres) => (
                 <div className="flex items-center justify-center gap-x-1">
                     <button
@@ -125,7 +128,9 @@ export default function GenresAdminView() {
                             setModalCreateOrUpdateGenre(true);
                         }}
                     >
-                        <FaRegEdit size={15} /> Sửa
+                        <Tooltip title="Sửa">
+                            <BrushSquare size={18} />
+                        </Tooltip>
                     </button>
                     <button
                         className="flex items-center gap-x-1 rounded p-1 text-red-500"
@@ -134,7 +139,9 @@ export default function GenresAdminView() {
                             setModalDeleteGenre(true);
                         }}
                     >
-                        <IoTrashBinSharp size={15} /> Xóa
+                        <Tooltip title="Xóa">
+                            <CloseSquare size={18} />
+                        </Tooltip>
                     </button>
                 </div>
             )

@@ -6,7 +6,7 @@ type Movie = Omit<DataGetMoviesDTO["data"][0], "is_visible">;
 // const img = "https://img.ophim.live/uploads/movies/du-phuong-hanh-thumb.jpg";
 export default function MovieCard({ movie }: { movie: Movie }) {
     return (
-        <Link href={"/phim/" + movie.slug} scroll={true}>
+        <Link href={"/phim/" + movie.slug} scroll={true} className="text-white">
             <motion.div
                 className="relative min-h-64 cursor-pointer rounded border border-gray-700 p-1"
                 initial={{ opacity: 0, y: 50 }}

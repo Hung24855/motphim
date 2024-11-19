@@ -19,7 +19,7 @@ export default function NotificationView() {
     return (
         <MaxWidth className="min-h-screen">
             <div className="pb-10 pt-20">
-                <div className="px-4 sm:px-6 lg:px-8">
+                <div className="px-2 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-4xl overflow-hidden rounded bg-white py-2 shadow-md">
                         <div className="scrollbar-custom h-[80vh] w-full overflow-y-auto rounded text-black">
                             <div className="h-full px-2">
