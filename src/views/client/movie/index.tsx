@@ -26,8 +26,8 @@ const MovieDetailSkeleton = () => {
                 <div className="rounded-lg p-6 text-white shadow-lg">
                     {/* Movie Poster Skeleton */}
                     <div className="flex flex-col lg:flex-row">
-                        <div className="flex w-full justify-center lg:w-1/3">
-                            <div className="mb-6 h-96 w-2/3 animate-pulse rounded-lg bg-gray-700 md:w-full lg:mb-0"></div>
+                        <div className="flex w-full lg:w-1/4">
+                            <div className="mb-6 h-96 w-full animate-pulse rounded-lg bg-gray-700 lg:mb-0"></div>
                         </div>
 
                         {/* Movie Information Skeleton */}
@@ -74,6 +74,7 @@ export default function MoviePage(props: Props) {
     }, []);
 
     if (!response) return <MovieDetailSkeleton />;
+ 
     if (response.length === 0)
         return (
             <div className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl text-white">
