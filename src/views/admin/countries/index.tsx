@@ -1,8 +1,7 @@
 "use client";
 import { CountriesService } from "@/domain/quoc-gia/service";
-import { Table, Tag } from "antd";
+import { Table, Tag, Tooltip } from "antd";
 import { ChangeEvent, Fragment, useMemo, useState } from "react";
-import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
 import { DataCreateCountry, DataUpdateCountry, TResGetAllCountries } from "@/domain/quoc-gia/model";
 import Input from "@/base/libs/input";
@@ -11,7 +10,8 @@ import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
-import { IoTrashBinSharp } from "react-icons/io5";
+import { BrushSquare, CloseSquare } from "iconsax-react";
+import { ColumnProps } from "antd/es/table";
 
 const initCountry: DataCreateCountry | DataUpdateCountry = { name: "", slug: "" };
 
@@ -91,7 +91,7 @@ export default function CountriesAdminView() {
         }
     };
 
-    const columns = [
+    const columns: ColumnProps<any>[] = [
         {
             title: "Tên quốc gia",
             dataIndex: "name",
@@ -105,6 +105,7 @@ export default function CountriesAdminView() {
         {
             title: "Số phim thuộc quốc gia",
             key: "movie_count",
+            align: "center",
             render: () => {
                 return <Tag color="geekblue">Chưa cập nhật</Tag>;
             }
@@ -112,6 +113,7 @@ export default function CountriesAdminView() {
         {
             title: "SEO Title",
             key: "movie_count",
+            align: "center",
             render: () => {
                 return <Tag color="green">Chưa cập nhật</Tag>;
             }
@@ -119,6 +121,7 @@ export default function CountriesAdminView() {
         {
             title: "Hành động",
             key: "action",
+            align: "center",
             render: (_: any, record: DataUpdateCountry) => (
                 <div className="flex items-center justify-center gap-x-1">
                     <button
@@ -128,7 +131,9 @@ export default function CountriesAdminView() {
                             setModalCreateOrUpdateCountry(true);
                         }}
                     >
-                        <FaRegEdit size={15} /> Sửa
+                        <Tooltip title="Sửa">
+                            <BrushSquare size={18} />
+                        </Tooltip>
                     </button>
                     <button
                         className="flex items-center gap-x-1 rounded p-1 text-red-500"
@@ -137,7 +142,9 @@ export default function CountriesAdminView() {
                             setModalDeleteCountry(true);
                         }}
                     >
-                        <IoTrashBinSharp size={15} /> Xóa
+                        <Tooltip title="Xóa">
+                            <CloseSquare size={18} />
+                        </Tooltip>
                     </button>
                 </div>
             )

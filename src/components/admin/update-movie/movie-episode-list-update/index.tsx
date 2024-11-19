@@ -3,11 +3,10 @@ import clsx from "clsx";
 import { Episode, MoviesDetailDTO } from "@/domain/phim/dto";
 import { MoviesService } from "@/domain/phim/services";
 import { toast } from "react-toastify";
-import { Spin } from "antd";
+import { Spin, Tooltip } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { FaRegEdit } from "react-icons/fa";
-import { IoTrashBinSharp } from "react-icons/io5";
 import { ModalMotion } from "@/base/libs/modal";
+import { BrushSquare, CloseSquare } from "iconsax-react";
 
 interface Props {
     movie: MoviesDetailDTO;
@@ -78,7 +77,7 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                             <th className="border p-2 text-left">Tên phim</th>
                             <th className="border p-2 text-left">Đường dẫn tĩnh</th>
                             <th className="border p-2 text-left">Link phim</th>
-                            <th className="border p-2 text-left">Hành động</th>
+                            <th className="border p-2 text-center">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -162,7 +161,9 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                                     "Cập nhật"
                                                 ) : (
                                                     <span className="flex items-center gap-x-1 text-admin_primary">
-                                                        <FaRegEdit size={15} /> Sửa
+                                                        <Tooltip title="Sửa">
+                                                            <BrushSquare size={18} />
+                                                        </Tooltip>
                                                     </span>
                                                 )}
                                             </button>
@@ -181,7 +182,9 @@ export default function MovieEpisodeListUpdate({ movie, refetchMovieDetail }: Pr
                                                     setDeleteEpisode(episode);
                                                 }}
                                             >
-                                                <IoTrashBinSharp size={15} /> Xóa
+                                                <Tooltip title="Xóa">
+                                                    <CloseSquare size={18} />
+                                                </Tooltip>
                                             </button>
                                         </Spin>
                                     </div>

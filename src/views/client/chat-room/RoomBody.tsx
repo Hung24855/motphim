@@ -186,7 +186,7 @@ export const RoomBody = () => {
                                     ))}
                                 </div>
                             ) : (
-                                "Không tìm thấy phim này!"
+                                <center>Không tìm thấy phim này!</center>
                             ))}
                     </div>
                 </Loading>

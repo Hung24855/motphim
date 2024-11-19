@@ -17,10 +17,10 @@ type slide = {
 const SlideSkeleton = () => {
     return (
         <div className="relative h-screen w-full animate-pulse">
-            <MaxWidth className="relative px-4">
+            <MaxWidth className="relative px-2">
                 <div className="absolute bottom-20 max-w-[32rem]">
                     <div className="h-10 w-[16rem] rounded bg-gray-700"></div>
-                    <div className="mt-4 h-20 w-[32rem] rounded bg-gray-700"></div>
+                    <div className="mt-4 h-20 w-[21rem] rounded bg-gray-700 md:w-[32rem]"></div>
                     <div className="mt-4 h-6 w-[14rem] rounded bg-gray-700"></div>
                     <div className="mt-4 h-6 w-32 rounded bg-gray-700"></div>
                 </div>

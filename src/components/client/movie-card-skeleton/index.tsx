@@ -29,13 +29,13 @@ export const ListMovieSkeleton = ({
     showTitle?: boolean;
 }) => {
     return (
-        <MaxWidth className={clsx("px-2 pb-10 pt-24", containerClassName)}>
+        <MaxWidth className={clsx("pb-10 pt-24 px-2", containerClassName)}>
             {/* Title */}
-            {showTitle && <div className="ml-2 w-[200px] animate-pulse rounded-md bg-gray-700 py-3"></div>}
-            <div className="mt-2 grid grid-cols-2 gap-2 px-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {showTitle && <div className=" w-[200px] animate-pulse rounded-md bg-gray-700 py-3"></div>}
+            <div className="mt-2 grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {Array(number)
                     .fill(0)
-                    .map((item, index) => (
+                    .map((_, index) => (
                         <Fragment key={index}>
                             <MovieCardSkeleton key={index} />
                         </Fragment>

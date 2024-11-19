@@ -1,13 +1,13 @@
-.ant-table-wrapper .ant-table-tbody>tr>td {
+.ant-table-wrapper .ant-table-tbody > tr > td {
     padding: 4px;
 }
 
-.ant-table-wrapper .ant-table-tbody .ant-table-row >.ant-table-cell-row-hover {
-    background-color: #e5e7e9; 
-  }
+.ant-table-wrapper .ant-table-tbody .ant-table-row > .ant-table-cell-row-hover {
+    background-color: #e5e7e9;
+}
 
-.ant-table-wrapper .ant-table-thead >tr>th {
-    padding:  16px 4px;
+.ant-table-wrapper .ant-table-thead > tr > th {
+    padding: 16px 4px;
     background: #efefef;
     text-align: left;
     font-weight: 600;
@@ -37,4 +37,17 @@
 .ant-empty-description {
     text-align: center;
 }
+/* Scroll bar */
+/* .ant-table-content::-webkit-scrollbar {
+    width: 8px;
+}
 
+.ant-table-content::-webkit-scrollbar-track {
+    background: orange;
+}
+
+.ant-table-content::-webkit-scrollbar-thumb {
+    background-color: blue;
+    border-radius: 20px;
+    border: 3px solid orange;
+} */
