@@ -1,14 +1,14 @@
 "use client";
+import { register_action } from "@/actions/auth";
+import Button from "@/base/libs/button";
 import Input from "@/base/libs/input";
-import Link from "next/link";
-import {  useState } from "react";
-import { Controller, useForm } from "react-hook-form";
 import { signUpSchema, SignUpType } from "@/utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { register_action } from "@/actions/auth";
-import { toast } from "react-toastify";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Button from "@/base/libs/button";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function RegisternPage() {
     const [globalMessage, setGlobalMessage] = useState<string>("");

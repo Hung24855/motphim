@@ -1,7 +1,7 @@
-import { MovieDetail, MoviesSearch } from "./../type";
+import axios from "axios";
 import { NextRequest } from "next/server";
 import { RouterHandler } from "../../router.handler";
-import axios from "axios";
+import { MovieDetail, MoviesSearch } from "./../type";
 
 export async function GET(request: NextRequest) {
     return RouterHandler({

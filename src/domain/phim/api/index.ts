@@ -1,28 +1,5 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
-import {
-    DataCreateEpisode,
-    DataCreateMovie,
-    DataGetAllMoviesByCountry,
-    DataGetAllMoviesByGenre,
-    DataGetAllMoviesByType,
-    DataGetAllMovies,
-    DataUpdateEpisode,
-    DataUpdateMovie,
-    TResGetMovie,
-    TResGetMovies,
-    TResGetMoviesByType,
-    TResGetMoviesByGenre,
-    TResGetMoviesByCountry,
-    TResGetSearchMovies,
-    TResChangeVisibleMovie,
-    TResGetMoviesFavorite,
-    TResFavoriteMovie,
-    TResGetFeaturedMovies,
-    TResDeletedMovie,
-    TResDeletedEpisode,
-    TResUpdateEpisode
-} from "../model";
 import { requester } from "@/infrastructure/config/request/requester";
 import {
     DataChangeVisibleMovieDTO,
@@ -38,6 +15,29 @@ import {
     DataSearchMovieDTO,
     DataUpdateEpisodeDTO
 } from "../dto";
+import {
+    DataCreateEpisode,
+    DataCreateMovie,
+    DataGetAllMovies,
+    DataGetAllMoviesByCountry,
+    DataGetAllMoviesByGenre,
+    DataGetAllMoviesByType,
+    DataUpdateEpisode,
+    DataUpdateMovie,
+    TResChangeVisibleMovie,
+    TResDeletedEpisode,
+    TResDeletedMovie,
+    TResFavoriteMovie,
+    TResGetFeaturedMovies,
+    TResGetMovie,
+    TResGetMovies,
+    TResGetMoviesByCountry,
+    TResGetMoviesByGenre,
+    TResGetMoviesByType,
+    TResGetMoviesFavorite,
+    TResGetSearchMovies,
+    TResUpdateEpisode
+} from "../model";
 
 export class MoviesApi {
     static async get_movie(slug: string) {

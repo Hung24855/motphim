@@ -1,7 +1,7 @@
-import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
-import { CountriesApi } from "../api";
+import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CountriesApi } from "../api";
 import { DataCreateCountry, DataUpdateCountry, TResDeleteCountry, TResGetAllCountries } from "../model";
 
 interface ICreateCountryMutation {

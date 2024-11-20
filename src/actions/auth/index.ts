@@ -1,9 +1,9 @@
 "use server";
-import { signOut, signIn, auth } from "@/auth";
-import { AuthError } from "next-auth";
-import { IResponseData } from "@/infrastructure/config/types/apiResponse";
-import { revalidatePath } from "next/cache";
+import { auth, signIn, signOut } from "@/auth";
 import { pool } from "@/database/connect";
+import { IResponseData } from "@/infrastructure/config/types/apiResponse";
+import { AuthError } from "next-auth";
+import { revalidatePath } from "next/cache";
 
 export const register_action = async ({
     email,
@@ -61,4 +61,3 @@ export async function logout_action() {
     await signOut();
     revalidatePath("/");
 }
-

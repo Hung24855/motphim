@@ -5,8 +5,6 @@ import { CrawlerService } from "@/domain/crawler/services";
 import { Fragment, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "@/base/libs/loading";
-import useWindowSize from "@/base/hooks/useWindowSize";
-import clsx from "clsx";
 
 export default function CrawlerView() {
     const [enabled, setEnabled] = useState(false);
@@ -16,7 +14,6 @@ export default function CrawlerView() {
     const [loadingUpdateMovies, setLoadingUpdateMovies] = useState(false); //Loading tổng
     const [moviesUpdateSuccess, setMoviesUpdateSuccess] = useState<string[]>([]);
     const [searchText, setSearchText] = useState<string>("");
-    const { screenSize } = useWindowSize();
 
     const { data, isFetching, mutateAsyncUpdateDataCrawl, mutateSearchDataCrawl, isPendingSearch } =
         CrawlerService.useCrawlData({
@@ -148,10 +145,10 @@ export default function CrawlerView() {
                                 Đã chọn : {Object.values(checkedMovies).filter(Boolean).length}/{movies.length} phim
                             </div>
                             <div className="mt-2 h-[calc(100%-35px)] w-full overflow-hidden overflow-y-scroll">
-                                <div className="grid w-full grid-cols-2 gap-2 p-1">
+                                <div className="grid w-full grid-cols-1 gap-2 p-1 md:grid-cols-2">
                                     {movies.map((movie) => {
                                         return (
-                                            <div className="flex gap-x-40" key={movie.slug}>
+                                            <div className="flex justify-between" key={movie.slug}>
                                                 <div className="flex gap-x-2">
                                                     <input
                                                         type="checkbox"
@@ -161,7 +158,7 @@ export default function CrawlerView() {
                                                     />
                                                     <label
                                                         htmlFor={movie.slug}
-                                                        className="line-clamp-1 max-w-[350px] cursor-pointer"
+                                                        className="line-clamp-1 max-w-[200px] cursor-pointer md:max-w-[350px]"
                                                     >
                                                         {movie.movie_name}
                                                     </label>

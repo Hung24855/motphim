@@ -1,10 +1,9 @@
 import { Episode, FieldValues } from "@/views/admin/movie/create/page";
-import { Control, Controller, FieldErrors, UseFormGetValues, UseFormSetValue } from "react-hook-form";
-import { useState } from "react";
-import clsx from "clsx";
-import { IoTrashBinSharp } from "react-icons/io5";
-import { BrushSquare, CloseSquare } from "iconsax-react";
 import { Tooltip } from "antd";
+import clsx from "clsx";
+import { CloseSquare } from "iconsax-react";
+import { useState } from "react";
+import { Control, Controller, FieldErrors, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 interface Props {
     control: Control<FieldValues, any>;
     errors: FieldErrors<FieldValues>;

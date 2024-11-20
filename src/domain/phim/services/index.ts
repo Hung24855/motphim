@@ -1,15 +1,15 @@
-import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
+import { useFetcher } from "@/infrastructure/hooks/useFetcher";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MoviesApi } from "../api";
 import { MovieForCardDTO } from "../dto";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
     DataCreateEpisode,
     DataCreateMovie,
+    DataGetAllMovies,
     DataGetAllMoviesByCountry,
     DataGetAllMoviesByGenre,
     DataGetAllMoviesByType,
-    DataGetAllMovies,
     DataGetFavoriteMovies,
     DataUpdateEpisode,
     DataUpdateMovie,

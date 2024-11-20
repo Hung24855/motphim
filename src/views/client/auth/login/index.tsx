@@ -1,15 +1,12 @@
 "use client";
+import { login_action } from "@/actions/auth";
+import Button from "@/base/libs/button";
 import Input from "@/base/libs/input";
+import { signInSchema, SignInType } from "@/utils/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { signInSchema, SignInType } from "@/utils/zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { login_action } from "@/actions/auth";
-import Button from "@/base/libs/button";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { authFirebase } from "@/firebase";
-import { toast } from "react-toastify";
 
 export default function LoginPage() {
     const [globalMessage, setGlobalMessage] = useState<string>("");

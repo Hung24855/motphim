@@ -1,16 +1,16 @@
+import { auth } from "@/auth";
+import Footer from "@/components/layout/footer";
+import Header from "@/components/layout/header";
+import DB_Connect from "@/database/connect";
+import FireBaseProvider from "@/provider/fire-base";
+import NextAuthProvider from "@/provider/next-auth";
+import ProgessbarProviders from "@/provider/progess-bar";
+import ReactQueryProvder from "@/provider/react-query";
+import Toast from "@/provider/react-toastify";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
-import DB_Connect from "@/database/connect";
-import Header from "@/components/layout/header";
-import Footer from "@/components/layout/footer";
-import NextAuthProvider from "@/provider/next-auth";
-import { auth } from "@/auth";
-import "./globals.css";
 import "swiper/css";
-import ReactQueryProvder from "@/provider/react-query";
-import FireBaseProvider from "@/provider/fire-base";
-import ProgessbarProviders from "@/provider/progess-bar";
-import Toast from "@/provider/react-toastify";
+import "./globals.css";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 

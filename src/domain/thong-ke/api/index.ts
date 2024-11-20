@@ -1,8 +1,8 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
 import { requester } from "@/infrastructure/config/request/requester";
-import { TResGetStatistical } from "../model";
 import { GetStatisticalDTO } from "../dto";
+import { TResGetStatistical } from "../model";
 
 export class StatisticalApi {
     static async get_statistical() {

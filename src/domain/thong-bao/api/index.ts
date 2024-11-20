@@ -1,8 +1,8 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
 import { requester } from "@/infrastructure/config/request/requester";
-import { DataSaveToken, DataSendNotification, TResGetAllNotification } from "../model";
 import { GetAllNotificationDTO } from "../dto";
+import { DataSaveToken, DataSendNotification, TResGetAllNotification } from "../model";
 
 export class NotificationApi {
     static async save_token(data: DataSaveToken) {

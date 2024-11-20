@@ -1,17 +1,17 @@
 "use client";
-import { GenresService } from "@/domain/the-loai/service";
-import { Table, Tag, Tooltip } from "antd";
-import { ChangeEvent, Fragment, useMemo, useState } from "react";
-import "@/infrastructure/styles/table.ant.css";
-import { DataCreateGenres, DataUpdateGenres, TResGetAllGenre } from "@/domain/the-loai/model";
-import { toast } from "react-toastify";
 import Input from "@/base/libs/input";
 import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
-import { useQueryClient } from "@tanstack/react-query";
+import { DataCreateGenres, DataUpdateGenres, TResGetAllGenre } from "@/domain/the-loai/model";
+import { GenresService } from "@/domain/the-loai/service";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
-import { BrushSquare, CloseSquare } from "iconsax-react";
+import "@/infrastructure/styles/table.ant.css";
+import { useQueryClient } from "@tanstack/react-query";
+import { Table, Tag, Tooltip } from "antd";
 import { ColumnProps } from "antd/es/table";
+import { BrushSquare, CloseSquare } from "iconsax-react";
+import { ChangeEvent, Fragment, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 
 const initGenre: DataCreateGenres | DataUpdateGenres = { name: "", slug: "" };
 

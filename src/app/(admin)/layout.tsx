@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
-import AdminSideBar from "@/components/admin/side-bar";
-import { Fragment } from "react";
-import { Nunito } from "next/font/google";
-import "./globals.css";
-import "swiper/css";
-import ReactQueryProvder from "@/provider/react-query";
-import AntDesignConfig from "@/provider/ant-config";
 import { auth } from "@/auth";
+import AdminSideBar from "@/components/admin/side-bar";
+import AntDesignConfig from "@/provider/ant-config";
 import ProgessbarProviders from "@/provider/progess-bar";
+import ReactQueryProvder from "@/provider/react-query";
 import Toast from "@/provider/react-toastify";
+import type { Metadata } from "next";
+import { Nunito } from "next/font/google";
+import { Fragment } from "react";
+import "swiper/css";
+import "./globals.css";
 
 const inter = Nunito({ subsets: ["latin"], preload: true });
 

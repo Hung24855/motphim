@@ -1,13 +1,13 @@
 import clsx from "clsx";
 import "./uiverse.io.css";
-import { ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 
 type LoadingProps = {
     children?: ReactNode;
     allowFullScreen?: boolean;
-    backgroundOverlayClassName?: string;
+    backgroundOverlayClassName?: HTMLAttributes<HTMLDivElement>["className"];
     loading: boolean;
-    containerClassName?: string;
+    containerClassName?: HTMLAttributes<HTMLDivElement>["className"];
 };
 export default function Loading({
     allowFullScreen,

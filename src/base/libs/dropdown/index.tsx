@@ -1,7 +1,7 @@
-import CSS from "csstype";
 import { useOnClickOutside } from "@/base/hooks/useOnClickOutside";
-import { HTMLProps, MouseEvent, ReactNode, useRef, useState } from "react";
 import clsx from "clsx";
+import CSS from "csstype";
+import { HTMLAttributes, MouseEvent, ReactNode, useRef, useState } from "react";
 
 type DropDownProps = {
     toggleComponent: ReactNode;
@@ -20,9 +20,9 @@ type DropDownProps = {
     dropdownComponentStyle?: Pick<CSS.Properties, "top" | "left" | "right">;
     transitionProperty?: Pick<CSS.Properties, "transformOrigin" | "transitionDuration" | "transitionTimingFunction">;
     transitionType: "zoomIn" | "scaleY" | "slideDown";
-    dropdownPositionClassName?: HTMLProps<HTMLDivElement>["className"];
-    dropdownComponentClassName?: HTMLProps<HTMLDivElement>["className"];
-    toggleComponentClassName?: HTMLProps<HTMLDivElement>["className"];
+    dropdownPositionClassName?: HTMLAttributes<HTMLDivElement>["className"];
+    dropdownComponentClassName?: HTMLAttributes<HTMLDivElement>["className"];
+    toggleComponentClassName?: HTMLAttributes<HTMLDivElement>["className"];
 };
 
 const DropdownMenu = ({

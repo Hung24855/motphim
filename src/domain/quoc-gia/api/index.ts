@@ -1,5 +1,7 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
+import { requester } from "@/infrastructure/config/request/requester";
+import { CreateCountryDTO, DeleteCountryDTO, GetAllCountriesDTO, UpdateCountryDTO } from "../dto";
 import {
     DataCreateCountry,
     DataUpdateCountry,
@@ -8,8 +10,6 @@ import {
     TResGetAllCountries,
     TResUpdateCountry
 } from "../model";
-import { requester } from "@/infrastructure/config/request/requester";
-import { CreateCountryDTO, DeleteCountryDTO, GetAllCountriesDTO, UpdateCountryDTO } from "../dto";
 
 export class CountriesApi {
     static async get_all_countries() {
