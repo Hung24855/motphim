@@ -95,12 +95,15 @@ export default function CountriesAdminView() {
         {
             title: "Tên quốc gia",
             dataIndex: "name",
-            key: "genre_name"
+            key: "genre_name",
+            width: 150,
+            fixed: "left"
         },
         {
             title: "Đường dẫn tĩnh",
             dataIndex: "slug",
-            key: "slug"
+            key: "slug",
+            width: 150
         },
         {
             title: "Số phim thuộc quốc gia",
@@ -147,7 +150,9 @@ export default function CountriesAdminView() {
                         </Tooltip>
                     </button>
                 </div>
-            )
+            ),
+            width: 100,
+            fixed: "right"
         }
     ];
     return (
@@ -170,6 +175,7 @@ export default function CountriesAdminView() {
                     position: ["bottomCenter"]
                 }}
                 bordered
+                scroll={{ x: "max-content" }}
             />
 
             {/* Modal thêm quốc gia */}

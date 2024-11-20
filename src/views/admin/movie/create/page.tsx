@@ -91,7 +91,7 @@ export default function CreateMoviePage() {
                             type="submit"
                             disabled={isPeddingCreateMovie}
                         >
-                            Lưu thay đổi
+                            Thêm phim
                         </button>
                     </Spin>
                     <Link href={"/admin/phim"}>
