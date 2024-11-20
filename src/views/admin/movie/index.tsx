@@ -13,10 +13,12 @@ import FilterMovies from "./components/FilterMovies";
 import ModalDeleteMovie from "./components/ModalDeleteMovie";
 import ModalDeleteMutibleMovie from "./components/ModalDeleteMutibleMovie";
 import ModalHideOrVisibleMovie from "./components/ModalHideOrVisibleMovie";
+import useWindowSize from "@/base/hooks/useWindowSize";
 
 export default function MoviesAdminView() {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
+    const { screenSize } = useWindowSize();
     const [isShowModal, setIsShowModal] = useState<boolean>(false);
     const [isShowModalDeleteMovie, setIsShowModalDeleteMovie] = useState<boolean>(false);
     const [isShowModalDeleteMultibleMovie, setIsShowModalDeleteMultibleMovie] = useState<boolean>(false);
@@ -59,32 +61,35 @@ export default function MoviesAdminView() {
             dataIndex: "movie_name",
             key: "movie_name",
             fixed: "left",
-            width: 350,
+            width: ["small", "medium"].includes(screenSize) ? 150 : 300,
             render: (movie_name: string) => <div className="line-clamp-1">{movie_name}</div>
         },
         {
             title: "Ảnh",
             dataIndex: "image",
             key: "image",
-            render: (src: string) => <img src={src} alt="" className="h-24 w-20" />
+            render: (src: string) => <img src={src} alt="" className="h-24 w-20" />,
+            width: 100
         },
         {
             title: "Năm",
             dataIndex: "year",
             key: "year",
-            align: "center"
+            align: "center",
+            width: 100
         },
         {
             title: "Thời gian",
             dataIndex: "time_per_episode",
             key: "time_per_episode",
-            align: "center"
+            width: 100
         },
         {
             title: "Ngôn ngữ",
             dataIndex: "lang",
             key: "lang",
-            align: "center"
+            align: "center",
+            width: 100
         },
         {
             title: "Loại phim",
@@ -97,19 +102,22 @@ export default function MoviesAdminView() {
                     return <Tag color="green">Phim lẻ</Tag>;
                 }
             },
-            align: "center"
+            align: "center",
+            width: 100
         },
         {
             title: "Tập hiện tại",
             dataIndex: "episode_current",
             key: "episode_current",
-            align: "center"
+            align: "center",
+            width: 100
         },
         {
             title: "Tổng số tập",
             dataIndex: "episode_total",
             key: "episode_total",
-            align: "center"
+            align: "center",
+            width: 100
         },
 
         {
@@ -167,12 +175,13 @@ export default function MoviesAdminView() {
                 </div>
             ),
             fixed: "right",
-            align: "center"
+            align: "center",
+            width: 100
         }
     ];
 
     return (
-        <div className="h-screen">
+        <div className="min-h-screen">
             <h1 className="text-center text-3xl font-semibold">Quản lý phim</h1>
             <div className="flex flex-wrap gap-4">
                 <Link href={"/admin/phim/them-phim"}>
@@ -224,7 +233,7 @@ export default function MoviesAdminView() {
                             setLimit(size);
                         }
                     }}
-                    scroll={{ y: 480 }}
+                    scroll={{ x: "max-content" }}
                 />
             </div>
 

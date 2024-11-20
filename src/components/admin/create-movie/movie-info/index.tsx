@@ -1,5 +1,6 @@
 import Input from "@/base/libs/input";
 import { FieldValues } from "@/views/admin/movie/create/page";
+import { Fragment } from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 
 interface Props {
@@ -9,35 +10,75 @@ interface Props {
 
 export default function MovieInfo({ control, errors }: Props) {
     return (
-        <div className="w-max">
-            <Controller
-                name="movie_name"
-                control={control}
-                defaultValue=""
-                rules={{
-                    required: "Tên phim không thể để trống."
-                }}
-                render={({ field }) => (
-                    <Input
-                        field={field}
-                        label="Tên phim"
-                        placeholder="VD: Tứ Phương Quán"
-                        required
-                        error={errors.movie_name}
-                    />
-                )}
-            />
-            <Controller
-                name="slug"
-                control={control}
-                defaultValue=""
-                rules={{
-                    required: "Slug phim không thể để trống."
-                }}
-                render={({ field }) => (
-                    <Input field={field} label="Slug" placeholder="VD: tu-phuong-quan" required error={errors.slug} />
-                )}
-            />
+        <Fragment>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
+                <Controller
+                    name="movie_name"
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                        required: "Tên phim không thể để trống."
+                    }}
+                    render={({ field }) => (
+                        <Input
+                            field={field}
+                            label="Tên phim"
+                            placeholder="VD: Tứ Phương Quán"
+                            required
+                            error={errors.movie_name}
+                        />
+                    )}
+                />
+                <Controller
+                    name="slug"
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                        required: "Slug phim không thể để trống."
+                    }}
+                    render={({ field }) => (
+                        <Input
+                            field={field}
+                            label="Slug"
+                            placeholder="VD: tu-phuong-quan"
+                            required
+                            error={errors.slug}
+                        />
+                    )}
+                />
+
+                <Controller
+                    name="image"
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                        required: "Ảnh phim không thể để trống."
+                    }}
+                    render={({ field }) => (
+                        <Input
+                            field={field}
+                            label="Ảnh Thumb"
+                            placeholder="Ảnh thumbnail"
+                            required
+                            error={errors.image}
+                        />
+                    )}
+                />
+                <Controller
+                    name="trailer_youtube_url"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                        <Input
+                            field={field}
+                            label="Trailer Youtube URL"
+                            placeholder="Trailer Youtube URL"
+                            error={errors.trailer_youtube_url}
+                        />
+                    )}
+                />
+            </div>
+
             <Controller
                 name="content"
                 control={control}
@@ -56,31 +97,6 @@ export default function MovieInfo({ control, errors }: Props) {
                     />
                 )}
             />
-            <Controller
-                name="image"
-                control={control}
-                defaultValue=""
-                rules={{
-                    required: "Ảnh phim không thể để trống."
-                }}
-                render={({ field }) => (
-                    <Input field={field} label="Ảnh Thumb" placeholder="Ảnh thumbnail" required error={errors.image} />
-                )}
-            />
-            <Controller
-                name="trailer_youtube_url"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                    <Input
-                        field={field}
-                        label="Trailer Youtube URL"
-                        placeholder="Trailer Youtube URL"
-                        error={errors.trailer_youtube_url}
-                    />
-                )}
-            />
-
             <div className="grid grid-cols-3 gap-x-4">
                 <Controller
                     name="time_per_episode"
@@ -163,6 +179,6 @@ export default function MovieInfo({ control, errors }: Props) {
                     )}
                 />
             </div>
-        </div>
+        </Fragment>
     );
 }

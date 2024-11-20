@@ -92,12 +92,15 @@ export default function GenresAdminView() {
         {
             title: "Tên thể loại",
             dataIndex: "name",
-            key: "genre_name"
+            key: "genre_name",
+            width: 150,
+            fixed: "left"
         },
         {
             title: "Đường dẫn tĩnh",
             dataIndex: "slug",
-            key: "slug"
+            key: "slug",
+            width: 150
         },
         {
             title: "Số phim thuộc thể loại",
@@ -144,7 +147,9 @@ export default function GenresAdminView() {
                         </Tooltip>
                     </button>
                 </div>
-            )
+            ),
+            width: 100,
+            fixed: "right"
         }
     ];
 
@@ -169,6 +174,7 @@ export default function GenresAdminView() {
                     position: ["bottomCenter"]
                 }}
                 bordered
+                scroll={{ x: "max-content" }}
             />
 
             {/* Modal thêm thể loại hoặc cập nhật thể loại */}
