@@ -93,8 +93,7 @@ export default function GenresAdminView() {
             title: "Tên thể loại",
             dataIndex: "name",
             key: "genre_name",
-            width: 150,
-            fixed: "left"
+            width: 150
         },
         {
             title: "Đường dẫn tĩnh",
@@ -148,8 +147,7 @@ export default function GenresAdminView() {
                     </button>
                 </div>
             ),
-            width: 100,
-            fixed: "right"
+            width: 100
         }
     ];
 

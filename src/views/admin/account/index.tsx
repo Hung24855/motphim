@@ -46,7 +46,7 @@ export default function AccountAdminView() {
         }
         setloading(false);
     };
-    const columns:ColumnProps[] = [
+    const columns: ColumnProps[] = [
         {
             title: "Họ tên",
             dataIndex: "username",
@@ -141,6 +141,7 @@ export default function AccountAdminView() {
                     position: ["bottomCenter"]
                 }}
                 bordered
+                scroll={{ x: "max-content" }}
             />
         </div>
     );

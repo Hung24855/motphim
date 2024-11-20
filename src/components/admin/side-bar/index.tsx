@@ -50,6 +50,7 @@ export default function AdminSideBar({ session }: { session: Session | null }) {
     useEffect(() => {
         if (["small", "medium"].includes(screenSize)) {
             setSidebarOpen(false);
+            setOpenMenus([]);
         }
     }, [screenSize]);
 
