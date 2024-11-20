@@ -222,7 +222,7 @@ export default function AdminSideBar({ session }: { session: Session | null }) {
                                 await logout_action();
                                 setLogoutLoading(false);
                             }}
-                            className="absolute bottom-5 right-0 w-full px-2"
+                            className="absolute bottom-5 right-0 w-full"
                         >
                             <Spin spinning={logoutLoading} indicator={<LoadingOutlined spin />}>
                                 <button

@@ -58,7 +58,7 @@ export class MoviesService {
             data,
             isFetching,
             refetch: refetchMovies
-        } = useFetcher<TResGetMovies>([QUERY_KEY.GET_LIST_MOVIES, page, movie_type_id, country, genre], () =>
+        } = useFetcher<TResGetMovies>([QUERY_KEY.GET_LIST_MOVIES, page,limit, movie_type_id, country, genre], () =>
             MoviesApi.get_movies({ page, limit, movie_type_id, country, genre })
         );
         const { mutate: createMovieMutation, isPending: isPeddingCreateMovie } = useMutation({

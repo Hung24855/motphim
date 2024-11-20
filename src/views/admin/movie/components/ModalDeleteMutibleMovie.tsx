@@ -15,6 +15,7 @@ type Props = {
     setIsShowModalDeleteMultibleMovie: (value: SetStateAction<boolean>) => void;
     moviesSearch: TResGetSearchMovies | undefined;
     page: number;
+    limit:number
     filterType: {
         type?: "type1" | "type2";
         genre: string;
@@ -31,6 +32,7 @@ export default function ModalDeleteMutibleMovie({
     setIsShowModalDeleteMultibleMovie,
     filterType,
     page,
+    limit,
     moviesSearch,
     mutibleChoisedRow,
     isShowModalDeleteMultibleMovie,
@@ -47,7 +49,7 @@ export default function ModalDeleteMutibleMovie({
                         refetch();
                     } else {
                         queryClient.setQueryData(
-                            [QUERY_KEY.GET_LIST_MOVIES, page, filterType.type, filterType.country, filterType.genre],
+                            [QUERY_KEY.GET_LIST_MOVIES, page,limit, filterType.type, filterType.country, filterType.genre],
                             (prevData: TResGetMovies) => ({
                                 ...prevData,
                                 data: prevData.data.filter((movie) => movie.id !== movie_id)

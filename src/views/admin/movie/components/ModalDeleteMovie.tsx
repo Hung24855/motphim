@@ -17,6 +17,7 @@ type Props = {
     moviesSearch: TResGetSearchMovies | undefined;
     movieSelect: MovieSelect | null;
     page: number;
+    limit:number;
     filterType: {
         type?: "type1" | "type2";
         genre: string;
@@ -34,6 +35,7 @@ export default function ModalDeleteMovie({
     movieSelect,
     filterType,
     page,
+    limit,
     isPeddingDeleteMovie,
     isShowModalDeleteMovie
 }: Props) {
@@ -49,7 +51,7 @@ export default function ModalDeleteMovie({
                         refetch();
                     } else {
                         queryClient.setQueryData(
-                            [QUERY_KEY.GET_LIST_MOVIES, page, filterType.type, filterType.country, filterType.genre],
+                            [QUERY_KEY.GET_LIST_MOVIES, page,limit, filterType.type, filterType.country, filterType.genre],
                             (prevData: TResGetMovies) => ({
                                 ...prevData,
                                 data: prevData.data.filter((movie) => movie.id !== data.id)

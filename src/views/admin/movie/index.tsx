@@ -1,21 +1,22 @@
 "use client";
-import { Fragment, useState } from "react";
-import Link from "next/link";
-import { Table, Tag, Tooltip } from "antd";
+import useDebounce from "@/base/hooks/useDebounce";
+import Loading from "@/base/libs/loading";
 import { MoviesService } from "@/domain/phim/services";
 import "@/infrastructure/styles/table.ant.css";
-import Loading from "@/base/libs/loading";
-import useDebounce from "@/base/hooks/useDebounce";
 import { convertSearchParams } from "@/utils/function";
+import { Table, Tag, Tooltip } from "antd";
+import { ColumnProps } from "antd/es/table";
+import { BrushSquare, CloseSquare, Eye, EyeSlash } from "iconsax-react";
+import Link from "next/link";
+import { useState } from "react";
 import FilterMovies from "./components/FilterMovies";
-import ModalHideOrVisibleMovie from "./components/ModalHideOrVisibleMovie";
 import ModalDeleteMovie from "./components/ModalDeleteMovie";
 import ModalDeleteMutibleMovie from "./components/ModalDeleteMutibleMovie";
-import { ColumnProps } from "antd/es/table";
-import { BrushSquare, Eye, EyeSlash, CloseSquare } from "iconsax-react";
+import ModalHideOrVisibleMovie from "./components/ModalHideOrVisibleMovie";
 
 export default function MoviesAdminView() {
     const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
     const [isShowModal, setIsShowModal] = useState<boolean>(false);
     const [isShowModalDeleteMovie, setIsShowModalDeleteMovie] = useState<boolean>(false);
     const [isShowModalDeleteMultibleMovie, setIsShowModalDeleteMultibleMovie] = useState<boolean>(false);
@@ -35,7 +36,7 @@ export default function MoviesAdminView() {
         mutateAsyncDeleteMovie
     } = MoviesService.use_movies({
         page: page,
-        limit: 10,
+        limit: limit,
         movie_type_id: filterType?.type,
         country: filterType?.country,
         genre: filterType?.genre
@@ -215,10 +216,13 @@ export default function MoviesAdminView() {
                         indicator: <Loading loading={isFetching || isFetchingSearch} />
                     }}
                     pagination={{
-                        pageSize: 10,
+                        pageSize: limit,
                         total: moviesSearch ? 1 : movies?.pagination ? movies.pagination.totalRows : 1,
                         onChange: (page) => setPage(page),
-                        position: ["bottomCenter"]
+                        position: ["bottomCenter"],
+                        onShowSizeChange(_, size) {
+                            setLimit(size);
+                        }
                     }}
                     scroll={{ y: 480 }}
                 />
@@ -244,6 +248,7 @@ export default function MoviesAdminView() {
                 refetch={refetch}
                 filterType={filterType}
                 page={page}
+                limit={limit}
                 setIsShowModalDeleteMovie={setIsShowModalDeleteMovie}
                 setMovieSelect={setMovieSelect}
                 isPeddingDeleteMovie={isPeddingDeleteMovie}
@@ -254,6 +259,7 @@ export default function MoviesAdminView() {
             <ModalDeleteMutibleMovie
                 filterType={filterType}
                 page={page}
+                limit={limit}
                 setIsShowModalDeleteMultibleMovie={setIsShowModalDeleteMultibleMovie}
                 isShowModalDeleteMultibleMovie={isShowModalDeleteMultibleMovie}
                 isPeddingDeleteMovie={isPeddingDeleteMovie}
