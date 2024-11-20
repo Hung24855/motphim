@@ -5,6 +5,8 @@ import { CrawlerService } from "@/domain/crawler/services";
 import { Fragment, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "@/base/libs/loading";
+import useWindowSize from "@/base/hooks/useWindowSize";
+import clsx from "clsx";
 
 export default function CrawlerView() {
     const [enabled, setEnabled] = useState(false);
@@ -14,6 +16,7 @@ export default function CrawlerView() {
     const [loadingUpdateMovies, setLoadingUpdateMovies] = useState(false); //Loading tổng
     const [moviesUpdateSuccess, setMoviesUpdateSuccess] = useState<string[]>([]);
     const [searchText, setSearchText] = useState<string>("");
+    const { screenSize } = useWindowSize();
 
     const { data, isFetching, mutateAsyncUpdateDataCrawl, mutateSearchDataCrawl, isPendingSearch } =
         CrawlerService.useCrawlData({
@@ -85,41 +88,45 @@ export default function CrawlerView() {
     return (
         <Fragment>
             <h1 className="text-center text-3xl font-semibold">Crawl data từ OPHIM</h1>
-            <div className="mt-2 flex items-center gap-x-3">
+            <div className="mt-2 flex flex-col flex-wrap gap-3 md:flex-row md:items-center">
                 <Button onClick={() => setEnabled(true)} loading={isFetching} buttonClassName="!bg-admin_primary">
                     Lấy danh sách phim
                 </Button>
-                <span>Từ trang:</span>
-                <input
-                    type="number"
-                    className="h-10 border px-1 outline-none"
-                    value={pageRange.start || ""}
-                    onChange={(e) => {
-                        const value = e.target.value;
-                        setPageRange({
-                            ...pageRange,
-                            start: value === "" ? "" : Number(value)
-                        });
-                    }}
-                />
-                <span>Đến trang:</span>
-                <input
-                    type="number"
-                    className="h-10 border px-1 outline-none"
-                    value={pageRange.end || ""}
-                    onChange={(e) => {
-                        const value = e.target.value;
-                        setPageRange({
-                            ...pageRange,
-                            end: value === "" ? "" : Number(value)
-                        });
-                    }}
-                />
-                <span>Tìm kiếm:</span>
-                <div className="h-10 w-52">
+                <div className="flex flex-col md:flex-row md:items-center">
+                    <span>Từ trang:</span>
+                    <input
+                        type="number"
+                        className="h-10 border px-1 outline-none"
+                        value={pageRange.start || ""}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setPageRange({
+                                ...pageRange,
+                                start: value === "" ? "" : Number(value)
+                            });
+                        }}
+                    />
+                </div>
+                <div className="flex flex-col md:flex-row md:items-center">
+                    <span>Đến trang:</span>
+                    <input
+                        type="number"
+                        className="h-10 border px-1 outline-none"
+                        value={pageRange.end || ""}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setPageRange({
+                                ...pageRange,
+                                end: value === "" ? "" : Number(value)
+                            });
+                        }}
+                    />
+                </div>
+                <div className="flex flex-col md:flex-row md:items-center">
+                    <span>Tìm kiếm:</span>
                     <input
                         placeholder="Nhập tên phim ..."
-                        className="rounded-sm border p-2 outline-none"
+                        className="h-10 border px-1 outline-none"
                         value={searchText}
                         onChange={(e: any) => {
                             setSearchText(e.target.value);

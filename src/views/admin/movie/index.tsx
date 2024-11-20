@@ -60,7 +60,6 @@ export default function MoviesAdminView() {
             title: "Tên phim",
             dataIndex: "movie_name",
             key: "movie_name",
-            fixed: "left",
             width: ["small", "medium"].includes(screenSize) ? 150 : 300,
             render: (movie_name: string) => <div className="line-clamp-1">{movie_name}</div>
         },
@@ -174,7 +173,7 @@ export default function MoviesAdminView() {
                     </button>
                 </div>
             ),
-            fixed: "right",
+
             align: "center",
             width: 100
         }
