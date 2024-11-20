@@ -1,10 +1,7 @@
-import useGetAllSearchParams from "@/base/hooks/useGetAllSearchParams";
 import Select, { Option } from "@/base/libs/select";
 import { removeMark } from "@/base/utils/function";
 import { CountriesService } from "@/domain/quoc-gia/service";
 import { GenresService } from "@/domain/the-loai/service";
-import { useRouter } from "next-nprogress-bar";
-import { usePathname, useSearchParams } from "next/navigation";
 import { Fragment, SetStateAction } from "react";
 
 type FilterType = {

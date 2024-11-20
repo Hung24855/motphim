@@ -3,40 +3,40 @@ import Button from "@/base/libs/button";
 import Input from "@/base/libs/input";
 import { saveToLocalStorage } from "@/base/utils/function";
 import { AccountsService } from "@/domain/tai-khoan/services";
-import { verifyEmailAndCodeSchema, VerifyEmailAndCodeType } from "@/utils/zod";
+import { verifyEmailSchema, VerifyEmailType } from "@/utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { TOKEN_VERIFY_CODE } from ".";
+import OTP from "@/base/libs/otp";
+import { toast } from "react-toastify";
+const CODE_LENGTH = 6;
 
 type IVerifyEmailAndCodeProps = {
     setIsCodeVerified: React.Dispatch<React.SetStateAction<boolean>>;
-    setGlobalMessage: React.Dispatch<React.SetStateAction<string>>;
-    globalMessage: string;
+    setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+    errorMessage: string;
 };
 export default function VerifyEmailAndCode(props: IVerifyEmailAndCodeProps) {
-    const { setIsCodeVerified, setGlobalMessage, globalMessage } = props;
+    const { setIsCodeVerified, setErrorMessage, errorMessage } = props;
     const [isEmailVerified, setIsEmailVerified] = useState<boolean>(false);
+    const [code, SetCode] = useState<string>("");
 
     const {
         control,
         formState: { errors },
         trigger,
         getValues
-    } = useForm<VerifyEmailAndCodeType>({
+    } = useForm<VerifyEmailType>({
         mode: "onSubmit",
         reValidateMode: "onSubmit",
-        resolver: zodResolver(verifyEmailAndCodeSchema)
+        resolver: zodResolver(verifyEmailSchema)
     });
 
     const { start, remainingTime } = useCountdownTimer();
-    const {
-        SendEmailMutation,
-        isPendingSendEmail,
-        VerifyCodeMutation,
-        isPendingVerify,
-    } = AccountsService.useAccounts();
+    const { SendEmailMutation, isPendingSendEmail, VerifyCodeMutation, isPendingVerify } =
+        AccountsService.useAccounts();
     const handleSendEmail = async () => {
         const checkEmail = await trigger("email");
         if (checkEmail) {
@@ -45,31 +45,29 @@ export default function VerifyEmailAndCode(props: IVerifyEmailAndCodeProps) {
             SendEmailMutation(email, {
                 onSuccess: () => {
                     setIsEmailVerified(true);
-                    setGlobalMessage("");
+                    setErrorMessage("");
                 },
                 onError: (error) => {
-                    setGlobalMessage(error.message);
+                    setErrorMessage(error.message);
                 }
             });
         }
     };
 
     const handleVerifyCode = async () => {
-        const checkCode = await trigger("code");
-        if (checkCode) {
-            const code = getValues("code");
+        if (code) {
             const email = getValues("email");
-
             VerifyCodeMutation(
                 { code, email },
                 {
                     onSuccess: (data) => {
                         setIsCodeVerified(true);
                         saveToLocalStorage({ key: TOKEN_VERIFY_CODE, value: data.token });
-                        setGlobalMessage("");
+                        setErrorMessage("");
                     },
                     onError: (error) => {
-                        setGlobalMessage(error.message);
+                        setErrorMessage(error.message);
+                        toast.error(error.message, { position: "bottom-left" });
                     }
                 }
             );
@@ -78,29 +76,37 @@ export default function VerifyEmailAndCode(props: IVerifyEmailAndCodeProps) {
     return (
         <form className="space-y-2" method="POST">
             {isEmailVerified ? (
-                <div className="flex gap-x-2">
-                    <Controller
-                        name="code"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
-                            <Input field={field} label="Mã xác thực" placeholder="code" required error={errors.code} />
-                        )}
-                    />
-                    <div
-                        className={clsx(
-                            "mb-3 flex h-10 w-[75px] items-center justify-center self-end rounded border-[2px] px-1",
-                            remainingTime === 0 ? "cursor-pointer border-red-400" : "border-gray-400"
-                        )}
-                        onClick={() => {
-                            if (remainingTime === 0) {
-                                handleSendEmail();
-                            }
-                        }}
-                    >
-                        {remainingTime > 0 ? remainingTime : "Gửi mã"}
+                <Fragment>
+                    <div className="flex justify-between gap-x-2">
+                        <OTP
+                            length={CODE_LENGTH}
+                            onConpleteOTP={(code) => {
+                                SetCode(code);
+                            }}
+                            error={!!errorMessage}
+                            className="!gap-3"
+                            inputclassName="!border-[2px]"
+                            eventGetCode="onChange"
+                            onpreviousSibling={() => {
+                                SetCode("");
+                                setErrorMessage("");
+                            }}
+                        />
+                        <div
+                            className={clsx(
+                                "flex h-10 w-[75px] items-center justify-center self-end rounded border-[2px] px-1",
+                                remainingTime === 0 ? "cursor-pointer border-[#295779]" : "border-gray-400"
+                            )}
+                            onClick={() => {
+                                if (remainingTime === 0) {
+                                    handleSendEmail();
+                                }
+                            }}
+                        >
+                            {remainingTime > 0 ? remainingTime : "Gửi mã"}
+                        </div>
                     </div>
-                </div>
+                </Fragment>
             ) : (
                 <Controller
                     name="email"
@@ -111,13 +117,13 @@ export default function VerifyEmailAndCode(props: IVerifyEmailAndCodeProps) {
                     )}
                 />
             )}
-            <div className="text-right text-red-500">{globalMessage}</div>
+
             {!isEmailVerified ? (
                 <Button type="button" block onClick={handleSendEmail} loading={isPendingSendEmail}>
-                    Lấy lại mật khẩu
+                    Gửi yêu cầu
                 </Button>
             ) : (
-                <Button type="button" block onClick={handleVerifyCode} loading={isPendingVerify}>
+                <Button type="button" block onClick={handleVerifyCode} loading={isPendingVerify} disabled={!code}>
                     Xác nhận
                 </Button>
             )}

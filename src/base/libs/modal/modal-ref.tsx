@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { forwardRef, Fragment, HTMLProps, useEffect, useImperativeHandle, useState } from "react";
+import React, { forwardRef, Fragment, HTMLAttributes,useImperativeHandle, useState } from "react";
 import { IoClose } from "react-icons/io5";
 
 type ModalProps = {
@@ -11,10 +11,10 @@ type ModalProps = {
     textOk?: string;
     textHeader?: string;
     overlayBackgroundColor?: string;
-    modalContainerClassName?: HTMLProps<HTMLDivElement>["className"];
-    cancelButtonClassName?: HTMLProps<HTMLButtonElement>["className"];
-    okButtonClassName?: HTMLProps<HTMLButtonElement>["className"];
-    headerModalClassName?: HTMLProps<HTMLButtonElement>["className"];
+    modalContainerClassName?: HTMLAttributes<HTMLDivElement>["className"];
+    cancelButtonClassName?: HTMLAttributes<HTMLButtonElement>["className"];
+    okButtonClassName?: HTMLAttributes<HTMLButtonElement>["className"];
+    headerModalClassName?: HTMLAttributes<HTMLButtonElement>["className"];
     loading?: boolean;
     sizeSpin?: "small" | "default" | "large";
 };

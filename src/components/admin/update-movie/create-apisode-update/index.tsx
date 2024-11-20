@@ -1,13 +1,12 @@
-import { Episode } from "@/views/admin/movie/create/page";
-import { useState } from "react";
-import clsx from "clsx";
 import { MoviesService } from "@/domain/phim/services";
-import { Spin, Tooltip } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { toast } from "react-toastify";
-import { IoTrashBinSharp } from "react-icons/io5";
 import { NotificationService } from "@/domain/thong-bao/services";
+import { Episode } from "@/views/admin/movie/create/page";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin, Tooltip } from "antd";
+import clsx from "clsx";
 import { CloseSquare } from "iconsax-react";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function CreateEpisodeUpdate({
     movie_id,

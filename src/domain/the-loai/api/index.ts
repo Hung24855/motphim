@@ -1,8 +1,8 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
-import { DataCreateGenres, DataUpdateGenres, TResCreateGenre, TResDeleteGenre, TResGetAllGenre, TResUpdateGenre } from "../model";
 import { requester } from "@/infrastructure/config/request/requester";
 import { CreateGenreDTO, DeleteGenreDTO, GetAllGenresDTO, UpdateGenreDTO } from "../dto";
+import { DataCreateGenres, DataUpdateGenres, TResCreateGenre, TResDeleteGenre, TResGetAllGenre, TResUpdateGenre } from "../model";
 
 export class GenresApi {
     static async get_all_genres() {

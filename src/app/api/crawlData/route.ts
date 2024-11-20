@@ -1,12 +1,10 @@
-import { RouterHandler } from "../router.handler";
-import puppeteer from "puppeteer";
-import { Browser } from "puppeteer";
-import fs from "fs";
-import axios from "axios";
-import { NextRequest } from "next/server";
 import http from "@/infrastructure/config/request";
+import axios from "axios";
 import { cookies } from "next/headers";
+import { NextRequest } from "next/server";
+import puppeteer, { Browser } from "puppeteer";
 import { v4 as uuidv4 } from "uuid";
+import { RouterHandler } from "../router.handler";
 import { Episode, MovieDetail, Movies } from "./type";
 
 export const revalidate = 0;

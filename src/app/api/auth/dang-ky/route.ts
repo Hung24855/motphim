@@ -1,7 +1,7 @@
 import { isEmail } from "@/base/utils/function";
+import bcrypt from "bcrypt";
 import { NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
-import bcrypt from "bcrypt";
 import { RouterHandler } from "../../router.handler";
 
 export async function POST(request: NextRequest) {

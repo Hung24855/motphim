@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { HTMLProps, useState } from "react";
+import React, { HTMLAttributes, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
 export interface MenuItem {
@@ -11,10 +11,10 @@ export interface MenuItem {
 
 interface MenuProps {
     menuItems: MenuItem[];
-    menuContainerClassName?: HTMLProps<HTMLDivElement>["className"];
-    menuItemClassName?: HTMLProps<HTMLDivElement>["className"];
-    bgMenuColorClassName?: HTMLProps<HTMLDivElement>["className"];
-    hoverCorlorItemClassName?: HTMLProps<HTMLElement>["className"];
+    menuContainerClassName?: HTMLAttributes<HTMLDivElement>["className"];
+    menuItemClassName?: HTMLAttributes<HTMLDivElement>["className"];
+    bgMenuColorClassName?: HTMLAttributes<HTMLDivElement>["className"];
+    hoverCorlorItemClassName?: HTMLAttributes<HTMLElement>["className"];
 }
 
 const Menu: React.FC<MenuProps> = ({

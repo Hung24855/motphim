@@ -1,7 +1,6 @@
-import { removeMark } from "@/base/utils/function";
 import { NextRequest } from "next/server";
-import { RouterHandler } from "../router.handler";
 import CheckAdmin from "../middleware";
+import { RouterHandler } from "../router.handler";
 export const revalidate = 60;
 export async function GET(request: NextRequest) {
     return RouterHandler({

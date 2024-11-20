@@ -1,4 +1,4 @@
-import React, { HTMLProps } from "react";
+import React, { HTMLAttributes } from "react";
 import CSS from "csstype";
 import clsx from "clsx";
 import { IoMdArrowDropdown } from "react-icons/io";
@@ -7,7 +7,7 @@ import { useOnClickOutside } from "@/base/hooks/useOnClickOutside";
 type ISelectProps = {
     placeholder?: string;
     children: React.ReactNode;
-    selectClassName?: HTMLProps<HTMLDivElement>["className"];
+    selectClassName?: HTMLAttributes<HTMLDivElement>["className"];
     transitionType?: "zoomIn" | "scaleY" | "slideDown";
     transitionProperty?: Pick<CSS.Properties, "transformOrigin" | "transitionDuration" | "transitionTimingFunction">;
     optionContainerStyle?: Pick<CSS.Properties, "top" | "left" | "right" | "backgroundColor">;
@@ -105,7 +105,7 @@ export default function Select({
 
 type IOptionProps = {
     children: React.ReactNode;
-    selectItemClassName?: HTMLProps<HTMLDivElement>["className"];
+    selectItemClassName?: HTMLAttributes<HTMLDivElement>["className"];
     onClick?: (value: string) => void;
     optionClick?: (value: string) => void;
 };

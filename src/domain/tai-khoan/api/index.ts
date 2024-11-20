@@ -1,6 +1,7 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
 import { requester } from "@/infrastructure/config/request/requester";
+import { GetAllAccountDTO, GetInfoUserDTO, VerifyCodeDTO } from "../dto";
 import {
     DataChangePassword,
     DataUpdateUser,
@@ -9,7 +10,6 @@ import {
     TResGetInfoUser,
     TResVerifyCode
 } from "../model";
-import { GetAllAccountDTO, GetInfoUserDTO, VerifyCodeDTO } from "../dto";
 
 export class AccountsApi {
     static async get_all_accounts() {

@@ -18,9 +18,8 @@ export const signUpSchema = object({
     path: ["confirm_password"]
 });
 
-export const verifyEmailAndCodeSchema = object({
+export const verifyEmailSchema = object({
     email: string().min(1, "Email không thể để trống!").email("Email không đúng định dạng!"),
-    code: string().min(1, "Mã code không thể để trống")
 });
 
 export const resetPasswordSchema = object({
@@ -36,5 +35,5 @@ export const resetPasswordSchema = object({
 
 export type SignInType = z.infer<typeof signInSchema>;
 export type SignUpType = z.infer<typeof signUpSchema>;
-export type VerifyEmailAndCodeType = z.infer<typeof verifyEmailAndCodeSchema>;
+export type VerifyEmailType = z.infer<typeof verifyEmailSchema>;
 export type ResetPasswordType = z.infer<typeof resetPasswordSchema>;

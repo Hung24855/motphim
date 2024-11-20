@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useState, ReactNode, HTMLProps } from "react";
+import React, { useState, ReactNode, HTMLAttributes } from "react";
 
 interface Tab {
     label: string;
@@ -8,8 +8,8 @@ interface Tab {
 
 interface TabsProps {
     tabs: Tab[];
-    buttonHeaderclassName?: HTMLProps<HTMLDivElement>["className"];
-    contentWraperClassName?: HTMLProps<HTMLDivElement>["className"];
+    buttonHeaderclassName?: HTMLAttributes<HTMLDivElement>["className"];
+    contentWraperClassName?: HTMLAttributes<HTMLDivElement>["className"];
 }
 
 const Tabs: React.FC<TabsProps> = ({ tabs, buttonHeaderclassName, contentWraperClassName }) => {

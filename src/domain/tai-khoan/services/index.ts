@@ -1,8 +1,8 @@
-import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
-import { DataChangePassword, DataUpdateUser, DataVerify, TResGetAllAccounts } from "../model";
-import { AccountsApi } from "../api";
+import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { useMutation } from "@tanstack/react-query";
+import { AccountsApi } from "../api";
+import { DataChangePassword, DataUpdateUser, DataVerify, TResGetAllAccounts } from "../model";
 
 export class AccountsService {
     static queryKey = [QUERY_KEY.GET_ACCOUNTS];

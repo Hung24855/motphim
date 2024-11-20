@@ -1,8 +1,8 @@
 import axios from "axios";
 
+import { removeMark } from "@/base/utils/function";
 import * as cheerio from "cheerio";
 import { NextRequest } from "next/server";
-import { removeMark } from "@/base/utils/function";
 import { RouterHandler } from "../../router.handler";
 import { Episode, Info, Movies } from "../type";
 

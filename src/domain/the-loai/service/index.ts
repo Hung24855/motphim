@@ -1,7 +1,7 @@
-import { useFetcher } from "@/infrastructure/hooks/useFetcher";
-import { GenresApi } from "../api";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
+import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { GenresApi } from "../api";
 import { DataCreateGenres, DataUpdateGenres, TResCreateGenre, TResGetAllGenre } from "../model";
 
 interface ICreateGenreMutation {

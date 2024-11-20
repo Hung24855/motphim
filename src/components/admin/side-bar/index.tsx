@@ -1,19 +1,10 @@
 "use client";
-import clsx from "clsx";
-import Link from "next/link";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { useRouter } from "next-nprogress-bar";
-import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { IoIosArrowForward } from "react-icons/io";
-import { FaArrowLeft } from "react-icons/fa";
 import { logout_action } from "@/actions/auth";
-import { SideBarList } from "./type";
+import useWindowSize from "@/base/hooks/useWindowSize";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
-import { Session } from "next-auth";
-import useWindowSize from "@/base/hooks/useWindowSize";
+import clsx from "clsx";
+import { AnimatePresence, motion } from "framer-motion";
 import {
     ArrowLeft,
     Category2,
@@ -25,6 +16,14 @@ import {
     Profile2User,
     VideoSquare
 } from "iconsax-react";
+import { Session } from "next-auth";
+import { useRouter } from "next-nprogress-bar";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { IoIosArrowForward } from "react-icons/io";
+import { SideBarList } from "./type";
 
 const sidebar_variants = {
     open: { opacity: 1, x: 0, width: "16rem" },
