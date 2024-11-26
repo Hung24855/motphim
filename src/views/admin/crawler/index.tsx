@@ -138,14 +138,14 @@ export default function CrawlerView() {
             </div>
             {/* Danh sách phim */}
             <Loading loading={isFetching || isPendingSearch} containerClassName="!bg-black/10">
-                <div className="my-2 h-[70vh] w-full border bg-white p-2">
+                <div className="my-2 h-[70vh] w-full border bg-white p-2 overflow-hidden">
                     {movies.length > 0 && (
                         <Fragment>
                             <div className="mr-5 flex-1 text-2xl font-semibold">
                                 Đã chọn : {Object.values(checkedMovies).filter(Boolean).length}/{movies.length} phim
                             </div>
                             <div className="mt-2 h-[calc(100%-35px)] w-full overflow-hidden overflow-y-scroll">
-                                <div className="grid w-full grid-cols-1 gap-2 p-1 md:grid-cols-2">
+                                <div className="grid w-full grid-cols-1 gap-2 overflow-x-auto p-1 md:grid-cols-2">
                                     {movies.map((movie) => {
                                         return (
                                             <div className="flex justify-between" key={movie.slug}>

@@ -64,7 +64,7 @@ export default function Slide() {
                 slug
             }));
             setSlides(arrSlides);
-            setOldSlides(arrSlides[2]); // Initialize oldSlides
+            setOldSlides(arrSlides[2]);
         }
     }, [featuredMovies]);
 

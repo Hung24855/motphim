@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
                         link: `${BASE_URL_FRONT}/phim/${movie_info.rows[0].slug}`
                     },
                     notification: {
-                        icon: "https://firebasestorage.googleapis.com/v0/b/themovie-af1e4.appspot.com/o/Logo-light.png?alt=media&token=a18772c3-b1dc-422d-9dd8-92c8f0523889",
+                        icon: "https://firebasestorage.googleapis.com/v0/b/themovie-af1e4.appspot.com/o/imagesIMG_20231118_110756.jpg?alt=media&token=1e0f4815-5a3c-4d10-b817-d138c8cb4da0",
                         title: "Motphim",
                         body: title,
                         sound: "default"
