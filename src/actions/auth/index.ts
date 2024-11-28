@@ -3,7 +3,6 @@ import { auth, signIn, signOut } from "@/auth";
 import { pool } from "@/database/connect";
 import { IResponseData } from "@/infrastructure/config/types/apiResponse";
 import { AuthError } from "next-auth";
-import { revalidatePath } from "next/cache";
 
 export const register_action = async ({
     email,
@@ -59,5 +58,4 @@ export async function logout_action() {
     //Xóa token thông báo khi đăng xuất tránh trình trạng đăng nhập tài khoản khác nhưng vẫn nhận thông báo
     pool.query("UPDATE users SET token_notification = NULL WHERE id = $1", [user_id]);
     await signOut();
-    revalidatePath("/");
 }
