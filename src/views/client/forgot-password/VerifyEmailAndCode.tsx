@@ -1,4 +1,4 @@
-import { useCountdownTimer } from "@/base/hooks/useCountdownTimer";
+"use client";
 import Button from "@/base/libs/button";
 import Input from "@/base/libs/input";
 import { saveToLocalStorage } from "@/base/utils/function";
@@ -11,6 +11,7 @@ import { Controller, useForm } from "react-hook-form";
 import { TOKEN_VERIFY_CODE } from ".";
 import OTP from "@/base/libs/otp";
 import { toast } from "react-toastify";
+import { useCountdownTimer } from "@/base/hooks/useCountdownTimer";
 const CODE_LENGTH = 6;
 
 type IVerifyEmailAndCodeProps = {
@@ -34,18 +35,18 @@ export default function VerifyEmailAndCode(props: IVerifyEmailAndCodeProps) {
         resolver: zodResolver(verifyEmailSchema)
     });
 
-    const { start, remainingTime } = useCountdownTimer();
+    const { start, remainingTime } = useCountdownTimer(60, "verify-code");
     const { SendEmailMutation, isPendingSendEmail, VerifyCodeMutation, isPendingVerify } =
         AccountsService.useAccounts();
     const handleSendEmail = async () => {
         const checkEmail = await trigger("email");
         if (checkEmail) {
             const email = getValues("email");
-            start();
             SendEmailMutation(email, {
                 onSuccess: () => {
                     setIsEmailVerified(true);
                     setErrorMessage("");
+                    start();
                 },
                 onError: (error) => {
                     setErrorMessage(error.message);

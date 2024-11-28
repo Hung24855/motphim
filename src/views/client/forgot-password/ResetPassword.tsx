@@ -1,3 +1,4 @@
+"use client";
 import Button from "@/base/libs/button";
 import Input from "@/base/libs/input";
 import { getDataLocalStorage } from "@/base/utils/function";
@@ -29,11 +30,11 @@ export default function ResetPassword() {
                 { newPassword: data.password, token },
                 {
                     onSuccess: () => {
-                        toast.success("Đổi mật khẩu thành công!");
+                        toast.success("Đổi mật khẩu thành công!", { position: "bottom-left" });
                         router.push("/dang-nhap");
                     },
                     onError: (error) => {
-                        toast.error(error.message);
+                        toast.error(error.message, { position: "bottom-left" });
                     }
                 }
             );
