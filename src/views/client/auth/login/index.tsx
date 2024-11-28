@@ -1,15 +1,12 @@
 "use client";
+import { login_action } from "@/actions/auth";
+import Button from "@/base/libs/button";
 import Input from "@/base/libs/input";
+import { signInSchema, SignInType } from "@/utils/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { signInSchema, SignInType } from "@/utils/zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { login_action } from "@/actions/auth";
-import Button from "@/base/libs/button";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { authFirebase } from "@/firebase";
-import { toast } from "react-toastify";
 
 export default function LoginPage() {
     const [globalMessage, setGlobalMessage] = useState<string>("");
@@ -28,19 +25,16 @@ export default function LoginPage() {
             const result = await login_action(data);
 
             if (!result?.message) {
-                signInWithEmailAndPassword(authFirebase, data.email, data.password)
-                    .then((userCredential) => {
-                        // Signed in
-                        const user = userCredential.user;
-                    })
-                    .catch((error) => {
-                        toast.error("Đăng nhập Firebase thất bại!");
-                        console.log("Đăng nhập Firebase thất bại!", error.message);
-                    });
+                // signInWithEmailAndPassword(authFirebase, data.email, data.password)
+                //     .then((userCredential) => {
+                //         // Signed in
+                //         const user = userCredential.user;
+                //     })
+                //     .catch((error) => {
+                //         toast.error("Đăng nhập Firebase thất bại!");
+                //         console.log("Đăng nhập Firebase thất bại!", error.message);
+                //     });
             }
-
-            // Đăng nhập firebase
-
             if (result?.message) {
                 setGlobalMessage(result.message);
             }
@@ -51,7 +45,7 @@ export default function LoginPage() {
     return (
         <Fragment>
             <section className="bg-[#030A1B]">
-                <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 pt-28 md:h-screen lg:py-0">
+                <div className="mx-auto flex flex-col items-center justify-center px-2 py-8 pt-28 md:h-screen lg:py-0">
                     <div className="w-full rounded bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
                         <div className="space-y-4 p-4 sm:p-6 md:space-y-6">
                             <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-[#295779] md:text-2xl">
@@ -67,7 +61,7 @@ export default function LoginPage() {
                                             <Input
                                                 field={field}
                                                 label="Email"
-                                                placeholder="name@gmail.com"
+                                                placeholder="Email"
                                                 required
                                                 error={errors.email}
                                             />
@@ -98,6 +92,7 @@ export default function LoginPage() {
                                                 id="remember"
                                                 aria-describedby="remember"
                                                 type="checkbox"
+                                                defaultChecked
                                                 className="focus:ring-3 focus:ring-primary-300 h-4 w-4 rounded border border-gray-300 bg-gray-50"
                                             />
                                         </div>
@@ -110,7 +105,7 @@ export default function LoginPage() {
                                             </label>
                                         </div>
                                     </div>
-                                    <a href="#" className="text-sm font-medium text-[#295779] hover:underline">
+                                    <a href="quen-mat-khau" className="text-sm font-medium text-[#295779] hover:underline">
                                         Quên mật khẩu?
                                     </a>
                                 </div>

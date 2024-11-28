@@ -1,13 +1,14 @@
-import {  NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 import { RouterHandler } from "../../router.handler";
-export const revalidate = 3600;
+export const revalidate = 0;
 export async function GET(_: NextRequest) {
     return RouterHandler({
         async mainFc(pool) {
             const movies = await pool.query(
-                "SELECT movies.id, movies.movie_name, movies.slug,movies.content , movies.image" +
-                    " FROM movies" +
-                    " WHERE is_visible = true ORDER BY views DESC LIMIT 5"
+                `SELECT movies.id, movies.movie_name, movies.slug,movies.content , movies.image 
+                 FROM movies 
+                 WHERE is_visible = true 
+                 ORDER BY views DESC LIMIT 5`
             );
             return {
                 message: "Lấy thông tin danh sách phim nổi bật thành công!",

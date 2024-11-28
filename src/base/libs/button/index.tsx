@@ -1,36 +1,40 @@
 import clsx from "clsx";
+import { HTMLAttributes } from "react";
 
 type ButtonProps = {
     children: React.ReactNode;
     loading?: boolean;
     sizeSpin?: "small" | "default" | "large";
-    buttonClssName?: string;
-    onClick?: (e:any) => void;
+    buttonClassName?: HTMLAttributes<HTMLButtonElement>["className"];
+    onClick?: (e: any) => void;
     type?: "button" | "submit" | "reset";
     block?: boolean;
+    disabled?: boolean;
     [key: string]: any;
 };
 export default function Button({
     children,
     loading,
-    buttonClssName,
+    buttonClassName,
     onClick,
     sizeSpin = "default",
     type = "button",
     block,
+    disabled = false,
     ...rest
 }: ButtonProps) {
     return (
         <button
             type={type}
             className={clsx(
-                "flex items-center justify-center gap-x-2 rounded bg-[#295779] p-2 text-white cursor-pointer",
-                buttonClssName,
+                "flex cursor-pointer items-center justify-center gap-x-2 rounded bg-[#295779] p-2 text-white",
+                buttonClassName,
                 loading && "opacity-80",
-                block && "w-full"
+                block && "w-full",
+                disabled && "cursor-not-allowed opacity-80"
             )}
             onClick={onClick}
-            disabled={loading}
+            disabled={loading || disabled}
             {...rest}
         >
             {loading && (

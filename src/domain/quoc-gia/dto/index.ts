@@ -9,4 +9,5 @@ export interface CountriesDTO {
 export type GetAllCountriesDTO = ISuccessResponse<CountriesDTO[]>;
 export type CreateCountryDTO = ISuccessResponse<CountriesDTO[]>;
 export type UpdateCountryDTO = ISuccessResponse<CountriesDTO[]>;
+export type DeleteCountryDTO = ISuccessResponse<CountriesDTO[]>;
 

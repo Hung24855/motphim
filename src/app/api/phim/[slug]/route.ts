@@ -1,20 +1,19 @@
 import { NextRequest } from "next/server";
 import { status } from "../../utils/status";
 import { RouterHandler } from "../../router.handler";
-export const revalidate = 3600;
+export const revalidate = 60;
 export async function GET(_: NextRequest, { params }: { params: { slug: string } }) {
     return RouterHandler({
         async mainFc(pool) {
-            let join = `INNER JOIN movie_genre ON movies.id = movie_genre.movie_id 
-             INNER JOIN genres ON movie_genre.genres_id = genres.id`;
-
-            const res = await pool.query(
-                "SELECT movies.*, genres.name AS genre,genres.slug AS genre_slug  FROM movies " +
-                    join +
-                    " WHERE movies.slug = $1",
+            const movies = await pool.query(
+                `SELECT movies.*, genres.name AS genre,genres.slug AS genre_slug  
+                 FROM movies
+                 INNER JOIN movie_genre ON movies.id = movie_genre.movie_id 
+                 INNER JOIN genres ON movie_genre.genres_id = genres.id
+                 WHERE movies.slug = $1`,
                 [params.slug]
             );
-            if (res.rows.length === 0) {
+            if (movies.rows.length === 0) {
                 return {
                     message: "Phim không tồn tại!",
                     data: []
@@ -23,31 +22,35 @@ export async function GET(_: NextRequest, { params }: { params: { slug: string }
 
             const [genres, countries, episodes] = await Promise.all([
                 pool.query(
-                    "SELECT movie_genre.*,genres.name ,genres.slug FROM movie_genre" +
-                        " INNER JOIN genres ON movie_genre.genres_id = genres.id" +
-                        " WHERE movie_id = $1",
-                    [res.rows[0]?.id]
+                    `SELECT movie_genre.*,genres.name ,genres.slug 
+                     FROM movie_genre INNER 
+                     JOIN genres ON movie_genre.genres_id = genres.id 
+                     WHERE movie_id = $1`,
+                    [movies.rows[0]?.id]
                 ),
                 pool.query(
-                    "SELECT movie_country.*,countries.name,countries.slug FROM movie_country" +
-                        " INNER JOIN countries ON movie_country.country_id = countries.id " +
-                        " WHERE movie_id = $1",
-                    [res.rows[0]?.id]
+                    `SELECT movie_country.*,countries.name,countries.slug FROM movie_country 
+                     INNER JOIN countries ON movie_country.country_id = countries.id 
+                     WHERE movie_id = $1`,
+                    [movies.rows[0]?.id]
                 ),
-                // //Chuyển tập phim sang number vì ban đầu name của nó là chuỗi nên không order_by được
+                // Chuyển tập phim sang number vì ban đầu name của nó là chuỗi nên không order_by được
                 pool.query(
-                    "SELECT * FROM episodes WHERE movie_id = $1 ORDER BY CAST(REGEXP_REPLACE(name, '\\D', '', 'g') AS INTEGER)",
-                    [res.rows[0]?.id]
+                    `SELECT * 
+                     FROM episodes 
+                     WHERE movie_id = $1 
+                     ORDER BY CAST(REGEXP_REPLACE(name, '\\D', '', 'g') AS INTEGER)`,
+                    [movies.rows[0]?.id]
                 ),
                 // Tăng lượt xem
-                pool.query("UPDATE movies SET views = views + 1 WHERE id = $1", [res.rows[0]?.id])
+                pool.query("UPDATE movies SET views = views + 1 WHERE id = $1", [movies.rows[0]?.id])
             ]);
 
             return {
                 message: "Lấy thông tin chi tiết phim thành công!",
                 data: [
                     {
-                        ...res.rows[0],
+                        ...movies.rows[0],
                         episodes: episodes.rows,
                         genres: genres.rows,
                         countries: countries.rows
@@ -63,14 +66,11 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
     return RouterHandler({
         async mainFc(pool, _, body) {
             // Cập nhật phim
-
-            let sql_update_movie = `UPDATE movies SET
-         movie_name = $1, slug = $2,content = $3,title_head = $4,image = $5,
-         time_per_episode = $6, episode_current = $7,episode_total = $8,movie_type_id = $9,trailer_youtube_url = $10
-         WHERE id=$11`;
-
             pool.query(
-                sql_update_movie,
+                `UPDATE movies 
+                 SET movie_name = $1, slug = $2,content = $3,title_head = $4,image = $5,
+                 time_per_episode = $6, episode_current = $7,episode_total = $8,movie_type_id = $9,trailer_youtube_url = $10
+                 WHERE id=$11`,
                 [
                     body.movie_name,
                     body.slug,
@@ -88,9 +88,6 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
                     if (error) {
                         throw new Error(error.message);
                     }
-
-                    //C1: Xóa danh mục cũ và thêm danh mục mới
-                    //C2: Xóa những danh mục cũ không có trong lựa chọn mới và thêm những lựa chọn mới
 
                     await Promise.all([
                         pool.query("DELETE FROM movie_country WHERE movie_id = $1", [params.slug]),

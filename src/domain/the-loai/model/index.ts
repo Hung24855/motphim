@@ -12,3 +12,4 @@ export interface DataUpdateGenres extends DataCreateGenres {
 export type TResGetAllGenre = GenresDTO[];
 export type TResCreateGenre = GenresDTO[];
 export type TResUpdateGenre = GenresDTO[];
+export type TResDeleteGenre = GenresDTO[];

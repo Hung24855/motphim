@@ -1,22 +1,5 @@
 import REGEX from "./regex";
 
-export function handleSortSlide(arr: any[], index: number) {
-    // const arr = [0, 1, 2, 3, 4]; // 3=> [1,2,3,4,0] 4=>[2,3,4,0,1] 1=>[4,0,1,2,3] 0=>[3,4,0,1,2]
-    // Chức năng : Dịch chuyển vị trị các phần tử trong slide
-    const middle = Math.floor(arr.length / 2); //Index trung tâm
-    const space = Math.abs(index - middle); //Khoảng cách tử index đến trung tâm
-    if (index > middle) {
-        const a = arr.splice(0, space);
-        arr.push(...a);
-    }
-    if (index < middle) {
-        const a = arr.splice(-space);
-        arr.unshift(...a);
-    }
-
-    if (index === middle) return;
-}
-
 export function isEmail(email: string) {
     return REGEX.email.test(email);
 }
@@ -24,7 +7,6 @@ export function isEmail(email: string) {
 export function removeMark(str: string) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
-
 // Convert thời gian
 export function convertTime(inputTime: string): string {
     const now: Date = new Date();
@@ -68,7 +50,40 @@ export function convertTime(inputTime: string): string {
     return `${seconds} giây trước`;
 }
 
-// remove all undefined or null value in object, if allowNull = true, object is not remove null value.
+export const delay = (m: number) => new Promise((r) => setTimeout(r, m));
+export function isWindow() {
+    return typeof window !== "undefined";
+}
+export function saveToLocalStorage({ key, value }: { key: string; value: any }) {
+    try {
+        if (!isWindow()) return;
+        const jsonValue = JSON.stringify(value);
+        localStorage.setItem(key, jsonValue);
+    } catch (error) {
+        console.error("Lỗi khi lưu vào localStorage:", error);
+    }
+}
+export function getDataLocalStorage(key: string) {
+    try {
+        if (!isWindow()) return;
+        const jsonValue = localStorage.getItem(key);
+        return jsonValue ? JSON.parse(jsonValue) : null; // Chuyển đổi chuỗi JSON trở lại thành giá trị
+    } catch (error) {
+        console.error("Lỗi khi lấy từ localStorage:", error);
+        return null; // Trả về null trong trường hợp có lỗi
+    }
+}
+export function removeDataLocalStorage(key: string) {
+    if (!isWindow()) return;
+    localStorage.removeItem(key);
+}
+export function removeDuplicatesOfArray(array: any[]) {
+    return [...new Set(array)];
+}
+
+export function removeLettersAndSpaces(str: string) {
+    return str.replace(/[^\d]/g, ""); // Loại bỏ tất cả các ký tự không phải số
+}
 export function removeNullAndUndefinedFromObject({
     obj,
     allowNull = false
@@ -86,42 +101,15 @@ export function removeNullAndUndefinedFromObject({
 
     return result;
 }
-// remove all undefined or null value in array, if allowNull = true, array is not remove null value.
+
 export function removeNullAndUndefinedFromArray({ arr, allowNull = false }: { arr: any[]; allowNull: boolean }): any[] {
     return arr.filter((item) => item !== undefined && (allowNull || item !== null));
 }
-export const delay = (m: number) => new Promise((r) => setTimeout(r, m));
 
-export function isWindow() {
-    return typeof window !== "undefined";
-}
-export function saveToLocalStorage({ key, value }: { key: string; value: any }) {
-    try {
-        if (!isWindow()) return;
-        const jsonValue = JSON.stringify(value);
-        localStorage.setItem(key, jsonValue);
-    } catch (error) {
-        console.error("Lỗi khi lưu vào localStorage:", error);
+export function generateRandomCode() {
+    let code = '';
+    for (let i = 0; i < 6; i++) {
+        code += Math.floor(Math.random() * 10); // Tạo số ngẫu nhiên từ 0 đến 9
     }
+    return code;
 }
-
-export function getDataLocalStorage(key: string) {
-    try {
-        if (!isWindow()) return;
-        const jsonValue = localStorage.getItem(key);
-        return jsonValue ? JSON.parse(jsonValue) : null; // Chuyển đổi chuỗi JSON trở lại thành giá trị
-    } catch (error) {
-        console.error("Lỗi khi lấy từ localStorage:", error);
-        return null; // Trả về null trong trường hợp có lỗi
-    }
-}
-
-export function removeDataLocalStorage(key: string) {
-    if (!isWindow()) return;
-    localStorage.removeItem(key);
-}
-
-
-export function removeDuplicatesOfArray(array: any[]) {
-    return [...new Set(array)];
-}   

@@ -9,7 +9,6 @@ type PostEpisodesFields = {
 
 export async function POST(request: NextRequest, { params }: { params: { slug: string } }) {
     //slug = movie_id
-
     return RouterHandler({
         async mainFc(pool) {
             const body = (await request.json()) as PostEpisodesFields;
@@ -46,7 +45,6 @@ export async function POST(request: NextRequest, { params }: { params: { slug: s
 
 export async function DELETE(request: NextRequest, { params }: { params: { slug: string } }) {
     //slug = episode_id
-
     return RouterHandler({
         async mainFc(pool) {
             await pool.query("DELETE FROM episodes WHERE episode_id = $1", [params.slug]);
@@ -68,7 +66,6 @@ type PutEpisodesFields = {
 };
 export async function PUT(request: NextRequest, { params }: { params: { slug: string } }) {
     //slug = episode_id
-
     return RouterHandler({
         async mainFc(pool) {
             const body = (await request.json()) as PutEpisodesFields;

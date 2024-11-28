@@ -1,5 +1,5 @@
-import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
+import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { StatisticalApi } from "../api";
 import { TResGetStatistical } from "../model";
 

@@ -1,16 +1,17 @@
 "use client";
-import { GenresService } from "@/domain/the-loai/service";
-import { Table, Tag } from "antd";
-import { ChangeEvent, Fragment, useMemo, useState } from "react";
-import { FaRegEdit } from "react-icons/fa";
-import "@/infrastructure/styles/table.ant.css";
-import { DataCreateGenres, DataUpdateGenres, TResGetAllGenre } from "@/domain/the-loai/model";
-import { toast } from "react-toastify";
 import Input from "@/base/libs/input";
 import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
-import { useQueryClient } from "@tanstack/react-query";
+import { DataCreateGenres, DataUpdateGenres, TResGetAllGenre } from "@/domain/the-loai/model";
+import { GenresService } from "@/domain/the-loai/service";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
+import "@/infrastructure/styles/table.ant.css";
+import { useQueryClient } from "@tanstack/react-query";
+import { Table, Tag, Tooltip } from "antd";
+import { ColumnProps } from "antd/es/table";
+import { BrushSquare, CloseSquare } from "iconsax-react";
+import { ChangeEvent, Fragment, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 
 const initGenre: DataCreateGenres | DataUpdateGenres = { name: "", slug: "" };
 
@@ -20,13 +21,17 @@ export default function GenresAdminView() {
         data: genres,
         createEGenreMutation,
         updateGenreMutation,
+        deleteGenreMutation,
         isPeddingCreateGenre,
-        isPeddingUpdateGenre
+        isPeddingUpdateGenre,
+        isPeddingDeleteGenre
     } = GenresService.useGenres();
 
     const [ModalCreateOrUpdateGenre, setModalCreateOrUpdateGenre] = useState<boolean>(false);
+    const [ModalDeleteGenre, setModalDeleteGenre] = useState<boolean>(false);
     const [genre, setGenre] = useState<DataCreateGenres | DataUpdateGenres>(initGenre);
     const [message, setMessage] = useState<string>("");
+    const [idDelete, setIdDelete] = useState<number | undefined>();
 
     const isTypeUpdateGenre = useMemo(() => "id" in genre && genre.id !== undefined, [genre]);
 
@@ -73,20 +78,33 @@ export default function GenresAdminView() {
         }
     };
 
-    const columns = [
+    const handleDeleteGenre = () => {
+        if (idDelete)
+            deleteGenreMutation(idDelete, {
+                onSuccess: () => {
+                    toast.success("Xóa thể loại thành công!");
+                    setModalDeleteGenre(false);
+                }
+            });
+    };
+
+    const columns: ColumnProps<any>[] = [
         {
             title: "Tên thể loại",
             dataIndex: "name",
-            key: "genre_name"
+            key: "genre_name",
+            width: 150
         },
         {
             title: "Đường dẫn tĩnh",
             dataIndex: "slug",
-            key: "slug"
+            key: "slug",
+            width: 150
         },
         {
             title: "Số phim thuộc thể loại",
             key: "movie_count",
+            align: "center",
             render: () => {
                 return <Tag color="geekblue">Chưa cập nhật</Tag>;
             }
@@ -94,6 +112,7 @@ export default function GenresAdminView() {
         {
             title: "SEO Title",
             key: "movie_count",
+            align: "center",
             render: () => {
                 return <Tag color="green">Chưa cập nhật</Tag>;
             }
@@ -101,8 +120,9 @@ export default function GenresAdminView() {
         {
             title: "Hành động",
             key: "action",
+            align: "center",
             render: (_: any, record: DataUpdateGenres) => (
-                <div className="flex items-center gap-x-1">
+                <div className="flex items-center justify-center gap-x-1">
                     <button
                         className="flex items-center gap-x-1 rounded p-1 text-admin_primary"
                         onClick={() => {
@@ -110,10 +130,24 @@ export default function GenresAdminView() {
                             setModalCreateOrUpdateGenre(true);
                         }}
                     >
-                        <FaRegEdit size={15} /> Sửa
+                        <Tooltip title="Sửa">
+                            <BrushSquare size={18} />
+                        </Tooltip>
+                    </button>
+                    <button
+                        className="flex items-center gap-x-1 rounded p-1 text-red-500"
+                        onClick={() => {
+                            setIdDelete(record.id);
+                            setModalDeleteGenre(true);
+                        }}
+                    >
+                        <Tooltip title="Xóa">
+                            <CloseSquare size={18} />
+                        </Tooltip>
                     </button>
                 </div>
-            )
+            ),
+            width: 100
         }
     ];
 
@@ -132,12 +166,13 @@ export default function GenresAdminView() {
                 columns={columns}
                 loading={{
                     spinning: !genres,
-                    indicator: <Loading loading={!genres} containerClassName="pt-20" />
+                    indicator: <Loading loading={!genres} />
                 }}
                 pagination={{
                     position: ["bottomCenter"]
                 }}
                 bordered
+                scroll={{ x: "max-content" }}
             />
 
             {/* Modal thêm thể loại hoặc cập nhật thể loại */}
@@ -171,6 +206,22 @@ export default function GenresAdminView() {
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setGenre({ ...genre, slug: e.target.value })}
                 />
                 <div className="text-red-500">{message}</div>
+            </ModalMotion>
+
+            {/* Modal xóa thể loại */}
+            <ModalMotion
+                textHeader="Xác nhận xóa thể loại"
+                onClose={() => {
+                    setModalDeleteGenre(false);
+                }}
+                onOk={handleDeleteGenre}
+                isOpen={ModalDeleteGenre}
+                textOk="Xóa"
+                loading={isPeddingDeleteGenre}
+                modalContainerClassName="!gap-y-4"
+                okButtonClassName="!bg-red-500 !text-white"
+            >
+                {`Bạn có chắc chắn muốn xóa thể loại này không?`}
             </ModalMotion>
         </Fragment>
     );

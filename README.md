@@ -3,11 +3,13 @@
 
 ## Công nghệ sử dụng 
 - NextJS 14
-- Tailwind
+- Tailwindcss
 - Typescript
 - Postgresql
 - Next-auth
 - Firebase
+- Axios
+- React-hook-form
 - React-query
 - Ant-Design
 - Framer-motion
@@ -15,17 +17,17 @@
 
 
 ## Chức năng
-- Đăng nhập và đăng ký
+- Đăng nhập, đăng ký và đổi mẩt khẩu
 - Xem phim mới cập nhật từng ngày
 - Tìm kiếm phim
 - Xem phim theo từng thể loại và quốc gia
-- Responsive
 - Yêu thích phim
 - Tạo phòng xem phim : Trò truyện real-time và xem phim
-- CRUD phim, thể loại, quốc gia
+- CRUD phim, thể loại, quốc gia, crawl data
 - Phân quyền
 - Gửi và nhận thông báo real-time với FCM (Firebase cloud message)
 - Bình luận
+- Responsive
 
 ## Screenshots
 ### Trang chủ
@@ -49,4 +51,5 @@
 ![Admin](/public/demo/TRANG_QUAN_TRI_1.jpg)
 ![Admin](/public/demo/TRANG_QUAN_TRI_2.jpg)
 ![Admin](/public/demo/TRANG_QUAN_TRI_3.jpg)
+![Admin](/public/demo/TRANG_QUAN_TRI_4.jpg)
 ![Admin](/public/demo/PHAN_QUYEN.jpg)

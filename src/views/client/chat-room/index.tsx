@@ -39,7 +39,7 @@ export default function ChatRoomView() {
             <MaxWidth className="z-40 px-2">
                 {session ? (
                     <ChatRoomContext.Provider value={{ selectedRoom, setSelectedRoom, RoomInfo }}>
-                        <div className="flex h-screen overflow-hidden pt-20">
+                        <div className="flex min-h-screen overflow-hidden pt-20">
                             <div
                                 className={`flex h-full flex-col md:border-r ${selectedRoom ? "hidden" : "block"} w-full md:w-96`}
                             >
@@ -65,7 +65,7 @@ export default function ChatRoomView() {
                                         </div>
                                     </Fragment>
                                 ) : (
-                                    <div className="flex h-full items-center justify-center">
+                                    <div className="flex h-screen items-center justify-center">
                                         <p className="text-lg text-gray-400">
                                             Chọn một phòng để xem phim cùng mọi người!
                                         </p>

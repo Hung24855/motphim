@@ -1,15 +1,15 @@
-import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
+import { useFetcher } from "@/infrastructure/hooks/useFetcher";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MoviesApi } from "../api";
 import { MovieForCardDTO } from "../dto";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
     DataCreateEpisode,
     DataCreateMovie,
+    DataGetAllMovies,
     DataGetAllMoviesByCountry,
     DataGetAllMoviesByGenre,
     DataGetAllMoviesByType,
-    DataGetAllMovies,
     DataGetFavoriteMovies,
     DataUpdateEpisode,
     DataUpdateMovie,
@@ -53,14 +53,14 @@ export class MoviesService {
         );
         return { data };
     }
-
-    // CRUD phim
-    static use_movies({ page, limit }: DataGetAllMovies) {
+    static use_movies({ page, limit, movie_type_id, country, genre }: DataGetAllMovies) {
         const {
             data,
             isFetching,
             refetch: refetchMovies
-        } = useFetcher<TResGetMovies>([QUERY_KEY.GET_LIST_MOVIES, page], () => MoviesApi.get_movies({ page, limit }));
+        } = useFetcher<TResGetMovies>([QUERY_KEY.GET_LIST_MOVIES, page,limit, movie_type_id, country, genre], () =>
+            MoviesApi.get_movies({ page, limit, movie_type_id, country, genre })
+        );
         const { mutate: createMovieMutation, isPending: isPeddingCreateMovie } = useMutation({
             mutationFn: (data: DataCreateMovie) => MoviesApi.create_movie(data)
         });
@@ -69,7 +69,11 @@ export class MoviesService {
             mutationFn: (data: { data: DataUpdateMovie; id: string }) =>
                 MoviesApi.update_movie({ data: data.data, id: data.id })
         });
-        const { mutate: deleteMovieMutation, isPending: isPeddingDeleteMovie } = useMutation({
+        const {
+            mutate: deleteMovieMutation,
+            isPending: isPeddingDeleteMovie,
+            mutateAsync: mutateAsyncDeleteMovie
+        } = useMutation({
             mutationFn: (id: string) => MoviesApi.delete_movie(id)
             // onMutate: async (id) => {
             //     const queryKey = [QUERY_KEY.GET_LIST_MOVIES, page];
@@ -99,6 +103,7 @@ export class MoviesService {
             createMovieMutation,
             updateMovieMutation,
             deleteMovieMutation,
+            mutateAsyncDeleteMovie,
             isPeddingCreateMovie,
             isPeddingUpdateMovie,
             isPeddingDeleteMovie
@@ -136,13 +141,13 @@ export class MoviesService {
     }
     // Tim kiem phim
     static get_search_movie({ query, movie_type_id }: { query: string; movie_type_id?: "typ1" | "type2" }) {
-        const { data, isFetching, isError } = useFetcher<TResGetSearchMovies>(
+        const { data, isFetching, isError, refetch } = useFetcher<TResGetSearchMovies>(
             [QUERY_KEY.GET_SEARCH_MOVIE, query],
             () => MoviesApi.search_movie({ query, movie_type_id }),
             { enabled: !!query }
         );
 
-        return { data, isFetching, isError };
+        return { data, isFetching, isError, refetch };
     }
     // Ẩn hiện phim
     static change_visible_movie() {

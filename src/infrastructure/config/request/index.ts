@@ -1,15 +1,12 @@
 import axios, { AxiosInstance } from "axios";
 
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL_API;
 
 class HTTP {
     instance: AxiosInstance;
     constructor() {
         this.instance = axios.create({
-            baseURL: BASE_URL,
-            headers: {
-                "Content-Type": "application/json",
-            }
+            baseURL: BASE_URL
         });
     }
 }

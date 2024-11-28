@@ -1,9 +1,9 @@
 import { Episode, FieldValues } from "@/views/admin/movie/create/page";
-import { Control, Controller, FieldErrors, UseFormGetValues, UseFormSetValue } from "react-hook-form";
-import { useState } from "react";
+import { Tooltip } from "antd";
 import clsx from "clsx";
-import { FaRegEdit, FaEye } from "react-icons/fa";
-import { IoTrashBinSharp } from "react-icons/io5";
+import { CloseSquare } from "iconsax-react";
+import { useState } from "react";
+import { Control, Controller, FieldErrors, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 interface Props {
     control: Control<FieldValues, any>;
     errors: FieldErrors<FieldValues>;
@@ -42,7 +42,7 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                             <th className="border p-2 text-left">Tên phim</th>
                             <th className="border p-2 text-left">Đường dẫn tĩnh</th>
                             <th className="border p-2 text-left">Link phim</th>
-                            <th className="border p-2 text-left">Hành động</th>
+                            <th className="border p-2 text-center">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,7 +60,7 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                                                 type="text"
                                                 placeholder="1"
                                                 className={clsx(
-                                                    "w-full p-2 outline-none h-full",
+                                                    "h-full w-full p-2 outline-none",
                                                     errors.episodes?.[index]?.name && "border border-b-red-500"
                                                 )}
                                             />
@@ -79,7 +79,7 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                                                 type="text"
                                                 placeholder="tap-1"
                                                 className={clsx(
-                                                    "w-full p-2 outline-none h-full",
+                                                    "h-full w-full p-2 outline-none",
                                                     errors.episodes?.[index]?.slug && "border border-b-red-500"
                                                 )}
                                             />
@@ -98,7 +98,7 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                                                 type="text"
                                                 placeholder="Link phim"
                                                 className={clsx(
-                                                    "w-full p-2 outline-none h-full",
+                                                    "h-full w-full p-2 outline-none",
                                                     errors.episodes?.[index]?.link && "border border-b-red-500"
                                                 )}
                                             />
@@ -119,7 +119,9 @@ export default function MovieEpisodeList({ control, setValue, getValues, errors 
                                                     setValue(`episodes`, NewEpisodes);
                                                 }}
                                             >
-                                                <IoTrashBinSharp size={15} /> Xóa
+                                                <Tooltip title="Xóa">
+                                                    <CloseSquare size={18} color="red" />
+                                                </Tooltip>
                                             </button>
                                         )}
                                     </div>

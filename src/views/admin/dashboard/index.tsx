@@ -1,7 +1,7 @@
 "use client";
 import Loading from "@/base/libs/loading";
 import { convertTime } from "@/base/utils/function";
-import Counter from "@/components/shared/counter";
+import Counter from "@/components/admin/counter";
 import { StatisticalService } from "@/domain/thong-ke/services";
 import { Fragment } from "react";
 
@@ -51,8 +51,10 @@ export default function Doashboard() {
                                     key={movie.movie_name}
                                     className="flex items-center justify-between px-2 py-3 hover:bg-[#e5e7e9]"
                                 >
-                                    <span>{movie.movie_name}</span>
-                                    <span className="text-sm text-gray-500">{movie.views} lượt xem</span>
+                                    <span className="line-clamp-1 flex-1">{movie.movie_name}</span>
+                                    <span className="w-[120px] text-right text-sm text-gray-500">
+                                        {movie.views} lượt xem
+                                    </span>
                                 </li>
                             ))}
                         </ul>
@@ -73,8 +75,10 @@ export default function Doashboard() {
                                     className="flex items-center justify-between px-2 py-3 hover:bg-[#e5e7e9]"
                                     key={movie.movie_name}
                                 >
-                                    <span>{movie.movie_name}</span>
-                                    <span className="text-sm text-gray-500">{convertTime(movie.updated_at)}</span>
+                                    <span className="line-clamp-1 flex-1">{movie.movie_name}</span>
+                                    <span className="w-[120px] text-right text-sm text-gray-500">
+                                        {convertTime(movie.updated_at)}
+                                    </span>
                                 </li>
                             ))}
                         </ul>

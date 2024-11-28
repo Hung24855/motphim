@@ -1,12 +1,12 @@
-import { Episode } from "@/views/admin/movie/create/page";
-import { useState } from "react";
-import clsx from "clsx";
 import { MoviesService } from "@/domain/phim/services";
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { toast } from "react-toastify";
-import { IoTrashBinSharp } from "react-icons/io5";
 import { NotificationService } from "@/domain/thong-bao/services";
+import { Episode } from "@/views/admin/movie/create/page";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin, Tooltip } from "antd";
+import clsx from "clsx";
+import { CloseSquare } from "iconsax-react";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function CreateEpisodeUpdate({
     movie_id,
@@ -44,7 +44,7 @@ export default function CreateEpisodeUpdate({
             }
         );
 
-        SendNotificationMutation({ movie_id: movie_id });
+        SendNotificationMutation({ movie_id: movie_id, list_episodes: Episodes.map((episode) => episode.name) });
     };
     return (
         <div className="min-w-max">
@@ -72,7 +72,7 @@ export default function CreateEpisodeUpdate({
                             <th className="border p-2 text-left">Tên phim</th>
                             <th className="border p-2 text-left">Đường dẫn tĩnh</th>
                             <th className="border p-2 text-left">Link phim</th>
-                            <th className="border p-2 text-left">Hành động</th>
+                            <th className="border p-2 text-center">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -139,7 +139,9 @@ export default function CreateEpisodeUpdate({
                                                     setEpisodes(() => newEpisodes);
                                                 }}
                                             >
-                                                <IoTrashBinSharp size={15} /> Xóa
+                                                <Tooltip title="Xóa">
+                                                    <CloseSquare size={18} />
+                                                </Tooltip>
                                             </button>
                                         </div>
                                     }

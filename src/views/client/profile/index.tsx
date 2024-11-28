@@ -5,7 +5,7 @@ import { AccountsService } from "@/domain/tai-khoan/services";
 import { storageFirebase } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Image from "next/image";
-import { ChangeEvent, FormEvent, useContext, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { TbEdit } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
@@ -55,21 +55,20 @@ export default function ProfileView() {
                     setProcess(Math.floor(progress));
                     switch (snapshot.state) {
                         case "paused":
-                            console.log("Upload is paused");
+                            console.log("Tải lên bị dừng!");
                             break;
                         case "running":
-                            console.log("Upload is running");
+                            console.log("Đang tải lên...");
                             break;
                     }
                 },
                 (error) => {
-                    // Handle unsuccessful uploads
+                 
                 },
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         UpdateUserMutation(
                             { username: formData.username, avatar: downloadURL },
-
                             {
                                 onSuccess: () => {
                                     toast.success("Cập nhật thông tin thành công!");
@@ -78,18 +77,18 @@ export default function ProfileView() {
                                         ...session?.user,
                                         username: formData.username,
                                         avatar: downloadURL
-                                    });
+                                    })
                                     // Đồng bộ thông tin trên fire-base
-                                    handle_update_doc_firebase({
-                                        docInfo: {
-                                            collectionName: CONLLECTION.USERS,
-                                            docId: session?.user.email ?? ""
-                                        },
-                                        data: {
-                                            name: formData.username,
-                                            avatar: downloadURL
-                                        }
-                                    });
+                                    // handle_update_doc_firebase({
+                                    //     docInfo: {
+                                    //         collectionName: CONLLECTION.USERS,
+                                    //         docId: session?.user.email ?? ""
+                                    //     },
+                                    //     data: {
+                                    //         name: formData.username,
+                                    //         avatar: downloadURL
+                                    //     }
+                                    // });
                                 }
                             }
                         );
@@ -107,16 +106,16 @@ export default function ProfileView() {
                             username: formData.username,
                             avatar: session?.user.avatar ?? ""
                         });
-                        handle_update_doc_firebase({
-                            docInfo: {
-                                collectionName: CONLLECTION.USERS,
-                                docId: session?.user.email ?? ""
-                            },
-                            data: {
-                                name: formData.username,
-                                avatar: session?.user.avatar ?? ""
-                            }
-                        });
+                        // handle_update_doc_firebase({
+                        //     docInfo: {
+                        //         collectionName: CONLLECTION.USERS,
+                        //         docId: session?.user.email ?? ""
+                        //     },
+                        //     data: {
+                        //         name: formData.username,
+                        //         avatar: session?.user.avatar ?? ""
+                        //     }
+                        // });
                     }
                 }
             );

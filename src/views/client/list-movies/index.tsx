@@ -1,8 +1,8 @@
 "use client";
 import Pagination from "@/base/libs/pagination";
 import MaxWidth from "@/components/layout/max-width";
-import MovieCard from "@/components/shared/movie-card";
-import { ListMovieSkeleton } from "@/components/shared/movie-card-skeleton";
+import MovieCard from "@/components/client/movie-card";
+import { ListMovieSkeleton } from "@/components/client/movie-card-skeleton";
 import { MoviesService } from "@/domain/phim/services";
 import { notFound, useSearchParams } from "next/navigation";
 type TitleType = {
@@ -21,9 +21,8 @@ const TITLE: TitleType[] = [
     }
 ];
 
-
 export default function ListMovieView({ slug }: { slug: string }) {
-    const isTitle = TITLE.find((item) => item.slug === slug)
+    const isTitle = TITLE.find((item) => item.slug === slug);
     const SearchParams = useSearchParams();
     if (!isTitle) return notFound();
     const { data: movies } = MoviesService.get_movies_by_type({
@@ -32,6 +31,7 @@ export default function ListMovieView({ slug }: { slug: string }) {
     });
 
     if (!movies) return <ListMovieSkeleton showTitle />;
+
 
     return (
         <MaxWidth className="min-h-screen text-white">

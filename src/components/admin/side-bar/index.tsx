@@ -1,21 +1,29 @@
 "use client";
-import clsx from "clsx";
-import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
-import { useRouter } from "next-nprogress-bar";
-import { usePathname } from "next/navigation";
-import { MdMovie } from "react-icons/md";
-import { GiEarthAsiaOceania } from "react-icons/gi";
-import { motion, AnimatePresence } from "framer-motion";
-import { HiOutlineLogout } from "react-icons/hi";
-import { IoIosArrowForward } from "react-icons/io";
-import { FaArrowLeft, FaUserCircle } from "react-icons/fa";
-import { TbLayoutDashboardFilled, TbList } from "react-icons/tb";
 import { logout_action } from "@/actions/auth";
-import { SideBarList } from "./type";
+import useWindowSize from "@/base/hooks/useWindowSize";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import clsx from "clsx";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+    ArrowLeft,
+    Category2,
+    DirectboxReceive,
+    FilterEdit,
+    GlobalEdit,
+    HomeTrendUp,
+    LogoutCurve,
+    Profile2User,
+    VideoSquare
+} from "iconsax-react";
+import { Session } from "next-auth";
+import { useRouter } from "next-nprogress-bar";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { IoIosArrowForward } from "react-icons/io";
+import { SideBarList } from "./type";
 
 const sidebar_variants = {
     open: { opacity: 1, x: 0, width: "16rem" },
@@ -30,12 +38,20 @@ const span_variants = {
     open: { width: "100%" },
     closed: { width: 0 }
 };
-export default function AdminSideBar() {
+export default function AdminSideBar({ session }: { session: Session | null }) {
     const pathName = usePathname();
     const router = useRouter();
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const [openMenus, setOpenMenus] = useState<string[]>([]);
     const [logoutLoading, setLogoutLoading] = useState<boolean>(false);
+    const { screenSize } = useWindowSize();
+
+    useEffect(() => {
+        if (["small", "medium"].includes(screenSize)) {
+            setSidebarOpen(false);
+            setOpenMenus([]);
+        }
+    }, [screenSize]);
 
     const toggleSubMenu = (name: string) => {
         if (openMenus.includes(name)) {
@@ -49,37 +65,45 @@ export default function AdminSideBar() {
 
     const ListItem: SideBarList[] = [
         {
-            name: "Trang chủ",
-            icon: <TbLayoutDashboardFilled size={24} />,
+            name: "Thống kê",
+            icon: <HomeTrendUp size={24} />,
             path: "/admin"
         },
         {
             name: "Quản lý phim",
-            icon: <MdMovie size={24} />,
+            icon: <VideoSquare size={24} />,
             path: "/admin/phim"
         },
         {
             name: "Phân loại",
-            icon: <TbList size={24} />,
+            icon: <FilterEdit size={24} />,
             subMenu: [
                 {
                     name: "Thể loại",
                     path: "/admin/the-loai",
-                    icon: <TbList size={24} />
+                    icon: <Category2 size={24} />
                 },
                 {
                     name: "Quốc gia",
                     path: "/admin/quoc-gia",
-                    icon: <GiEarthAsiaOceania size={24} />
+                    icon: <GlobalEdit size={24} />
                 }
             ]
         },
         {
+            name: "Crawler",
+            icon: <DirectboxReceive size={24} />,
+            path: "/admin/crawler"
+        },
+        {
             name: "Tài khoản",
-            icon: <FaUserCircle size={24} />,
+            icon: <Profile2User size={24} />,
             path: "/admin/tai-khoan"
         }
     ];
+
+    const sideBarItem: SideBarList[] =
+        session?.user?.email === "admin@gmail.com" ? ListItem : ListItem.filter((item) => item.name !== "Tài khoản");
 
     const isActive = (path: string) => {
         if (path === "") {
@@ -115,7 +139,7 @@ export default function AdminSideBar() {
                     </div>
 
                     <ul className="space-y-1 pt-4 font-semibold">
-                        {ListItem.map((item, index) => {
+                        {sideBarItem.map((item, index) => {
                             return (
                                 <li className={clsx("min-h-12 rounded")} key={index}>
                                     <span
@@ -152,9 +176,9 @@ export default function AdminSideBar() {
                                             {item.subMenu && sidebarOpen && (
                                                 <span className="ml-2">
                                                     {openMenus.includes(item.name) ? (
-                                                        <IoIosArrowForward className="rotate-90 duration-200" />
+                                                        <IoIosArrowForward className="rotate-90 duration-300" />
                                                     ) : (
-                                                        <IoIosArrowForward className="rotate-0 duration-200" />
+                                                        <IoIosArrowForward className="rotate-0 duration-300" />
                                                     )}
                                                 </span>
                                             )}
@@ -163,7 +187,7 @@ export default function AdminSideBar() {
                                     {item.subMenu && (
                                         <ul
                                             className={clsx(
-                                                "mt-1 overflow-hidden pl-4 transition-all duration-300",
+                                                "mt-1 overflow-hidden pl-4 duration-300",
                                                 openMenus.includes(item.name)
                                                     ? "max-h-96 opacity-100"
                                                     : "max-h-0 opacity-0"
@@ -198,7 +222,7 @@ export default function AdminSideBar() {
                                 await logout_action();
                                 setLogoutLoading(false);
                             }}
-                            className="absolute bottom-5 right-0 w-full px-2"
+                            className="absolute bottom-5 right-0 w-full"
                         >
                             <Spin spinning={logoutLoading} indicator={<LoadingOutlined spin />}>
                                 <button
@@ -207,7 +231,7 @@ export default function AdminSideBar() {
                                         !sidebarOpen && "justify-center"
                                     )}
                                 >
-                                    <HiOutlineLogout size={24} />
+                                    <LogoutCurve size={24} />
                                     <AnimatePresence>
                                         {sidebarOpen && (
                                             <motion.span
@@ -229,14 +253,14 @@ export default function AdminSideBar() {
                 <motion.div
                     animate={sidebarOpen ? "open" : "closed"}
                     variants={arrow_variants}
-                    className="absolute -right-4 top-2 cursor-pointer rounded-full bg-gray-200 p-2 hover:bg-gray-200"
+                    className="absolute -right-4 top-2 cursor-pointer rounded-full bg-gray-100 p-2 hover:bg-gray-200"
                     onClick={() => {
                         setSidebarOpen(!sidebarOpen);
                         // Đóng hết các menu con khi đóng side bar
                         setOpenMenus([]);
                     }}
                 >
-                    <FaArrowLeft size={20} />
+                    <ArrowLeft size={20} />
                 </motion.div>
             </motion.div>
         </motion.aside>

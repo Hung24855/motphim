@@ -54,21 +54,12 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                     [params.id]
                 )
             ]);
-            if (movies.rows.length === 0) {
-                return {
-                    message: "Không có phim thuộc thể loại này!",
-                    data: [],
-                    pagination: {
-                        totalRows: Number(totalRows.rows[0].count),
-                        currentPage: page,
-                        pageSize: limit,
-                        totalPages: Math.ceil(totalRows.rows[0].count / limit)
-                    }
-                };
-            }
 
             return {
-                message: "Lấy phim theo thể loại thành công!",
+                message:
+                    movies.rows.length === 0
+                        ? "Không có phim thuộc thể loại này!"
+                        : "Lấy phim theo thể loại thành công!",
                 data: movies.rows,
                 pagination: {
                     totalRows: Number(totalRows.rows[0].count),

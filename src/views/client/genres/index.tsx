@@ -1,8 +1,8 @@
 "use client";
 import Pagination from "@/base/libs/pagination";
 import MaxWidth from "@/components/layout/max-width";
-import MovieCard from "@/components/shared/movie-card";
-import { ListMovieSkeleton } from "@/components/shared/movie-card-skeleton";
+import MovieCard from "@/components/client/movie-card";
+import { ListMovieSkeleton } from "@/components/client/movie-card-skeleton";
 import { MoviesService } from "@/domain/phim/services";
 import { useSearchParams } from "next/navigation";
 
@@ -10,7 +10,7 @@ export default function GenresPage({ slug }: { slug: string }) {
     const SearchParams = useSearchParams();
     const { data: movies } = MoviesService.get_movies_by_genre({
         slug,
-        page: SearchParams.get("page") ?? 1,
+        page: SearchParams.get("page") ?? 1
     });
 
     if (!movies) return <ListMovieSkeleton showTitle />;

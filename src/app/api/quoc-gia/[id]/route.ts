@@ -33,41 +33,35 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
         }
     });
 }
-
+export const revalidate = 0;
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-    let select =
-        "movies.id, movies.movie_name, movies.slug, movies.year , movies.image, movies.time_per_episode, movies.episode_current, movies.episode_total,movies.lang,countries.name as country_name";
-
-    let join =
-        "INNER JOIN movie_country ON movies.id = movie_country.movie_id INNER JOIN countries ON movie_country.country_id = countries.id";
     return RouterHandler({
         async mainFc(pool) {
             const { limitSql, offset, orderBy, where, page, limit } = Filter(request);
             const [movies, totalRows] = await Promise.all([
                 pool.query(
-                    `SELECT ${select} FROM movies ${join} WHERE is_visible = true AND ${where} countries.slug = $1 ${orderBy} ${limitSql} ${offset}`,
+                    `SELECT movies.id, movies.movie_name, movies.slug, movies.year , movies.image, movies.time_per_episode, movies.episode_current, movies.episode_total,movies.lang,countries.name as country_name 
+                     FROM movies 
+                     INNER JOIN movie_country ON movies.id = movie_country.movie_id 
+                     INNER JOIN countries ON movie_country.country_id = countries.id 
+                     WHERE is_visible = true AND ${where} countries.slug = $1 ${orderBy} ${limitSql} ${offset}`,
                     [params.id]
                 ),
                 pool.query(
-                    `SELECT COUNT(*) FROM movies ${join} WHERE is_visible = true AND ${where} countries.slug = $1 ${orderBy} `,
+                    `SELECT COUNT(*) 
+                     FROM movies 
+                     INNER JOIN movie_country ON movies.id = movie_country.movie_id 
+                     INNER JOIN countries ON movie_country.country_id = countries.id 
+                     WHERE is_visible = true AND ${where} countries.slug = $1 ${orderBy} `,
                     [params.id]
                 )
             ]);
-            if (movies.rows.length === 0) {
-                return {
-                    message: "Không có phim thuộc thể loại này!",
-                    data: [],
-                    pagination: {
-                        totalRows: Number(totalRows.rows[0].count),
-                        currentPage: page,
-                        pageSize: limit,
-                        totalPages: Math.ceil(totalRows.rows[0].count / limit)
-                    }
-                };
-            }
 
             return {
-                message: "Lấy phim theo quốc gia thành công!",
+                message:
+                    movies.rows.length === 0
+                        ? "Không có phim thuộc thể loại không!"
+                        : "Lấy phim theo quốc gia thành công!",
                 data: movies.rows,
                 pagination: {
                     totalRows: Number(totalRows.rows[0].count),

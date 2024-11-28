@@ -1,14 +1,17 @@
 import { NextRequest } from "next/server";
 import { RouterHandler } from "../../router.handler";
+export const revalidate = 0;
 export async function GET(request: NextRequest) {
     return RouterHandler({
         async mainFc(pool) {
-            const res = await pool.query(
-                "SELECT users.id, users.email,users.username,users.role,users.created_at,users.updated_at FROM users WHERE email != 'admin@gmail.com'"
+            const accounts = await pool.query(
+                `SELECT users.id, users.email,users.username,users.role,users.created_at,users.updated_at 
+                 FROM users 
+                 WHERE email != 'admin@gmail.com'`
             );
             return {
                 message: "Lấy danh sách tài khoản thành công!",
-                data: res.rows
+                data: accounts.rows
             };
         },
         options: {

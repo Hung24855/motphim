@@ -1,9 +1,8 @@
-import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
-import { GetAllCountriesDTO } from "../dto";
-import { CountriesApi } from "../api";
+import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { DataCreateCountry, DataUpdateCountry, TResGetAllCountries } from "../model";
+import { CountriesApi } from "../api";
+import { DataCreateCountry, DataUpdateCountry, TResDeleteCountry, TResGetAllCountries } from "../model";
 
 interface ICreateCountryMutation {
     data: DataCreateCountry;
@@ -51,13 +50,36 @@ export class CountriesService {
                 queryClient.setQueryData<TResGetAllCountries>([QUERY_KEY.GET_ALL_COUNTRIES], context?.previousData);
             }
         });
+
+        const { mutate: deleteCountryMutation, isPending: isPeddingDeleteCountry } = useMutation({
+            mutationFn: (id: number) => CountriesApi.delete_country(id),
+            onMutate: (id) => {
+                queryClient.cancelQueries({ queryKey: this.queryKey });
+                const previousData = queryClient.getQueryData<TResDeleteCountry>(this.queryKey);
+
+                if (previousData) {
+                    queryClient.setQueryData<TResGetAllCountries>(this.queryKey, [
+                        ...previousData.filter((country) => country.id !== id)
+                    ]);
+                }
+
+                return {
+                    previousData
+                };
+            },
+            onError(_, __, context) {
+                queryClient.setQueryData<TResGetAllCountries>([QUERY_KEY.GET_ALL_GENRES], context?.previousData);
+            }
+        });
         return {
             data,
             refetch,
             createCountryMutation,
             updateCountryMutation,
+            deleteCountryMutation,
             isPeddingCreateCountry,
-            isPeddingUpdateCountry
+            isPeddingUpdateCountry,
+            isPeddingDeleteCountry
         };
     }
 }

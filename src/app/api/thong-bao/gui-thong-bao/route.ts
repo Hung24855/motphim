@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { getMessaging, Message, MulticastMessage } from "firebase-admin/messaging";
 import { adminApp } from "../../firebase.admin";
 import { RouterHandler } from "../../router.handler";
-// import { removeDuplicatesOfArray } from "@/base/utils/function";
+const BASE_URL_FRONT = process.env.NEXT_PUBLIC_BASE_URL_FRONT;
 
 export async function POST(request: NextRequest) {
     return RouterHandler({
@@ -10,7 +10,9 @@ export async function POST(request: NextRequest) {
             //Lấy danh sách token yêu thích movie_id
             const [response, movie_info] = await Promise.all([
                 pool.query(
-                    "SELECT token_notification as token, user_id FROM users INNER JOIN favorites ON users.id = favorites.user_id  WHERE movie_id=$1",
+                    `SELECT token_notification as token, user_id FROM users 
+                     INNER JOIN favorites ON users.id = favorites.user_id  
+                     WHERE movie_id=$1`,
                     [body.movie_id]
                 ),
                 pool.query("SELECT slug, movie_name, image FROM movies WHERE id = $1", [body.movie_id])
@@ -18,20 +20,20 @@ export async function POST(request: NextRequest) {
 
             const tokens: string[] = response.rows.map((item) => item.token);
             const user_ids: string[] = response.rows.map((item) => item.user_id);
+            const list_episodes: string = body.list_episodes.join(", ");
 
-            const title = `${movie_info.rows[0].movie_name} đã ra tập mới! ❤️`;
-          
-            
+            const title = `${movie_info.rows[0].movie_name} đã ra tập: ${list_episodes} ! ❤️`;
+
             const message: MulticastMessage = {
                 tokens: tokens.length > 0 ? tokens : ["fake_token"], // Vì token phải là mảng không rỗng
                 // tokens: removeDuplicatesOfArray(tokens), //Vì có nhiều user_id có cùng token điều này gây gửi nhiều thông báo đến 1 token
                 //Cấu hình thông báo cho nền tảng web
                 webpush: {
                     fcmOptions: {
-                        link: `http://localhost:3000/phim/${movie_info.rows[0].slug}`,
+                        link: `${BASE_URL_FRONT}/phim/${movie_info.rows[0].slug}`
                     },
                     notification: {
-                        icon: "https://firebasestorage.googleapis.com/v0/b/themovie-af1e4.appspot.com/o/Logo-light.png?alt=media&token=a18772c3-b1dc-422d-9dd8-92c8f0523889",
+                        icon: "https://firebasestorage.googleapis.com/v0/b/themovie-af1e4.appspot.com/o/imagesIMG_20231118_110756.jpg?alt=media&token=1e0f4815-5a3c-4d10-b817-d138c8cb4da0",
                         title: "Motphim",
                         body: title,
                         sound: "default"
@@ -43,13 +45,14 @@ export async function POST(request: NextRequest) {
                 }
             };
 
+            //Gửi thông báo đến người dùng
             getMessaging(adminApp)
                 .sendEachForMulticast(message)
-                .then((response) => {
-                    console.log("Successfully sent message");
+                .then(() => {
+                    console.log("Gửi thông báo thành công!");
                 })
                 .catch((error) => {
-                    console.log("Error sending message ====>", error);
+                    console.log("Gửi thông báo lỗi ====>", error);
                 });
 
             // Lưu thông tin thông báo vào CSDL
@@ -69,7 +72,7 @@ export async function POST(request: NextRequest) {
         options: {
             request: request,
             checkAuth: "isAdmin",
-            required: ["movie_id"]
+            required: ["movie_id", "list_episodes"]
         }
     });
 }

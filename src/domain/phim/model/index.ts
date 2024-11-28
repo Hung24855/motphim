@@ -1,3 +1,4 @@
+//cấu trúc  data cần để truyền đến back-end và cấu trúc  data lưu trữ trong react-query
 import {
     DataGetMoviesByCountryDTO,
     DataGetMoviesByGenreDTO,
@@ -55,6 +56,9 @@ export type DataUpdateEpisode = {
 export type DataGetAllMovies = {
     page?: number | string;
     limit?: number | string;
+    movie_type_id?: "type1" | "type2";
+    country?: string;
+    genre?: string;
 };
 
 export type DataGetAllMoviesByGenre = {

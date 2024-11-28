@@ -1,8 +1,8 @@
+import { QUERY_KEY } from "@/infrastructure/constant/query-key";
+import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { NotificationApi } from "../api";
-import { useFetcher } from "@/infrastructure/hooks/useFetcher";
 import { DataSendNotification, TResGetAllNotification } from "../model";
-import { QUERY_KEY } from "@/infrastructure/constant/query-key";
 
 export class NotificationService {
     static useNotification = ({ user_id = "" }: { user_id?: string }) => {

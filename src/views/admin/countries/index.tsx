@@ -1,8 +1,7 @@
 "use client";
 import { CountriesService } from "@/domain/quoc-gia/service";
-import { Table, Tag } from "antd";
+import { Table, Tag, Tooltip } from "antd";
 import { ChangeEvent, Fragment, useMemo, useState } from "react";
-import { FaRegEdit } from "react-icons/fa";
 import "@/infrastructure/styles/table.ant.css";
 import { DataCreateCountry, DataUpdateCountry, TResGetAllCountries } from "@/domain/quoc-gia/model";
 import Input from "@/base/libs/input";
@@ -11,6 +10,8 @@ import Loading from "@/base/libs/loading";
 import { ModalMotion } from "@/base/libs/modal";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/infrastructure/constant/query-key";
+import { BrushSquare, CloseSquare } from "iconsax-react";
+import { ColumnProps } from "antd/es/table";
 
 const initCountry: DataCreateCountry | DataUpdateCountry = { name: "", slug: "" };
 
@@ -20,14 +21,17 @@ export default function CountriesAdminView() {
         data: countries,
         createCountryMutation,
         updateCountryMutation,
+        deleteCountryMutation,
         isPeddingCreateCountry,
         isPeddingUpdateCountry,
-        refetch: refetchCountries
+        isPeddingDeleteCountry
     } = CountriesService.useCountries();
 
     const [ModalCreateOrUpdateCountry, setModalCreateOrUpdateCountry] = useState<boolean>(false);
+    const [ModalDeleteCountry, setModalDeleteCountry] = useState<boolean>(false);
     const [country, setCountry] = useState<DataCreateCountry | DataUpdateCountry>(initCountry);
     const [message, setMessage] = useState<string>("");
+    const [idDelete, setIdDelete] = useState<number | undefined>();
 
     const isTypeUpdateCountry = useMemo(() => "id" in country && country.id !== undefined, [country]);
 
@@ -76,20 +80,34 @@ export default function CountriesAdminView() {
         }
     };
 
-    const columns = [
+    const handleDeleteCountry = () => {
+        if (idDelete) {
+            deleteCountryMutation(idDelete, {
+                onSuccess: () => {
+                    toast.success("Xóa quốc gia thành công!");
+                    setModalDeleteCountry(false);
+                }
+            });
+        }
+    };
+
+    const columns: ColumnProps<any>[] = [
         {
             title: "Tên quốc gia",
             dataIndex: "name",
-            key: "genre_name"
+            key: "genre_name",
+            width: 150
         },
         {
             title: "Đường dẫn tĩnh",
             dataIndex: "slug",
-            key: "slug"
+            key: "slug",
+            width: 150
         },
         {
             title: "Số phim thuộc quốc gia",
             key: "movie_count",
+            align: "center",
             render: () => {
                 return <Tag color="geekblue">Chưa cập nhật</Tag>;
             }
@@ -97,6 +115,7 @@ export default function CountriesAdminView() {
         {
             title: "SEO Title",
             key: "movie_count",
+            align: "center",
             render: () => {
                 return <Tag color="green">Chưa cập nhật</Tag>;
             }
@@ -104,8 +123,9 @@ export default function CountriesAdminView() {
         {
             title: "Hành động",
             key: "action",
+            align: "center",
             render: (_: any, record: DataUpdateCountry) => (
-                <div className="flex items-center gap-x-1">
+                <div className="flex items-center justify-center gap-x-1">
                     <button
                         className="flex items-center gap-x-1 rounded p-1 text-admin_primary"
                         onClick={() => {
@@ -113,10 +133,24 @@ export default function CountriesAdminView() {
                             setModalCreateOrUpdateCountry(true);
                         }}
                     >
-                        <FaRegEdit size={15} /> Sửa
+                        <Tooltip title="Sửa">
+                            <BrushSquare size={18} />
+                        </Tooltip>
+                    </button>
+                    <button
+                        className="flex items-center gap-x-1 rounded p-1 text-red-500"
+                        onClick={() => {
+                            setIdDelete(record.id);
+                            setModalDeleteCountry(true);
+                        }}
+                    >
+                        <Tooltip title="Xóa">
+                            <CloseSquare size={18} />
+                        </Tooltip>
                     </button>
                 </div>
-            )
+            ),
+            width: 100
         }
     ];
     return (
@@ -133,12 +167,13 @@ export default function CountriesAdminView() {
                 columns={columns}
                 loading={{
                     spinning: !countries,
-                    indicator: <Loading loading={!countries} containerClassName="pt-20" />
+                    indicator: <Loading loading={!countries} />
                 }}
                 pagination={{
                     position: ["bottomCenter"]
                 }}
                 bordered
+                scroll={{ x: "max-content" }}
             />
 
             {/* Modal thêm quốc gia */}
@@ -176,6 +211,22 @@ export default function CountriesAdminView() {
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCountry({ ...country, slug: e.target.value })}
                 />
                 <div className="text-red-500">{message}</div>
+            </ModalMotion>
+
+            {/* Modal xóa quốc gia */}
+            <ModalMotion
+                textHeader="Xác nhận xóa quốc gia"
+                onClose={() => {
+                    setModalDeleteCountry(false);
+                }}
+                onOk={handleDeleteCountry}
+                isOpen={ModalDeleteCountry}
+                textOk="Xóa"
+                loading={isPeddingDeleteCountry}
+                modalContainerClassName="!gap-y-4"
+                okButtonClassName="!bg-red-500 !text-white"
+            >
+                {`Bạn có chắc chắn muốn xóa quốc gia này không?`}
             </ModalMotion>
         </Fragment>
     );

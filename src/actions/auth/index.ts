@@ -1,11 +1,8 @@
 "use server";
-import { signOut, signIn, auth } from "@/auth";
-import { AuthError } from "next-auth";
-import { IResponseData } from "@/infrastructure/config/types/apiResponse";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { auth, signIn, signOut } from "@/auth";
 import { pool } from "@/database/connect";
+import { IResponseData } from "@/infrastructure/config/types/apiResponse";
+import { AuthError } from "next-auth";
 
 export const register_action = async ({
     email,
@@ -20,15 +17,11 @@ export const register_action = async ({
     try {
         const response = await fetch(baseUrl + "/auth/dang-ky", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
             body: JSON.stringify({ email, password, username })
         }).then((res) => res.json());
 
         return response;
     } catch (error) {
-        console.log("Error: register_action", error);
         return {
             data: [],
             message: "Có lỗi xảy ra",
@@ -65,27 +58,4 @@ export async function logout_action() {
     //Xóa token thông báo khi đăng xuất tránh trình trạng đăng nhập tài khoản khác nhưng vẫn nhận thông báo
     pool.query("UPDATE users SET token_notification = NULL WHERE id = $1", [user_id]);
     await signOut();
-    revalidatePath("/");
 }
-
-export const Permissions = async ({ user_id, role }: { user_id: string; role: "admin" | "user" }) => {
-    try {
-        const cookie = cookies();
-        const session = cookie.get("authjs.session-token")?.value;
-        if (!session) {
-            redirect("/");
-        }
-
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL_API + `/phan-quyen/${user_id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                cookie: "authjs.session-token=" + session
-            },
-            body: JSON.stringify({ role })
-        }).then((res) => res.json());
-        return response;
-    } catch (error) {
-        throw new Error("Có lỗi xảy ra thử lại sau!");
-    }
-};

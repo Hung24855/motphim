@@ -1,27 +1,15 @@
 "use client";
-
+import { useCountdownTimer } from "@/base/hooks/useCountdownTimer";
 import Button from "@/base/libs/button";
 import MaxWidth from "@/components/layout/max-width";
-import { requestPermission } from "@/firebase";
-import { toast } from "react-toastify";
 
-export default function TestModal() {
-    const handleClick = () => {
-        requestPermission({
-            onGranted: (currentToken) => {
-                console.log("currentToken", currentToken);
-            },
-            onDenied: () => {
-                toast.info("Yêu cầu quyền thông báo đã bị từ chối");
-            },
-            onDefault: () => {
-                toast.info("Yêu cầu quyền thông báo đã bị từ chối");
-            }
-        });
-    };
+export default function TestGlobalState() {
+    const { remainingTime, start } = useCountdownTimer(60, "test");
+
     return (
         <MaxWidth className="flex min-h-screen flex-col items-center justify-center pt-20 text-white">
-            <Button onClick={handleClick}>Bật thông báo</Button>
+            <div>{remainingTime}</div>
+            <Button onClick={start}>start</Button>
         </MaxWidth>
     );
 }

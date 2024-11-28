@@ -1,17 +1,14 @@
 "use client";
+import { register_action } from "@/actions/auth";
+import Button from "@/base/libs/button";
 import Input from "@/base/libs/input";
-import Link from "next/link";
-import { Fragment, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
 import { signUpSchema, SignUpType } from "@/utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { register_action } from "@/actions/auth";
-import { toast } from "react-toastify";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Button from "@/base/libs/button";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { authFirebase } from "@/firebase";
-import { CONLLECTION, handle_add_doc_firebase } from "@/database/firebase.services";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function RegisternPage() {
     const [globalMessage, setGlobalMessage] = useState<string>("");
@@ -33,38 +30,38 @@ export default function RegisternPage() {
             router.push("/dang-nhap");
 
             // Đăng ký tài khoản Firebase
-            createUserWithEmailAndPassword(authFirebase, data.email, data.password)
-                .then(async (userCredential) => {
-                    const user = userCredential.user;
+            // createUserWithEmailAndPassword(authFirebase, data.email, data.password)
+            //     .then(async (userCredential) => {
+            //         const user = userCredential.user;
 
-                    // Cập nhật displayName
-                    await updateProfile(user, {
-                        displayName: data.username
-                    });
+            //         // Cập nhật displayName
+            //         await updateProfile(user, {
+            //             displayName: data.username
+            //         });
 
-                    // Ghi thông tin người dùng vài firestore
-                    await handle_add_doc_firebase({
-                        docInfo: {
-                            collectionName: CONLLECTION.USERS,
-                            docId: data.email
-                        },
-                        data: {
-                            name: data.username,
-                            email: data.email,
-                            uid: user.uid,
-                            avatar: ""
-                        }
-                    });
-                })
-                .catch((error) => {
-                    toast.error("Tài khoản đã tồn tại!");
-                });
+            //         // Ghi thông tin người dùng vài firestore
+            //         await handle_add_doc_firebase({
+            //             docInfo: {
+            //                 collectionName: CONLLECTION.USERS,
+            //                 docId: data.email
+            //             },
+            //             data: {
+            //                 name: data.username,
+            //                 email: data.email,
+            //                 uid: user.uid,
+            //                 avatar: ""
+            //             }
+            //         });
+            //     })
+            //     .catch((error) => {
+            //         toast.error("Tài khoản đã tồn tại!");
+            //     });
         } else {
             setGlobalMessage(res.message);
         }
     };
     return (
-        <Fragment>
+        <div className="px-2">
             <div className="mx-auto flex flex-col items-center justify-center pt-28 md:min-h-screen lg:py-0">
                 <div className="w-full rounded bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
                     <div className="space-y-3 p-2 sm:p-6 md:space-y-4">
@@ -81,7 +78,7 @@ export default function RegisternPage() {
                                         <Input
                                             field={field}
                                             label="Email"
-                                            placeholder="name@gmail.com"
+                                            placeholder="Email"
                                             required
                                             error={errors.email}
                                         />
@@ -97,7 +94,7 @@ export default function RegisternPage() {
                                         <Input
                                             field={field}
                                             label="Tên người dùng"
-                                            placeholder="Nghiêm Hồng"
+                                            placeholder="Nguyễn Văn A"
                                             required
                                             error={errors.username}
                                         />
@@ -153,6 +150,6 @@ export default function RegisternPage() {
                     </div>
                 </div>
             </div>
-        </Fragment>
+        </div>
     );
 }

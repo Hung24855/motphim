@@ -1,15 +1,14 @@
 import Input from "@/base/libs/input";
 import { ModalMotion } from "@/base/libs/modal";
-import { authFirebase } from "@/firebase";
 import { useFirestore } from "@/infrastructure/hooks/useFirestore";
 import { ChangeEvent, Fragment, useContext, useEffect, useRef, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { AddRoomType, RoomsType } from "./type";
 import { CONLLECTION, handle_add_doc_firebase } from "@/database/firebase.services";
 import { toast } from "react-toastify";
 import { ChatRoomContext } from ".";
 import { convertTime } from "@/base/utils/function";
 import { serverTimestamp, Timestamp } from "firebase/firestore";
+import { sessionContext } from "@/provider/next-auth";
 
 const initCreateRoomForm = {
     movie_name: ""
@@ -20,11 +19,12 @@ export default function SideBar() {
     const [ModalCreateRoom, setModalCreateRoom] = useState<boolean>(false);
     const [RoomCreateForm, setRoomCreateForm] = useState(initCreateRoomForm);
     const [loading, setloading] = useState<boolean>(false);
-    const [user] = useAuthState(authFirebase);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const { session } = useContext(sessionContext);
 
     //Lắng nghe danh sách các phòng
     const { doccument: Rooms }: { doccument: RoomsType } = useFirestore({
-        collectionName: "ROOM_MOVIES"
+        collectionName: CONLLECTION.ROOM_MOVIES
     });
 
     const handleCreateRoom = async () => {
@@ -35,12 +35,12 @@ export default function SideBar() {
             data: {
                 createdAt: serverTimestamp() as Timestamp,
                 isPlay: false,
-                members: [user?.uid as string],
+                members: [session?.user?.id as string],
                 messages: [],
                 movie_link: "",
                 list_movies: [],
                 movie_name: RoomCreateForm.movie_name,
-                owner: user?.email as string
+                owner: session?.user?.email as string
             }
         });
         setloading(false);
@@ -52,8 +52,6 @@ export default function SideBar() {
         setModalCreateRoom(false);
         setRoomCreateForm(initCreateRoomForm);
     };
-
-    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (inputRef.current) {
@@ -93,11 +91,10 @@ export default function SideBar() {
                             <div className="flex-1">
                                 <div className="flex items-baseline justify-between">
                                     <p className="text-sm font-medium text-white">{room.movie_name}</p>
-                                    <span className="text-xs text-gray-400 block min-w-[70px]">
+                                    <span className="block min-w-[70px] text-xs text-gray-400">
                                         {convertTime(room.createdAt?.toDate().toString())}
                                     </span>
                                 </div>
-                                {/* <p className="truncate text-xs text-gray-400">Tin nhắn cuối cùng!</p> */}
                             </div>
                         </div>
                     ))}

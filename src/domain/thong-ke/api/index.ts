@@ -1,15 +1,14 @@
 import { ENDPOINT_URL } from "@/infrastructure/config/endpointUrl";
 import http from "@/infrastructure/config/request";
 import { requester } from "@/infrastructure/config/request/requester";
-import { TResGetStatistical } from "../model";
 import { GetStatisticalDTO } from "../dto";
+import { TResGetStatistical } from "../model";
 
 export class StatisticalApi {
     static async get_statistical() {
-        const statistical = await requester<TResGetStatistical>({
+        return await requester<TResGetStatistical>({
             requestFunc: () => http.get(ENDPOINT_URL.get_statistical()),
-            handleData: (data:GetStatisticalDTO) => data.data
+            handleData: (data: GetStatisticalDTO) => data.data
         })();
-        return statistical;
     }
 }

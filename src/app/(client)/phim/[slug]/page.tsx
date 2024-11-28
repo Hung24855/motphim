@@ -1,7 +1,12 @@
 import { auth } from "@/auth";
 import MoviePage from "@/views/client/movie";
 
-export default async function Movie({ params }: { params: { slug: string } }) {
+type Props = {
+    params: { slug: string };
+    searchParams: { tap: string };
+};
+
+export default async function Movie(props: Props) {
     const session = await auth();
-    return <MoviePage slug={params.slug} session={session} />;
+    return <MoviePage slug={props.params.slug} session={session} searchParams={props.searchParams} />;
 }

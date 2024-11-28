@@ -1,10 +1,4 @@
 class EndpointUrl {
-    baseAdmin: string;
-
-    constructor() {
-        this.baseAdmin = "/admin";
-    }
-
     //the-loai
     get_genres = () => `/the-loai`;
     create_genre = () => `/the-loai`;
@@ -47,11 +41,19 @@ class EndpointUrl {
     // Tài khoản
     get_accounts = () => `/danh-sach/tai-khoan`;
     update_user_info = () => `/thong-tin-ca-nhan`;
+    send_email = () => `quen-mat-khau`;
+    verify_code = ()=>"quen-mat-khau/verify"
+    change_password = ()=>"quen-mat-khau/dat-lai-mat-khau"
     //Thông báo
     save_token = () => `/thong-bao/luu-token`;
     send_notification = () => `/thong-bao/gui-thong-bao`;
     get_all_notifications = () => `/thong-bao/danh-sach-thong-bao`;
     read_notification = () => `/thong-bao`;
+
+    //crawler
+    crawler = () => `/crawlData2`;
+    crawlerUpdateData = () => `/crawlData`;
+    crawlerSearchData = () => `/crawlData2/tim-kiem`;
 }
 
 export const ENDPOINT_URL = new EndpointUrl();

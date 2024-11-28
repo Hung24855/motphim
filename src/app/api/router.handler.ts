@@ -1,9 +1,9 @@
 import { status } from "@/app/api/utils/status";
 import { pool } from "@/database/connect";
 import { NextRequest, NextResponse } from "next/server";
-import { Exception } from "./utils/Exception";
 import { Pool } from "pg";
 import CheckAdmin, { getUserIdByTokenNextAuth } from "./middleware";
+import { Exception } from "./utils/Exception";
 
 type response = {
     message: string;

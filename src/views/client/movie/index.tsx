@@ -1,5 +1,5 @@
 "use client";
-import MovieCategory from "@/components/home/movies/movie-category";
+import MovieCategory from "@/components/client/movies/movie-category";
 import MaxWidth from "@/components/layout/max-width";
 import { MovieForCardDTO } from "@/domain/phim/dto";
 import { MoviesService } from "@/domain/phim/services";
@@ -8,6 +8,7 @@ import { Icon } from "@iconify/react";
 import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { Session } from "next-auth";
+import { useRouter } from "next-nprogress-bar";
 import Script from "next/script";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
@@ -15,6 +16,7 @@ import { toast } from "react-toastify";
 type Props = {
     slug: string;
     session: Session | null;
+    searchParams: { tap: string };
 };
 
 const MovieDetailSkeleton = () => {
@@ -24,8 +26,8 @@ const MovieDetailSkeleton = () => {
                 <div className="rounded-lg p-6 text-white shadow-lg">
                     {/* Movie Poster Skeleton */}
                     <div className="flex flex-col lg:flex-row">
-                        <div className="flex w-full justify-center lg:w-1/3">
-                            <div className="mb-6 h-96 w-2/3 animate-pulse rounded-lg bg-gray-700 md:w-full lg:mb-0"></div>
+                        <div className="flex w-full lg:w-1/4">
+                            <div className="mb-6 h-96 w-full animate-pulse rounded-lg bg-gray-700 lg:mb-0"></div>
                         </div>
 
                         {/* Movie Information Skeleton */}
@@ -58,19 +60,21 @@ const MovieDetailSkeleton = () => {
 export default function MoviePage(props: Props) {
     const queryClient = useQueryClient();
     const videoRef = useRef<HTMLDivElement>(null);
-    const [episode, setEpisode] = useState<string>("1");
+    const [episode, setEpisode] = useState<string>(() => props.searchParams?.tap ?? "1");
     const { data: response } = MoviesService.get_movie(props.slug);
     const { mutateUnFavoriteMovie, mutateFavoriteMovie } = MoviesService.use_favorite_action();
     const { checkFavoriteMovie } = MoviesService.check_favorite_movie({
-        movie_id: response ? response[0].id : "",
+        movie_id: response ? response[0]?.id : "",
         user_id: props.session?.user.id ?? ""
     });
+    const router = useRouter();
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
     if (!response) return <MovieDetailSkeleton />;
+ 
     if (response.length === 0)
         return (
             <div className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl text-white">
@@ -139,7 +143,7 @@ export default function MoviePage(props: Props) {
                             <img src={movie.image} alt="img" className="aspect-[2/3] w-full max-w-[300px] rounded" />
                             <div className="w-full">
                                 <h2 className="text-4xl font-extrabold lg:text-5xl">{movie.movie_name}</h2>
-                                <span className="font-bold text-primary">The Legend of Shaolin Kung Fu 4</span>
+                                <span className="font-bold text-primary">Phim vietsub độc quyền</span>
                                 <div className="my-4 flex flex-col gap-5 font-medium lg:flex-row lg:items-center">
                                     <div className="flex items-center gap-2 text-xs font-bold">
                                         {/* <span className="bg-white px-2.5 py-1 text-black">{`${movie?.episode_current} / ${movie?.episode_total} Tập`}</span> */}
@@ -179,7 +183,13 @@ export default function MoviePage(props: Props) {
                                         </ul>
                                     </div>
                                 </div>
-                                <div className="movie-content max-h-80 overflow-auto text-sm">{movie.content}</div>
+                                <div className="movie-content max-h-80 overflow-auto text-sm">
+                                    <span
+                                        dangerouslySetInnerHTML={{
+                                            __html: movie.content ?? ""
+                                        }}
+                                    />
+                                </div>
                                 <div className="mt-8 flex w-max items-center gap-1.5 rounded-lg border border-white/5 bg-white/5 px-4 py-4 md:gap-5 md:px-7">
                                     <button
                                         className="flex flex-col items-center justify-center gap-1 text-sm hover:text-primary"
@@ -197,7 +207,7 @@ export default function MoviePage(props: Props) {
                                         </a>
                                         <button
                                             className={clsx(
-                                                "flex items-center gap-2 rounded-full border-2 border-primary bg-black/70 px-5 py-2.5 duration-300",
+                                                "flex w-[132px] items-center gap-2 rounded-full border-2 border-primary bg-black/70 px-5 py-2.5 duration-300",
                                                 checkFavoriteMovie?.is_favorites
                                                     ? "bg-red-500 text-white"
                                                     : "hover:bg-primary hover:text-black"
@@ -243,7 +253,10 @@ export default function MoviePage(props: Props) {
                                             }
                                         )}
                                         key={item.episode_id}
-                                        onClick={() => setEpisode(item.name)}
+                                        onClick={() => {
+                                            setEpisode(item.name);
+                                            router.push(`?tap=${item.name}`, { scroll: false });
+                                        }}
                                     >
                                         {item.name}
                                     </button>
