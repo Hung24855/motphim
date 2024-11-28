@@ -39,6 +39,7 @@ export default function VerifyEmailAndCode(props: IVerifyEmailAndCodeProps) {
     const { SendEmailMutation, isPendingSendEmail, VerifyCodeMutation, isPendingVerify } =
         AccountsService.useAccounts();
     const handleSendEmail = async () => {
+
         const checkEmail = await trigger("email");
         if (checkEmail) {
             const email = getValues("email");
@@ -50,6 +51,7 @@ export default function VerifyEmailAndCode(props: IVerifyEmailAndCodeProps) {
                 },
                 onError: (error) => {
                     setErrorMessage(error.message);
+                    toast.error(error.message, { position: "bottom-left" });
                 }
             });
         }
@@ -120,7 +122,16 @@ export default function VerifyEmailAndCode(props: IVerifyEmailAndCodeProps) {
             )}
 
             {!isEmailVerified ? (
-                <Button type="button" block onClick={handleSendEmail} loading={isPendingSendEmail}>
+                <Button
+                    type="button"
+                    block
+                    onClick={() => {
+                        console.log("kdhfgkdj");
+
+                        handleSendEmail();
+                    }}
+                    loading={isPendingSendEmail}
+                >
                     Gửi yêu cầu
                 </Button>
             ) : (

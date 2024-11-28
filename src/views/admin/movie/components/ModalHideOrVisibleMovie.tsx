@@ -18,6 +18,7 @@ type Props = {
     isShowModal: boolean;
     movieSelect: MovieSelect | null;
     moviesSearch: TResGetSearchMovies | undefined;
+    limit: number;
     page: number;
     filterType: {
         type?: "type1" | "type2";
@@ -34,6 +35,7 @@ export default function ModalHideOrVisibleMovie({
     moviesSearch,
     movieSelect,
     page,
+    limit,
     filterType
 }: Props) {
     const queryClient = useQueryClient();
@@ -55,6 +57,7 @@ export default function ModalHideOrVisibleMovie({
                                 [
                                     QUERY_KEY.GET_LIST_MOVIES,
                                     page,
+                                    limit,
                                     filterType.type,
                                     filterType.country,
                                     filterType.genre

@@ -75,9 +75,9 @@ export default function ChatRoomView() {
                         </div>
                     </ChatRoomContext.Provider>
                 ) : (
-                    <div className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl text-white">
+                    <center className="flex h-screen items-center justify-center px-2 pb-10 pt-24 text-3xl text-white">
                         Vui lòng đăng nhập để sử dụng chức năng này!
-                    </div>
+                    </center>
                 )}
             </MaxWidth>
         </Fragment>
