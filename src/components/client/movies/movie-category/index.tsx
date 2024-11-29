@@ -32,8 +32,8 @@ export default function MovieCategory(props: props) {
         <MaxWidth>
             <div className="mb-5">
                 {/* Title */}
-                <div className="flex justify-between">
-                    <h1 className="mb-2 text-2xl">{title}</h1>
+                <div className="flex justify-between text-white">
+                    <h1 className="mb-2 text-2xl ">{title}</h1>
                     <div className="flex items-center space-x-4">
                         <motion.button
                             className="px-2 py-1 hover:text-primary"

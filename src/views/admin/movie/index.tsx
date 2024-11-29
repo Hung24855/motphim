@@ -10,7 +10,7 @@ import { BrushSquare, CloseSquare, Eye, EyeSlash } from "iconsax-react";
 import Link from "next/link";
 import { useState } from "react";
 import FilterMovies from "./components/FilterMovies";
-import ModalDeleteMovie from "./components/ModalDeleteMovie";
+import ModalDeleteMovie from "./components/ModalDeleteMovie"
 import ModalDeleteMutibleMovie from "./components/ModalDeleteMutibleMovie";
 import ModalHideOrVisibleMovie from "./components/ModalHideOrVisibleMovie";
 import useWindowSize from "@/base/hooks/useWindowSize";
@@ -243,6 +243,7 @@ export default function MoviesAdminView() {
                 movieSelect={movieSelect}
                 moviesSearch={moviesSearch}
                 page={page}
+                limit={limit}
                 refetch={refetch}
                 setIsShowModal={setIsShowModal}
                 setMovieSelect={setMovieSelect}

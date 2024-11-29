@@ -50,6 +50,7 @@ export default function VerifyEmailAndCode(props: IVerifyEmailAndCodeProps) {
                 },
                 onError: (error) => {
                     setErrorMessage(error.message);
+                    toast.error(error.message, { position: "bottom-left" });
                 }
             });
         }

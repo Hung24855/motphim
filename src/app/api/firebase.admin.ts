@@ -2,7 +2,6 @@ import { initializeApp, getApps, getApp } from "firebase-admin/app";
 import admin from "firebase-admin";
 import { AccountKey } from "./serviceAccountKey";
 
-
 export const adminApp = !getApps().length
     ? initializeApp(
           {
