@@ -4,6 +4,7 @@ import nodemailer from "nodemailer";
 import { NewToken } from "../quen-mat-khau/type";
 
 export const genneralAccessToken = async <T extends object>(payload: T, expiresIn: string = "60s"): Promise<string> => {
+    // @ts-ignore
     const access_token = jwt.sign(
         {
             ...payload
