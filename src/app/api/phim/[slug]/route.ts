@@ -13,6 +13,7 @@ export async function GET(_: NextRequest, { params }: { params: { slug: string }
                  WHERE movies.slug = $1`,
                 [params.slug]
             );
+
             if (movies.rows.length === 0) {
                 return {
                     message: "Phim không tồn tại!",

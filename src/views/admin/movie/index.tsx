@@ -15,7 +15,7 @@ import ModalDeleteMutibleMovie from "./components/ModalDeleteMutibleMovie";
 import ModalHideOrVisibleMovie from "./components/ModalHideOrVisibleMovie";
 import useWindowSize from "@/base/hooks/useWindowSize";
 
-export default function MoviesAdminView() {
+export default function     MoviesAdminView() {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const { screenSize } = useWindowSize();
@@ -121,6 +121,7 @@ export default function MoviesAdminView() {
 
         {
             title: "Hành động",
+            fixed: 'right',
             key: "action",
             render: (_: any, record: any) => (
                 <div className="flex items-center gap-x-1">

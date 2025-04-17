@@ -4,7 +4,7 @@ export function isEmail(email: string) {
     return REGEX.email.test(email);
 }
 // Bỏ dấu khỏi từ tiếng việt
-export function removeMark(str: string) {
+export function removeMark(str: string): string {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 // Convert thời gian
@@ -107,7 +107,7 @@ export function removeNullAndUndefinedFromArray({ arr, allowNull = false }: { ar
 }
 
 export function generateRandomCode() {
-    let code = '';
+    let code = "";
     for (let i = 0; i < 6; i++) {
         code += Math.floor(Math.random() * 10); // Tạo số ngẫu nhiên từ 0 đến 9
     }

@@ -105,7 +105,10 @@ export default function LoginPage() {
                                             </label>
                                         </div>
                                     </div>
-                                    <a href="quen-mat-khau" className="text-sm font-medium text-[#295779] hover:underline">
+                                    <a
+                                        href="quen-mat-khau"
+                                        className="text-sm font-medium text-[#295779] hover:underline"
+                                    >
                                         Quên mật khẩu?
                                     </a>
                                 </div>

@@ -7,6 +7,7 @@ export async function GET(request: NextRequest) {
     return RouterHandler({
         async mainFc() {
             let query = request.nextUrl.searchParams.get("q") ?? "";
+            console.log("dfkshfsfj")
 
             const { data: moviesSearch } = await axios.get<MoviesSearch>(
                 `https://ophim1.com/v1/api//tim-kiem?keyword=${query}`

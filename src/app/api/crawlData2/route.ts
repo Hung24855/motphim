@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
             const { start = "1", end = "1" } = Object.fromEntries(searchParams);
 
             const crawlData = async () => {
-                const arrayPage = Array.from({ length: Number(end) - Number(start) + 1 }, (v, k) => k + Number(start)); //Tạo mảng tăng dần từ start đến end
+                const arrayPage = Array.from({ length: Number(end) - Number(start) + 1 }, (_, k) => k + Number(start)); //Tạo mảng tăng dần từ start đến end
                 const promise = arrayPage.map((page) => getSlugsMoviesPerPage(page));
                 await Promise.all(promise);
                 // Đã lấy được danh sách slugs
