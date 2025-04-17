@@ -27,69 +27,7 @@ export async function GET(request: NextRequest) {
 
                 return browser;
             };
-            const getRenges = async (browser: Browser) => {
-                let page = await browser.newPage();
-                await page.setViewport({ width: 1440, height: 1024 });
-                let data: {
-                    name: string | null;
-                    slug: string | undefined;
-                }[] = [];
-                try {
-                    await page.goto("https://ophim17.cc", { waitUntil: "networkidle2", timeout: 5000 });
-                    //Chờ selector được tải xong
-                    await page.waitForSelector("#headlessui-menu-button-1", { timeout: 5000 });
-                    await page.locator("#headlessui-menu-button-1").click();
-
-                    data = await page.evaluate(() => {
-                        const elements = Array.from(
-                            document.querySelectorAll(`[aria-labelledby="headlessui-menu-button-1"] button a.px-4.py-2`)
-                        );
-
-                        return elements.map((ele) => ({
-                            name: ele.textContent,
-                            slug: ele.getAttribute("href")?.toString().replace("/the-loai/", "")
-                        }));
-                    });
-                    console.log(">>>Đã lấy dữ liệu thể loại...");
-                } catch (error) {
-                    console.error(">>>Lỗi khi lấy danh sách thể loại");
-                } finally {
-                    page.close();
-                }
-
-                return data;
-            };
-            const getCountries = async (browser: Browser) => {
-                let page = await browser.newPage();
-                await page.setViewport({ width: 1440, height: 1024 });
-                let data: {
-                    name: string | null;
-                    slug: string | undefined;
-                }[] = [];
-                try {
-                    await page.goto("https://ophim17.cc", { waitUntil: "networkidle2", timeout: 5000 });
-                    await page.waitForSelector("#headlessui-menu-button-2", { timeout: 5000 });
-                    await page.locator("#headlessui-menu-button-2").click();
-
-                    data = await page.evaluate(() => {
-                        const elements = Array.from(
-                            document.querySelectorAll(`[aria-labelledby="headlessui-menu-button-2"] button a.px-4.py-2`)
-                        );
-                        return elements.map((ele) => ({
-                            name: ele.textContent,
-                            slug: ele.getAttribute("href")?.toString().replace("/quoc-gia/", "")
-                        }));
-                    });
-                    console.log(">>>Đã lấy dữ liệu quốc gia...");
-                    page.close();
-                } catch (error) {
-                    console.error(">>>Lỗi khi lấy danh sách quốc gia");
-                } finally {
-                    page.close();
-                }
-
-                return data;
-            };
+           
             const getListMovie = async ({ browser, page: p }: { browser: Browser; page: number }) => {
                 const page = await browser.newPage();
                 await page.setViewport({ width: 1440, height: 1024 });

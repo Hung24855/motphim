@@ -71,12 +71,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return token;
         },
         session({ session, token }) {
-            //Nó cho phép bạn tùy chỉnh nội dung của session trước khi nó được gửi đến client.
+            //Tùy chỉnh nội dung của session trước khi nó được gửi đến client.
             session.user.id = token.id;
             session.user.role = token.role;
             session.user.username = token.username;
             session.user.avatar = token.avatar;
-
             return session;
         }
     },
