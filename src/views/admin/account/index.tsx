@@ -46,6 +46,7 @@ export default function AccountAdminView() {
         }
         setloading(false);
     };
+    console.log("");
     const columns: ColumnProps[] = [
         {
             title: "Họ tên",
